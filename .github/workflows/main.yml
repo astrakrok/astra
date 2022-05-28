@@ -3,6 +3,8 @@ name: Deploy
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
@@ -11,12 +13,21 @@ jobs:
     steps:
       - name: Git checkout
         uses: actions/checkout@v3
-      - name: Build, Push and Release a Docker container to Heroku
+      - name: Deploy backend
         uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
           email: ${{ secrets.HEROKU_EMAIL }}
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
+          heroku_app_name: ${{ secrets.HEROKU_BACKEND_APP_NAME }}
           docker_options: "--no-cache"
           process_type: web
           dockerfile_directory: ./astra-api/
+      - name: Deploy frontend
+        uses: gonuit/heroku-docker-deploy@v1.3.3
+        with:
+          email: ${{ secrets.HEROKU_EMAIL }}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_app_name: ${{ secrets.HEROKU_FRONTEND_APP_NAME }}
+          docker_options: "--no-cache"
+          process_type: web
+          dockerfile_directory: ./astra-web/
