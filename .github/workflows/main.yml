@@ -6,15 +6,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  checkout:
+  deploy_backend:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout
         uses: actions/checkout@v3
-  deploy_backend:
-    needs: checkout
-    runs-on: ubuntu-latest
-    steps:
       - name: Deploy backend
         uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
@@ -25,9 +21,10 @@ jobs:
           process_type: web
           dockerfile_directory: ./astra-api/
   deploy_frontend:
-    needs: checkout
     runs-on: ubuntu-latest
     steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
       - name: Deploy frontend
         uses: gonuit/heroku-docker-deploy@v1.3.3
         with:
