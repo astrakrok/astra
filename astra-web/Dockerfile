@@ -5,7 +5,7 @@ RUN npm install --silent
 COPY . .
 RUN npm run build
 
-FROM nginx:stable-alpine
+FROM nginx:latest
 COPY --from=builder /app/build /usr/share/nginx/html
-EXPOSE 80
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+COPY --from=builder /app/default.conf.template /etc/nginx/templates/default.conf.template
+CMD /bin/bash -c "envsubst '\$PORT' < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf" && nginx -g 'daemon off;'
