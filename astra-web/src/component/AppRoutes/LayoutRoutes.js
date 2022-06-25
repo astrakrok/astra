@@ -1,7 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 import { page } from "../../constant/page";
-import { Footer } from "../Footer/Footer";
-import { Header } from "../Header/Header";
 import { HomePage } from "../page/home/HomePage";
 import { LoginPage } from "../page/login/LoginPage";
 import { RegisterPage } from "../page/register/RegisterPage";
@@ -9,7 +7,7 @@ import { RegisterPage } from "../page/register/RegisterPage";
 export const LayoutRoutes = () => {
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
 
       <Routes>
         <Route path={page.home} element={<HomePage />} />
@@ -17,7 +15,7 @@ export const LayoutRoutes = () => {
         <Route path={page.register} element={<RegisterPage />} />
       </Routes>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

@@ -1,15 +1,16 @@
-import { Link } from 'react-router-dom';
-import { page } from '../../constant/page';
+import { AuthControl } from '../AuthControl/AuthControl';
+import { Logo } from '../Logo/Logo';
 import './Header.css';
 
 export const Header = () => {
     return (
-        <header className="full-width">
+        <header className="full-width Header">
             <div className="container">
-                <div className="row">
-                    <div className="s-hflex-end">
-                        <Link to={page.register} className="register weight-strong">Зареєструватися</Link>
-                        <Link to={page.login} className="login weight-strong">Увійти</Link>
+                <div className="row content">
+                    <div className="s-hflex-start">
+                        <Logo />
+                        <div className="equal-flex"></div>
+                        <AuthControl />
                     </div>
                 </div>
             </div>
