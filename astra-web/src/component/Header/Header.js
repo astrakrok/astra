@@ -9,7 +9,7 @@ export const Header = () => {
                 <div className="row content">
                     <div className="s-hflex-start">
                         <Logo />
-                        <div className="equal-flex"></div>
+                        <div className="equal-flex" />
                         <AuthControl />
                     </div>
                 </div>
