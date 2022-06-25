@@ -7,15 +7,11 @@ import { RegisterPage } from "../page/register/RegisterPage";
 export const LayoutRoutes = () => {
   return (
     <div>
-      {/* <Header /> */}
-
       <Routes>
         <Route path={page.home} element={<HomePage />} />
         <Route path={page.login} element={<LoginPage />} />
         <Route path={page.register} element={<RegisterPage />} />
       </Routes>
-
-      {/* <Footer /> */}
     </div>
   );
 }

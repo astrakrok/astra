@@ -1,5 +1,5 @@
-import { app } from './../../constant/app';
-import { page } from './../../constant/page';
+import { app } from '../../constant/app';
+import { page } from '../../constant/page';
 import './Logo.css';
 
 export const Logo = () => {
