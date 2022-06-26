@@ -1,0 +1,19 @@
+.Footer {
+    border-top: 1px solid var(--border-primary-color);
+    margin-top: 50px;
+    padding-top: 25px;
+}
+
+.Footer .description {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.Footer .link {
+    font-size: 15px;
+}
+
+.Footer .social-links {
+    margin-top: 10px;
+}

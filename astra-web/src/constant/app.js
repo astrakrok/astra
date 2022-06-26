@@ -1,3 +1,4 @@
 export const app = {
-    name: "AstraKROK"
+    name: "AstraKROK",
+    email: "astra.krok@gmail.com"
 };

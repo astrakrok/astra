@@ -1,0 +1,9 @@
+.StudySection img {
+    max-width: 100%;
+    box-shadow: 0 0 7px 1px rgb(0 0 0 / 30%);
+    border-radius: 2px;
+}
+
+.StudySection .content {
+    padding-left: 20px;
+}

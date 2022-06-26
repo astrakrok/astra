@@ -1,0 +1,13 @@
+.SocialLink {
+    width: 25px;
+    height: 25px;
+    margin-left: 10px;
+}
+
+.SocialLink:first-child {
+    margin-left: 0 !important;
+}
+
+.SocialLink img {
+    max-width: 100%;
+}
