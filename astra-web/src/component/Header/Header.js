@@ -8,7 +8,7 @@ export const Header = () => {
             <div className="container">
                 <div className="row content">
                     <div className="s-hflex-start">
-                        <Logo />
+                        <Logo responsive="true" />
                         <div className="equal-flex" />
                         <AuthControl />
                     </div>
