@@ -85,6 +85,10 @@ a.deactivate {
     flex: 1;
 }
 
+.wrap-flex {
+    flex-wrap: wrap;
+}
+
 .radius-1 {
     border-radius: 1px;
 }

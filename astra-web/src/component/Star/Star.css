@@ -1,0 +1,18 @@
+.Star {
+    padding: 10px 30px;
+    width: 270px;
+    height: 210px;
+}
+
+.Star .content {
+    background-image: url(./star.png);
+    width: auto;
+    background-size: 100% 100%;
+    padding: 80px 15px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 30px;
+    line-height: 35px;
+    text-transform: uppercase;
+}
