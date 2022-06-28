@@ -1,18 +1,22 @@
 import { Button } from "../../../Button/Button";
 import { Input } from "../../../Input/Input";
-import { ResponsiveColumns } from "../../../ResponsiveColumns/ResponsiveColumns";
+import {ResponsiveColumns} from "../../../ResponsiveColumns/ResponsiveColumns";
 import { Spacer } from "../../../Spacer/Spacer";
-import "./LoginContent.css";
+import "./RegisterContent.css";
 
-export const LoginContent = () => {
+export const RegisterContent = () => {
     const getFirstColumn = () => {
         return (
-            <div className="optimal login-form">
-                <Input placeholder="E-mail або username" />
+            <div className="optimal register-form">
+                <Input placeholder="Ім'я" />
+                <Input placeholder="Прізвище" />
+                <Input placeholder="Курс" />
+                <Input placeholder="E-mail" />
                 <Input type="password" className="browser-default" placeholder="Пароль" />
+                <Input type="password" className="browser-default" placeholder="Повторити пароль" />
                 <div className="button center">
                     <Button>
-                        Увійти
+                        Зареєструватися
                     </Button>
                 </div>
             </div>

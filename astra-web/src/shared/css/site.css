@@ -13,3 +13,13 @@
 main {
     flex: 1 0 auto;
 }
+
+.heading .title {
+    font-size: 30px;
+    margin: 0;
+}
+
+.heading .subtitle {
+    margin: 0;
+    font-size: 18px;
+}
