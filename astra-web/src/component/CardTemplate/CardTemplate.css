@@ -1,0 +1,19 @@
+.CardTemplate {
+    color: white;
+    border-radius: 5px;
+    overflow: hidden;
+    font-weight: bold;
+    letter-spacing: 1px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.CardTemplate .heading {
+    background: linear-gradient(155deg, rgba(248,105,1,1) 34%, rgba(255,173,7,1) 100%);
+    padding: 12px;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+
+.CardTemplate .content {
+    padding: 20px 0;
+}
