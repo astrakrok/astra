@@ -1,0 +1,45 @@
+.LoginPage .authentication {
+    color: white;
+    border-radius: 5px;
+    overflow: hidden;
+    font-weight: bold;
+    letter-spacing: 1px;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.LoginPage .heading {
+    background: linear-gradient(155deg, rgba(248,105,1,1) 34%, rgba(255,173,7,1) 100%);
+    padding: 12px;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+
+.LoginPage .heading .title {
+    font-size: 30px;
+    margin: 0;
+}
+
+.LoginPage .heading .subtitle {
+    margin: 0;
+    font-size: 18px;
+}
+
+.LoginPage .content {
+    padding: 20px 0;
+}
+
+.LoginPage .content .v-separator {
+    width: 2px;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.LoginPage .content .credentials .form {
+    padding: 70px 80px;
+    width: 100%;
+    max-width: 480px;
+}
+
+.LoginPage .content .credentials .form .button {
+    text-align: center;
+    margin-top: 30px;
+}

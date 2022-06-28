@@ -1,0 +1,21 @@
+.Input {
+    margin-bottom: 20px;
+}
+
+.Input label {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.Input input {
+    font-size: 15px;
+    padding: 5px 8px;
+    border: 1px solid var(--primary-color);
+    border-radius: 3px;
+    transition: 0.3s;
+    outline: none;
+}
+
+.Input input:focus {
+    box-shadow: 0 0 15px 0 var(--primary-color);
+}
