@@ -8,7 +8,7 @@ export const LoginContent = () => {
     const getFirstColumn = () => {
         return (
             <div className="optimal login-form">
-                <Input placeholder="E-mail або username" />
+                <Input placeholder="E-mail" />
                 <Input type="password" className="browser-default" placeholder="Пароль" />
                 <div className="button center">
                     <Button>
