@@ -1,0 +1,18 @@
+.Button button {
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: 600;
+    padding: 10px 35px;
+    box-shadow: 0 0 15px var(--primary-color);
+    border: 1px solid var(--primary-color);
+    transition: 0.4s;
+}
+
+.Button button:hover, .Button.filled button {
+    color: white;
+    background-color: var(--primary-color) !important;
+}
+
+.Button button:focus {
+    background-color: unset;
+}

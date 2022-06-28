@@ -1,0 +1,26 @@
+.LoginPage .content .v-separator, .LoginPage .content .h-separator {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.LoginPage .content .v-separator {
+    width: 2px;
+}
+
+.LoginPage .content .h-separator {
+    height: 2px;
+}
+
+.LoginPage .content .credentials .form {
+    width: 100%;
+    max-width: 480px;
+    padding: 70px 50px;
+}
+
+.LoginPage .content .credentials .form .button {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.LoginPage .content .social {
+    padding: 40px 10px;
+}
