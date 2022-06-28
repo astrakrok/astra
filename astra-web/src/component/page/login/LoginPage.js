@@ -14,8 +14,8 @@ export const LoginPage = () => {
                         <p className="title">Увійти</p>
                         <p className="subtitle">Раді бачити знову</p>
                     </div>
-                    <div className="content s-hflex">
-                        <div className="credentials equal-flex s-hflex-center">
+                    <div className="content s-vflex m-hflex">
+                        <div className="credentials equal-flex s-hflex-center m-no-width">
                             <div className="form">
                                 <Input placeholder="E-mail або username" />
                                 <Input type="password" className="browser-default" placeholder="Пароль" />
@@ -26,8 +26,9 @@ export const LoginPage = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="v-separator" />
-                        <div className="social equal-flex s-hflex-center">
+                        <div className="v-separator hide-on-small-only" />
+                        <div className="h-separator hide-on-med-and-up" />
+                        <div className="social equal-flex s-hflex-center m-no-width">
                             <div className="s-vflex-center full-height">
                                 <Button className="full-width" isFilled={true}>Продовжити з Google</Button>
                                 <Spacer size="25" />
