@@ -4,6 +4,8 @@ import { Spacer } from "../../Spacer/Spacer";
 import "./LoginPage.css";
 
 export const LoginPage = () => {
+    document.title = "Увійти";
+
     return (
         <div className="container LoginPage">
             <div className="row">
