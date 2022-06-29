@@ -1,0 +1,21 @@
+.ResponsiveColumns .v-separator, .ResponsiveColumns .h-separator {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.ResponsiveColumns .v-separator {
+    width: 2px;
+}
+
+.ResponsiveColumns .h-separator {
+    height: 2px;
+}
+
+.ResponsiveColumns .second {
+    padding: 40px 10px;
+}
+
+.ResponsiveColumns .first .optimal {
+    width: 100%;
+    max-width: 480px;
+    padding: 50px 50px;
+}

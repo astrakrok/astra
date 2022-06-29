@@ -4,11 +4,11 @@
 
 .Input label {
     margin-bottom: 5px;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .Input input {
-    font-size: 15px;
+    font-size: 19px;
     padding: 5px 8px;
     border: 1px solid var(--primary-color);
     border-radius: 3px;
