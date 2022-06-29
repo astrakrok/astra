@@ -4,6 +4,8 @@ import { RegisterHeading } from "./RegisterHeading/RegisterHeading";
 import "./RegisterPage.css";
 
 export const RegisterPage = () => {
+    document.title = "Зареєструватися";
+
     return (
         <div className="container">
             <div className="row">
