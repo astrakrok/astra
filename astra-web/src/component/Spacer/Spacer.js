@@ -1,5 +1,12 @@
-export const Spacer = ({size = 0}) => {
+export const Spacer = ({
+    height = 0,
+    width = 0,
+    className = ""
+}) => {
     return (
-        <div style={{height: size + "px"}} />
+        <div className={className} style={{
+            width: width + "px",
+            height: height + "px"
+        }} />
     );
 }

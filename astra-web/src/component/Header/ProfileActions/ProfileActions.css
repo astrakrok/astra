@@ -1,0 +1,41 @@
+.ProfileActions {
+    --picture-size: 60px;
+}
+
+.ProfileActions .avatar-container {
+    width: var(--picture-size);
+    height: var(--picture-size);
+    overflow: hidden;
+}
+
+.ProfileActions .actions-wrapper {
+    margin: 0;
+}
+
+.ProfileActions .action {
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 10px;
+}
+
+.ProfileActions .action a {
+    color: unset;
+}
+
+.ProfileActions .dropdown-card .content {
+    padding: 0 !important;
+}
+
+.ProfileActions .dropdown-content li:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.ProfileActions .username {
+    font-size: 1rem;
+}
+
+.ProfileActions .email {
+    opacity: 0.6;
+}
