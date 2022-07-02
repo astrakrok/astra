@@ -5,21 +5,22 @@ import { Header } from "../Header/Header";
 import { HomePage } from "../page/home/HomePage";
 import { LoginPage } from "../page/login/LoginPage";
 import { RegisterPage } from "../page/register/RegisterPage";
+import { PermissionBoundary } from "../PermissionBoundary/PermissionBoundary";
 
 export const LayoutRoutes = () => {
-  return (
-    <>
-      <Header />
-      
-      <main className="s-vflex-center">
-        <Routes>
-          <Route path={page.home} element={<HomePage />} />
-          <Route path={page.login} element={<LoginPage />} />
-          <Route path={page.register} element={<RegisterPage />} />
-        </Routes>
-      </main>
+    return (
+        <PermissionBoundary>
+            <Header />
 
-      <Footer />
-    </>
-  );
+            <main className="s-vflex-center">
+                <Routes>
+                    <Route path={page.home} element={<HomePage />} />
+                    <Route path={page.login} element={<LoginPage />} />
+                    <Route path={page.register} element={<RegisterPage />} />
+                </Routes>
+            </main>
+
+            <Footer />
+        </PermissionBoundary>
+    );
 }
