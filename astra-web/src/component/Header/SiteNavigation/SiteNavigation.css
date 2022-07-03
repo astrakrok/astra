@@ -1,0 +1,12 @@
+.SiteNavigation .link {
+    font-size: 1.25rem;
+    color: black;
+    text-transform: uppercase;
+    padding: 0 15px;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.SiteNavigation .link:hover {
+    color: var(--primary-color);
+}

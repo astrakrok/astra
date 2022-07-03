@@ -27,9 +27,9 @@ export const RegisterContent = () => {
         return (
             <div className="s-vflex-center full-height">
                 <Button className="full-width" isFilled={true}>Продовжити з Google</Button>
-                <Spacer size="25" />
+                <Spacer height="25" />
                 <Button className="full-width" isFilled={true}>Продовжити з Facebook</Button>
-                <Spacer size="25" />
+                <Spacer height="25" />
                 <Button className="full-width" isFilled={true}>Продовжити з Instagram</Button>
             </div>
         );
