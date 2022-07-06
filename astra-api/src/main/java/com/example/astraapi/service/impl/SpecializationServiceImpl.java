@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +27,7 @@ public class SpecializationServiceImpl implements SpecializationService {
 
   @Override
   public List<SpecializationDto> getAll() {
-    return  mapper.toDto(repository.getAll());
+    List<SpecializationEntity> entities = repository.getAll();
+    return entities.stream().map(x -> mapper.toDto(x)).collect(Collectors.toList());
   }
 }

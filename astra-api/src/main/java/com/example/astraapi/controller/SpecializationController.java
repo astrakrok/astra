@@ -20,7 +20,7 @@ public class SpecializationController {
     return service.save(specializationDto);
   }
 
-  @GetMapping(value = Endpoint.GETALL)
+  @GetMapping
   public List<SpecializationDto> getAll(){
     return service.getAll();
   }
