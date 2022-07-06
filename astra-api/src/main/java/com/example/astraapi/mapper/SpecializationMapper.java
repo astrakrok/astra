@@ -7,4 +7,6 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface SpecializationMapper {
   SpecializationEntity toEntity(SpecializationDto specializationDto);
+
+  SpecializationDto toDto(SpecializationEntity specializationEntity);
 }

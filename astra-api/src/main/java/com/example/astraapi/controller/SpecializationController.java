@@ -7,6 +7,8 @@ import com.example.astraapi.service.SpecializationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(Endpoint.SPECIALIZATIONS)
 @RequiredArgsConstructor
@@ -16,5 +18,10 @@ public class SpecializationController {
   @PostMapping
   public IdDto saveSpecializations(@RequestBody SpecializationDto specializationDto) {
     return service.save(specializationDto);
+  }
+
+  @GetMapping
+  public List<SpecializationDto> getAll() {
+    return service.getAll();
   }
 }
