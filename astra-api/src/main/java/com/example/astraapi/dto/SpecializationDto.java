@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MessageDto {
-  private String message;
+public class SpecializationDto {
+  private Long id;
+  private String title;
 }
