@@ -5,4 +5,7 @@
     <insert id="save" parameterType="com.example.astraapi.entity.SpecializationEntity" useGeneratedKeys="true" keyProperty="entity.id">
         insert into public.specializations (title) values (#{entity.title})
     </insert>
+    <select id="getAll" resultType="com.example.astraapi.entity.SpecializationEntity">
+        select * from public.specializations
+    </select>
 </mapper>

@@ -9,6 +9,8 @@ import com.example.astraapi.service.SpecializationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class SpecializationServiceImpl implements SpecializationService {
@@ -20,5 +22,10 @@ public class SpecializationServiceImpl implements SpecializationService {
     SpecializationEntity specializationEntity = mapper.toEntity(specializationDto);
     repository.save(specializationEntity);
     return new IdDto(specializationEntity.getId());
+  }
+
+  @Override
+  public List<SpecializationDto> getAll() {
+    return  mapper.toDto(repository.getAll());
   }
 }
