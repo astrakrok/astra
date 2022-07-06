@@ -29,7 +29,7 @@ public class SpecializationServiceImpl implements SpecializationService {
   public List<SpecializationDto> getAll() {
     List<SpecializationEntity> entities = repository.getAll();
     return entities.stream()
-        .map(x -> mapper.toDto(x))
+        .map(mapper::toDto)
         .collect(Collectors.toList());
   }
 }
