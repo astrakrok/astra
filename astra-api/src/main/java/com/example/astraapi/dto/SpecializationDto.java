@@ -10,7 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SpecializationDto {
-
   private Long id;
   private String title;
 }

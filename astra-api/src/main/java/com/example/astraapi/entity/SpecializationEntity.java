@@ -9,8 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Specialization {
-
+public class SpecializationEntity {
   private Long id;
   private String title;
 }
