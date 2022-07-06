@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(Endpoint.specializationEndpoint)
+@RequestMapping(Endpoint.SPECIALIZATIONS)
 @RequiredArgsConstructor
 public class SpecializationController {
   private final SpecializationService service;
