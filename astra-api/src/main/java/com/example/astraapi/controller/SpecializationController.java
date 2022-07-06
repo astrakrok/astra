@@ -21,7 +21,7 @@ public class SpecializationController {
   }
 
   @GetMapping
-  public List<SpecializationDto> getAll(){
+  public List<SpecializationDto> getAll() {
     return service.getAll();
   }
 }
