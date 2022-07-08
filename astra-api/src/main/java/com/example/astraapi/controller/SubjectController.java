@@ -14,7 +14,10 @@ public class SubjectController {
   private final SubjectService service;
 
   @PostMapping
-  public IdDto saveSubjects(@PathVariable("specializationId") Long specializationId, @RequestBody SubjectDto subjectDto) {
+  public IdDto saveSubjects(
+      @PathVariable("specializationId") Long specializationId,
+      @RequestBody SubjectDto subjectDto
+  ) {
     return service.save(specializationId, subjectDto);
   }
 }
