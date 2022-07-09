@@ -6,4 +6,10 @@
         insert into public.subjects (title, specialization_id)
         values (#{entity.title}, #{entity.specializationId});
     </insert>
+    <select id="getAll" resultType="com.example.astraapi.entity.SubjectEntity">
+        select subjects.id, subjects.title, subjects.specialization_id
+        from public.subjects
+        where specialization_id = #{specializationId}
+    </select>
 </mapper>
+
