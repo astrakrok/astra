@@ -25,7 +25,7 @@ public class SubjectController {
   }
 
   @GetMapping
-  public List<ResponseSubjectDto> getAll(@PathVariable("specializationId") Long specializationId){
+  public List<ResponseSubjectDto> getAllBySpecializationId (@PathVariable("specializationId") Long specializationId){
     return service.getAllBySpecializationId(specializationId);
   }
 }

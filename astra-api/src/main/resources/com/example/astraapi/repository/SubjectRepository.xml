@@ -12,4 +12,3 @@
         where specialization_id = #{specializationId}
     </select>
 </mapper>
-
