@@ -1,6 +1,6 @@
 import "./IconTitle.css";
 
-export const IconTitle = ({
+const IconTitle = ({
     icon = "star",
     size = "small",
     title = ""
@@ -12,3 +12,5 @@ export const IconTitle = ({
         </div>
     );
 }
+
+export default IconTitle;

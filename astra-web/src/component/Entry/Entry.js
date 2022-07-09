@@ -1,4 +1,4 @@
-import { InfoText } from '../InfoText/InfoText';
+import InfoText from '../InfoText/InfoText';
 import './Entry.css';
 import entry from './entry.png';
 

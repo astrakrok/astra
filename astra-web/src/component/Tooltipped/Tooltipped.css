@@ -1,0 +1,27 @@
+.Tooltipped::before {
+    content: attr(data-text);
+    position: absolute;
+    font-size: 1.1rem;
+    color: white;
+    background-color: black;
+    padding: 0 15px;
+    border-radius: 5px;
+    z-index: 1000000;
+    font-weight: bold;
+    letter-spacing: 1px;
+    display: none;
+}
+
+.Tooltipped {
+    position: relative;
+}
+
+
+.Tooltipped:hover::before {
+    display: block;
+}
+
+.Tooltipped.right::before {
+    left: 105%;
+    transform: translateY(0%);
+}

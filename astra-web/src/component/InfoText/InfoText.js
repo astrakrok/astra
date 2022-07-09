@@ -1,7 +1,9 @@
 import "./InfoText.css";
 
-export const InfoText = ({children}) => {
+const InfoText = ({children}) => {
     return (
         <p className="InfoText">{children}</p>
     );
 }
+
+export default InfoText;
