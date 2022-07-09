@@ -10,5 +10,5 @@ import java.util.List;
 public interface SubjectRepository {
   void save(@Param("entity") SubjectEntity subjectEntity);
 
-  List<SubjectEntity> getAll(@Param("specializationId") Long specializationId);
+  List<SubjectEntity> getAllBySpecializationId(@Param("specializationId") Long specializationId);
 }

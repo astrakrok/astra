@@ -9,7 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SubjectDto {
+public class ResponseSubjectDto {
   private Long id;
   private String title;
+  private Long specializationId;
 }

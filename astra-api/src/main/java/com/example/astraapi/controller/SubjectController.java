@@ -1,8 +1,8 @@
 package com.example.astraapi.controller;
 
 import com.example.astraapi.dto.IdDto;
-import com.example.astraapi.dto.SubjectAndSpecializationIdDto;
-import com.example.astraapi.dto.SubjectDto;
+import com.example.astraapi.dto.RequestSubjectDto;
+import com.example.astraapi.dto.ResponseSubjectDto;
 import com.example.astraapi.meta.Endpoint;
 import com.example.astraapi.service.SubjectService;
 import lombok.RequiredArgsConstructor;
@@ -19,13 +19,13 @@ public class SubjectController {
   @PostMapping
   public IdDto saveSubjects(
       @PathVariable("specializationId") Long specializationId,
-      @RequestBody SubjectDto subjectDto
+      @RequestBody RequestSubjectDto requestSubjectDto
   ) {
-    return service.save(specializationId, subjectDto);
+    return service.save(specializationId, requestSubjectDto);
   }
 
   @GetMapping
-  public List<SubjectAndSpecializationIdDto> getAll(@PathVariable("specializationId") Long specializationId){
-    return service.getAll(specializationId);
+  public List<ResponseSubjectDto> getAll(@PathVariable("specializationId") Long specializationId){
+    return service.getAllBySpecializationId(specializationId);
   }
 }
