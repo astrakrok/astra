@@ -1,7 +1,7 @@
-import { Button } from "../../../Button/Button";
+import Button from "../../../Button/Button";
 import { Input } from "../../../Input/Input";
 import { ResponsiveColumns } from "../../../ResponsiveColumns/ResponsiveColumns";
-import { Spacer } from "../../../Spacer/Spacer";
+import Spacer from "../../../Spacer/Spacer";
 import "./LoginContent.css";
 
 export const LoginContent = () => {

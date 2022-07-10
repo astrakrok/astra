@@ -1,4 +1,4 @@
-.Button button {
+.Button button, .Button a {
     cursor: pointer;
     border-radius: 4px;
     font-weight: 600;
@@ -8,11 +8,13 @@
     transition: 0.4s;
 }
 
-.Button button:hover, .Button.filled button {
+.Button button:hover, .Button.filled button,
+.Button a:hover, .Button.filled a {
     color: white;
     background-color: var(--primary-color) !important;
 }
 
-.Button button:focus {
+.Button button:focus,
+.Button a:focus {
     background-color: unset;
 }

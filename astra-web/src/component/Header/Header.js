@@ -4,7 +4,7 @@ import { Logo } from '../Logo/Logo';
 import { SiteNavigation } from "./SiteNavigation/SiteNavigation";
 import { ProfileActions } from "./ProfileActions/ProfileActions";
 import './Header.css';
-import { Spacer } from '../Spacer/Spacer';
+import Spacer from '../Spacer/Spacer';
 
 export const Header = () => {
     return (

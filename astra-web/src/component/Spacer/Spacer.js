@@ -1,4 +1,4 @@
-export const Spacer = ({
+const Spacer = ({
     height = 0,
     width = 0,
     className = ""
@@ -10,3 +10,5 @@ export const Spacer = ({
         }} />
     );
 }
+
+export default Spacer;

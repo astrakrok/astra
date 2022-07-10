@@ -1,0 +1,45 @@
+.SpecializationItem .content {
+    text-align: center;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    font-size: 2.5rem;
+    transition: all 0.3s;
+    height: 250px;
+    background-color: var(--secondary-color);
+    font-weight: bold;
+    letter-spacing: 1px;
+    opacity: 0.8;
+    border-radius: 3px;
+}
+
+.SpecializationItem .content a {
+    color: white;
+}
+
+.SpecializationItem .content:hover {
+    box-shadow: 0 0 10px 0 var(--secondary-color)
+}
+
+.SpecializationItem {
+    position: relative;
+    display: block;
+}
+
+.SpecializationItem .edit {
+    position: absolute;
+    right: 15px;
+    color: white;
+    z-index: 1000;
+    top: 10px;
+    opacity: 0.5;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.SpecializationItem .edit:hover {
+    opacity: 1;
+}
+
+.SpecializationItem .edit i.material-icons {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+}

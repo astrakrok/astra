@@ -5,7 +5,8 @@ import { getUser } from "./user.handler";
 const permissions = {
     [page.home]: [
         userRole.guest,
-        userRole.user
+        userRole.user,
+        userRole.admin
     ],
     [page.login]: [
         userRole.guest
@@ -20,6 +21,24 @@ const permissions = {
     [page.joinTeam]: [
         userRole.guest,
         userRole.user
+    ],
+    [page.exams]: [
+        userRole.user
+    ],
+    [page.adminLogin]: [
+        userRole.guest
+    ],
+    [page.admin]: [
+        userRole.admin
+    ],
+    [page.admin.specializations.all]: [
+        userRole.admin
+    ],
+    [page.admin.subjects.all]: [
+        userRole.admin
+    ],
+    [page.admin.tests.all]: [
+        userRole.admin
     ]
 };
 

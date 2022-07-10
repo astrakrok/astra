@@ -1,4 +1,4 @@
-import { InfoText } from "../InfoText/InfoText";
+import InfoText from "../InfoText/InfoText";
 import { TextHeader } from "../TextHeader/TextHeader";
 import study from "./study.png";
 import "./StudySection.css";
