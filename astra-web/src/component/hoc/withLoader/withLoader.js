@@ -13,7 +13,7 @@ const withLoader = (
             const runFetcher = async () => {
                 const fetchedData = await fetch();
 
-                setData(fetchedData);
+                setData(fetchedData.data);
             }
             
             runFetcher();
