@@ -2,7 +2,7 @@ name: Deploy
 
 on:
   push:
-    branches: [main]
+    branches: ['*']
   workflow_dispatch:
 
 jobs:
@@ -31,6 +31,6 @@ jobs:
           email: ${{ secrets.HEROKU_EMAIL }}
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: ${{ secrets.HEROKU_FRONTEND_APP_NAME }}
-          docker_options: "--no-cache"
+          docker_options: ${{ secrets.FRONTEND_DOCKER_OPTIONS }}
           process_type: web
           dockerfile_directory: ./astra-web/
