@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 import { page } from "../../constant/page";
-import AxiosClient from "../AxiosClient/AxiosClient";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import AllSpecializationsPage from "../page/admin/specializations/all/AllSpecializationsPage";
@@ -11,21 +10,19 @@ import PermissionBoundary from "../PermissionBoundary/PermissionBoundary";
 
 export const LayoutRoutes = () => {
     return (
-        <AxiosClient>
-            <PermissionBoundary>
-                <Header />
+        <PermissionBoundary>
+            <Header />
 
-                <main className="s-vflex-center">
-                    <Routes>
-                        <Route path={page.home} element={<HomePage />} />
-                        <Route path={page.login} element={<LoginPage />} />
-                        <Route path={page.register} element={<RegisterPage />} />
-                        <Route path={page.admin.specializations.all} element={<AllSpecializationsPage />} />
-                    </Routes>
-                </main>
+            <main className="s-vflex-center">
+                <Routes>
+                    <Route path={page.home} element={<HomePage />} />
+                    <Route path={page.login} element={<LoginPage />} />
+                    <Route path={page.register} element={<RegisterPage />} />
+                    <Route path={page.admin.specializations.all} element={<AllSpecializationsPage />} />
+                </Routes>
+            </main>
 
-                <Footer />
-            </PermissionBoundary>
-        </AxiosClient>
+            <Footer />
+        </PermissionBoundary>
     );
 }
