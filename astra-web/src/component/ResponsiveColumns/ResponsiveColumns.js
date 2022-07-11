@@ -1,6 +1,6 @@
 import "./ResponsiveColumns.css";
 
-export const ResponsiveColumns = ({
+const ResponsiveColumns = ({
     firstColumn = <></>,
     secondColumn = <></>,
     isSeparated = false,
@@ -27,3 +27,5 @@ export const ResponsiveColumns = ({
         </div>
     );
 }
+
+export default ResponsiveColumns;

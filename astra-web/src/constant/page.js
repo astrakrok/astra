@@ -16,7 +16,6 @@ export const page = {
     admin: {
         specializations: {
             all: adminSpecializations,
-            create: adminSpecializations + "/create",
             id: id => {
                 const path = adminSpecializations + "/" + setParamOrPlaceholder(id, "id");
                 return {

@@ -3,7 +3,7 @@ import { page } from "../../../constant/page";
 import { isAdmin } from "../../../handler/user.handler";
 import "./SiteNavigation.css";
 
-export const SiteNavigation = () => {
+const SiteNavigation = () => {
     return (
         <div className="s-vflex-center equal-flex SiteNavigation">
             <div className="wrapper s-hflex-center m-hflex-end">
@@ -23,3 +23,5 @@ export const SiteNavigation = () => {
         </div>
     );
 }
+
+export default SiteNavigation;

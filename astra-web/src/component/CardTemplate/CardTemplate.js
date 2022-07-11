@@ -1,6 +1,6 @@
 import "./CardTemplate.css";
 
-export const CardTemplate = ({
+const CardTemplate = ({
     className = "",
     heading = <></>,
     content = <></>
@@ -16,3 +16,5 @@ export const CardTemplate = ({
         </div>
     );
 }
+
+export default CardTemplate;

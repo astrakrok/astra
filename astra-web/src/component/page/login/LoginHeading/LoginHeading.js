@@ -1,6 +1,6 @@
 import "./LoginHeading.css";
 
-export const LoginHeading = () => {
+const LoginHeading = () => {
     return (
         <div className="LoginHeading heading">
             <p className="title">Увійти</p>
@@ -8,3 +8,5 @@ export const LoginHeading = () => {
         </div>
     );
 }
+
+export default LoginHeading;

@@ -1,14 +1,14 @@
 import { page } from "../../../constant/page";
 import { getUser } from "../../../handler/user.handler";
-import { Dropdown } from "../../Dropdown/Dropdown";
+import Dropdown from "../../Dropdown/Dropdown";
 import IconTitle from "../../IconTitle/IconTitle";
-import { CardTemplate } from "../../CardTemplate/CardTemplate";
+import CardTemplate from "../../CardTemplate/CardTemplate";
 import "./ProfileActions.css";
 import { Link } from "react-router-dom";
 import DropdownList from "../../DropdownList/DropdownList";
 import Divider from "../../Divider/Divider";
 
-export const ProfileActions = () => {
+const ProfileActions = () => {
     const user = getUser();
 
     const getUserInformation = () => {
@@ -57,3 +57,5 @@ export const ProfileActions = () => {
         </div>
     );
 }
+
+export default ProfileActions;

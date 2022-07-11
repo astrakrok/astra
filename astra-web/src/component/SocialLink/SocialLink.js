@@ -1,6 +1,6 @@
 import "./SocialLink.css";
 
-export const SocialLink = ({social}) => {
+const SocialLink = ({social}) => {
     return (
         <div className="SocialLink z-depth-1">
             <a href={social.url}>
@@ -9,3 +9,5 @@ export const SocialLink = ({social}) => {
         </div>
     );
 }
+
+export default SocialLink;

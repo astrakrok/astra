@@ -1,8 +1,8 @@
 import { page } from "../../constant/page";
-import { Ref } from "../Ref/Ref";
+import Ref from "../Ref/Ref";
 import './AuthControl.css';
 
-export const AuthControl = () => {
+const AuthControl = () => {
     return (
         <div className="AuthControl s-hflex-center">
             <Ref className="auth-link s-vflex-center" to={page.login}>Увійти</Ref>
@@ -10,3 +10,5 @@ export const AuthControl = () => {
         </div>
     );
 }
+
+export default AuthControl;

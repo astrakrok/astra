@@ -1,4 +1,6 @@
-export const NotFoundPage = () => {
+import withTitle from "../../hoc/withTitle/withTitle";
+
+const NotFoundPage = () => {
     return (
         <div className="container">
             <div className="row">
@@ -7,3 +9,5 @@ export const NotFoundPage = () => {
         </div>
     );
 }
+
+export default withTitle(NotFoundPage, "Сторінку не знайдено");

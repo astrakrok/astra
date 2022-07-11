@@ -2,7 +2,7 @@ import "./Dropdown.css";
 import M from "materialize-css";
 import { useEffect } from "react";
 
-export const Dropdown = ({
+const Dropdown = ({
     id,
     trigger = <></>,
     content = <></>
@@ -30,3 +30,5 @@ export const Dropdown = ({
         </>
     );
 }
+
+export default Dropdown;

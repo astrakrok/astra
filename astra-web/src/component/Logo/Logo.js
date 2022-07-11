@@ -3,7 +3,7 @@ import { app } from '../../constant/app';
 import { page } from '../../constant/page';
 import './Logo.css';
 
-export const Logo = ({
+const Logo = ({
     responsive = false
 }) => {
     return (
@@ -13,3 +13,5 @@ export const Logo = ({
         </Link>
     );
 }
+
+export default Logo;

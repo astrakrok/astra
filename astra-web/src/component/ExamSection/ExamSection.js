@@ -1,4 +1,4 @@
-import { TextHeader } from "../TextHeader/TextHeader";
+import TextHeader from "../TextHeader/TextHeader";
 import { exams } from "../../mock/data/exams";
 import { Exams } from "../Exams/Exams";
 

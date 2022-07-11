@@ -1,10 +1,10 @@
 import Button from "../../../Button/Button";
-import { Input } from "../../../Input/Input";
-import { ResponsiveColumns } from "../../../ResponsiveColumns/ResponsiveColumns";
+import Input from "../../../Input/Input";
+import ResponsiveColumns from "../../../ResponsiveColumns/ResponsiveColumns";
 import Spacer from "../../../Spacer/Spacer";
 import "./LoginContent.css";
 
-export const LoginContent = () => {
+const LoginContent = () => {
     const getFirstColumn = () => {
         return (
             <div className="optimal login-form">
@@ -38,3 +38,5 @@ export const LoginContent = () => {
             isSeparated={true} />
     );
 }
+
+export default LoginContent;

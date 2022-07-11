@@ -1,7 +1,7 @@
-import {app} from "../../../../constant/app";
+import { app } from "../../../../constant/app";
 import "./RegisterHeading.css";
 
-export const RegisterHeading = () => {
+const RegisterHeading = () => {
     return (
         <div className="RegisterHeading heading">
             <p className="title">Зареєструватися</p>
@@ -9,3 +9,5 @@ export const RegisterHeading = () => {
         </div>
     );
 }
+
+export default RegisterHeading;
