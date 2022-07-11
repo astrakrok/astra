@@ -1,5 +1,6 @@
 package com.example.astraapi.dto;
 
+import com.example.astraapi.annotation.TrimmedLength;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,5 +12,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SpecializationDto {
   private Long id;
+  @TrimmedLength(min = 6, max = 255)
   private String title;
 }
