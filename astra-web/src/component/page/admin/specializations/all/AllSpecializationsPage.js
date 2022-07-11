@@ -6,6 +6,7 @@ import { page } from "../../../../../constant/page";
 import { getAll } from "../../../../../service/specialization.service";
 import "./AllSpecializationsPage.css";
 import withLoader from "../../../../hoc/withLoader/withLoader";
+import withTitle from "../../../../hoc/withTitle/withTitle";
 
 const AllSpecializationsPage = () => {
     const getSpecializationItem = (specialization, index) => {
@@ -47,4 +48,4 @@ const AllSpecializationsPage = () => {
     );
 }
 
-export default AllSpecializationsPage;
+export default withTitle(AllSpecializationsPage, "Спеціалізації");

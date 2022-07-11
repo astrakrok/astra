@@ -34,6 +34,9 @@ const permissions = {
     [page.admin.specializations.all]: [
         userRole.admin
     ],
+    [page.admin.specializations.create]: [
+        userRole.admin
+    ],
     [page.admin.subjects.all]: [
         userRole.admin
     ],

@@ -1,10 +1,21 @@
 import "./Input.css";
 
-export const Input = props => {
+const Input = props => {
+    const {
+        placeholder,
+        withLabel = true
+    } = props;
+
     return (
         <div className="Input s-vflex">
-            <label>{props.placeholder}</label>
+            {
+                withLabel ? (
+                    <label>{placeholder}</label>
+                ) : null
+            }
             <input type="input" {...props} />
         </div>
     );
 }
+
+export default Input;

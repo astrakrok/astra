@@ -1,6 +1,6 @@
 import './TextHeader.css';
 
-export const TextHeader = ({
+const TextHeader = ({
     text,
     additionalContent = <></>
 }) => {
@@ -14,3 +14,5 @@ export const TextHeader = ({
         </div>
     );
 }
+
+export default TextHeader;

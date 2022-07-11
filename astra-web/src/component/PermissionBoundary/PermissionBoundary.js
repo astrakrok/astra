@@ -2,10 +2,10 @@ import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom";
 import { checkPermission } from "../../handler/permission.handler";
 import { permissionStatus } from "../../constant/permission.status";
-import { PrePage } from "../page/pre-page/PrePage";
-import { NotFoundPage } from "../page/not-found/NotFoundPage";
+import PrePage from "../page/pre-page/PrePage";
+import NotFoundPage from "../page/not-found/NotFoundPage";
 
-export const PermissionBoundary = ({children}) => {
+const PermissionBoundary = ({children}) => {
     const [status, setStatus] = useState(permissionStatus.processing);
     const location = useLocation();
 
@@ -25,3 +25,5 @@ export const PermissionBoundary = ({children}) => {
     }
     return children;
 }
+
+export default PermissionBoundary;

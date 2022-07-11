@@ -1,12 +1,12 @@
 import { app } from "../../constant/app";
 import { page } from "../../constant/page";
 import { socialLinks } from "../../mock/data/social.links";
-import { Logo } from "../Logo/Logo";
-import { Ref } from "../Ref/Ref";
-import { SocialLink } from "../SocialLink/SocialLink";
+import Logo from "../Logo/Logo";
+import Ref from "../Ref/Ref";
+import SocialLink from "../SocialLink/SocialLink";
 import "./Footer.css";
 
-export const Footer = () => {
+const Footer = () => {
     return (
         <div className="container Footer">
             <div className="s-vflex m-hflex">
@@ -29,3 +29,5 @@ export const Footer = () => {
         </div>
     );
 }
+
+export default Footer;

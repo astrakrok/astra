@@ -1,10 +1,10 @@
 import Button from "../../../Button/Button";
-import { Input } from "../../../Input/Input";
-import { ResponsiveColumns } from "../../../ResponsiveColumns/ResponsiveColumns";
+import Input from "../../../Input/Input";
+import ResponsiveColumns from "../../../ResponsiveColumns/ResponsiveColumns";
 import Spacer from "../../../Spacer/Spacer";
 import "./RegisterContent.css";
 
-export const RegisterContent = () => {
+const RegisterContent = () => {
     const getFirstColumn = () => {
         return (
             <div className="optimal register-form">
@@ -42,3 +42,5 @@ export const RegisterContent = () => {
             isSeparated={true} />
     );
 }
+
+export default RegisterContent;

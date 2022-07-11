@@ -1,11 +1,10 @@
-import { CardTemplate } from "../../CardTemplate/CardTemplate";
-import { LoginContent } from "./LoginContent/LoginContent";
-import { LoginHeading } from "./LoginHeading/LoginHeading";
+import CardTemplate from "../../CardTemplate/CardTemplate";
+import withTitle from "../../hoc/withTitle/withTitle";
+import LoginContent from "./LoginContent/LoginContent";
+import LoginHeading from "./LoginHeading/LoginHeading";
 import "./LoginPage.css";
 
-export const LoginPage = () => {
-    document.title = "Увійти";
-
+const LoginPage = () => {
     return (
         <div className="container LoginPage">
             <div className="row">
@@ -14,3 +13,5 @@ export const LoginPage = () => {
         </div>
     );
 }
+
+export default withTitle(LoginPage, "Увійти");
