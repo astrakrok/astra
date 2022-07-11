@@ -11,5 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RequestSubjectDto {
   private Long id;
+
   private String title;
 }
