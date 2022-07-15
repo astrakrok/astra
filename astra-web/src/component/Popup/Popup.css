@@ -1,0 +1,32 @@
+.Popup {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    top: 0;
+    left: 0;
+    display: none;
+    z-index: 10000;
+}
+
+.Popup.open {
+    display: block;
+}
+
+.Popup .popup-container {
+    width: 100%;
+    background-color: white;
+    padding: 10px;
+    box-shadow: 0 0 15px rgb(0 0 0 / 50%);
+    border: 1px solid var(--primary-color);
+    border-radius: 3px;
+}
+
+.Popup .popup-container.tiny {
+    width: 100%;
+    max-width: 400px;
+}
+
+.Popup .popup-wrapper {
+    align-items: center;
+}

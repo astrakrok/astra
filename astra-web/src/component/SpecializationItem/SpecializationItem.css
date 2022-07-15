@@ -41,5 +41,10 @@
 
 .SpecializationItem .edit i.material-icons {
     font-size: 2.5rem;
+    color: white;
+    transition: all 0.3s;
+}
+
+.SpecializationItem .edit:hover i.material-icons {
     color: var(--primary-color);
 }

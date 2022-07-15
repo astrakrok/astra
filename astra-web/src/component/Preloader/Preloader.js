@@ -1,8 +1,10 @@
 import "./Preloader.css";
 
-const Preloader = () => {
+const Preloader = ({
+    size = "big"
+}) => {
     return (
-        <div className="preloader-wrapper big active">
+        <div className={`preloader-wrapper ${size} active`}>
             <div className="spinner-layer spinner-blue-only">
                 <div className="circle-clipper left">
                     <div className="circle" />
