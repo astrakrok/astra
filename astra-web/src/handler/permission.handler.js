@@ -1,3 +1,4 @@
+import { matchPath } from "react-router";
 import { page } from "../constant/page"
 import { userRole } from "../constant/user.role";
 import { getUser } from "./user.handler";
@@ -39,9 +40,6 @@ const permissions = {
     ],
     [page.admin.subjects.all]: [
         userRole.admin
-    ],
-    [page.admin.tests.all]: [
-        userRole.admin
     ]
 };
 
@@ -54,6 +52,21 @@ export const checkPermission = url => {
 const checkPermissionForRole = (url, role) => {
     if (typeof permissions[url] !== "undefined") {
         return permissions[url].includes(role);
+    }
+    return tryBruteForce(url, role);
+}
+
+const tryBruteForce = (requestUrl, role) => {
+    const urls = Object.keys(permissions);
+    for (const url of urls) {
+        const match = matchPath({
+            path: url,
+            exact: true,
+            strict: false
+        }, requestUrl);
+        if (match != null) {
+            return permissions[url].includes(role);
+        }
     }
     return false;
 }

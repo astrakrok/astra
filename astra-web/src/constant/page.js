@@ -19,10 +19,7 @@ export const page = {
             id: id => {
                 const path = adminSpecializations + "/" + setParamOrPlaceholder(id, "id");
                 return {
-                    edit: path + "/edit",
-                    subjects: {
-                        all: path + "/subjects"
-                    }
+                    edit: path + "/edit"
                 }
             }
         },
@@ -36,5 +33,5 @@ export const page = {
 };
 
 const setParamOrPlaceholder = (param, paramName) => {
-    return param == null ? ":" + paramName : param;
+    return param ? param : ":" + paramName;
 };

@@ -4,6 +4,7 @@ import PopupProvider from "../../context/popup/PopupProvider";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import AllSpecializationsPage from "../page/admin/specializations/all/AllSpecializationsPage";
+import AllSubjectsPage from "../page/admin/subjects/all/AllSubjectsPage";
 import HomePage from "../page/home/HomePage";
 import LoginPage from "../page/login/LoginPage";
 import RegisterPage from "../page/register/RegisterPage";
@@ -21,6 +22,7 @@ export const LayoutRoutes = () => {
                         <Route path={page.login} element={<LoginPage />} />
                         <Route path={page.register} element={<RegisterPage />} />
                         <Route path={page.admin.specializations.all} element={<AllSpecializationsPage />} />
+                        <Route path={page.admin.subjects.all} element={<AllSubjectsPage />} />
                     </Routes>
                 </main>
 
