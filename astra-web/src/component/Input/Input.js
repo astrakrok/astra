@@ -3,7 +3,8 @@ import "./Input.css";
 const Input = props => {
     const {
         placeholder,
-        withLabel = true
+        withLabel = true,
+        ...otherProps
     } = props;
 
     return (
@@ -13,7 +14,7 @@ const Input = props => {
                     <label>{placeholder}</label>
                 ) : null
             }
-            <input type="input" {...props} />
+            <input type="input" placeholder={placeholder} {...otherProps} />
         </div>
     );
 }

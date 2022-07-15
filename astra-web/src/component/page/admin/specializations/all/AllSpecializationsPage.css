@@ -6,3 +6,7 @@
 .AllSpecializationsPage .button {
     font-size: 1.25rem;
 }
+
+.AllSpecializationsPage .modal-content {
+    padding: 20px;
+}
