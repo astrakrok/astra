@@ -8,6 +8,7 @@ import com.example.astraapi.service.SubjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,7 +20,7 @@ public class SubjectController {
   @PostMapping
   public IdDto saveSubjects(
       @PathVariable("specializationId") Long specializationId,
-      @RequestBody RequestSubjectDto requestSubjectDto
+      @Valid @RequestBody RequestSubjectDto requestSubjectDto
   ) {
     return service.save(specializationId, requestSubjectDto);
   }
