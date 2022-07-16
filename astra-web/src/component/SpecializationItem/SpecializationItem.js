@@ -14,9 +14,7 @@ const SpecializationItem = ({specialization}) => {
                 </Tooltipped>
             </div>
             <div className="content s-vflex-center">
-                <Link to={page.admin.specializations.id(specialization.id).subjects.all}>
-                    {specialization.title}
-                </Link>
+                {specialization.title}
             </div>
         </div>
     );
