@@ -1,0 +1,24 @@
+.SubjectListItem {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    padding: 5px 10px;
+    margin: 5px 0;
+    font-size: 1.25rem;
+}
+
+.SubjectListItem:hover {
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.2);
+}
+
+.SubjectListItem .title {
+    padding: 0 3px;
+}
+
+.SubjectListItem .options i {
+    color: var(--secondary-color);
+    opacity: 0.5;
+    transition: all 0.3s;
+}
+
+.SubjectListItem .options i:hover {
+    opacity: 1;
+}
