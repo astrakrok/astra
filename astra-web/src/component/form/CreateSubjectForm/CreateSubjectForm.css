@@ -1,0 +1,9 @@
+.specializations input {
+    height: auto !important;
+}
+
+.specializations div[class$="control"] {
+    border: 1px solid var(--primary-color);
+    text-align: left;
+    box-shadow: none;
+}

@@ -9,6 +9,12 @@ export const getSubjectsWithSpecializations = async () => {
     }));
 }
 
+export const create = async (subject) => {
+    return {
+        id: 5
+    }
+}
+
 const getSpecializations = subject => {
     const ids = subjectsSpecializations.filter(item => item.subjectId === subject.id).map(item => item.specializationId);
     return specializations.filter(item => ids.includes(item.id));
