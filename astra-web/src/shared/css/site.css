@@ -4,6 +4,10 @@
     --border-primary-color: rgba(0, 0, 0, 0.5);
 }
 
+body {
+    overflow-x: hidden;
+}
+
 #root {
     display: flex;
     min-height: 100vh;

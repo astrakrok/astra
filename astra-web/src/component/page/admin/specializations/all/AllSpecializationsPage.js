@@ -2,13 +2,12 @@ import SpecializationItem from "../../../../SpecializationItem/SpecializationIte
 import Button from "../../../../Button/Button";
 import Spacer from "../../../../Spacer/Spacer";
 import InfoText from "../../../../InfoText/InfoText";
-import { page } from "../../../../../constant/page";
 import "./AllSpecializationsPage.css";
 import withTitle from "../../../../hoc/withTitle/withTitle";
 import CreateSpecializationForm from "../../../../form/CreateSpecializationForm";
 import LoaderBoundary from "../../../../LoaderBoundary/LoaderBoundary";
-import { useEffect, useState } from "react";
-import { getAll } from "../../../../../service/specialization.service";
+import {useEffect, useState} from "react";
+import {getAll} from "../../../../../service/specialization.service";
 import PopupConsumer from "../../../../../context/popup/PopupConsumer";
 
 const AllSpecializationsPage = () => {
@@ -56,7 +55,7 @@ const AllSpecializationsPage = () => {
                     <PopupConsumer>
                         {
                             ({setPopupState}) =>  (
-                                <Button to={page.admin.specializations.create} isFilled={true} onClick={() => openPopup(setPopupState)}>
+                                <Button isFilled={true} onClick={() => openPopup(setPopupState)}>
                                     Створити
                                 </Button>
                             )
