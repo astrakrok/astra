@@ -7,6 +7,7 @@ import SubjectListItem from "../../../../SubjectListItem/SubjectListItem";
 import Button from "../../../../Button/Button";
 import Spacer from "../../../../Spacer/Spacer";
 import "./AllSubjectsPage.css";
+import CreateSubjectForm from "../../../../form/CreateSubjectForm/CreateSubjectForm";
 
 const AllSubjectsPage = () => {
     const [subjects, setSubjects] = useState(null);
@@ -20,8 +21,12 @@ const AllSubjectsPage = () => {
         fetchSubjects();
     }, []);
 
-    const openPopup = setPopupState => {
+    const createSubjectForm = <CreateSubjectForm />
 
+    const openPopup = setPopupState => {
+        setPopupState({
+            bodyGetter: () => createSubjectForm
+        });
     }
 
     return (

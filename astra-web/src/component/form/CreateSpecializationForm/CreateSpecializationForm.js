@@ -6,11 +6,9 @@ import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 import Spacer from "../../Spacer/Spacer";
 
 const CreateSpecializationForm = ({
-                                      onSuccess = () => {
-                                      },
-                                      onFailure = () => {
-                                      }
-                                  }) => {
+    onSuccess = () => {},
+    onFailure = () => {}
+}) => {
     const [title, setTitle] = useState("");
     const [loading, setLoading] = useState(false);
 
