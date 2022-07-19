@@ -1,0 +1,1 @@
+alter table subjects drop column specialization_id;
