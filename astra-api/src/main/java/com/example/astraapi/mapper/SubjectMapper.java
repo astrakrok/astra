@@ -9,9 +9,8 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = TitleQualifier.class)
 public interface SubjectMapper {
-  @Mapping(source = "specializationId", target = "specializationId")
   @Mapping(target = "title", qualifiedByName = TitleQualifier.TRIM)
-  SubjectEntity toEntity(Long specializationId, RequestSubjectDto requestSubjectDto);
+  SubjectEntity toEntity(RequestSubjectDto requestSubjectDto);
 
   ResponseSubjectDto toDto(SubjectEntity subjectEntity);
 }

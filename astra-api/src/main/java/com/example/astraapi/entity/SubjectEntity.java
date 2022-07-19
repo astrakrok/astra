@@ -12,5 +12,4 @@ import lombok.Setter;
 public class SubjectEntity {
   private Long id;
   private String title;
-  private Long specializationId;
 }
