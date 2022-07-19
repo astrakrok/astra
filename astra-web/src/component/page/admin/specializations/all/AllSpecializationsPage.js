@@ -4,7 +4,7 @@ import Spacer from "../../../../Spacer/Spacer";
 import InfoText from "../../../../InfoText/InfoText";
 import "./AllSpecializationsPage.css";
 import withTitle from "../../../../hoc/withTitle/withTitle";
-import CreateSpecializationForm from "../../../../form/CreateSpecializationForm";
+import CreateSpecializationForm from "../../../../form/CreateSpecializationForm/CreateSpecializationForm";
 import LoaderBoundary from "../../../../LoaderBoundary/LoaderBoundary";
 import {useEffect, useState} from "react";
 import {getAll} from "../../../../../service/specialization.service";
