@@ -1,1 +1,2 @@
-alter table subjects drop column specialization_id;
+alter table public.subjects
+    drop column specialization_id;
