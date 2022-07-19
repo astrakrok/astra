@@ -27,8 +27,9 @@ public class SubjectServiceImpl implements SubjectService {
   public IdDto save(RequestSubjectDto requestSubjectDto) {
     SubjectEntity subjectEntity = mapper.toEntity(requestSubjectDto);
     repository.save(subjectEntity);
-    service.save(requestSubjectDto.getSpecializationIds(),subjectEntity.getId());
-    return new IdDto(subjectEntity.getId());
+    Long subjectId = subjectEntity.getId();
+    service.save(requestSubjectDto.getSpecializationIds(), subjectId);
+    return new IdDto(subjectId);
   }
 
   @Override

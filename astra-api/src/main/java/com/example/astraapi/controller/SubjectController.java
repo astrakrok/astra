@@ -3,7 +3,7 @@ package com.example.astraapi.controller;
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.RequestSubjectDto;
 import com.example.astraapi.meta.Endpoint;
-import com.example.astraapi.service.impl.SubjectServiceImpl;
+import com.example.astraapi.service.SubjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +16,7 @@ import javax.validation.Valid;
 @RequestMapping(Endpoint.SUBJECTS)
 @RequiredArgsConstructor
 public class SubjectController {
-  private final SubjectServiceImpl service;
+  private final SubjectService service;
 
   @PostMapping
   public IdDto saveSubject(@RequestBody @Valid RequestSubjectDto requestSubjectDto) {

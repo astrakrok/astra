@@ -14,6 +14,6 @@ public class SubjectSpecializationServiceImpl implements SubjectSpecializationSe
 
   @Override
   public void save(List<Long> specializationIds, Long subjectId) {
-    repository.save(specializationIds,subjectId);
+    repository.save(specializationIds, subjectId);
   }
 }

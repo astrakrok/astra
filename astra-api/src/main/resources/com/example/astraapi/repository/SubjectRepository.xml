@@ -9,6 +9,5 @@
     <select id="getAllBySpecializationId" resultType="com.example.astraapi.entity.SubjectEntity">
         select *
         from public.subjects
-
     </select>
 </mapper>
