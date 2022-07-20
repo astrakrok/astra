@@ -1,7 +1,7 @@
-import { matchPath } from "react-router";
-import { page } from "../constant/page"
-import { userRole } from "../constant/user.role";
-import { getUser } from "./user.handler";
+import {matchPath} from "react-router";
+import {page} from "../constant/page"
+import {userRole} from "../constant/user.role";
+import {getUser} from "./user.handler";
 
 const permissions = {
     [page.home]: [
@@ -39,6 +39,12 @@ const permissions = {
         userRole.admin
     ],
     [page.admin.subjects.all]: [
+        userRole.admin
+    ],
+    [page.admin.tests.all]: [
+        userRole.admin
+    ],
+    [page.admin.tests.create]: [
         userRole.admin
     ]
 };

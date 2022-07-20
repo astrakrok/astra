@@ -33,8 +33,6 @@ const CreateSubjectForm = () => {
             title: title,
             specializationIds: selectedSpecializations.map(item => item.id)
         };
-
-        console.log(subject);
     }
 
     return (

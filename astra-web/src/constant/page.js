@@ -1,5 +1,6 @@
 const adminSpecializations = "/admin/specializations";
 const adminSubjects = "/admin/subjects";
+const adminTests = "/admin/tests";
 
 export const page = {
     home: "/",
@@ -25,7 +26,7 @@ export const page = {
             }
         },
         subjects: {
-            all: "/admin/subjects",
+            all: adminSubjects,
             id: id => {
                 const path = adminSubjects + "/" + setParamOrPlaceholder(id, "id");
                 return {
@@ -34,7 +35,14 @@ export const page = {
             }
         },
         tests: {
-            all: "/admin/tests"
+            all: adminTests,
+            create: adminTests + "/create",
+            id: id => {
+                const path = adminTests + "/" + setParamOrPlaceholder(id, "id");
+                return {
+                    edit: path + "/edit"
+                };
+            }
         }
     },
 };

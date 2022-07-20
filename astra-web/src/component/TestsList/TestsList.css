@@ -1,0 +1,39 @@
+table.TestsList {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+table.TestsList thead tr {
+    background-color: var(--secondary-color);
+    color: #fff;
+}
+
+table.TestsList thead tr th {
+    text-align: center;
+}
+
+table.TestsList th,
+table.TestsList td {
+    padding: 12px 15px;
+    border-radius: 0;
+}
+
+table.TestsList tbody tr {
+    border-bottom: 1px solid #ddd;
+}
+
+table.TestsList tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+table.TestsList tbody tr:last-of-type {
+    border-bottom: 2px solid var(--secondary-color);
+}
+
+table.TestsList tbody tr:hover {
+    font-weight: bold;
+    color: var(--secondary-color);
+    background-color: rgba(0, 0, 0, 0.1);
+}
