@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import {page} from "../../../../../constant/page";
 import {getDetailedTests} from "../../../../../service/test.service";
 import Button from "../../../../Button/Button";
+import withTitle from "../../../../hoc/withTitle/withTitle";
 import TestsList from "../../../../TestsList/TestsList";
 import "./AllTestsPage.css";
 
@@ -31,4 +32,4 @@ const AllTestsPage = () => {
     );
 }
 
-export default AllTestsPage;
+export default withTitle(AllTestsPage, "Тести");

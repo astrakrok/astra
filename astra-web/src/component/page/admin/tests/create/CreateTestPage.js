@@ -1,3 +1,4 @@
+import withTitle from "../../../../hoc/withTitle/withTitle";
 import "./CreateTestPage.css";
 
 const CreateTestPage = () => {
@@ -6,4 +7,4 @@ const CreateTestPage = () => {
     );
 }
 
-export default CreateTestPage;
+export default withTitle(CreateTestPage, "Створити тест");
