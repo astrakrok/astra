@@ -1,9 +1,12 @@
 import "./Badge.css";
 
-const Badge = ({children}) => {
+const Badge = ({
+    type = "secondary",
+    children
+}) => {
     return (
         <div className="Badge">
-            <div className="wrapper">
+            <div className={`wrapper ${type}`}>
                 {children}
             </div>
         </div>

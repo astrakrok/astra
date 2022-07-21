@@ -1,13 +1,15 @@
-import { Routes, Route } from "react-router-dom";
-import { page } from "../../constant/page";
+import {Route, Routes} from "react-router-dom";
+import {page} from "../../constant/page";
 import PopupProvider from "../../context/popup/PopupProvider";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
 import AllSpecializationsPage from "../page/admin/specializations/all/AllSpecializationsPage";
 import AllSubjectsPage from "../page/admin/subjects/all/AllSubjectsPage";
+import AllTestsPage from "../page/admin/tests/all/AllTestsPage";
 import HomePage from "../page/home/HomePage";
 import LoginPage from "../page/login/LoginPage";
 import RegisterPage from "../page/register/RegisterPage";
+import CreateTestPage from "../page/admin/tests/create/CreateTestPage";
 import PermissionBoundary from "../PermissionBoundary/PermissionBoundary";
 
 export const LayoutRoutes = () => {
@@ -23,6 +25,8 @@ export const LayoutRoutes = () => {
                         <Route path={page.register} element={<RegisterPage />} />
                         <Route path={page.admin.specializations.all} element={<AllSpecializationsPage />} />
                         <Route path={page.admin.subjects.all} element={<AllSubjectsPage />} />
+                        <Route path={page.admin.tests.all} element={<AllTestsPage />} />
+                        <Route path={page.admin.tests.create} element={<CreateTestPage />} />
                     </Routes>
                 </main>
 

@@ -1,5 +1,4 @@
 .Badge .wrapper {
-    background-color: var(--secondary-color);
     color: white;
     padding: 4px 12px;
     text-align: center;
@@ -10,6 +9,14 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.Badge .wrapper.primary {
+    background-color: var(--primary-color);
+}
+
+.Badge .wrapper.secondary {
+    background-color: var(--secondary-color);
 }
 
 .Badge {
