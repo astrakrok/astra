@@ -1,13 +1,13 @@
 package com.example.astraapi.service;
 
 import com.example.astraapi.dto.IdDto;
-import com.example.astraapi.dto.ResponseSubjectDto;
 import com.example.astraapi.dto.RequestSubjectDto;
+import com.example.astraapi.dto.ResponseSubjectDto;
 
 import java.util.List;
 
 public interface SubjectService {
   IdDto save(RequestSubjectDto requestSubjectDto);
 
-  List<ResponseSubjectDto> getAllBySpecializationId(Long specializationId);
+  List<ResponseSubjectDto> getAll();
 }

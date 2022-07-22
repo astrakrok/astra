@@ -4,10 +4,27 @@
 <mapper namespace="com.example.astraapi.repository.SubjectRepository">
     <insert id="save" parameterType="com.example.astraapi.entity.SubjectEntity" useGeneratedKeys="true"
             keyProperty="entity.id">
-        insert into public.subjects (title) values (#{entity.title});
+        insert into public.subjects (title)
+        values (#{entity.title});
     </insert>
-    <select id="getAllBySpecializationId" resultType="com.example.astraapi.entity.SubjectEntity">
-        select *
-        from public.subjects
+    <select id="getAll" resultType="com.example.astraapi.entity.SubjectSpecializationHolder" resultMap="subjects">
+        select sub.id     as subjectId,
+               sub.title  as subjectTitle,
+               spec.id    as specializationId,
+               spec.title as specializationTitle
+        from public.subjects sub
+                 join public.subjects_specializations ss
+                      on sub.id = ss.subject_id
+                 join public.specializations spec
+                      on spec.id = ss.specialization_id
     </select>
+
+    <resultMap type="com.example.astraapi.entity.SubjectSpecializationHolder" id="subjects">
+        <id column="subjectId" property="subjectId"/>
+        <result column="subjectTitle" property="subjectTitle"/>
+        <collection property="specializations" ofType="com.example.astraapi.entity.SpecializationEntity">
+            <id column="specializationId" property="id"/>
+            <result column="specializationTitle" property="title"/>
+        </collection>
+    </resultMap>
 </mapper>
