@@ -1,5 +1,6 @@
 package com.example.astraapi.mapper;
 
+import com.example.astraapi.dto.ResponseSubjectDto;
 import com.example.astraapi.dto.RequestSubjectDto;
 import com.example.astraapi.dto.ResponseSubjectDto;
 import com.example.astraapi.entity.SubjectDetailEntity;
