@@ -1,4 +1,4 @@
-package com.example.astraapi.dto;
+package com.example.astraapi.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,8 +11,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponseSubjectDto {
+public class SubjectDetailEntity {
   private Long id;
   private String title;
-  private List<SpecializationDto> specializations;
+  private List<SpecializationEntity> specializations;
 }

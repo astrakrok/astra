@@ -33,9 +33,8 @@ public class SubjectServiceImpl implements SubjectService {
   }
 
   @Override
-  public List<ResponseSubjectDto> getAllBySpecializationId(Long specializationId) {
-    List<SubjectEntity> entities = repository.getAllBySpecializationId(specializationId);
-    return entities.stream()
+  public List<ResponseSubjectDto> getAll() {
+    return repository.getAll().stream()
         .map(mapper::toDto)
         .collect(Collectors.toList());
   }
