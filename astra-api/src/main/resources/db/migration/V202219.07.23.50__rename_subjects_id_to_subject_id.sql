@@ -1,2 +1,2 @@
 alter table public.subjects_specializations
-    rename column subject_id to subject_id;
+    rename column subjects_id to subject_id;
