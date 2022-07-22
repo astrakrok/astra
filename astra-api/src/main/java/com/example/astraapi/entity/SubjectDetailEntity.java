@@ -11,8 +11,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SubjectSpecializationHolder {
-  private Long subjectId;
-  private String subjectTitle;
+public class SubjectDetailEntity {
+  private Long id;
+  private String title;
   private List<SpecializationEntity> specializations;
 }

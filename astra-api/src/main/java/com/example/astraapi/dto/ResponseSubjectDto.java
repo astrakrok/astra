@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponseSubjectDto {
-  private Long subjectId;
-  private String subjectTitle;
+  private Long id;
+  private String title;
   private List<SpecializationDto> specializations;
 }

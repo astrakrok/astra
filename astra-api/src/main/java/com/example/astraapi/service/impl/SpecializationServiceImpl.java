@@ -27,8 +27,7 @@ public class SpecializationServiceImpl implements SpecializationService {
 
   @Override
   public List<SpecializationDto> getAll() {
-    List<SpecializationEntity> entities = repository.getAll();
-    return entities.stream()
+    return repository.getAll().stream()
         .map(mapper::toDto)
         .collect(Collectors.toList());
   }

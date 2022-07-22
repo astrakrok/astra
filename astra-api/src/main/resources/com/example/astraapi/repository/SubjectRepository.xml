@@ -7,7 +7,7 @@
         insert into public.subjects (title)
         values (#{entity.title});
     </insert>
-    <select id="getAll" resultType="com.example.astraapi.entity.SubjectSpecializationHolder" resultMap="subjects">
+    <select id="getAll" resultType="com.example.astraapi.entity.SubjectDetailEntity" resultMap="subjects">
         select sub.id     as subjectId,
                sub.title  as subjectTitle,
                spec.id    as specializationId,
@@ -19,7 +19,7 @@
                       on spec.id = ss.specialization_id
     </select>
 
-    <resultMap type="com.example.astraapi.entity.SubjectSpecializationHolder" id="subjects">
+    <resultMap type="com.example.astraapi.entity.SubjectDetailEntity" id="subjects">
         <id column="subjectId" property="subjectId"/>
         <result column="subjectTitle" property="subjectTitle"/>
         <collection property="specializations" ofType="com.example.astraapi.entity.SpecializationEntity">
