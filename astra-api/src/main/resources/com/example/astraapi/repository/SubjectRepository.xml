@@ -20,8 +20,8 @@
     </select>
 
     <resultMap type="com.example.astraapi.entity.SubjectDetailEntity" id="subjects">
-        <id column="subjectId" property="subjectId"/>
-        <result column="subjectTitle" property="subjectTitle"/>
+        <id column="subjectId" property="id"/>
+        <result column="subjectTitle" property="title"/>
         <collection property="specializations" ofType="com.example.astraapi.entity.SpecializationEntity">
             <id column="specializationId" property="id"/>
             <result column="specializationTitle" property="title"/>
