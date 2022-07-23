@@ -10,12 +10,23 @@
 .Input input {
     font-size: 19px;
     padding: 5px 8px;
-    border: 1px solid var(--primary-color);
     border-radius: 3px;
     transition: 0.3s;
     outline: none;
 }
 
-.Input input:focus {
+.Input.primary input {
+    border: 1px solid var(--primary-color);
+}
+
+.Input.primary input:focus {
     box-shadow: 0 0 15px 0 var(--primary-color);
+}
+
+.Input.secondary input {
+    border: 1px solid var(--secondary-color);
+}
+
+.Input.secondary input:focus {
+    box-shadow: 0 0 15px 0 var(--secondary-color);
 }
