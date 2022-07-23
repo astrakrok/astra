@@ -25,3 +25,7 @@
     left: 105%;
     transform: translateY(0%);
 }
+
+.Tooltipped.top::before {
+    transform: translateY(-100%);
+}

@@ -1,0 +1,37 @@
+.ExamItem {
+    padding: 5px 0;
+}
+
+.ExamItem .wrapper {
+    background-color: var(--secondary-color);
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+    border-radius: 3px;;
+}
+
+.ExamItem .wrapper .title,
+.ExamItem .wrapper .edit,
+.ExamItem .wrapper .delete {
+    padding: 10px 0;
+}
+
+.ExamItem .wrapper .edit,
+.ExamItem .wrapper .delete {
+    cursor: pointer;
+    transition: all 0.3s;
+    border-left: 1px solid white;
+}
+
+.ExamItem .wrapper .edit,
+.ExamItem .wrapper .delete {
+    padding: 0 8px;
+}
+
+.ExamItem .wrapper .edit:hover {
+    color: var(--primary-color);
+}
+
+.ExamItem .wrapper .delete:hover {
+    color: var(--red-color);
+}

@@ -9,9 +9,9 @@ import Spacer from "../../Spacer/Spacer";
 import PopupConsumer from "../../../context/popup/PopupConsumer";
 import SelectExams from "../../popup-component/SelectExams/SelectExams";
 import SelectSubject from "../../SelectSubject/SelectSubject";
-import withSpecializations from "../../hoc/withSpecializations/withSpecializations";
 import {defaultEmptyTest} from "../../../data/default/test";
 import "./TestForm.css";
+import withSubjectsDetails from "../../hoc/withSubjectsDetails/withSubjectsDetails";
 
 const TestForm = ({
     initialTest = defaultEmptyTest,
@@ -87,10 +87,10 @@ const TestForm = ({
 
     const renderSubject = (subject, index) => {
         return (
-            <Badge key={subject.id} type="green" onClick={() => removeSubject(index)}>
+            <Badge key={subject.id} type="green">
                 <div className="s-hflex">
-                    <span>{subject.title}</span>
-                    <div className="delete-subject s-vflex-center">
+                    <span className="long-text">{subject.title}</span>
+                    <div className="delete-subject s-vflex-center" onClick={() => removeSubject(index)}>
                         <i className="tiny material-icons">close</i>
                     </div>
                 </div>
@@ -100,10 +100,10 @@ const TestForm = ({
 
     const renderExam = (exam, index) => {
         return (
-            <Badge key={exam.id} type="primary" onClick={() => removeExam(index)}>
+            <Badge key={exam.id} type="primary">
                 <div className="s-hflex">
                     <span>{exam.title}</span>
-                    <div className="delete-exam s-vflex-center">
+                    <div className="delete-exam s-vflex-center"  onClick={() => removeExam(index)}>
                         <i className="tiny material-icons">close</i>
                     </div>
                 </div>
@@ -165,7 +165,7 @@ const TestForm = ({
     }
 
     const openSelectSubjectPopup = setPopupState => {
-        const SelectSubjectForm = withSpecializations(SelectSubject, "small");
+        const SelectSubjectForm = withSubjectsDetails(SelectSubject, "small");
 
         setPopupState({
             bodyGetter: () => (
@@ -211,7 +211,7 @@ const TestForm = ({
                     }
                 </PopupConsumer>
             </div>
-            <InfoHeader text="Екзамени" />
+            <InfoHeader text="Іспити" />
             <div className="exams s-hflex">
                 {
                     test.exams.map(renderExam)
