@@ -1,5 +1,5 @@
-import { avatars } from "../../mock/data/avatars";
-import { Avatar } from "../Avatar/Avatar";
+import {avatars} from "../../data/mock/avatars";
+import {Avatar} from "../Avatar/Avatar";
 import TextHeader from "../TextHeader/TextHeader";
 
 export const OurTeamSection = () => {

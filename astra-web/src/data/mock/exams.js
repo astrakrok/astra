@@ -18,5 +18,5 @@ export const exams = [
     {
         id: 5,
         title: 'Крок 5'
-    },
+    }
 ];

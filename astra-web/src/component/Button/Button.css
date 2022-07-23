@@ -8,13 +8,17 @@
     transition: 0.4s;
 }
 
+.Button.disabled button, .Button.disabled a {
+    background-color: rgba(0, 0, 0, 0.15) !important;
+    box-shadow: none;
+    border: none;
+    color: grey;
+    cursor: default;
+    pointer-events: none;
+}
+
 .Button button:hover, .Button.filled button,
 .Button a:hover, .Button.filled a {
     color: white;
-    background-color: var(--primary-color) !important;
-}
-
-.Button button:focus,
-.Button a:focus {
-    background-color: unset;
+    background-color: var(--primary-color);
 }

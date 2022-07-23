@@ -1,12 +1,17 @@
-import {subjects} from "../mock/data/subjects";
-import {specializations} from "../mock/data/specializations";
-import {subjectsSpecializations} from "../mock/data/subjects.specializations"
+import {subjects} from "../data/mock/subjects";
+import {specializations} from "../data/mock/specializations";
+import {subjectsSpecializations} from "../data/mock/subjects.specializations"
+import {getRandomSubArray} from "../handler/array.handler";
 
 export const getSubjectsWithSpecializations = async () => {
     return subjects.map(item => ({
         specializations: getSpecializations(item),
         ...item
     }));
+}
+
+export const getSubjectsBySpecializationId = async (specializationId) => {
+    return getRandomSubArray(subjects);
 }
 
 export const create = async (subject) => {

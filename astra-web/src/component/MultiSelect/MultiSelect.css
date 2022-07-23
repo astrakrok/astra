@@ -1,0 +1,9 @@
+.MultiSelect input {
+    height: auto !important;
+}
+
+.MultiSelect div[class$="control"] {
+    border: 1px solid var(--primary-color);
+    text-align: left;
+    box-shadow: none;
+}
