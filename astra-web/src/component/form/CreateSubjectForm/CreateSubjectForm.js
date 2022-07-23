@@ -1,16 +1,20 @@
 import {useEffect, useState} from "react";
 import Select from "react-select";
 import {getAll} from "../../../service/specialization.service";
+import {create} from "../../../service/subject.service";
 import Button from "../../Button/Button";
 import Input from "../../Input/Input";
 import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 import Spacer from "../../Spacer/Spacer";
 import "./CreateSubjectForm.css";
 
-const CreateSubjectForm = () => {
+const CreateSubjectForm = ({
+    onSuccess = () => {}
+}) => {
     const [title, setTitle] = useState("");
     const [specializations, setSpecializations] = useState(null);
     const [selectedSpecializations, setSelectedSpecializations] = useState([]);
+    const [loading, setLoading] = useState(false);
     
     useEffect(() => {
         const fetchSpecializations = async () => {
@@ -31,8 +35,11 @@ const CreateSubjectForm = () => {
     const createSubject = async () => {
         const subject = {
             title: title,
-            specializationIds: selectedSpecializations.map(item => item.id)
+            specializationIds: selectedSpecializations.map(item => item.value)
         };
+        setLoading(true);
+        const data = await create(subject);
+        onSuccess(data);
     }
 
     return (
@@ -56,9 +63,11 @@ const CreateSubjectForm = () => {
             </div>
             <Spacer height={20}/>
             <div className="s-hflex-center">
-                <Button isFilled={true} onClick={() => createSubject()}>
-                    Підтвердити
-                </Button>
+                <LoaderBoundary condition={loading} size="small">
+                    <Button isFilled={true} onClick={() => createSubject()}>
+                        Підтвердити
+                    </Button>
+                </LoaderBoundary>
             </div>
         </div>
     );
