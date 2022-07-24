@@ -1,31 +1,41 @@
 import {useEffect, useState} from "react";
-import {getSubjectsWithSpecializations} from "../../../../../service/subject.service";
+import {getSubjectsDetails} from "../../../../../service/subject.service";
 import LoaderBoundary from "../../../../LoaderBoundary/LoaderBoundary";
 import InfoText from "../../../../InfoText/InfoText";
 import PopupConsumer from "../../../../../context/popup/PopupConsumer";
 import SubjectListItem from "../../../../SubjectListItem/SubjectListItem";
 import Button from "../../../../Button/Button";
 import Spacer from "../../../../Spacer/Spacer";
-import "./AllSubjectsPage.css";
 import CreateSubjectForm from "../../../../form/CreateSubjectForm/CreateSubjectForm";
+import "./AllSubjectsPage.css";
 
 const AllSubjectsPage = () => {
     const [subjects, setSubjects] = useState(null);
 
-    useEffect(() => {
-        const fetchSubjects = async () => {
-            const subjects = await getSubjectsWithSpecializations();
-            setSubjects(subjects);
-        }
+    const fetchSubjects = async () => {
+        setSubjects(null);
+        const subjects = await getSubjectsDetails();
+        setSubjects(subjects);
+    }
 
+    useEffect(() => {
         fetchSubjects();
     }, []);
 
-    const createSubjectForm = <CreateSubjectForm />
+    const onSubjectSaved = setPopupState => {
+        setPopupState();
+        fetchSubjects();
+    }
+
+    const createSubjectForm = setPopupState => {
+        return (
+            <CreateSubjectForm onSuccess={() => onSubjectSaved(setPopupState)} />
+        );
+    }
 
     const openPopup = setPopupState => {
         setPopupState({
-            bodyGetter: () => createSubjectForm
+            bodyGetter: () => createSubjectForm(setPopupState)
         });
     }
 

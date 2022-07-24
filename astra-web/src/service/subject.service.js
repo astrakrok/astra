@@ -1,13 +1,11 @@
 import {subjects} from "../data/mock/subjects";
-import {specializations} from "../data/mock/specializations";
-import {subjectsSpecializations} from "../data/mock/subjects.specializations"
 import {getRandomSubArray} from "../handler/array.handler";
+import {route} from "../constant/app.route";
+import axios from "axios";
 
-export const getSubjectsWithSpecializations = async () => {
-    return subjects.map(item => ({
-        specializations: getSpecializations(item),
-        ...item
-    }));
+export const getSubjectsDetails = async () => {
+    const response = await axios.get(route.subjects);
+    return response.data;
 }
 
 export const getSubjectsBySpecializationId = async (specializationId) => {
@@ -15,12 +13,6 @@ export const getSubjectsBySpecializationId = async (specializationId) => {
 }
 
 export const create = async (subject) => {
-    return {
-        id: 5
-    }
-}
-
-const getSpecializations = subject => {
-    const ids = subjectsSpecializations.filter(item => item.subjectId === subject.id).map(item => item.specializationId);
-    return specializations.filter(item => ids.includes(item.id));
+    const response = await axios.post(route.subjects, subject);
+    return response.data;
 }
