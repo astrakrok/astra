@@ -1,9 +1,14 @@
+import CreateTestForm from "../../../../form/CreateTestForm/CreateTestForm";
 import withTitle from "../../../../hoc/withTitle/withTitle";
 import "./CreateTestPage.css";
 
 const CreateTestPage = () => {
     return (
-        <div>Page for creating a test</div>
+        <div className="CreateTestPage container">
+            <div className="row">
+                <CreateTestForm />
+            </div>
+        </div>
     );
 }
 

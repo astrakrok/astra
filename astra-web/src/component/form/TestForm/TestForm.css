@@ -1,0 +1,67 @@
+.TestForm .answers .collection .collection-item {
+    padding: 0;
+}
+
+.TestForm .answers .collection .collection-item .content {
+    padding: 20px;
+}
+
+.TestForm .answers .collection .make-correct,
+.TestForm .answers .collection .delete-variant {
+    padding: 15px 0;
+}
+
+.TestForm .answers .collection .make-correct:hover {
+    background-color: var(--green-color);
+    color: white;
+}
+
+.TestForm .answers .collection .delete-variant:hover {
+    background-color: #f44336;
+    color: white;
+}
+
+.TestForm .answers .collection .collection-item.correct {
+    background-color: #e7e7e7;
+}
+
+.TestForm .answers .collection .add {
+    color: var(--primary-color);
+    transition: all 0.5s;
+}
+
+.TestForm .answers .collection .add:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.TestForm .subjects {
+    margin-bottom: 20px;
+}
+
+.TestForm .subjects .delete-subject,
+.TestForm .exams .delete-exam {
+    padding-left: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.TestForm .subjects .delete-subject:hover,
+.TestForm .exams .delete-exam:hover {
+    color: #f44336;
+}
+
+.TestForm .subjects .add-subject-badge,
+.TestForm .exams .add-exam-badge {
+    transition: all 0.3s;
+}
+
+.TestForm .subjects .add-subject-badge:hover,
+.TestForm .exams .add-exam-badge:hover {
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.5);
+}
+
+.TestForm .subjects .add-subject i,
+.TestForm .exams .add-exam i {
+    font-weight: bold;
+}

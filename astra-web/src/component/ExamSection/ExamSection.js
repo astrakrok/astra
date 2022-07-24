@@ -1,6 +1,6 @@
 import TextHeader from "../TextHeader/TextHeader";
-import { exams } from "../../mock/data/exams";
-import { Exams } from "../Exams/Exams";
+import {exams} from "../../data/mock/exams";
+import {Exams} from "../Exams/Exams";
 
 export const ExamSection = () => {
     return (

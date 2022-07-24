@@ -4,11 +4,12 @@ const LoaderBoundary = props => {
     const {
         children,
         condition,
+        size = "big",
         ...otherProps
     } = props;
     return (
         condition ? (
-            <Preloader {...otherProps} />
+            <Preloader size={size} {...otherProps} />
         ) : (
             children
         )

@@ -1,11 +1,15 @@
-import {variants} from "../mock/data/variants";
-import {tests} from "../mock/data/tests";
+import {variants} from "../data/mock/variants";
+import {tests} from "../data/mock/tests";
 import {getRandomSubArray} from "../handler/array.handler";
-import {specializations} from "../mock/data/specializations";
-import {exams} from "../mock/data/exams";
+import {specializations} from "../data/mock/specializations";
+import {exams} from "../data/mock/exams";
 
 export const getDetailedTests = async () => {
     return tests.map(getDetailedTest);
+}
+
+export const saveTest = async test => {
+    console.log("test:", test);
 }
 
 const getDetailedTest = test => {

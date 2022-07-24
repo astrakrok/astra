@@ -1,6 +1,6 @@
-import { app } from "../../constant/app";
-import { page } from "../../constant/page";
-import { socialLinks } from "../../mock/data/social.links";
+import {app} from "../../constant/app";
+import {page} from "../../constant/page";
+import {socialLinks} from "../../data/mock/social.links";
 import Logo from "../Logo/Logo";
 import Ref from "../Ref/Ref";
 import SocialLink from "../SocialLink/SocialLink";

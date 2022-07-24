@@ -1,0 +1,9 @@
+.SingleSelect input {
+    height: auto !important;
+}
+
+.SingleSelect div[class$="control"] {
+    border: 1px solid var(--primary-color);
+    text-align: left;
+    box-shadow: none;
+}

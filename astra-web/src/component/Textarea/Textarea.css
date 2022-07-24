@@ -1,0 +1,28 @@
+.Textarea {
+    margin-bottom: 20px;
+}
+
+.Textarea textarea {
+    border: 1px solid var(--primary-color);
+    padding: 5px 8px;
+    font-size: 19px;
+    border-radius: 3px;
+    transition: 0.3s;
+    outline: none;
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.15;
+    background-color: white;
+}
+
+.Textarea textarea:focus {
+    box-shadow: 0 0 15px 0 var(--primary-color);
+}
+
+.Textarea label {
+    margin-bottom: 5px;
+    font-size: 16px;
+}
