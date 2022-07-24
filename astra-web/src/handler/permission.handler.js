@@ -46,6 +46,9 @@ const permissions = {
     ],
     [page.admin.tests.create]: [
         userRole.admin
+    ],
+    [page.admin.exams.all]: [
+        userRole.admin
     ]
 };
 

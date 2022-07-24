@@ -1,6 +1,7 @@
 const adminSpecializations = "/admin/specializations";
 const adminSubjects = "/admin/subjects";
 const adminTests = "/admin/tests";
+const adminExams = "/admin/exams";
 
 export const page = {
     home: "/",
@@ -16,6 +17,9 @@ export const page = {
     
     adminLogin: "/admin/login",
     admin: {
+        exams: {
+            all: adminExams
+        },
         specializations: {
             all: adminSpecializations,
             id: id => {

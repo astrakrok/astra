@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import { page } from "../../../constant/page";
-import { isAdmin } from "../../../handler/user.handler";
+import {Link} from "react-router-dom";
+import {page} from "../../../constant/page";
+import {isAdmin} from "../../../handler/user.handler";
 import Dropdown from "../../Dropdown/Dropdown";
 import DropdownList from "../../DropdownList/DropdownList";
 import IconTitle from "../../IconTitle/IconTitle";
@@ -9,7 +9,7 @@ import "./SiteNavigation.css";
 const SiteNavigation = () => {
     const getAdminDropdownTrigger = () => {
         return (
-            <div className="link">
+            <div className="link center">
                 Панель керування
             </div>
         );
@@ -18,6 +18,9 @@ const SiteNavigation = () => {
     const getAdminDropdownContent = () => {
         return (
             <DropdownList items={[
+                <Link to={page.admin.exams.all}>
+                    <IconTitle icon="timelapse" title="Іспити" />
+                </Link>,
                 <Link to={page.admin.specializations.all}>
                     <IconTitle icon="folder" title="Спеціалізації" />
                 </Link>,
@@ -37,9 +40,6 @@ const SiteNavigation = () => {
                 {
                     isAdmin() ? (
                         <Dropdown id="management" trigger={getAdminDropdownTrigger()} content={getAdminDropdownContent()} />
-                        // <Link to={page.admin.specializations.all} className="link">
-                        //     Панель керування
-                        // </Link>
                     ) : (
                         <>
                             <Link to={page.exams} className="link">Іспити</Link>

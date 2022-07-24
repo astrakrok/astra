@@ -17,7 +17,7 @@
 }
 
 .TestForm .answers .collection .delete-variant:hover {
-    background-color: #f44336;
+    background-color: var(--red-color);
     color: white;
 }
 
@@ -48,7 +48,7 @@
 
 .TestForm .subjects .delete-subject:hover,
 .TestForm .exams .delete-exam:hover {
-    color: #f44336;
+    color: var(--red-color);
 }
 
 .TestForm .subjects .add-subject-badge,

@@ -11,6 +11,7 @@ import LoginPage from "../page/login/LoginPage";
 import RegisterPage from "../page/register/RegisterPage";
 import CreateTestPage from "../page/admin/tests/create/CreateTestPage";
 import PermissionBoundary from "../PermissionBoundary/PermissionBoundary";
+import AllExamsPage from "../page/admin/exams/all/AllExamsPage";
 
 export const LayoutRoutes = () => {
     return (
@@ -27,6 +28,7 @@ export const LayoutRoutes = () => {
                         <Route path={page.admin.subjects.all} element={<AllSubjectsPage />} />
                         <Route path={page.admin.tests.all} element={<AllTestsPage />} />
                         <Route path={page.admin.tests.create} element={<CreateTestPage />} />
+                        <Route path={page.admin.exams.all} element={<AllExamsPage />} />
                     </Routes>
                 </main>
 

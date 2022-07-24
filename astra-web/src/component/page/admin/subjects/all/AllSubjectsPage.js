@@ -8,6 +8,7 @@ import Button from "../../../../Button/Button";
 import Spacer from "../../../../Spacer/Spacer";
 import CreateSubjectForm from "../../../../form/CreateSubjectForm/CreateSubjectForm";
 import "./AllSubjectsPage.css";
+import withTitle from "../../../../hoc/withTitle/withTitle";
 
 const AllSubjectsPage = () => {
     const [subjects, setSubjects] = useState(null);
@@ -72,4 +73,4 @@ const AllSubjectsPage = () => {
     );
 }
 
-export default AllSubjectsPage;
+export default withTitle(AllSubjectsPage, "Предмети");
