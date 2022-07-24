@@ -26,9 +26,6 @@ const permissions = {
     [page.exams]: [
         userRole.user
     ],
-    [page.adminLogin]: [
-        userRole.guest
-    ],
     [page.admin]: [
         userRole.admin
     ],
@@ -49,6 +46,9 @@ const permissions = {
     ],
     [page.admin.exams.all]: [
         userRole.admin
+    ],
+    [page.admin.login]: [
+        userRole.guest
     ]
 };
 

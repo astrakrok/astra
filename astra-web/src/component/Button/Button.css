@@ -3,9 +3,17 @@
     border-radius: 4px;
     font-weight: 600;
     padding: 10px 35px;
+    transition: 0.4s;
+}
+
+.Button.primary button, .Button.primary a {
     box-shadow: 0 0 15px var(--primary-color);
     border: 1px solid var(--primary-color);
-    transition: 0.4s;
+}
+
+.Button.secondary button, .Button.secondary a {
+    box-shadow: 0 0 15px var(--secondary-color);
+    border: 1px solid var(--secondary-color);
 }
 
 .Button.disabled button, .Button.disabled a {
@@ -21,4 +29,14 @@
 .Button a:hover, .Button.filled a {
     color: white;
     background-color: var(--primary-color);
+}
+
+.Button.primary button:hover, .Button.primary.filled button,
+.Button.primary a:hover, .Button.primary.filled a {
+    background-color: var(--primary-color);
+}
+
+.Button.secondary button:hover, .Button.secondary.filled button,
+.Button.secondary a:hover, .Button.secondary.filled a {
+    background-color: var(--secondary-color);
 }

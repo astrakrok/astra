@@ -1,0 +1,14 @@
+.AdminLoginPage {
+    background: linear-gradient(315deg, rgba(108,118,235,1) 5%, rgba(248,105,1,1) 51%, rgba(108,118,235,1) 100%);
+}
+
+.AdminLoginPage .row {
+    margin: 0;
+}
+
+.AdminLoginPage .form {
+    padding: 20px;
+    background-color: white;
+    border-radius: 3px;
+    box-shadow: 0 0 15px 0 var(--secondary-color);
+}

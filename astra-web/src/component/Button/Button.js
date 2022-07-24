@@ -3,6 +3,7 @@ import "./Button.css";
 
 const Button = props => {
     const {
+        type = "primary",
         isFilled = false,
         to = null,
         disabled = false,
@@ -10,7 +11,7 @@ const Button = props => {
     } = props;
 
     return (
-        <div className={`Button${isFilled ? " filled" : ""}${disabled ? " disabled" : ""}`}>
+        <div className={`Button${isFilled ? " filled" : ""}${disabled ? " disabled" : ""} ${type}`}>
             {
                 to == null ? (
                     <button {...other}>
