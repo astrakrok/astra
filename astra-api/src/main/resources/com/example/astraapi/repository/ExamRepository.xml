@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.astraapi.repository.ExamRepository">
+    <insert id="save" parameterType="com.example.astraapi.entity.ExamEntity" useGeneratedKeys="true"
+            keyProperty="entity.id">
+        insert into public.exams (title)
+        values (#{entity.title})
+    </insert>
+    <select id="getAll" resultType="com.example.astraapi.entity.ExamEntity">
+        select *
+        from public.exams
+    </select>
+</mapper>
