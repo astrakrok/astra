@@ -1,0 +1,48 @@
+.ExamStatisticItem {
+    padding: 15px 0;
+}
+
+.ExamStatisticItem .progress-bar {
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;;
+}
+
+.ExamStatisticItem .progress-bar .content {
+    position: absolute;
+    padding: 0 15px;
+    font-size: 1.5rem;
+    color: white;
+    text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+}
+
+.ExamStatisticItem .progress-bar .filler {
+    min-height: 50px;
+}
+
+.ExamStatisticItem.success .progress-bar {
+    background-color: var(--light-green-color);
+}
+
+.ExamStatisticItem.success .progress-bar .filler {
+    background-color: var(--green-color);
+}
+
+.ExamStatisticItem.failure .progress-bar {
+    background-color: var(--light-red-color);
+}
+
+.ExamStatisticItem.failure .progress-bar .filler {
+    background-color: var(--red-color);
+}
+
+.ExamStatisticItem .progress-bar .content .percentage .last,
+.ExamStatisticItem .progress-bar .content .percentage .best {
+    padding: 0 5px;
+}
+
+.ExamStatisticItem .progress-bar .content .percentage .corona {
+    padding: 10px 0;
+}

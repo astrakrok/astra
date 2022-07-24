@@ -1,8 +1,14 @@
 import "./InfoText.css";
 
-const InfoText = ({children}) => {
+const InfoText = props => {
+    const {
+        className = "",
+        children,
+        ...otherProps
+    } = props;
+
     return (
-        <p className="InfoText">{children}</p>
+        <p className={`InfoText ${className}`} {...otherProps}>{children}</p>
     );
 }
 

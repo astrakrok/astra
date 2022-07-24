@@ -10,6 +10,7 @@ import LoginPage from "../page/login/LoginPage";
 import RegisterPage from "../page/register/RegisterPage";
 import CreateTestPage from "../page/admin/tests/create/CreateTestPage";
 import AllExamsPage from "../page/admin/exams/all/AllExamsPage";
+import ProfilePage from "../page/profile/ProfilePage";
 
 export const LayoutRoutes = () => {
     return (
@@ -19,6 +20,7 @@ export const LayoutRoutes = () => {
             <main className="s-vflex-center">
                 <Routes>
                     <Route path={page.home} element={<HomePage />} />
+                    <Route path={page.profile} element={<ProfilePage />} />
                     <Route path={page.login} element={<LoginPage />} />
                     <Route path={page.register} element={<RegisterPage />} />
                     <Route path={page.admin.specializations.all} element={<AllSpecializationsPage />} />
