@@ -57,7 +57,7 @@ const AllExamsPage = () => {
                         </PopupConsumer>
                     </div>
                     <Spacer height={20} />
-                    <div className="exams-list">
+                    <div className="exams-list center">
                         <LoaderBoundary condition={exams == null}>
                             {
                                 (exams && exams.length > 0) ? (
