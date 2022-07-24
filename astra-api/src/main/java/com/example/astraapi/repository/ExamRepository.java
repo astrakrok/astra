@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface ExamRepository {
-  void save(@Param("save")ExamEntity examEntity);
+  void save(@Param("entity") ExamEntity examEntity);
 
   List<ExamEntity> getAll();
 }

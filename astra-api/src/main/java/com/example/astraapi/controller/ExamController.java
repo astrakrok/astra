@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(Endpoint.SUBJECTS)
+@RequestMapping(Endpoint.EXAMS)
 @RequiredArgsConstructor
 public class ExamController {
   private final ExamService examService;
