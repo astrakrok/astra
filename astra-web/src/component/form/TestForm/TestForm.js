@@ -1,5 +1,4 @@
 import {useState} from "react";
-import {exams} from "../../../data/mock/exams";
 import Button from "../../Button/Button";
 import InfoHeader from "../../InfoHeader/InfoHeader";
 import Input from "../../Input/Input";
@@ -10,8 +9,9 @@ import PopupConsumer from "../../../context/popup/PopupConsumer";
 import SelectExams from "../../popup-component/SelectExams/SelectExams";
 import SelectSubject from "../../SelectSubject/SelectSubject";
 import {defaultEmptyTest} from "../../../data/default/test";
-import "./TestForm.css";
 import withSubjectsDetails from "../../hoc/withSubjectsDetails/withSubjectsDetails";
+import withExams from "../../hoc/withExams/withExams";
+import "./TestForm.css";
 
 const TestForm = ({
     initialTest = defaultEmptyTest,
@@ -32,9 +32,9 @@ const TestForm = ({
 
     const updateCorrectVariant = index => {
         for (const variant of test.variants) {
-            variant.isCorrect = false;
+            variant.correct = false;
         }
-        test.variants[index].isCorrect = true;
+        test.variants[index].correct = true;
         setTest({
             ...test
         });
@@ -66,7 +66,7 @@ const TestForm = ({
 
     const renderVariant = (variant, index) => {
         return (
-            <li className={`collection-item ${variant.isCorrect ? "correct" : ""}`} key={index}>
+            <li className={`collection-item ${variant.correct ? "correct" : ""}`} key={index}>
                 <div className="s-vflex">
                     <div className="content">
                         <Input value={variant.title} placeholder="Варіант" onChange={event => updateVariant({...variant, title: event.target.value}, index)} />
@@ -120,7 +120,7 @@ const TestForm = ({
                     id: null,
                     title: "",
                     explanation: "",
-                    isCorrect: false
+                    correct: false
                 }
             ]
         })
@@ -153,11 +153,12 @@ const TestForm = ({
     }
 
     const openSelectExamsPopup = setPopupState => {
+        const SelectExamsForm = withExams(SelectExams, "small");
+
         setPopupState({
             bodyGetter: () => (
-                <SelectExams
+                <SelectExamsForm
                     onChange={changeSelectedExams}
-                    exams={exams}
                     selectedExams={test.exams}
                     onSave={exam => handleExamSaving(exam, setPopupState)} />
             )
