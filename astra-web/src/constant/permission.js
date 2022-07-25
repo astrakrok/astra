@@ -8,6 +8,12 @@ const all = [
     userRole.superAdmin
 ];
 
+const authorized = [
+    userRole.user,
+    userRole.admin,
+    userRole.superAdmin
+];
+
 const notAuthorized = [
     userRole.guest
 ];
@@ -22,6 +28,7 @@ export const permission = {
     [page.profile]: [
         userRole.user
     ],
+    [page.settings]: authorized,
     [page.login]: notAuthorized,
     [page.register]: notAuthorized,
     [page.team]: [

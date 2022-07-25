@@ -7,6 +7,7 @@ import {getAllStatistic} from "../../../service/users.exams.statistic.service";
 import ExamStatisticItem from "../../ExamStatisticItem/ExamStatisticItem";
 import withTitle from "../../hoc/withTitle/withTitle";
 import "./ProfilePage.css";
+import PhotoPreview from "../../PhotoPreview/PhotoPreview";
 
 const ProfilePage = () => {
     const [statistic, setStatistic] = useState(null);
@@ -33,7 +34,7 @@ const ProfilePage = () => {
                     <div className="s-hflex-center profile-information">
                         <div className="s-vflex">
                             <div className="s-hflex-center avatar-wrapper">
-                                <div className="avatar stretch-background border50p" style={{backgroundImage: `url(${user.pictureUrl})`}} />
+                                <PhotoPreview src={user.pictureUrl} />
                             </div>
                             <div className="full-name center">{user.name} {user.surname}</div>
                             <div className="email center">{user.email}</div>
