@@ -11,6 +11,7 @@ import RegisterPage from "../page/register/RegisterPage";
 import CreateTestPage from "../page/admin/tests/create/CreateTestPage";
 import AllExamsPage from "../page/admin/exams/all/AllExamsPage";
 import ProfilePage from "../page/profile/ProfilePage";
+import SettingsPage from "../page/settings/SettingsPage";
 
 export const LayoutRoutes = () => {
     return (
@@ -23,6 +24,7 @@ export const LayoutRoutes = () => {
                     <Route path={page.profile} element={<ProfilePage />} />
                     <Route path={page.login} element={<LoginPage />} />
                     <Route path={page.register} element={<RegisterPage />} />
+                    <Route path={page.settings} element={<SettingsPage />} />
                     <Route path={page.admin.specializations.all} element={<AllSpecializationsPage />} />
                     <Route path={page.admin.subjects.all} element={<AllSubjectsPage />} />
                     <Route path={page.admin.tests.all} element={<AllTestsPage />} />
