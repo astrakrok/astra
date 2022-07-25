@@ -2,7 +2,7 @@ import {userRole} from "../constant/user.role";
 
 export const getUser = () => {
     return {
-        roles: [userRole.user],
+        roles: [userRole.admin],
         name: "Andrii",
         surname: "Bosyk",
         email: "example@email.com",
