@@ -3,8 +3,8 @@ import {saveTest} from "../../../service/test.service";
 import "./CreateTestForm.css";
 
 const CreateTestForm = () => {
-    const save = test => {
-        saveTest({
+    const save = async test => {
+        const data = await saveTest({
             id: test.id,
             question: test.question,
             comment: test.comment,
@@ -12,6 +12,8 @@ const CreateTestForm = () => {
             subjectIds: test.subjects.map(item => item.id),
             examIds: test.exams.map(item => item.id)
         });
+
+        console.log("id:", data);
     }
 
     return (
