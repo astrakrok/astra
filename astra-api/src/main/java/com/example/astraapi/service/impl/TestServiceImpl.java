@@ -28,8 +28,8 @@ public class TestServiceImpl implements TestService {
   private final TestExamService testExamService;
   private final TestSubjectService testSubjectService;
 
-  @Transactional
   @Override
+  @Transactional
   public IdDto save(RequestTestDto testDto) {
     List<TestVariantDto> testVariants = testDto.getVariants();
     testVariantsValidator.validate(testVariants);
