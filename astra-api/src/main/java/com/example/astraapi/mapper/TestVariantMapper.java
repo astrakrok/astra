@@ -12,7 +12,4 @@ public interface TestVariantMapper {
   @Mapping(target = "explanation", qualifiedByName = TitleQualifier.TRIM)
   @Mapping(target = "isCorrect", source = "correct")
   TestVariantEntity toEntity(TestVariantDto testVariantDto);
-
-  @Mapping(target = "correct", source = "isCorrect")
-  TestVariantDto toDto(TestVariantEntity testVariantEntity);
 }

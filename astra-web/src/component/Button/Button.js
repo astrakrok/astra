@@ -11,7 +11,7 @@ const Button = props => {
     } = props;
 
     return (
-        <div className={`Button${isFilled ? " filled" : ""}${disabled ? " disabled" : ""} ${type} ${to == null ? "simple" : "link"}`}>
+        <div className={`Button${isFilled ? " filled" : ""}${disabled ? " disabled" : ""} ${type}`}>
             {
                 to == null ? (
                     <button {...other}>
