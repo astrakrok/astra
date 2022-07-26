@@ -12,15 +12,19 @@ import {defaultEmptyTest} from "../../../data/default/test";
 import withSubjectsDetails from "../../hoc/withSubjectsDetails/withSubjectsDetails";
 import withExams from "../../hoc/withExams/withExams";
 import "./TestForm.css";
+import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 
 const TestForm = ({
     initialTest = defaultEmptyTest,
     onSend = () => {}
 }) => {
     const [test, setTest] = useState(initialTest);
+    const [loading, setLoading] = useState(false);
 
-    const save = () => {
-        onSend(test);
+    const save = async () => {
+        setLoading(true);
+        await onSend(test);
+        setLoading(false);
     }
 
     const updateVariant = (variant, index) => {
@@ -231,7 +235,9 @@ const TestForm = ({
             </div>
             <Spacer height={50} />
             <div className="s-hflex-end">
-                <Button onClick={save}>Зберегти</Button>
+                <LoaderBoundary condition={loading} size="small">
+                    <Button onClick={save}>Зберегти</Button>
+                </LoaderBoundary>
             </div>
         </div>
     );

@@ -1,9 +1,11 @@
 import TestForm from "../TestForm/TestForm";
 import {saveTest} from "../../../service/test.service";
+import PopupConsumer from "../../../context/popup/PopupConsumer";
 import "./CreateTestForm.css";
+import MessagePopupBody from "../../popup-component/MessagePopupBody/MessagePopupBody";
 
 const CreateTestForm = () => {
-    const save = async test => {
+    const save = async (test, setPopupState) => {
         const data = await saveTest({
             id: test.id,
             question: test.question,
@@ -13,11 +15,21 @@ const CreateTestForm = () => {
             examIds: test.exams.map(item => item.id)
         });
 
-        console.log("id:", data);
+        const message = data.id ? "Тест успішно створений" : "Під час створення тесту виникла помилка :(";
+
+        setPopupState({
+            bodyGetter: () => <MessagePopupBody message={message} />
+        });
     }
 
     return (
-        <TestForm onSend={save} />
+        <PopupConsumer>
+            {
+                ({setPopupState}) => (
+                    <TestForm onSend={test => save(test, setPopupState)} />
+                )
+            }
+        </PopupConsumer>
     );
 }
 
