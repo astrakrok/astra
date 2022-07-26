@@ -6,6 +6,10 @@
     transition: 0.4s;
 }
 
+.Button a {
+    display: block;
+}
+
 .Button.primary button, .Button.primary a {
     box-shadow: 0 0 15px var(--primary-color);
     border: 1px solid var(--primary-color);

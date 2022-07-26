@@ -7,4 +7,37 @@
         insert into public.tests(question, comment)
         values (#{entity.question}, #{entity.comment})
     </insert>
+
+    <select id="getAll" resultMap="testDetail">
+        select t.id           as id,
+               t.question     as question,
+               t.comment      as comment,
+               e.id           as examId,
+               e.title        as examTitle,
+               s.id           as specializationId,
+               s.title        as specializationTitle
+        from public.tests t
+                 left join public.tests_exams te on t.id = te.test_id
+                 left join public.exams e on te.exam_id = e.id
+                 left join public.tests_subjects ts on t.id = ts.test_id
+                 left join public.subjects_specializations ss on ts.subject_id = ss.subject_id
+                 left join public.specializations s on ss.specialization_id = s.id
+        order by id, examId, specializationId
+    </select>
+
+    <resultMap id="testDetail" type="com.example.astraapi.entity.TestShortDetailEntity">
+        <id column="id" property="id"/>
+        <result column="question" property="question"/>
+        <result column="comment" property="comment"/>
+
+        <collection property="exams" javaType="List" ofType="com.example.astraapi.entity.ExamEntity">
+            <id column="examId" property="id"/>
+            <result column="examTitle" property="title"/>
+        </collection>
+
+        <collection property="specializations" javaType="List" ofType="com.example.astraapi.entity.SpecializationEntity">
+            <id column="specializationId" property="id" />
+            <result column="specializationTitle" property="title" />
+        </collection>
+    </resultMap>
 </mapper>
