@@ -1,5 +1,4 @@
 import {useState} from "react";
-import {exams} from "../../../data/mock/exams";
 import Button from "../../Button/Button";
 import InfoHeader from "../../InfoHeader/InfoHeader";
 import Input from "../../Input/Input";
@@ -12,6 +11,7 @@ import SelectSubject from "../../SelectSubject/SelectSubject";
 import {defaultEmptyTest} from "../../../data/default/test";
 import "./TestForm.css";
 import withSubjectsDetails from "../../hoc/withSubjectsDetails/withSubjectsDetails";
+import withExams from "../../hoc/withExams/withExams";
 
 const TestForm = ({
     initialTest = defaultEmptyTest,
@@ -153,11 +153,12 @@ const TestForm = ({
     }
 
     const openSelectExamsPopup = setPopupState => {
+        const SelectExamsForm = withExams(SelectExams, "small");
+
         setPopupState({
             bodyGetter: () => (
-                <SelectExams
+                <SelectExamsForm
                     onChange={changeSelectedExams}
-                    exams={exams}
                     selectedExams={test.exams}
                     onSave={exam => handleExamSaving(exam, setPopupState)} />
             )
