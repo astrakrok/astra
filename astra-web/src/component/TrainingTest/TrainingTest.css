@@ -1,0 +1,58 @@
+.TrainingTest input[type="radio"].with-gap:checked+span:before {
+    border: 2px solid var(--secondary-color) !important;
+}
+
+.TrainingTest input[type="radio"].with-gap:checked+span:after {
+    background-color: var(--secondary-color);
+    border: 2px solid var(--secondary-color) !important;
+}
+
+.TrainingTest .question {
+    font-size: 1.25rem;
+}
+
+.TrainingTest .variants {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.TrainingTest .variants .variant {
+    padding: 5px 0;
+}
+
+
+.TrainingTest .variants .variant .radio {
+    padding: 5px 0;
+    border-radius: 4px;
+}
+
+.TrainingTest .variants .variant .radio.checked.selected.incorrect {
+    /* background-color: #ffc9c5; */
+    background-color: var(--light-red-color);
+}
+
+.TrainingTest .variants .variant .radio.checked.correct {
+    /* background-color: #a9ffb6; */
+    background-color: var(--light-green-color);
+}
+
+.TrainingTest .variants .variant .title {
+    font-size: 1.2rem;
+    color: black;
+}
+
+.TrainingTest .comment {
+    border-left: 3px solid var(--secondary-color);
+    padding-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}
+
+.TrainingTest .variants .variant .explanation {
+    font-size: 1.1rem;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    border-left: 3px solid var(--primary-color);
+    padding-left: 20px;
+}

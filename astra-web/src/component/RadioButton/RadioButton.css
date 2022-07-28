@@ -1,0 +1,12 @@
+.RadioButton {
+    cursor: pointer;
+}
+
+.RadioButton[data-disabled="true"],
+.RadioButton[data-disabled="true"] span {
+    cursor: default !important;
+}
+
+.RadioButton input[type="radio"]:disabled+span {
+    color: rgba(0, 0, 0, 0.4) !important;
+}

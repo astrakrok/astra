@@ -4,10 +4,10 @@ import corona from "./corona.png";
 import "./ExamStatisticItem.css";
 
 const ExamStatisticItem = ({statistic}) => {
-    const getSearch = () => `?exam=${statistic.exam.id}&specialization=${statistic.specialization.id}`;
+    const getSearch = () => `?examId=${statistic.exam.id}&specializationId=${statistic.specialization.id}`;
 
     const getNavigation = () => ({
-        pathname: page.exams,
+        pathname: page.testing,
         search: getSearch()
     });
 
@@ -32,8 +32,8 @@ const ExamStatisticItem = ({statistic}) => {
                             <img src={corona} alt="score" className="corona full-height" />
                         </div>
                     </div>
-                    <div className="filler" style={{width: statistic.last + "%"}} />
                 </Link>
+                <div className="filler" style={{width: statistic.last + "%"}} />
             </div>
         </div>
     );
