@@ -5,6 +5,10 @@
     padding: 0 15px;
     font-weight: bold;
     transition: all 0.3s;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .SiteNavigation .link:hover {

@@ -9,7 +9,7 @@ export const page = {
     register: "/register",
     team: "/team",
     joinTeam: "/join-team",
-    exams: "/exams",
+    testing: "/testing",
     feedback: "/feedback",
     profile: "/profile",
     settings: "/settings",
