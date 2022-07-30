@@ -4,7 +4,7 @@ ARG BASE_API_URL=http://localhost:8080/api/v1
 
 WORKDIR /app
 COPY package*.json ./
-RUN npm install --silent
+RUN npm install --silent --force
 COPY . .
 RUN REACT_APP_BASE_API_URL=$BASE_API_URL npm run build
 
