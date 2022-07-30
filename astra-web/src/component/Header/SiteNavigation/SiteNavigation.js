@@ -1,5 +1,6 @@
 import {Link} from "react-router-dom";
 import {page} from "../../../constant/page";
+import AuthConsumer from "../../../context/auth/AuthConsumer";
 import {isAdmin} from "../../../handler/user.handler";
 import Dropdown from "../../Dropdown/Dropdown";
 import DropdownList from "../../DropdownList/DropdownList";
@@ -37,16 +38,18 @@ const SiteNavigation = () => {
     return (
         <div className="s-vflex-center equal-flex SiteNavigation">
             <div className="wrapper s-hflex-center m-hflex-end">
-                {
-                    isAdmin() ? (
-                        <Dropdown id="management" trigger={getAdminDropdownTrigger()} content={getAdminDropdownContent()} />
-                    ) : (
-                        <>
-                            <Link to={page.testing} className="link">Почати іспит</Link>
-                            <Link to={page.feedback} className="link">Відгуки</Link>
-                        </>
-                    )
-                }
+                <AuthConsumer>
+                    {
+                        ({userData}) => isAdmin(userData) ? (
+                            <Dropdown id="management" trigger={getAdminDropdownTrigger()} content={getAdminDropdownContent()} />
+                        ) : (
+                            <>
+                                <Link to={page.testing} className="link">Почати іспит</Link>
+                                <Link to={page.feedback} className="link">Відгуки</Link>
+                            </>
+                        )
+                    }
+                </AuthConsumer>
             </div>
         </div>
     );

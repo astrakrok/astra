@@ -1,5 +1,5 @@
 import {route} from "../constant/app.route";
-import axios from "axios";
+import {client} from "../shared/js/axios";
 
 const trainingModeToUrl = {
     training: route.tests + "/training",
@@ -7,13 +7,13 @@ const trainingModeToUrl = {
 };
 
 export const getDetailedTests = async () => {
-    const response = await axios.get(route.tests);
+    const response = await client.get(route.tests);
     return response.data;
 }
 
 export const getTestsForTesting = async options => {
     const url = trainingModeToUrl[options.mode];
-    const response = await axios.get(url, {
+    const response = await client.get(url, {
         params: options
     });
     return response.data;
@@ -21,7 +21,7 @@ export const getTestsForTesting = async options => {
 
 export const saveTest = async test => {
     try {
-        const response = await axios.post(route.tests, test);
+        const response = await client.post(route.tests, test);
         return response.data;
     } catch (error) {
         return {

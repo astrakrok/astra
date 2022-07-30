@@ -14,18 +14,18 @@ const TestingPage = () => {
 
     const [tests, setTests] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [options, setOptions] = useState({});
 
-    useEffect(() => {
-        setOptions({
+    const getOptionsFromSearchParams = () => {
+        return {
             examId: searchParams.get("examId"),
             specializationId: searchParams.get("specializationId"),
             mode: searchParams.get("mode"),
             count: searchParams.get("count")
-        });
-    }, [searchParams]);
+        };
+    }
 
     useEffect(() => {
+        const options = getOptionsFromSearchParams();
         if (!options.mode || !options.examId || !options.specializationId || !options.count) {
             return;
         }
@@ -39,12 +39,12 @@ const TestingPage = () => {
         }
 
         fetchTests();
-    }, [options]);
+    }, [searchParams]);
 
     const Form = withSpecializationsAndExams(SelectTestingOptionsForm);
 
     const displayTesting = () => {
-        switch (options.mode) {
+        switch (searchParams.get("mode")) {
             case "training":
                 return <TrainingTesting tests={tests} />
             default:
@@ -61,9 +61,9 @@ const TestingPage = () => {
             <div className="row">
                 <div className="s-hflex-center">
                     {
-                        (tests == null || options.mode == null) ? (
+                        (tests == null || searchParams.get("mode") == null) ? (
                             <LoaderBoundary condition={loading}>
-                                <Form initialOptions={options} onSelect={setOptions} />
+                                <Form initialOptions={getOptionsFromSearchParams()} onSelect={setSearchParams} />
                             </LoaderBoundary>
                         ) : (
                             displayTesting()

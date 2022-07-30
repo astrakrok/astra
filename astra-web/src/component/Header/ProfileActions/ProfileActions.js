@@ -1,5 +1,5 @@
 import {page} from "../../../constant/page";
-import {getUser, isAdmin} from "../../../handler/user.handler";
+import {isAdmin} from "../../../handler/user.handler";
 import Dropdown from "../../Dropdown/Dropdown";
 import IconTitle from "../../IconTitle/IconTitle";
 import CardTemplate from "../../CardTemplate/CardTemplate";
@@ -7,33 +7,50 @@ import "./ProfileActions.css";
 import {Link} from "react-router-dom";
 import DropdownList from "../../DropdownList/DropdownList";
 import Divider from "../../Divider/Divider";
+import AuthConsumer from "../../../context/auth/AuthConsumer";
 
 const ProfileActions = () => {
-    const user = getUser();
-
     const getUserInformation = () => {
         return (
-            <>
-                <span className="username">{user.name} {user.surname}</span>
-                <span className="email">{user.email}</span>
-            </>
+            <AuthConsumer>
+                {
+                    ({userData}) => (
+                        <>
+                            <span className="username">{userData.name} {userData.surname}</span>
+                            <span className="email">{userData.email}</span>
+                        </>
+                    )
+                }
+            </AuthConsumer>
         );
     };
 
     const getDropdownOptions = () => {
         const items = [
-            isAdmin() ? null : (
-                <Link to={page.profile}>
-                    <IconTitle icon="perm_identity" title="Профіль" />
-                </Link>
-            ),
+            <AuthConsumer>
+                {
+                    ({userData}) => {
+                        return isAdmin(userData) ? null : (
+                            <Link to={page.profile}>
+                                <IconTitle icon="perm_identity" title="Профіль" />
+                            </Link>
+                        )
+                    }
+                }
+            </AuthConsumer>,
             <Link to={page.settings}>
                 <IconTitle icon="settings" title="Налаштування" />
             </Link>,
             <Divider />,
-            <Link to={page.logout}>
-                <IconTitle icon="exit_to_app" title="Вийти" />
-            </Link>
+            <AuthConsumer>
+                {
+                    ({setUserData}) => (
+                        <Link to="" onClick={() => setUserData(null)}>
+                            <IconTitle icon="exit_to_app" title="Вийти" />
+                        </Link>
+                    )
+                }
+            </AuthConsumer>
         ].filter(item => item != null);
 
         return (
@@ -43,7 +60,13 @@ const ProfileActions = () => {
 
     const getDropdownTrigger = () => {
         return (
-            <img src={user.pictureUrl} alt="avatar" className="full-width full-height" />
+            <AuthConsumer>
+                {
+                    ({userData}) => (
+                        <img src={userData.pictureUrl} alt="avatar" className="full-width full-height" />
+                    )
+                }
+            </AuthConsumer>
         );
     };
 
