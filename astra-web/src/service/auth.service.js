@@ -8,8 +8,28 @@ export const login = async loginData => {
         headers: {
             Authorization: null
         }
-    });
-    const tokens = response.data;
-    save(tokens);
+    }).catch(error => ({
+        data: {
+            error
+        }
+    }));
+    if (response.data.accessToken) {
+        const tokens = response.data;
+        save(tokens);
+    }
+    return response.data;
+}
+
+export const signUp = async signUpData => {
+    clear();
+    const response = await axios.post(route.signUp, signUpData, {
+        headers: {
+            Authorization: null
+        }
+    }).catch(error => ({
+        data: {
+            error
+        }
+    }));
     return response.data;
 }

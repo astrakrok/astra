@@ -1,3 +1,7 @@
 .register-form .button {
     padding-top: 20px;
 }
+
+.register-form .completed-icon i {
+    color: var(--green-color);
+}
