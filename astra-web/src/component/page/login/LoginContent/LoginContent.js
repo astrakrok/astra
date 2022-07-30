@@ -9,6 +9,8 @@ import {loginStatus} from "../../../../constant/login.status";
 import {page} from "../../../../constant/page";
 import "./LoginContent.css";
 import {login} from "../../../../service/auth.service";
+import PopupConsumer from "../../../../context/popup/PopupConsumer";
+import MessagePopupBody from "../../../popup-component/MessagePopupBody/MessagePopupBody";
 
 const LoginContent = ({
     onSuccess = () => {}
@@ -19,11 +21,17 @@ const LoginContent = ({
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleLogin = async () => {
+    const handleLogin = async setPopupState => {
         setStatus(loginStatus.inProgress);
         const tokenResponse = await login({email, password});
-        await onSuccess(tokenResponse);
-        navigate(page.home);
+        if (tokenResponse.accessToken) {
+            await onSuccess(tokenResponse);
+            navigate(page.home);
+        } else {
+            setPopupState({
+                bodyGetter: () => <MessagePopupBody message="Під час входу сталася помилка! Перевірте свій E-mail і пароль та спробуйте ще раз" />
+            })
+        }
     }
 
     const getFirstColumn = () => {
@@ -33,9 +41,15 @@ const LoginContent = ({
                 <Input type="password" className="browser-default" placeholder="Пароль" value={password} onChange={event => setPassword(event.target.value)} />
                 <div className="button center">
                     <LoaderBoundary condition={status === loginStatus.processing} size="small">
-                        <Button onClick={handleLogin}>
-                            Увійти
-                        </Button>
+                        <PopupConsumer>
+                            {
+                                ({setPopupState}) => (
+                                    <Button onClick={() => handleLogin(setPopupState)}>
+                                        Увійти
+                                    </Button>
+                                )
+                            }
+                        </PopupConsumer>
                     </LoaderBoundary>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import "./Button.css";
 
 const Button = props => {
@@ -7,21 +7,25 @@ const Button = props => {
         isFilled = false,
         to = null,
         disabled = false,
+        onClick = () => {},
         ...other
     } = props;
+
+    const navigate = useNavigate();
+
+    const handleClick = async () => {
+        await onClick();
+        if (to != null) {
+            navigate(to);
+        }
+    }
 
     return (
         <div className={`Button${isFilled ? " filled" : ""}${disabled ? " disabled" : ""} ${type}`}>
             {
-                to == null ? (
-                    <button {...other}>
-                        {props.children}
-                    </button>
-                ) : (
-                    <Link to={to} {...other}>
-                        {props.children}
-                    </Link>
-                )
+                <button {...other} onClick={handleClick}>
+                    {props.children}
+                </button>
             }
         </div>
     );
