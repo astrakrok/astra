@@ -4,6 +4,8 @@ import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.RequestTestDto;
 import com.example.astraapi.dto.TestShortDetailDto;
 import com.example.astraapi.dto.TestVariantDto;
+import com.example.astraapi.dto.TrainingTestDto;
+import com.example.astraapi.dto.TrainingTestingSearchDto;
 import com.example.astraapi.entity.TestEntity;
 import com.example.astraapi.mapper.TestMapper;
 import com.example.astraapi.repository.TestRepository;
@@ -48,6 +50,16 @@ public class TestServiceImpl implements TestService {
   public List<TestShortDetailDto> getAll() {
     return testRepository.getAll().stream()
         .map(testMapper::toShortDetailDto)
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<TrainingTestDto> getTrainingTests(TrainingTestingSearchDto searchDto) {
+    return testRepository.getTrainingTestsBySpecializationIdAndGoodId(
+        searchDto.getSpecializationId(),
+        searchDto.getExamId(),
+        searchDto.getCount()).stream()
+        .map(testMapper::toDto)
         .collect(Collectors.toList());
   }
 }

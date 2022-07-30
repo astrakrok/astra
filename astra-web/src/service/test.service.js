@@ -1,7 +1,5 @@
 import {route} from "../constant/app.route";
 import axios from "axios";
-import {tests} from "../data/mock/tests";
-import {variants} from "../data/mock/variants";
 
 const trainingModeToUrl = {
     training: route.tests + "/training",
@@ -15,7 +13,10 @@ export const getDetailedTests = async () => {
 
 export const getTestsForTesting = async options => {
     const url = trainingModeToUrl[options.mode];
-    return tests.map(getTrainingTest);
+    const response = await axios.get(url, {
+        params: options
+    });
+    return response.data;
 }
 
 export const saveTest = async test => {
@@ -27,11 +28,4 @@ export const saveTest = async test => {
             error: "Something went wrong..."
         };
     }
-}
-
-const getTrainingTest = test => {
-    return {
-        ...test,
-        variants: variants.filter(item => item.testId === test.id)
-    };
 }

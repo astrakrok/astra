@@ -6,6 +6,7 @@ import "./TrainingTesting.css";
 import {useSearchParams} from "react-router-dom";
 import Spacer from "../Spacer/Spacer";
 import useRefresh from "../../hook/useRefresh";
+import InfoText from "../InfoText/InfoText";
 
 const initialStatus = {
     correctCount: 0,
@@ -33,6 +34,10 @@ const TrainingTesting = ({tests}) => {
         setStatus(initialStatus);
     }, [value]);
 
+    useEffect(() => {
+        setTestingState(initialTestingState(tests));
+    }, [tests]);
+
     const displayPreviousButton = () => {
         return currentTest > 0;
     }
@@ -51,7 +56,7 @@ const TrainingTesting = ({tests}) => {
         });
         setStatus(previousStatus => ({
             ...previousStatus,
-            correctCount: previousStatus.correctCount + answer.correct
+            correctCount: previousStatus.correctCount + answer.isCorrect
         }));
     }
 
@@ -104,10 +109,21 @@ const TrainingTesting = ({tests}) => {
                     </div>
                 ) : (
                     <>
-                        <div className="test-header s-hflex">
-                            Питання {currentTest + 1}/{tests.length}:
-                        </div>
-                        <TrainingTest testState={testingState[currentTest]} onAnswer={value => refreshUserAnswers(value, currentTest)} />
+                        {
+                            testingState.length === 0 ? (
+                                <InfoText className="s-hflex-center">
+                                    Немає тестів по Вашому запиту
+                                </InfoText>
+                            ) : (
+                                <>
+                                    <div className="test-header s-hflex">
+                                        Питання {currentTest + 1}/{testingState.length}:
+                                    </div>
+                                    <TrainingTest testState={testingState[currentTest]} onAnswer={value => refreshUserAnswers(value, currentTest)} />
+                                </>
+                            )
+                        }
+                        <div className="equal-flex" />
                         {
                             (displayPreviousButton() || displayNextButton()) ? (
                                 <div className="navigation-options s-hflex">

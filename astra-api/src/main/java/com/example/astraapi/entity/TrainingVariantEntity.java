@@ -9,10 +9,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TestVariantEntity {
+public class TrainingVariantEntity {
   private Long id;
   private Long testId;
   private String title;
   private String explanation;
-  private boolean isCorrect;
+  private Boolean isCorrect;
 }

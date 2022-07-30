@@ -1,6 +1,7 @@
 package com.example.astraapi.dto;
 
 import com.example.astraapi.annotation.TrimmedLength;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,6 @@ public class TestVariantDto {
   private String title;
   @TrimmedLength(min = 10)
   private String explanation;
-  private boolean correct;
+  @JsonProperty("isCorrect")
+  private boolean isCorrect;
 }

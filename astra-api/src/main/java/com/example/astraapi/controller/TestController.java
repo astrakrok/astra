@@ -3,6 +3,8 @@ package com.example.astraapi.controller;
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.RequestTestDto;
 import com.example.astraapi.dto.TestShortDetailDto;
+import com.example.astraapi.dto.TrainingTestDto;
+import com.example.astraapi.dto.TrainingTestingSearchDto;
 import com.example.astraapi.meta.Endpoint;
 import com.example.astraapi.service.TestService;
 import lombok.RequiredArgsConstructor;
@@ -29,5 +31,10 @@ public class TestController {
   @GetMapping
   public List<TestShortDetailDto> getAll() {
     return testService.getAll();
+  }
+
+  @GetMapping("/training")
+  public List<TrainingTestDto> getTrainingTesting(@Valid TrainingTestingSearchDto searchDto) {
+    return testService.getTrainingTests(searchDto);
   }
 }
