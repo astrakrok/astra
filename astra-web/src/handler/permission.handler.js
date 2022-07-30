@@ -1,10 +1,11 @@
 import {matchPath} from "react-router";
-import {getUser} from "./user.handler";
 import {permission} from "../constant/permission";
+import {userRole} from "../constant/user.role";
+import {get} from "./token.handler";
 
-export const checkPermission = url => {
-    const user = getUser();
-    const roles = user == null ? ["guest"] : user.roles;
+export const checkPermission = (url, user) => {
+    const hasTokens = get() != null;
+    const roles = (hasTokens && user) ? user.roles : [userRole.guest];
     for (const role of roles) {
         if (checkPermissionForRole(url, role)) {
             return true;

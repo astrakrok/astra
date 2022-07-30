@@ -5,7 +5,7 @@ const PopupConsumer = ({children}) => {
         <PopupContext.Consumer>
             {context => {
                 if (context === undefined) {
-                    throw new Error('CountConsumer must be used within a CountProvider')
+                    throw new Error('PopupConsumer must be used within a PopupProvider')
                 }
                 return children(context)
             }}

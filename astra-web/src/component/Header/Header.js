@@ -1,10 +1,10 @@
-import { isGuest } from '../../handler/user.handler';
 import AuthControl from '../AuthControl/AuthControl';
 import Logo from '../Logo/Logo';
 import SiteNavigation from "./SiteNavigation/SiteNavigation";
 import ProfileActions from "./ProfileActions/ProfileActions";
-import './Header.css';
+import AuthConsumer from "../../context/auth/AuthConsumer";
 import Spacer from '../Spacer/Spacer';
+import './Header.css';
 
 const Header = () => {
     return (
@@ -13,20 +13,22 @@ const Header = () => {
                 <div className="row content">
                     <div className="s-hflex-start">
                         <Logo responsive="true" />
-                        {
-                            isGuest() ? (
-                                <>
-                                    <div className="equal-flex" />
-                                    <AuthControl />
-                                </>
-                            ) : (
-                                <>
-                                    <SiteNavigation />
-                                    <Spacer className="hide-on-small-only" width={40} />
-                                    <ProfileActions />
-                                </>
-                            )
-                        }
+                        <AuthConsumer>
+                            {
+                                ({userData}) => userData ? (
+                                    <>
+                                        <SiteNavigation />
+                                        <Spacer className="hide-on-small-only" width={40} />
+                                        <ProfileActions />
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className="equal-flex" />
+                                        <AuthControl />
+                                    </>
+                                )
+                            }
+                        </AuthConsumer>
                     </div>
                 </div>
             </div>
