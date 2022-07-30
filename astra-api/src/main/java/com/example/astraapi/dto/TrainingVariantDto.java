@@ -1,4 +1,4 @@
-package com.example.astraapi.entity;
+package com.example.astraapi.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,10 +9,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TestVariantEntity {
+public class TrainingVariantDto {
   private Long id;
   private Long testId;
   private String title;
   private String explanation;
-  private boolean isCorrect;
+  private boolean correct;
 }

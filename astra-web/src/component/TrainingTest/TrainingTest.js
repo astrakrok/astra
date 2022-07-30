@@ -16,7 +16,7 @@ const TrainingTest = ({
     const check = () => {
         onAnswer({
             value: selected,
-            correct: testState.test.variants.find(item => item.id === selected).correct
+            isCorrect: testState.test.variants.find(item => item.id === selected).isCorrect
         });
     }
 
@@ -29,7 +29,7 @@ const TrainingTest = ({
 
     const renderVariant = variant => {
         const selectStatus = selected === variant.id ? "selected" : "skipped";
-        const correctStatus = variant.correct ? "correct" : "incorrect";
+        const correctStatus = variant.isCorrect ? "correct" : "incorrect";
         const checked = testState.userAnswer == null ? "" : "checked";
 
         return (
@@ -72,7 +72,7 @@ const TrainingTest = ({
                     testState.test.variants.map(renderVariant)
                 }
                 <div className="s-hflex-end" style={{marginTop: 20}}>
-                    <Button onClick={check} disabled={testState.userAnswer != null}>
+                    <Button onClick={check} disabled={testState.userAnswer != null || selected == null}>
                         Перевірити
                     </Button>
                 </div>

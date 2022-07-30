@@ -36,9 +36,9 @@ const TestForm = ({
 
     const updateCorrectVariant = index => {
         for (const variant of test.variants) {
-            variant.correct = false;
+            variant.isCorrect = false;
         }
-        test.variants[index].correct = true;
+        test.variants[index].isCorrect = true;
         setTest({
             ...test
         });
@@ -70,7 +70,7 @@ const TestForm = ({
 
     const renderVariant = (variant, index) => {
         return (
-            <li className={`collection-item ${variant.correct ? "correct" : ""}`} key={index}>
+            <li className={`collection-item ${variant.isCorrect ? "correct" : ""}`} key={index}>
                 <div className="s-vflex">
                     <div className="content">
                         <Input value={variant.title} placeholder="Варіант" onChange={event => updateVariant({...variant, title: event.target.value}, index)} />
@@ -124,7 +124,7 @@ const TestForm = ({
                     id: null,
                     title: "",
                     explanation: "",
-                    correct: false
+                    isCorrect: false
                 }
             ]
         })

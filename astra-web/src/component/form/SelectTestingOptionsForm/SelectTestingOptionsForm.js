@@ -45,7 +45,7 @@ const SelectTestingOptionsForm = ({
     const selected = () => {
         onSelect({
             examId: exam.value,
-            specializationId: exam.value,
+            specializationId: specialization.value,
             mode: mode.value,
             count: count.value
         });
