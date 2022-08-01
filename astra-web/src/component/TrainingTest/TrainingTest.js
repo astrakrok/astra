@@ -1,10 +1,13 @@
 import {useEffect, useState} from "react";
 import Button from "../Button/Button";
+import DisplayBoundary from "../DisplayBoundary/DisplayBoundary";
 import RadioButton from "../RadioButton/RadioButton";
 import "./TrainingTest.css";
 
 const TrainingTest = ({
     onAnswer = () => {},
+    checked = true,
+    order = null,
     testState
 }) => {
     const [selected, setSelected] = useState(testState.userAnswer);
@@ -58,7 +61,7 @@ const TrainingTest = ({
     return (
         <div className="TrainingTest">
             <div className="question">
-                {testState.test.question}
+                {order == null ? "" : order + "."} {testState.test.question}
             </div>
             {
                 (testState.userAnswer != null) ? (
@@ -71,11 +74,13 @@ const TrainingTest = ({
                 {
                     testState.test.variants.map(renderVariant)
                 }
-                <div className="s-hflex-end" style={{marginTop: 20}}>
-                    <Button onClick={check} disabled={testState.userAnswer != null || selected == null}>
-                        Перевірити
-                    </Button>
-                </div>
+                <DisplayBoundary condition={checked}>
+                    <div className="s-hflex-end" style={{marginTop: 20}}>
+                        <Button onClick={check} disabled={testState.userAnswer != null || selected == null}>
+                            Перевірити
+                        </Button>
+                    </div>
+                </DisplayBoundary>
             </div>
         </div>
     );

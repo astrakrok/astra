@@ -1,11 +1,15 @@
 package com.example.astraapi.service.impl;
 
+import com.example.astraapi.config.ExaminationProperties;
+import com.example.astraapi.dto.ExaminationDto;
+import com.example.astraapi.dto.ExaminationSearchDto;
+import com.example.astraapi.dto.ExaminationTestDto;
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.RequestTestDto;
 import com.example.astraapi.dto.TestShortDetailDto;
 import com.example.astraapi.dto.TestVariantDto;
+import com.example.astraapi.dto.TrainingSearchDto;
 import com.example.astraapi.dto.TrainingTestDto;
-import com.example.astraapi.dto.TrainingTestingSearchDto;
 import com.example.astraapi.entity.TestEntity;
 import com.example.astraapi.mapper.TestMapper;
 import com.example.astraapi.repository.TestRepository;
@@ -31,6 +35,7 @@ public class TestServiceImpl implements TestService {
   private final TestVariantService testVariantService;
   private final TestExamService testExamService;
   private final TestSubjectService testSubjectService;
+  private final ExaminationProperties examinationProperties;
 
   @Override
   @Transactional
@@ -54,12 +59,30 @@ public class TestServiceImpl implements TestService {
   }
 
   @Override
-  public List<TrainingTestDto> getTrainingTests(TrainingTestingSearchDto searchDto) {
-    return testRepository.getTrainingTestsBySpecializationIdAndGoodId(
-        searchDto.getSpecializationId(),
-        searchDto.getExamId(),
-        searchDto.getCount()).stream()
-        .map(testMapper::toDto)
+  public List<TrainingTestDto> getTrainingTests(TrainingSearchDto searchDto) {
+    return testRepository.getTestingBySpecializationIdAndGoodId(
+            searchDto.getSpecializationId(),
+            searchDto.getExamId(),
+            searchDto.getCount()).stream()
+        .map(testMapper::toTrainingDto)
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public ExaminationDto getExamination(ExaminationSearchDto searchDto) {
+    // TODO track user starting an examination
+    return new ExaminationDto(
+        getExaminationTests(searchDto),
+        examinationProperties.getDurationInMinutes()
+    );
+  }
+
+  private List<ExaminationTestDto> getExaminationTests(ExaminationSearchDto searchDto) {
+    return testRepository.getTestingBySpecializationIdAndGoodId(
+            searchDto.getSpecializationId(),
+            searchDto.getExamId(),
+            examinationProperties.getCount().longValue()).stream()
+        .map(testMapper::toExaminationDto)
         .collect(Collectors.toList());
   }
 }

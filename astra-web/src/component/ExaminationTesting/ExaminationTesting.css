@@ -1,0 +1,20 @@
+.ExaminationTesting {
+    margin-top: 20px;
+}
+
+.ExaminationTesting .header-info {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.ExaminationTesting .header-info .question-counter {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.ExaminationTesting .navigation-options {
+    margin-top: 50px;
+    padding: 20px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+}

@@ -1,5 +1,6 @@
 package com.example.astraapi.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,5 +15,6 @@ public class TrainingVariantDto {
   private Long testId;
   private String title;
   private String explanation;
+  @JsonProperty("isCorrect")
   private boolean correct;
 }

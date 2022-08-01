@@ -7,6 +7,7 @@ import {useSearchParams} from "react-router-dom";
 import Spacer from "../Spacer/Spacer";
 import useRefresh from "../../hook/useRefresh";
 import InfoText from "../InfoText/InfoText";
+import TestingControl from "../TestingControl/TestingControl";
 
 const initialStatus = {
     correctCount: 0,
@@ -15,10 +16,12 @@ const initialStatus = {
 
 const initialCurrentTest = 0;
 
-const initialTestingState = tests => tests.map(test => ({
-    test,
-    userAnswer: null,
-}));
+const initialTestingState = tests => {
+    return tests.map(test => ({
+        test,
+        userAnswer: null,
+    }));
+};
 
 const TrainingTesting = ({tests}) => {
     const [, setSearchParams] = useSearchParams();
@@ -97,15 +100,7 @@ const TrainingTesting = ({tests}) => {
                     <div className="s-vflex">
                         <TestingStatistic statistic={getTestingStatistic()} />
                         <Spacer height={50} />
-                        <div className="s-hflex-center">
-                            <Button onClick={startNew}>
-                                Почати новий іспит
-                            </Button>
-                            <Spacer width={20} />
-                            <Button isFilled={true} onClick={restartTesting}>
-                                Пройти знову
-                            </Button>
-                        </div>
+                        <TestingControl onNew={startNew} onRepeat={restartTesting} />
                     </div>
                 ) : (
                     <>

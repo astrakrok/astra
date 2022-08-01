@@ -4,6 +4,7 @@ import {questionsModes} from "../../../constant/questions.mode";
 import SingleSelect from "../../SingleSelect/SingleSelect";
 import Button from "../../Button/Button";
 import Spacer from "../../Spacer/Spacer";
+import DisplayBoundary from "../../DisplayBoundary/DisplayBoundary";
 import "./SelectTestingOptionsForm.css";
 
 const examToSelectValue = exam => {
@@ -43,16 +44,20 @@ const SelectTestingOptionsForm = ({
     const specializationsOptions = specializations.map(specialization => ({value: specialization.id, label: specialization.title}));
 
     const selected = () => {
-        onSelect({
+        const options = {
             examId: exam.value,
             specializationId: specialization.value,
-            mode: mode.value,
-            count: count.value
-        });
+            mode: mode.value
+        };
+        if (options.mode === "training") {
+            options.count = count.value;
+        }
+        onSelect(options);
     }
 
     const isValidOptions = () => {
-        return [exam, specialization, mode, count].filter(item => item == null).length !== 0;
+        const isValidMainData = [exam, specialization, mode].filter(item => item == null).length === 0;
+        return isValidMainData && (mode.value === "examination" || (mode.value === "training" && count != null));
     }
 
     return (
@@ -75,14 +80,16 @@ const SelectTestingOptionsForm = ({
                 value={mode}
                 onChange={setMode} />
             <Spacer height={20} />
-            <SingleSelect
-                placeholder="Виберіть кількість питань"
-                options={questionsModes}
-                value={count}
-                onChange={setCount} />
+            <DisplayBoundary condition={mode && mode.value === "training"}>
+                <SingleSelect
+                    placeholder="Виберіть кількість питань"
+                    options={questionsModes}
+                    value={count}
+                    onChange={setCount} />
+            </DisplayBoundary>
             <Spacer height={20} />
             <div className="s-hflex-center">
-                <Button onClick={selected} isFilled={true} disabled={isValidOptions()}>
+                <Button onClick={selected} isFilled={true} disabled={!isValidOptions()}>
                     Розпочати
                 </Button>
             </div>

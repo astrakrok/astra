@@ -11,7 +11,7 @@ export const getDetailedTests = async () => {
     return response.data;
 }
 
-export const getTestsForTesting = async options => {
+export const getTesting = async options => {
     const url = trainingModeToUrl[options.mode];
     const response = await client.get(url, {
         params: options
