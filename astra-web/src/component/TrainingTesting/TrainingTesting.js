@@ -8,6 +8,8 @@ import Spacer from "../Spacer/Spacer";
 import useRefresh from "../../hook/useRefresh";
 import InfoText from "../InfoText/InfoText";
 import TestingControl from "../TestingControl/TestingControl";
+import TestingNavigation from "../TestingNavigation/TestingNavigation";
+import {mapToNavigationItem} from "../../mapper/test.mapper";
 
 const initialStatus = {
     correctCount: 0,
@@ -18,7 +20,7 @@ const initialCurrentTest = 0;
 
 const initialTestingState = tests => {
     return tests.map(test => ({
-        test,
+        ...test,
         userAnswer: null,
     }));
 };
@@ -46,13 +48,14 @@ const TrainingTesting = ({tests}) => {
     }
 
     const displayNextButton = () => {
-        return currentTest < testingState.length && testingState[currentTest].userAnswer != null;
+        return currentTest < testingState.length;
     }
 
     const refreshUserAnswers = (answer, testIndex) => {
         setTestingState(previousTestingState => {
+            const test = previousTestingState[testIndex];
             previousTestingState[testIndex] = {
-                test: previousTestingState[testIndex].test,
+                ...test,
                 userAnswer: answer.value
             };
             return [...previousTestingState];
@@ -93,6 +96,17 @@ const TrainingTesting = ({tests}) => {
         refresh();
     }
 
+    const getNavigationItems = () => {
+        // return Array.from(Array(150).keys()).map(index => ({
+        //     selected: index === 10
+        // }));
+        return testingState.map((test, index) => mapToNavigationItem(test, index === currentTest))
+    }
+
+    const navigateToTest = index => {
+        setCurrentTest(index);
+    }
+
     return (
         <div className="TrainingTesting full-width">
             {
@@ -114,6 +128,7 @@ const TrainingTesting = ({tests}) => {
                                     <div className="test-header s-hflex">
                                         Питання {currentTest + 1}/{testingState.length}:
                                     </div>
+                                    <TestingNavigation items={getNavigationItems()} onSelect={navigateToTest} />
                                     <TrainingTest testState={testingState[currentTest]} onAnswer={value => refreshUserAnswers(value, currentTest)} />
                                 </>
                             )

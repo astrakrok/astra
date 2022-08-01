@@ -19,7 +19,7 @@ const TrainingTest = ({
     const check = () => {
         onAnswer({
             value: selected,
-            isCorrect: testState.test.variants.find(item => item.id === selected).isCorrect
+            isCorrect: testState.variants.find(item => item.id === selected).isCorrect
         });
     }
 
@@ -41,7 +41,7 @@ const TrainingTest = ({
                     className={`radio ${selectStatus} ${correctStatus} ${checked}`}
                     onChange={() => trySelectVariant(variant.id)}
                     contentClassName="title"
-                    name={`variant${testState.test.id}`}
+                    name={`variant${testState.id}`}
                     disabled={testState.userAnswer != null}
                     checked={selected === variant.id}
                 >
@@ -61,18 +61,18 @@ const TrainingTest = ({
     return (
         <div className="TrainingTest">
             <div className="question">
-                {order == null ? "" : order + "."} {testState.test.question}
+                {order == null ? "" : order + "."} {testState.question}
             </div>
             {
                 (testState.userAnswer != null) ? (
                     <div className="comment">
-                        {testState.test.comment}
+                        {testState.comment}
                     </div>
                 ) : null
             }
             <div className="s-vflex variants">
                 {
-                    testState.test.variants.map(renderVariant)
+                    testState.variants.map(renderVariant)
                 }
                 <DisplayBoundary condition={checked}>
                     <div className="s-hflex-end" style={{marginTop: 20}}>
