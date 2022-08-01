@@ -1,9 +1,9 @@
 package com.example.astraapi.mapper;
 
+import com.example.astraapi.dto.ExaminationVariantDto;
 import com.example.astraapi.dto.TestVariantDto;
 import com.example.astraapi.dto.TrainingVariantDto;
 import com.example.astraapi.entity.TestVariantEntity;
-import com.example.astraapi.entity.TrainingVariantEntity;
 import com.example.astraapi.mapper.qualifier.TitleQualifier;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,5 +14,7 @@ public interface TestVariantMapper {
   @Mapping(target = "explanation", qualifiedByName = TitleQualifier.TRIM)
   TestVariantEntity toEntity(TestVariantDto testVariantDto);
 
-  TrainingVariantDto toDto(TrainingVariantEntity entity);
+  TrainingVariantDto toTrainingDto(TestVariantEntity entity);
+
+  ExaminationVariantDto toExaminationDto(TestVariantEntity entity);
 }

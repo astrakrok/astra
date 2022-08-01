@@ -1,10 +1,12 @@
 package com.example.astraapi.service;
 
+import com.example.astraapi.dto.ExaminationDto;
+import com.example.astraapi.dto.ExaminationSearchDto;
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.RequestTestDto;
 import com.example.astraapi.dto.TestShortDetailDto;
+import com.example.astraapi.dto.TrainingSearchDto;
 import com.example.astraapi.dto.TrainingTestDto;
-import com.example.astraapi.dto.TrainingTestingSearchDto;
 
 import java.util.List;
 
@@ -13,5 +15,7 @@ public interface TestService {
 
   List<TestShortDetailDto> getAll();
 
-  List<TrainingTestDto> getTrainingTests(TrainingTestingSearchDto searchDto);
+  List<TrainingTestDto> getTrainingTests(TrainingSearchDto searchDto);
+
+  ExaminationDto getExamination(ExaminationSearchDto searchDto);
 }

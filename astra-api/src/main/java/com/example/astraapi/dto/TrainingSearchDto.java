@@ -12,7 +12,7 @@ import javax.validation.constraints.Positive;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TrainingTestingSearchDto {
+public class TrainingSearchDto {
   @NotNull
   @Positive
   private long specializationId;

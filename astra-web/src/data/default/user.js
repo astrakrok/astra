@@ -1,7 +1,7 @@
 import {userRole} from "../../constant/user.role";
 
 export const defaultUser = {
-    roles: [userRole.admin],
+    roles: [userRole.user],
     name: "Anonymous",
     surname: "Anonymous",
     email: "empty@email.com",

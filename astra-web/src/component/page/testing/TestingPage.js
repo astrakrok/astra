@@ -1,44 +1,58 @@
 import {useEffect, useState} from "react";
-import {getTestsForTesting} from "../../../service/test.service";
+import {getTesting} from "../../../service/test.service";
 import SelectTestingOptionsForm from "../../form/SelectTestingOptionsForm/SelectTestingOptionsForm";
 import withSpecializationsAndExams from "../../hoc/withSpecializationsAndExams/withSpecializationsAndExams";
 import withTitle from "../../hoc/withTitle/withTitle";
 import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 import TrainingTesting from "../../TrainingTesting/TrainingTesting";
 import InfoText from "../../InfoText/InfoText";
-import "./TestingPage.css";
 import {useSearchParams} from "react-router-dom";
+import ExaminationTesting from "../../ExaminationTesting/ExaminationTesting";
+import withAllAvailableHeight from "../../hoc/withAllAvailableHeight/withAllAvailableHeight";
+import "./TestingPage.css";
 
 const TestingPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
 
-    const [tests, setTests] = useState(null);
+    const [testing, setTesting] = useState(null);
     const [loading, setLoading] = useState(false);
 
     const getOptionsFromSearchParams = () => {
-        return {
+        const options = {
             examId: searchParams.get("examId"),
             specializationId: searchParams.get("specializationId"),
-            mode: searchParams.get("mode"),
-            count: searchParams.get("count")
+            mode: searchParams.get("mode")
         };
+        const count = searchParams.get("count");
+        if (count) {
+            options.count = count;
+        }
+        return options;
+    }
+
+    const isValidOptions = options => {
+        if (!options.examId || !options.specializationId || !options.mode) {
+            return false;
+        }
+        return options.mode === "examination" || (options.mode === "training" && options.count != null);
     }
 
     useEffect(() => {
+        setTesting(null);
         const options = getOptionsFromSearchParams();
-        if (!options.mode || !options.examId || !options.specializationId || !options.count) {
+        if (!isValidOptions(options)) {
             return;
         }
 
-        const fetchTests = async () => {
+        const fetchTesting = async () => {
             setLoading(true);
-            const result = await getTestsForTesting(options);
+            const result = await getTesting(options);
             setSearchParams(options);
-            setTests(result);
+            setTesting(result);
             setLoading(false);
         }
 
-        fetchTests();
+        fetchTesting();
     }, [searchParams]);
 
     const Form = withSpecializationsAndExams(SelectTestingOptionsForm);
@@ -46,7 +60,9 @@ const TestingPage = () => {
     const displayTesting = () => {
         switch (searchParams.get("mode")) {
             case "training":
-                return <TrainingTesting tests={tests} />
+                return <TrainingTesting tests={testing} />
+            case "examination":
+                return <ExaminationTesting tests={testing.tests} duration={testing.minutes} />
             default:
                 return (
                     <InfoText>
@@ -61,7 +77,7 @@ const TestingPage = () => {
             <div className="row">
                 <div className="s-hflex-center">
                     {
-                        (tests == null || searchParams.get("mode") == null) ? (
+                        (testing == null || searchParams.get("mode") == null) ? (
                             <LoaderBoundary condition={loading}>
                                 <Form initialOptions={getOptionsFromSearchParams()} onSelect={setSearchParams} />
                             </LoaderBoundary>
@@ -75,4 +91,4 @@ const TestingPage = () => {
     );
 }
 
-export default withTitle(TestingPage, "Тестування");
+export default withAllAvailableHeight(withTitle(TestingPage, "Тестування"));

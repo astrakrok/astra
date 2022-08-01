@@ -2,6 +2,15 @@
     cursor: pointer;
 }
 
+.RadioButton input[type="radio"].with-gap:checked+span:before {
+    border: 2px solid var(--secondary-color) !important;
+}
+
+.RadioButton input[type="radio"].with-gap:checked+span:after {
+    background-color: var(--secondary-color);
+    border: 2px solid var(--secondary-color) !important;
+}
+
 .RadioButton[data-disabled="true"],
 .RadioButton[data-disabled="true"] span {
     cursor: default !important;

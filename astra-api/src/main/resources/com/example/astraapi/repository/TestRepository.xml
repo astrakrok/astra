@@ -25,7 +25,7 @@
         order by id, examId, specializationId
     </select>
 
-    <select id="getTrainingTestsBySpecializationIdAndGoodId" resultMap="trainingTest">
+    <select id="getTestingBySpecializationIdAndGoodId" resultMap="trainingTest">
         select *
         from (
                  select *
@@ -77,17 +77,17 @@
         </collection>
     </resultMap>
 
-    <resultMap id="trainingTest" type="com.example.astraapi.entity.TrainingTestEntity">
+    <resultMap id="trainingTest" type="com.example.astraapi.entity.TestingTestEntity">
         <id column="id" property="id"/>
         <result column="question" property="question" />
         <result column="comment" property="comment" />
 
-        <collection property="variants" javaType="List" ofType="com.example.astraapi.entity.TrainingVariantEntity">
+        <collection property="variants" javaType="List" ofType="com.example.astraapi.entity.TestVariantEntity">
             <id column="variantId" property="id" />
             <result column="variantTestId" property="testId" />
             <result column="variantTitle" property="title" />
             <result column="variantExplanation" property="explanation" />
-            <result column="variantIsCorrect" property="isCorrect" />
+            <result column="variantIsCorrect" property="correct" />
         </collection>
     </resultMap>
 </mapper>

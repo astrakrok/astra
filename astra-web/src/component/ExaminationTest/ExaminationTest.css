@@ -1,0 +1,16 @@
+.ExaminationTest {
+    font-size: 1.25rem;
+}
+
+.ExaminationTest .question {
+    margin-bottom: 10px;
+}
+
+.ExaminationTest .variants .variant {
+    padding: 10px 0;
+}
+
+.ExaminationTest .variants .variant .title {
+    font-size: 1.2rem;
+    color: black;
+}

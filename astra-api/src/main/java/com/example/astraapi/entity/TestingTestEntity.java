@@ -5,14 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TrainingVariantEntity {
+public class TestingTestEntity {
   private Long id;
-  private Long testId;
-  private String title;
-  private String explanation;
-  private Boolean isCorrect;
+  private String question;
+  private String comment;
+  private List<TestVariantEntity> variants;
 }

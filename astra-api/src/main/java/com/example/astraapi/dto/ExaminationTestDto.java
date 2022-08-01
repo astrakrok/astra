@@ -1,6 +1,5 @@
-package com.example.astraapi.entity;
+package com.example.astraapi.dto;
 
-import com.example.astraapi.dto.TrainingVariantDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,9 +11,9 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TrainingTestEntity {
+public class ExaminationTestDto {
   private Long id;
   private String question;
   private String comment;
-  private List<TrainingVariantDto> variants;
+  private List<ExaminationVariantDto> variants;
 }

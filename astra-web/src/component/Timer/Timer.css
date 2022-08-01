@@ -1,0 +1,22 @@
+.Timer {
+    border: 1px solid var(--secondary-color);
+    padding: 1px 10px;
+}
+
+.Timer .hours,
+.Timer .minutes,
+.Timer .seconds,
+.Timer .colon {
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+.Timer .hours,
+.Timer .minutes,
+.Timer .seconds {
+    color: var(--secondary-color);
+}
+
+.Timer .colon {
+    padding: 0 5px;
+}
