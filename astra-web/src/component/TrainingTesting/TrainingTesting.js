@@ -7,7 +7,7 @@ import {useSearchParams} from "react-router-dom";
 import Spacer from "../Spacer/Spacer";
 import useRefresh from "../../hook/useRefresh";
 import InfoText from "../InfoText/InfoText";
-import TestingNavigation from "../TestingNavigation/TestingNavigation";
+import TestingControl from "../TestingControl/TestingControl";
 
 const initialStatus = {
     correctCount: 0,
@@ -100,7 +100,7 @@ const TrainingTesting = ({tests}) => {
                     <div className="s-vflex">
                         <TestingStatistic statistic={getTestingStatistic()} />
                         <Spacer height={50} />
-                        <TestingNavigation onNew={startNew} onRepeat={restartTesting} />
+                        <TestingControl onNew={startNew} onRepeat={restartTesting} />
                     </div>
                 ) : (
                     <>

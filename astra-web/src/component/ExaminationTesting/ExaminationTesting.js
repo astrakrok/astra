@@ -11,7 +11,7 @@ import TestingStatistic from "../TestingStatistic/TestingStatistic";
 import TestingCorrectness from "../TestingCorrectness/TestingCorrectness";
 import Spacer from "../Spacer/Spacer";
 import InfoHeader from "../InfoHeader/InfoHeader";
-import TestingNavigation from "../TestingNavigation/TestingNavigation";
+import TestingControl from "../TestingControl/TestingControl";
 import {useSearchParams} from "react-router-dom";
 import useRefresh from "../../hook/useRefresh";
 
@@ -113,7 +113,7 @@ const ExaminationTesting = ({
                     <>
                         <TestingStatistic statistic={{correctCount: result.correctCount, total: result.total}} />
                         <Spacer height={50} />
-                        <TestingNavigation onNew={startNew} onRepeat={repeat} />
+                        <TestingControl onNew={startNew} onRepeat={repeat} />
                         <Spacer height={100} />
                         <InfoHeader text="Ваш результат" />
                         <TestingCorrectness tests={result.tests} />

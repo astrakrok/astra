@@ -1,8 +1,8 @@
 import Button from "../Button/Button";
 import Spacer from "../Spacer/Spacer";
-import "./TestingNavigation.css";
+import "./TestingControl.css";
 
-const TestingNavigation = ({
+const TestingControl = ({
     onNew = () => {},
     onRepeat = () => {}
 }) => {
@@ -19,4 +19,4 @@ const TestingNavigation = ({
     );
 }
 
-export default TestingNavigation;
+export default TestingControl;
