@@ -1,0 +1,44 @@
+.TestingNavigation {
+    margin: 20px 0;
+    padding: 5px;
+    max-height: 100px;
+    overflow: auto;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.TestingNavigation .wrapper {
+    padding: 2px;
+}
+
+.TestingNavigation .wrapper .item {
+    padding: 1px 5px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.TestingNavigation .wrapper .item.selected {
+    border: 1px solid var(--secondary-color) !important;
+    background-color: var(--secondary-color) !important;
+    color: white !important;
+    font-weight: bold !important;
+}
+
+.TestingNavigation .wrapper .item.correct {
+    border: 1px solid var(--green-color);
+    background-color: var(--green-color);
+    color: white;
+    font-weight: bold;
+}
+
+.TestingNavigation .wrapper .item.wrong {
+    border-color: var(--red-color);
+    background-color: var(--red-color);
+    color: white;
+    font-weight: bold;
+}
+
+.TestingNavigation .wrapper .item.pending {
+    border-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.2);
+    color: black;
+    font-weight: bold;
+}
