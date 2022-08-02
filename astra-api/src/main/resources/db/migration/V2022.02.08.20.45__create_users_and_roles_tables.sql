@@ -11,7 +11,7 @@ create table public.users
 create table public.roles
 (
     id    bigserial primary key,
-    title varchar(20)
+    title varchar(20) not null
 );
 
 create table public.users_roles
