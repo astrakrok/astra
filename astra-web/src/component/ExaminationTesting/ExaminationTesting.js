@@ -19,6 +19,7 @@ import {mapExaminationToNavigationItem} from "../../mapper/test.mapper";
 import TestCompletionWarning from "../popup-component/TestCompletionWarning/TestCompletionWarning";
 import LoaderBoundary from "../LoaderBoundary/LoaderBoundary";
 import {loadingStatus} from "../../constant/loading.status";
+import InfoText from "../InfoText/InfoText";
 
 const mapToTestState = test => ({
     ...test,
@@ -188,19 +189,29 @@ const ExaminationTesting = ({
                     </LoaderBoundary>
                 ) : (
                     <>
-                        <div className="s-hflex-center">
-                            <PopupConsumer>
-                                {
-                                    ({setPopupState}) => (
-                                        <Timer duration={duration*60} onExpire={() => getMessagePopup(setPopupState)} />
-                                    )
-                                }
-                            </PopupConsumer>
-                        </div>
-                        <div className="question">
-                            <TestingNavigation items={getNavigationItems()} onSelect={showTest} />
-                            <ExaminationTest test={testingState.tests[testingState.currentTest]} onSelect={selectVariant} onRetry={() => showTest(testingState.currentTest)} />
-                        </div>
+                        {
+                            testingState.tests.length > 0 ? (
+                                <>
+                                    <div className="s-hflex-center">
+                                        <PopupConsumer>
+                                            {
+                                                ({setPopupState}) => (
+                                                    <Timer duration={duration*60} onExpire={() => getMessagePopup(setPopupState)} />
+                                                )
+                                            }
+                                        </PopupConsumer>
+                                    </div>
+                                    <div className="question">
+                                        <TestingNavigation items={getNavigationItems()} onSelect={showTest} />
+                                        <ExaminationTest test={testingState.tests[testingState.currentTest]} onSelect={selectVariant} onRetry={() => showTest(testingState.currentTest)} />
+                                    </div>
+                                </>
+                            ) : (
+                                <InfoText className="s-hflex-center">
+                                    Немає тестів по Вашому запиту
+                                </InfoText>
+                            )
+                        }
                         <DisplayBoundary condition={canMoveNext() || canMovePrevious() || canFinish()}>
                             <div className="navigation-options s-hflex">
                                 <DisplayBoundary condition={canMovePrevious()}>
