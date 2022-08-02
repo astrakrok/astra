@@ -9,7 +9,7 @@ import useRefresh from "../../hook/useRefresh";
 import InfoText from "../InfoText/InfoText";
 import TestingControl from "../TestingControl/TestingControl";
 import TestingNavigation from "../TestingNavigation/TestingNavigation";
-import {mapToNavigationItem} from "../../mapper/test.mapper";
+import {mapTrainingToNavigationItem} from "../../mapper/test.mapper";
 
 const initialStatus = {
     correctCount: 0,
@@ -97,10 +97,7 @@ const TrainingTesting = ({tests}) => {
     }
 
     const getNavigationItems = () => {
-        // return Array.from(Array(150).keys()).map(index => ({
-        //     selected: index === 10
-        // }));
-        return testingState.map((test, index) => mapToNavigationItem(test, index === currentTest))
+        return testingState.map((test, index) => mapTrainingToNavigationItem(test, index === currentTest))
     }
 
     const navigateToTest = index => {
@@ -125,9 +122,6 @@ const TrainingTesting = ({tests}) => {
                                 </InfoText>
                             ) : (
                                 <>
-                                    <div className="test-header s-hflex">
-                                        Питання {currentTest + 1}/{testingState.length}:
-                                    </div>
                                     <TestingNavigation items={getNavigationItems()} onSelect={navigateToTest} />
                                     <TrainingTest testState={testingState[currentTest]} onAnswer={value => refreshUserAnswers(value, currentTest)} />
                                 </>

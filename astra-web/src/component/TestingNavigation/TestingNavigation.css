@@ -37,8 +37,21 @@
 }
 
 .TestingNavigation .wrapper .item.pending {
-    border-color: rgba(0, 0, 0, 0.2);
-    background-color: rgba(0, 0, 0, 0.2);
-    color: black;
+    border-color: var(--light-primary-color);
+    background-color: var(--light-primary-color);
+    color: white;
+    font-weight: bold;
+}
+
+.TestingNavigation .wrapper .item.processed {
+    border-color: var(--primary-color);
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+}
+
+.TestingNavigation .wrapper .item.failed {
+    border-color: var(--red-color);
+    color: var(--red-color);
     font-weight: bold;
 }

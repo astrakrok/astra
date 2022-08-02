@@ -6,7 +6,7 @@ import {useEffect, useState} from "react";
 import ExaminationTest from "../ExaminationTest/ExaminationTest";
 import Button from "../Button/Button";
 import DisplayBoundary from "../DisplayBoundary/DisplayBoundary";
-import {getResult} from "../../service/examination.service";
+import {getResult, updateAnswer} from "../../service/examination.service";
 import TestingStatistic from "../TestingStatistic/TestingStatistic";
 import TestingCorrectness from "../TestingCorrectness/TestingCorrectness";
 import Spacer from "../Spacer/Spacer";
@@ -14,31 +14,41 @@ import InfoHeader from "../InfoHeader/InfoHeader";
 import TestingControl from "../TestingControl/TestingControl";
 import {useSearchParams} from "react-router-dom";
 import useRefresh from "../../hook/useRefresh";
+import TestingNavigation from "../TestingNavigation/TestingNavigation";
+import {mapExaminationToNavigationItem} from "../../mapper/test.mapper";
+import TestCompletionWarning from "../popup-component/TestCompletionWarning/TestCompletionWarning";
+import LoaderBoundary from "../LoaderBoundary/LoaderBoundary";
+import {loadingStatus} from "../../constant/loading.status";
+
+const mapToTestState = test => ({
+    ...test,
+    lastProcessed: null,
+    userAnswer: null
+});
+
+const initialResult = {
+    status: loadingStatus.inProgress,
+    data: null
+};
 
 const ExaminationTesting = ({
     tests,
     duration
 }) => {
-    const [, setSearchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const [value, refresh] = useRefresh();
 
-    const [result, setResult] = useState(null);
+    const [result, setResult] = useState(initialResult);
     const [testingState, setTestingState] = useState({
-        tests: tests.map(test => ({
-            ...test,
-            userAnswer: null
-        })),
+        tests: tests.map(mapToTestState),
         currentTest: 0
     });
 
     useEffect(() => {
-        setResult(null);
+        setResult(initialResult);
         setTestingState({
-            tests: tests.map(test => ({
-                ...test,
-                userAnswer: null
-            })),
+            tests: tests.map(mapToTestState),
             currentTest: 0
         });
     }, [value]);
@@ -56,33 +66,40 @@ const ExaminationTesting = ({
         });
     }
 
-    const sendUserAnswer = async test => {
+    const sendUserAnswer = async testIndex => {
+        const test = testingState.tests[testIndex];
         const data = {
+            examId: searchParams.get("examId"),
+            specializationId: searchParams.get("specializationId"),
             testId: test.id,
-            answer: test.userAnswer
+            variantId: test.userAnswer
         };
 
-        // TODO examinationService.updateAnswer(data)
+        await updateAnswer(data);
     }
 
     const previousTest = () => {
-        setTestingState(previous => ({
-            ...previous,
-            currentTest: previous.currentTest - 1
-        }));
+        showTest(testingState.currentTest - 1);
     }
 
-    const nextTest = async () => {
-        await sendUserAnswer(testingState.tests[testingState.currentTest]);
-        setTestingState(previous => ({
-            ...previous,
-            currentTest: previous.currentTest + 1
-        }));
+    const nextTest = () => {
+        showTest(testingState.currentTest + 1);
     }
 
-    const finishTest = async () => {
-        await sendUserAnswer(testingState.tests[testingState.currentTest]);
+    const completeTest = async setPopupState => {
+        setResult(previous => ({
+            ...previous,
+            status: loadingStatus.loading
+        }));
+        setPopupState();
+        await sendUserAnswer(testingState.currentTest);
         const result = await getResult();
+        setResult(previous => ({
+            ...previous,
+            status: loadingStatus.completed,
+            data: result
+        }));
+        console.log("result:", result);
         setResult(result);
     }
 
@@ -106,25 +123,72 @@ const ExaminationTesting = ({
         refresh();
     }
 
+    const getNavigationItems = () => {
+        return testingState.tests.map((item, index) => mapExaminationToNavigationItem(item, index === testingState.currentTest));
+    }
+
+    const getAnswer = test => ({
+        examId: searchParams.get("examId"),
+        specializationId: searchParams.get("specializationId"),
+        testId: test.id,
+        variantId: test.userAnswer
+    });
+
+    const showTest = async index => {
+        const currentTestIndex = testingState.currentTest;
+        const currentTest = testingState.tests[currentTestIndex];
+        const answer = getAnswer(currentTest);
+        const answerIsChanged = currentTest.lastProcessed !== currentTest.userAnswer;
+        setTestingState(previous => {
+            previous.tests[currentTestIndex].status = answerIsChanged ? "pending" : previous.tests[currentTestIndex].status;
+            return {
+                ...previous,
+                currentTest: index
+            };
+        });
+        if (!answerIsChanged) {
+            return;
+        }
+        const result = await updateAnswer(answer);
+        if (result.error) {
+            setTestingState(previous => {
+                previous.tests[currentTestIndex].status = "failed";
+                return {
+                    ...previous,
+                };
+            })
+        } else {
+            setTestingState(previous => {
+                previous.tests[currentTestIndex].status = "processed";
+                previous.tests[currentTestIndex].lastProcessed = result.variantId;
+                return {
+                    ...previous
+                };
+            })
+        }
+    }
+
+    const askToFinish = setPopupState => {
+        setPopupState({
+            bodyGetter: () => <TestCompletionWarning onClick={() => completeTest(setPopupState)} />
+        });
+    }
+
     return (
         <div className="ExaminationTesting full-width s-vflex">
             {
-                result != null ? (
-                    <>
+                result.status !== loadingStatus.inProgress ? (
+                    <LoaderBoundary condition={result.status === loadingStatus.loading} className="full-width s-hflex-center">
                         <TestingStatistic statistic={{correctCount: result.correctCount, total: result.total}} />
                         <Spacer height={50} />
                         <TestingControl onNew={startNew} onRepeat={repeat} />
                         <Spacer height={100} />
                         <InfoHeader text="Ваш результат" />
                         <TestingCorrectness tests={result.tests} />
-                    </>
+                    </LoaderBoundary>
                 ) : (
                     <>
-                        <div className="s-hflex header-info">
-                            <div className="question-counter s-vflex-end">
-                                Питання {testingState.currentTest + 1}/{testingState.tests.length}:
-                            </div>
-                            <div className="equal-flex" />
+                        <div className="s-hflex-center">
                             <PopupConsumer>
                                 {
                                     ({setPopupState}) => (
@@ -134,7 +198,8 @@ const ExaminationTesting = ({
                             </PopupConsumer>
                         </div>
                         <div className="question">
-                            <ExaminationTest test={testingState.tests[testingState.currentTest]} onSelect={selectVariant} />
+                            <TestingNavigation items={getNavigationItems()} onSelect={showTest} />
+                            <ExaminationTest test={testingState.tests[testingState.currentTest]} onSelect={selectVariant} onRetry={() => showTest(testingState.currentTest)} />
                         </div>
                         <DisplayBoundary condition={canMoveNext() || canMovePrevious() || canFinish()}>
                             <div className="navigation-options s-hflex">
@@ -150,9 +215,15 @@ const ExaminationTesting = ({
                                     </Button>
                                 </DisplayBoundary>
                                 <DisplayBoundary condition={canFinish()}>
-                                    <Button isFilled={true} onClick={finishTest}>
-                                        Завершити
-                                    </Button>
+                                    <PopupConsumer>
+                                        {
+                                            ({setPopupState}) => (
+                                                <Button isFilled={true} onClick={() => askToFinish(setPopupState)}>
+                                                    Завершити
+                                                </Button>
+                                            )
+                                        }
+                                    </PopupConsumer>
                                 </DisplayBoundary>
                             </div>
                         </DisplayBoundary>

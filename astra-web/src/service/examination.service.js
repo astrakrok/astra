@@ -1,3 +1,6 @@
+import {route} from "../constant/app.route";
+import {client} from "../shared/js/axios";
+
 export const getResult = (examId, specializationId) => {
     return {
         tests: [
@@ -101,4 +104,15 @@ export const getResult = (examId, specializationId) => {
         correctCount: 3,
         total: 5
     };
+}
+
+export const updateAnswer = async data => {
+    const response = await client.put(route.examinations, data)
+        .catch(error => ({
+            data: {
+                error
+            }
+        }));
+    
+    return response.data;
 }

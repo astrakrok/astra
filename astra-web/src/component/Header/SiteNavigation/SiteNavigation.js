@@ -45,7 +45,6 @@ const SiteNavigation = () => {
                         ) : (
                             <>
                                 <Link to={page.testing} className="link">Почати іспит</Link>
-                                <Link to={page.feedback} className="link">Відгуки</Link>
                             </>
                         )
                     }
