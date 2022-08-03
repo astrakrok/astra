@@ -17,7 +17,7 @@ const ChangePasswordForm = () => {
     }
 
     return (
-        <div className="s-vflex">
+        <div className="s-vflex-center">
             <Input
                 type="password"
                 className="browser-default"

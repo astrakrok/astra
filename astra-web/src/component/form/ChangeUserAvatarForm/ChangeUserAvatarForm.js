@@ -1,12 +1,10 @@
 import {useRef} from "react";
-import {getUser} from "../../../handler/user.handler";
+import AuthConsumer from "../../../context/auth/AuthConsumer";
 import Button from "../../Button/Button";
 import PhotoPreview from "../../PhotoPreview/PhotoPreview";
 import "./ChangeUserAvatarForm.css";
 
 const ChangeUserAvatarForm = () => {
-    const user = getUser();
-    
     const fileInput = useRef(null);
 
     const openFilePicker = () => {
@@ -26,13 +24,21 @@ const ChangeUserAvatarForm = () => {
 
     return (
         <div className="ChangeUserAvatarForm s-hflex-center">
-            <PhotoPreview src={user.pictureUrl} />
-            <div className="s-vflex-center form">
-                <input type="file" ref={fileInput} onChange={changeUserAvatar} />
-                <Button isFilled={true} onClick={openFilePicker}>
-                    Вибрати фото
-                </Button>
-            </div>
+            <AuthConsumer>
+                {
+                    ({userData}) => (
+                        <>
+                            <PhotoPreview src={userData.pictureUrl} />
+                            <div className="s-vflex-center form">
+                                <input type="file" ref={fileInput} onChange={changeUserAvatar} />
+                                <Button isFilled={true} onClick={openFilePicker}>
+                                    Вибрати фото
+                                </Button>
+                            </div>
+                        </>
+                    )
+                }
+            </AuthConsumer>
         </div>
     );
 }
