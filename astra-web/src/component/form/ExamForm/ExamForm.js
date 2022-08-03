@@ -4,12 +4,13 @@ import Input from "../../Input/Input";
 import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 import Spacer from "../../Spacer/Spacer";
 import {create} from "../../../service/exam.service";
-import "./CreateExamForm.css";
+import "./ExamForm.css";
 
-const CreateExamForm = ({
+const ExamForm = ({
+    exam = {},
     onSuccess = () => {}
 }) => {
-    const [title, setTitle] = useState("");
+    const [title, setTitle] = useState(exam.title ? exam.title : "");
     const [loading, setLoading] = useState(false);
 
     const save = async () => {
@@ -30,7 +31,7 @@ const CreateExamForm = ({
             <div className="s-hflex-center">
                 <LoaderBoundary size="small" condition={loading}>
                     <Button isFilled={true} onClick={save}>
-                        Підтвердити
+                        {exam.id ? "Підтвердити" : "Створити"}
                     </Button>
                 </LoaderBoundary>
             </div>
@@ -38,4 +39,4 @@ const CreateExamForm = ({
     );
 }
 
-export default CreateExamForm;
+export default ExamForm;

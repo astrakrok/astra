@@ -4,11 +4,12 @@ import Button from "../../../../Button/Button";
 import InfoText from "../../../../InfoText/InfoText";
 import LoaderBoundary from "../../../../LoaderBoundary/LoaderBoundary";
 import Spacer from "../../../../Spacer/Spacer";
-import {getAll} from "../../../../../service/exam.service";
+import {deleteExam, getAll} from "../../../../../service/exam.service";
 import "./AllExamsPage.css";
-import CreateExamForm from "../../../../form/CreateExamForm/CreateExamForm";
+import ExamForm from "../../../../form/ExamForm/ExamForm";
 import ExamItem from "../../../../ExamItem/ExamItem";
 import withTitle from "../../../../hoc/withTitle/withTitle";
+import ActionDialog from "../../../../popup-component/ActionDialog/ActionDialog";
 
 const AllExamsPage = () => {
     const [exams, setExams] = useState(null);
@@ -29,16 +30,36 @@ const AllExamsPage = () => {
 
     const openCreateExamPopup = setPopupState => {
         setPopupState({
-            bodyGetter: () => <CreateExamForm onSuccess={() => examSaved(setPopupState)} />
+            bodyGetter: () => <ExamForm onSuccess={() => examSaved(setPopupState)} />
         });
+    }
+
+    const onDeletionConfirmed = async examId => {
+        await deleteExam(examId);
+        fetchExams();
     }
 
     const renderExamItem = exam => {
         return (
             <div key={exam.id} className="col xs12 s6 m4 l3">
-                <ExamItem exam={exam} />
+                <PopupConsumer>
+                    {
+                        ({setPopupState}) => (
+                            <ExamItem exam={exam} onDeleteClick={() => showExamDeletionWarning(setPopupState, exam.id)} />
+                        )
+                    }
+                </PopupConsumer>
             </div>
         );
+    }
+
+    const showExamDeletionWarning = (setPopupState, examId) => {
+        setPopupState({
+            bodyGetter: () => <ActionDialog
+                message="Ви впевнені, що хочете видалити цей іспит? Його вже неможливо буде повернути"
+                setPopupState={setPopupState}
+                onConfirm={async () => await onDeletionConfirmed(examId)} />
+        })
     }
 
     return (

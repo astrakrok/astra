@@ -32,4 +32,9 @@ public class ExamServiceImpl implements ExamService {
         .map(examMapper::toDto)
         .collect(Collectors.toList());
   }
+
+  @Override
+  public void delete(Long id) {
+    examRepository.deleteById(id);
+  }
 }

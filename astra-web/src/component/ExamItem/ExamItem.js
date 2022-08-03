@@ -2,7 +2,9 @@ import Tooltipped from "../Tooltipped/Tooltipped";
 import "./ExamItem.css";
 
 const ExamItem = ({
-    exam
+    exam,
+    onUpdateClick = () => {},
+    onDeleteClick = () => {}
 }) => {
     return (
         <div className="ExamItem s-hflex">
@@ -13,7 +15,7 @@ const ExamItem = ({
                 <Tooltipped className="edit s-vflex-center" tooltip="Редагувати" position="top">
                     <i className="material-icons">create</i>
                 </Tooltipped>
-                <Tooltipped className="delete s-vflex-center" tooltip="Видалити" position="top">
+                <Tooltipped className="delete s-vflex-center" tooltip="Видалити" position="top" onClick={onDeleteClick}>
                     <i className="material-icons">close</i>
                 </Tooltipped>
             </div>
