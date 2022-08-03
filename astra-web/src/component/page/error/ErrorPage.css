@@ -1,9 +1,19 @@
-.ErrorPage .message {
-    margin-top: 20px;
-    font-size: 1.8rem;
+.ErrorPage .error {
     max-width: 500px;
+    text-align: left;
+    padding-left: 70px;
 }
 
-.ErrorPage .navigation {
-    margin-top: 30px;
+.ErrorPage .error .title,
+.ErrorPage .error .message {
+    font-size: 1.5rem;
+}
+
+.ErrorPage .error .title {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.ErrorPage .error .navigation {
+    margin-top: 20px;
 }
