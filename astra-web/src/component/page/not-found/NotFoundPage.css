@@ -1,0 +1,25 @@
+.NotFoundPage {
+    background-color: var(--light-primary-color);
+}
+
+.NotFoundPage .code,
+.NotFoundPage .message {
+    color: white;
+    text-shadow: 2px 2px 2px var(--secondary-color);
+}
+
+.NotFoundPage .code {
+    font-size: 12rem;
+    line-height: 1 !important;
+    font-weight: bold;
+    letter-spacing: 10px;
+}
+
+.NotFoundPage .message {
+    font-size: 4rem;
+    text-shadow: 1px 1px 1px var(--secondary-color);
+}
+
+.NotFoundPage .navigation {
+    margin-top: 40px;
+}

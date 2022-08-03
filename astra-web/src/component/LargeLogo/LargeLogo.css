@@ -1,0 +1,14 @@
+.LargeLogo {
+    background-image: url(./logo.png);
+    width: 200px;
+    height: 200px;
+    background-size: 100% 100%;
+    font-size: 9rem;
+    line-height: 200px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-shadow: 0 4px 4px rgb(0 0 0 / 25%);
+    padding-right: 10px;
+}

@@ -6,6 +6,7 @@ import {save} from "../../handler/token.handler";
 import AxiosClient from "../AxiosClient/AxiosClient";
 import AdminLoginPage from "../page/admin/login/AdminLoginPage";
 import PermissionBoundary from "../PermissionBoundary/PermissionBoundary";
+import ErrorBoundary from "../ErrorBoundary/ErrorBoundary";
 import {LayoutRoutes} from "./LayoutRoutes";
 
 export const AppRoutes = () => {
@@ -18,14 +19,16 @@ export const AppRoutes = () => {
     return (
         <AuthProvider>
             <PopupProvider>
-                <AxiosClient>
-                    <PermissionBoundary>
-                        <Routes>
-                            <Route path="/*" element={<LayoutRoutes />} />
-                            <Route path={page.admin.login} element={<AdminLoginPage />} />
-                        </Routes>
-                    </PermissionBoundary>
-                </AxiosClient>
+                <ErrorBoundary>
+                    <AxiosClient>
+                        <PermissionBoundary>
+                            <Routes>
+                                <Route path="/*" element={<LayoutRoutes />} />
+                                <Route path={page.admin.login} element={<AdminLoginPage />} />
+                            </Routes>
+                        </PermissionBoundary>
+                    </AxiosClient>
+                </ErrorBoundary>
             </PopupProvider>
         </AuthProvider>
     );
