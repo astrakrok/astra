@@ -34,6 +34,12 @@ const AllExamsPage = () => {
         });
     }
 
+    const openEditExamPopup = (setPopupState, exam) => {
+        setPopupState({
+            bodyGetter: () => <ExamForm initialExam={exam} onSuccess={() => examSaved(setPopupState)} />
+        });
+    }
+
     const onDeletionConfirmed = async examId => {
         await deleteExam(examId);
         fetchExams();
@@ -45,7 +51,10 @@ const AllExamsPage = () => {
                 <PopupConsumer>
                     {
                         ({setPopupState}) => (
-                            <ExamItem exam={exam} onDeleteClick={() => showExamDeletionWarning(setPopupState, exam.id)} />
+                            <ExamItem
+                                exam={exam}
+                                onUpdateClick={() => openEditExamPopup(setPopupState, exam)}
+                                onDeleteClick={() => showExamDeletionWarning(setPopupState, exam.id)} />
                         )
                     }
                 </PopupConsumer>

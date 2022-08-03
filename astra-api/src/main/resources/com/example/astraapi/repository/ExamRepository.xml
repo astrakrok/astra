@@ -13,6 +13,14 @@
     </select>
 
     <delete id="deleteById">
-        delete from public.exams where id=#{id}
+        delete
+        from public.exams
+        where id = #{id}
     </delete>
+
+    <update id="updateById">
+        update public.exams
+        set title = #{entity.title}
+        where id = #{id}
+    </update>
 </mapper>

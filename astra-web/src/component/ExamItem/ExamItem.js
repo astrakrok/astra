@@ -12,7 +12,7 @@ const ExamItem = ({
                 <div className="title equal-flex s-vflex-center center">
                     {exam.title}
                 </div>
-                <Tooltipped className="edit s-vflex-center" tooltip="Редагувати" position="top">
+                <Tooltipped className="edit s-vflex-center" tooltip="Редагувати" position="top" onClick={onUpdateClick}>
                     <i className="material-icons">create</i>
                 </Tooltipped>
                 <Tooltipped className="delete s-vflex-center" tooltip="Видалити" position="top" onClick={onDeleteClick}>

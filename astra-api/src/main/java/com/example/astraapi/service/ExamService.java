@@ -12,4 +12,6 @@ public interface ExamService {
   List<ResponseExamDto> getAll();
 
   void delete(Long id);
+
+  void update(Long id, RequestExamDto examDto);
 }

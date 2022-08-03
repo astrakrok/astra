@@ -3,21 +3,29 @@ import Button from "../../Button/Button";
 import Input from "../../Input/Input";
 import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 import Spacer from "../../Spacer/Spacer";
-import {create} from "../../../service/exam.service";
+import {create, update} from "../../../service/exam.service";
+import {defaultExam} from "../../../data/default/exam";
 import "./ExamForm.css";
 
 const ExamForm = ({
-    exam = {},
+    initialExam = defaultExam,
     onSuccess = () => {}
 }) => {
-    const [title, setTitle] = useState(exam.title ? exam.title : "");
+    const [exam, setExam] = useState(initialExam);
     const [loading, setLoading] = useState(false);
 
     const save = async () => {
         setLoading(true);
-        const data = await create({title});
+        const data = exam.id ? await update(exam) : await create();
         setLoading(false);
         onSuccess(data);
+    }
+
+    const updateExamTitle = title => {
+        setExam(previous => ({
+            ...previous,
+            title
+        }));
     }
 
     return (
@@ -25,8 +33,8 @@ const ExamForm = ({
             <Input
                 withLabel={false}
                 placeholder="Назва іспиту"
-                value={title}
-                onChange={event => setTitle(event.target.value)} />
+                value={exam.title}
+                onChange={event => updateExamTitle(event.target.value)} />
             <Spacer height={20} />
             <div className="s-hflex-center">
                 <LoaderBoundary size="small" condition={loading}>

@@ -37,4 +37,10 @@ public class ExamServiceImpl implements ExamService {
   public void delete(Long id) {
     examRepository.deleteById(id);
   }
+
+  @Override
+  public void update(Long id, RequestExamDto examDto) {
+    ExamEntity entity = examMapper.toEntity(examDto);
+    examRepository.updateById(id, entity);
+  }
 }
