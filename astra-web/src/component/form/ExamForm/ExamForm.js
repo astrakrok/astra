@@ -3,20 +3,29 @@ import Button from "../../Button/Button";
 import Input from "../../Input/Input";
 import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 import Spacer from "../../Spacer/Spacer";
-import {create} from "../../../service/exam.service";
-import "./CreateExamForm.css";
+import {create, update} from "../../../service/exam.service";
+import {defaultExam} from "../../../data/default/exam";
+import "./ExamForm.css";
 
-const CreateExamForm = ({
+const ExamForm = ({
+    initialExam = defaultExam,
     onSuccess = () => {}
 }) => {
-    const [title, setTitle] = useState("");
+    const [exam, setExam] = useState(initialExam);
     const [loading, setLoading] = useState(false);
 
     const save = async () => {
         setLoading(true);
-        const data = await create({title});
+        const data = exam.id ? await update(exam) : await create();
         setLoading(false);
         onSuccess(data);
+    }
+
+    const updateExamTitle = title => {
+        setExam(previous => ({
+            ...previous,
+            title
+        }));
     }
 
     return (
@@ -24,13 +33,13 @@ const CreateExamForm = ({
             <Input
                 withLabel={false}
                 placeholder="Назва іспиту"
-                value={title}
-                onChange={event => setTitle(event.target.value)} />
+                value={exam.title}
+                onChange={event => updateExamTitle(event.target.value)} />
             <Spacer height={20} />
             <div className="s-hflex-center">
                 <LoaderBoundary size="small" condition={loading}>
                     <Button isFilled={true} onClick={save}>
-                        Підтвердити
+                        {exam.id ? "Підтвердити" : "Створити"}
                     </Button>
                 </LoaderBoundary>
             </div>
@@ -38,4 +47,4 @@ const CreateExamForm = ({
     );
 }
 
-export default CreateExamForm;
+export default ExamForm;

@@ -1,0 +1,8 @@
+.ActionDialog {
+    padding: 0 15px;
+}
+
+.ActionDialog .message {
+    font-size: 1.3rem;
+    margin-bottom: 30px;
+}

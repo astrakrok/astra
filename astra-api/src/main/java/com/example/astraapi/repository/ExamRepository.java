@@ -11,4 +11,10 @@ public interface ExamRepository {
   void save(@Param("entity") ExamEntity examEntity);
 
   List<ExamEntity> getAll();
+
+  void deleteById(@Param("id") Long id);
+
+  void updateById(
+      @Param("id") Long id,
+      @Param("entity") ExamEntity examEntity);
 }

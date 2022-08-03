@@ -10,4 +10,8 @@ public interface ExamService {
   IdDto save(RequestExamDto examDto);
 
   List<ResponseExamDto> getAll();
+
+  void delete(Long id);
+
+  void update(Long id, RequestExamDto examDto);
 }
