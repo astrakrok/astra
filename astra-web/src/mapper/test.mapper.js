@@ -1,8 +1,19 @@
-export const mapToNavigationItem = (test, selected = false) => {
+export const mapTrainingToNavigationItem = (test, selected = false) => {
     return {
         selected,
         status: getTestStatus(test)
     }
+}
+
+export const mapExaminationToNavigationItem = (test, selected = false) => {
+    return {
+        selected,
+        status: (test.status === "pending" || test.status === "failed" || test.status === "processed") ? test.status : getStatusByUserAnswer()
+    }
+}
+
+const getStatusByUserAnswer = userAnswer => {
+    return userAnswer == null ? "" : "processed";
 }
 
 const getTestStatus = test => {

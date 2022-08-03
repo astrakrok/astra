@@ -9,7 +9,9 @@ const LoaderBoundary = props => {
     } = props;
     return (
         condition ? (
-            <Preloader size={size} {...otherProps} />
+            <div {...otherProps}>
+                <Preloader size={size} {...otherProps} />
+            </div>
         ) : (
             children
         )

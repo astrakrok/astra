@@ -13,7 +13,7 @@ const TestingNavigation = ({
         return (
             <div className="wrapper" key={index}>
                 <div className={className} onClick={() => onSelect(index)}>
-                    {order}
+                    {order} {item.status === "failed" ? "!" : ""}
                 </div>
             </div>
         );

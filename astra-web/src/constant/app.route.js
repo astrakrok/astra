@@ -6,5 +6,6 @@ export const route = {
     specializations: `${env.baseApiUrl}/api/v1/specializations`,
     subjects: `${env.baseApiUrl}/api/v1/subjects`,
     exams: `${env.baseApiUrl}/api/v1/exams`,
-    tests: `${env.baseApiUrl}/api/v1/tests`
+    tests: `${env.baseApiUrl}/api/v1/tests`,
+    examinations: `${env.baseApiUrl}/api/v1/examinations`
 };

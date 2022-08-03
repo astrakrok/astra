@@ -1,5 +1,4 @@
 import {app} from "../../constant/app";
-import {page} from "../../constant/page";
 import {socialLinks} from "../../data/mock/social.links";
 import Logo from "../Logo/Logo";
 import Ref from "../Ref/Ref";
@@ -16,8 +15,6 @@ const Footer = () => {
                     <p className="copyright">&copy; {app.name} {new Date().getFullYear()}</p>
                 </div>
                 <div className="s-vflex">
-                    <Ref to={page.team} className="link">Про команду</Ref>
-                    <Ref to={page.joinTeam} className="link">Долучитись до команди</Ref>
                     <Ref to={`mailto:${app.email}`}>{app.email}</Ref>
                     <div className="social-links s-hflex">
                         {

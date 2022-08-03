@@ -1,0 +1,28 @@
+.Alert {
+    border-width: 1px;
+    border-style: solid;
+    font-size: 1.05rem;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.Alert.success {
+    border-color: var(--green-color);
+    background-color: var(--light-green-color);
+}
+
+.Alert.danger {
+    border-color: var(--red-color);
+    background-color: var(--light-red-color);
+}
+
+.Alert.warning {
+    border-color: var(--primary-color);
+    background-color: var(--light-primary-color);
+}
+
+.Alert .link {
+    cursor: pointer;
+    color: var(--secondary-color);
+    font-weight: bold;
+}
