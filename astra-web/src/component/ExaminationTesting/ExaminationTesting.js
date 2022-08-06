@@ -100,7 +100,6 @@ const ExaminationTesting = ({
             status: loadingStatus.completed,
             data: result
         }));
-        console.log("result:", result);
         setResult(result);
     }
 

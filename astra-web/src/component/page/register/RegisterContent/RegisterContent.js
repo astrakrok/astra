@@ -8,13 +8,17 @@ import LoaderBoundary from "../../../LoaderBoundary/LoaderBoundary";
 import IconTitle from "../../../IconTitle/IconTitle";
 import MessagePopupBody from "../../../popup-component/MessagePopupBody/MessagePopupBody";
 import LinkFooter from "../../../popup-component/LinkFooter/LinkFooter";
+import ErrorsArea from "../../../ErrorsArea/ErrorsArea";
 import {loadingStatus} from "../../../../constant/loading.status";
 import {page} from "../../../../constant/page";
 import {signUp} from "../../../../service/auth.service";
+import V from "max-validator";
 import "./RegisterContent.css";
+import {signUpSchema} from "../../../../validation/scheme/signUp";
+import DisplayBoundary from "../../../DisplayBoundary/DisplayBoundary";
 
 const RegisterContent = () => {
-    const [status, setStatus] = useState(loadingStatus.inProgress);
+    const [formState, setFormState] = useState({loading: loadingStatus.inProgress, errors: {}});
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
     const [course, setCourse] = useState("");
@@ -23,8 +27,35 @@ const RegisterContent = () => {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
+    const checkConfirmPassword = (password, confirmPassword) => {
+        if (password === confirmPassword) {
+            return null;
+        }
+        return "Паролі не співпадають";
+    }
+
+    const checkErrors = (validationResult, signUpData) => {
+        const confirmPasswordErrorMessage = validationResult.errors.password ? null : checkConfirmPassword(
+            signUpData.password,
+            signUpData.confirmPassword
+        );
+        const confirmPasswordError = confirmPasswordErrorMessage ? {
+            confirmPassword: [confirmPasswordErrorMessage]
+        } : null;
+        if (validationResult.hasError) {
+            return {
+                ...validationResult.errors,
+                ...confirmPasswordError
+            };
+        }
+        return confirmPasswordError;
+    }
+
     const handleSignUp = async setPopupState => {
-        setStatus(loadingStatus.loading);
+        setFormState({
+            loading: loadingStatus.inProgress,
+            errors: {}
+        });
         const signUpData = {
             name,
             surname,
@@ -34,40 +65,74 @@ const RegisterContent = () => {
             password,
             confirmPassword
         };
-
+        
+        const validationResult = V.validate(signUpData, signUpSchema);
+        const errors = checkErrors(validationResult, signUpData);
+        if (errors) {
+            setFormState({
+                loading: loadingStatus.inProgress,
+                errors: errors
+            });
+            return;
+        }
         const data = await signUp(signUpData);
 
-        if (data.id) {
-            setPopupState({
-                bodyGetter: () => <MessagePopupBody message="Ви були успішно зареєстровані. Ввійдіть, щоб продовжити" />,
-                footerGetter: setPopupState => <LinkFooter title="Увійти" to={page.login} setPopupState={setPopupState} />
+        if (!data.id) {
+            setFormState({
+                loading: loadingStatus.inProgress,
+                errors: data.errors
             });
-            setStatus(loadingStatus.completed);
-        } else {
-            setStatus(loadingStatus.inProgress);
+            return;
         }
+        setPopupState({
+            bodyGetter: () => <MessagePopupBody message="Ви були успішно зареєстровані. Ввійдіть, щоб продовжити" />,
+            footerGetter: setPopupState => <LinkFooter title="Увійти" to={page.login} setPopupState={setPopupState} />
+        });
+        setFormState({
+            loading: loadingStatus.completed,
+            errors: {}
+        })
     }
 
     const getFirstColumn = () => {
         return (
             <div className="optimal register-form">
                 <Input placeholder="Ім'я" value={name} onChange={event => setName(event.target.value)} />
+                <ErrorsArea errors={formState.errors.name} />
+                <Spacer height={20} />
                 <Input placeholder="Прізвище" value={surname} onChange={event => setSurname(event.target.value)} />
+                <ErrorsArea errors={formState.errors.surname} />
+                <Spacer height={20} />
                 <Input placeholder="Курс" value={course} onChange={event => setCourse(event.target.value)} />
+                <Spacer height={20} />
                 <Input placeholder="Навчальний заклад" value={school} onChange={event => setSchool(event.target.value)} />
+                <Spacer height={20} />
                 <Input type="email" className="browser-default" placeholder="E-mail" value={email} onChange={event => setEmail(event.target.value)} />
+                <ErrorsArea errors={formState.errors.email} />
+                <Spacer height={20} />
                 <Input type="password" className="browser-default" placeholder="Пароль" value={password} onChange={event => setPassword(event.target.value)} />
+                <ErrorsArea errors={formState.errors.password} />
+                <Spacer height={20} />
                 <Input type="password" className="browser-default" placeholder="Повторити пароль" value={confirmPassword} onChange={event => setConfirmPassword(event.target.value)} />
+                <ErrorsArea errors={formState.errors.confirmPassword} />
                 <div className="button center">
-                    <LoaderBoundary condition={status === loadingStatus.loading} size="small">
+                    <LoaderBoundary condition={formState.loading === loadingStatus.loading} size="small">
                         {
-                            status === loadingStatus.inProgress ? (
+                            formState.loading === loadingStatus.inProgress ? (
                                 <PopupConsumer>
                                     {
                                         ({setPopupState}) => (
-                                            <Button onClick={() => handleSignUp(setPopupState)}>
-                                                Зареєструватися
-                                            </Button>
+                                            <div className="s-vflex">
+                                                <div className="s-hflex-center">
+                                                    <Button onClick={() => handleSignUp(setPopupState)}>
+                                                        Зареєструватися
+                                                    </Button>
+                                                </div>
+                                                <DisplayBoundary condition={formState.errors.global}>
+                                                    <Spacer height={20} />
+                                                    <ErrorsArea errors={formState.errors.global} />
+                                                </DisplayBoundary>
+                                            </div>
                                         )
                                     }
                                 </PopupConsumer>

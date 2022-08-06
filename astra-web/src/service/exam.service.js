@@ -7,7 +7,12 @@ export const getAll = async () => {
 }
 
 export const create = async exam => {
-    const response = await client.post(route.exams, exam);
+    const response = await client.post(route.exams, exam)
+        .catch(() => ({
+            data: {
+                error: "Сталась несподівано помилка. Перевірте правильність введених даних або спробуйте пізніше"
+            }
+        }));
     return response.data;
 }
 

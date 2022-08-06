@@ -11,6 +11,9 @@ import "./LoginContent.css";
 import {login} from "../../../../service/auth.service";
 import PopupConsumer from "../../../../context/popup/PopupConsumer";
 import MessagePopupBody from "../../../popup-component/MessagePopupBody/MessagePopupBody";
+import V from "max-validator";
+import {loginSchema} from "../../../../validation/scheme/login";
+import ErrorsArea from "../../../ErrorsArea/ErrorsArea";
 
 const LoginContent = ({
     onSuccess = () => {}
@@ -20,16 +23,25 @@ const LoginContent = ({
     const [status, setStatus] = useState(loginStatus.inProgress);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState({});
 
     const handleLogin = async setPopupState => {
+        setErrors({});
+        const data = {email, password};
+        const result = V.validate(data, loginSchema);
+        if (result.hasError) {
+            setErrors(result.errors);
+            return;
+        }
+        
         setStatus(loginStatus.inProgress);
-        const tokenResponse = await login({email, password});
+        const tokenResponse = await login(data);
         if (tokenResponse.accessToken) {
             await onSuccess(tokenResponse);
             navigate(page.home);
         } else {
             setPopupState({
-                bodyGetter: () => <MessagePopupBody message="Під час входу сталася помилка! Перевірте свій E-mail і пароль та спробуйте ще раз" />
+                bodyGetter: () => <MessagePopupBody message="Під час входу сталася помилка! Перевірте свій E-mail і пароль або спробуйте пізніше" />
             })
         }
     }
@@ -38,7 +50,10 @@ const LoginContent = ({
         return (
             <div className="optimal login-form">
                 <Input placeholder="E-mail" value={email} onChange={event => setEmail(event.target.value)} />
+                <ErrorsArea errors={errors.email} />
+                <Spacer height={20} />
                 <Input type="password" className="browser-default" placeholder="Пароль" value={password} onChange={event => setPassword(event.target.value)} />
+                <ErrorsArea errors={errors.password} />
                 <div className="button center">
                     <LoaderBoundary condition={status === loginStatus.processing} size="small">
                         <PopupConsumer>

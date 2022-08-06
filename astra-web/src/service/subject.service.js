@@ -7,6 +7,11 @@ export const getSubjectsDetails = async () => {
 }
 
 export const create = async (subject) => {
-    const response = await client.post(route.subjects, subject);
+    const response = await client.post(route.subjects, subject)
+        .catch(() => ({
+            data: {
+                error: "На жаль, щось пішло не так. Спробуйте пізніше"
+            }
+        }));
     return response.data;
 }
