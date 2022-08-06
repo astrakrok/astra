@@ -12,7 +12,7 @@
     <delete id="delete">
         delete from public.subjects_specializations ss where ss.subject_id=#{subjectId} and ss.specialization_id in (
         <foreach collection="specializationIds" item="specializationId" separator=",">
-            ${specializationId}
+            #{specializationId}
         </foreach>
         )
     </delete>

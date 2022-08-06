@@ -11,6 +11,7 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class ChangeServiceImpl implements ChangeService {
+
   @Override
   public <T> Change<T> getChange(Set<T> oldValues, Set<T> newValues) {
     return new Change<>(
