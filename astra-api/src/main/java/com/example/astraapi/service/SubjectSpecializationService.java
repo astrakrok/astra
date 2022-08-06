@@ -1,7 +1,9 @@
 package com.example.astraapi.service;
 
-import java.util.List;
+import java.util.Set;
 
 public interface SubjectSpecializationService {
-  void save(List<Long> specializationIds, Long subjectId);
+  void save(Set<Long> specializationIds, Long subjectId);
+
+  void updateSpecializationsForSubject(Long subjectId, Set<Long> specializationIds);
 }

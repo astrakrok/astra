@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -18,5 +18,5 @@ public class RequestSubjectDto {
   @TrimmedLength(min = 6, max = 255)
   private String title;
   @Size(min = 1)
-  private List<Long> specializationIds = new ArrayList<>();
+  private Set<Long> specializationIds = new HashSet<>();
 }

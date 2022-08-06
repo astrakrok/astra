@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -12,4 +14,5 @@ import lombok.Setter;
 public class SubjectEntity {
   private Long id;
   private String title;
+  private List<Long> specializationIds;
 }

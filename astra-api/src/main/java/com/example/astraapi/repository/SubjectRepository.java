@@ -12,4 +12,8 @@ public interface SubjectRepository {
   void save(@Param("entity") SubjectEntity subjectEntity);
 
   List<SubjectDetailEntity> getAll();
+
+  void update(
+      @Param("id") Long id,
+      @Param("entity") SubjectEntity subjectEntity);
 }

@@ -38,4 +38,12 @@ public class SubjectServiceImpl implements SubjectService {
         .map(mapper::toDto)
         .collect(Collectors.toList());
   }
+
+  @Override
+  @Transactional
+  public void update(Long id, RequestSubjectDto requestSubjectDto) {
+    service.updateSpecializationsForSubject(id, requestSubjectDto.getSpecializationIds());
+    SubjectEntity subjectEntity = mapper.toEntity(requestSubjectDto);
+    repository.update(id, subjectEntity);
+  }
 }
