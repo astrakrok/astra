@@ -1,25 +1,28 @@
 import {useEffect, useState} from "react";
 import Select from "react-select";
 import {getAll} from "../../../service/specialization.service";
-import {create} from "../../../service/subject.service";
+import {create, update} from "../../../service/subject.service";
 import Button from "../../Button/Button";
 import Input from "../../Input/Input";
 import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 import Spacer from "../../Spacer/Spacer";
 import ErrorsArea from "../../ErrorsArea/ErrorsArea";
+import {defaultSubject} from "../../../data/default/subject";
 import V from "max-validator";
-import "./CreateSubjectForm.css";
+import "./SubjectForm.css";
 import {subjectSchema} from "../../../validation/scheme/subject";
 import DisplayBoundary from "../../DisplayBoundary/DisplayBoundary";
+import {toSelectValue} from "../../../mapper/specialization.mapper";
 
-const CreateSubjectForm = ({
+const SubjectForm = ({
+    subject = defaultSubject,
     onSuccess = () => {}
 }) => {
-    const [title, setTitle] = useState("");
+    const [title, setTitle] = useState(subject.title);
     const [specializations, setSpecializations] = useState(null);
-    const [selectedSpecializations, setSelectedSpecializations] = useState([]);
+    const [selectedSpecializations, setSelectedSpecializations] = useState(subject.specializations.map(toSelectValue));
     const [formState, setFormState] = useState({loading: false, errors: {}});
-    
+
     useEffect(() => {
         const fetchSpecializations = async () => {
             const result = await getAll();
@@ -27,7 +30,7 @@ const CreateSubjectForm = ({
         }
 
         fetchSpecializations();
-    })
+    }, []);
 
     const getSpecializationOptions = () => {
         return (specializations) ? specializations.map(item => ({
@@ -36,8 +39,9 @@ const CreateSubjectForm = ({
         })) : [];
     }
 
-    const createSubject = async () => {
-        const subject = {
+    const save = async () => {
+        const subjectState = {
+            id: subject.id,
             title: title,
             specializationIds: selectedSpecializations.map(item => item.value)
         };
@@ -45,7 +49,7 @@ const CreateSubjectForm = ({
             loading: true,
             errors: {}
         });
-        const validationResult = V.validate(subject, subjectSchema);
+        const validationResult = V.validate(subjectState, subjectSchema);
         if (validationResult.hasError) {
             setFormState({
                 loading: false,
@@ -53,7 +57,7 @@ const CreateSubjectForm = ({
             });
             return;
         }
-        const data = await create(subject);
+        const data = subject.id ? await update(subjectState) : await create(subjectState);
         if (data.error) {
             setFormState({
                 loading: false,
@@ -83,16 +87,17 @@ const CreateSubjectForm = ({
                         onChange={setSelectedSpecializations}
                         className="specializations"
                         placeholder="Спеціалізації"
+                        value={selectedSpecializations}
                         noOptionsMessage={() => "Не залишилось спеціалізацій"} />
                     <ErrorsArea errors={formState.errors.specializationIds} />
                 </LoaderBoundary>
             </div>
             <Spacer height={20}/>
             <div className="s-vflex">
-                <LoaderBoundary condition={formState.loading} size="small">
+                <LoaderBoundary condition={formState.loading} size="small" className="s-hflex-center">
                     <div className="s-hflex-center">
-                        <Button isFilled={true} onClick={() => createSubject()}>
-                            Підтвердити
+                        <Button isFilled={true} onClick={() => save()}>
+                            {subject.id ? "Підтвердити" : "Створити"}
                         </Button>
                     </div>
                     <DisplayBoundary condition={formState.errors.global}>
@@ -107,4 +112,4 @@ const CreateSubjectForm = ({
     );
 }
 
-export default CreateSubjectForm;
+export default SubjectForm;

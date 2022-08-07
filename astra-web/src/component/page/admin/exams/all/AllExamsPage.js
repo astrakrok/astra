@@ -34,7 +34,7 @@ const AllExamsPage = () => {
         });
     }
 
-    const openEditExamPopup = (setPopupState, exam) => {
+    const openUpdateExamPopup = (setPopupState, exam) => {
         setPopupState({
             bodyGetter: () => <ExamForm initialExam={exam} onSuccess={() => examSaved(setPopupState)} />
         });
@@ -53,7 +53,7 @@ const AllExamsPage = () => {
                         ({setPopupState}) => (
                             <ExamItem
                                 exam={exam}
-                                onUpdateClick={() => openEditExamPopup(setPopupState, exam)}
+                                onUpdateClick={() => openUpdateExamPopup(setPopupState, exam)}
                                 onDeleteClick={() => showExamDeletionWarning(setPopupState, exam.id)} />
                         )
                     }
