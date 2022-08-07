@@ -8,7 +8,7 @@
         values (#{entity.question}, #{entity.comment})
     </insert>
 
-    <select id="getAll" resultMap="testDetail">
+    <select id="getAll" resultMap="testShortDetail">
         select t.id       as id,
                t.question as question,
                t.comment  as comment,
@@ -25,7 +25,28 @@
         order by id, examId, specializationId
     </select>
 
-    <select id="getTestingBySpecializationIdAndGoodId" resultMap="trainingTest">
+    <select id="getDetailedTestById" resultMap="testFullDetail">
+        select t.id           as id,
+               t.question     as question,
+               t.comment      as comment,
+               tv.id          as variantId,
+               tv.title       as variantTitle,
+               tv.explanation as variantExplanation,
+               tv.is_correct  as variantIsCorrect,
+               e.id           as examId,
+               e.title        as examTitle,
+               s.id           as subjectId,
+               s.title        as subjectTitle
+        from public.tests t
+                 left join public.tests_exams te on t.id = te.test_id
+                 left join public.exams e on te.exam_id = e.id
+                 left join public.tests_variants tv on t.id = tv.test_id
+                 left join public.tests_subjects ts on t.id = ts.test_id
+                 left join public.subjects s on ts.subject_id = s.id
+        where t.id = #{id}
+    </select>
+
+    <select id="getTestingBySpecializationIdAndGoodId" resultMap="testingTest">
         select *
         from (
                  select *
@@ -60,7 +81,7 @@
         order by random()
     </select>
 
-    <resultMap id="testDetail" type="com.example.astraapi.entity.TestShortDetailEntity">
+    <resultMap id="testShortDetail" type="com.example.astraapi.entity.TestShortDetailEntity">
         <id column="id" property="id"/>
         <result column="question" property="question"/>
         <result column="comment" property="comment"/>
@@ -77,17 +98,40 @@
         </collection>
     </resultMap>
 
-    <resultMap id="trainingTest" type="com.example.astraapi.entity.TestingTestEntity">
-        <id column="id" property="id"/>
+    <resultMap id="testFullDetail" type="com.example.astraapi.entity.TestFullDetailEntity">
+        <id column="id" property="id" />
         <result column="question" property="question" />
         <result column="comment" property="comment" />
 
         <collection property="variants" javaType="List" ofType="com.example.astraapi.entity.TestVariantEntity">
             <id column="variantId" property="id" />
-            <result column="variantTestId" property="testId" />
             <result column="variantTitle" property="title" />
             <result column="variantExplanation" property="explanation" />
             <result column="variantIsCorrect" property="correct" />
+        </collection>
+
+        <collection property="exams" javaType="List" ofType="com.example.astraapi.entity.ExamEntity">
+            <id column="examId" property="id" />
+            <result column="examTitle" property="title" />
+        </collection>
+
+        <collection property="subjects" javaType="List" ofType="com.example.astraapi.entity.SubjectEntity">
+            <id column="subjectId" property="id" />
+            <result column="subjectTitle" property="title" />
+        </collection>
+    </resultMap>
+
+    <resultMap id="testingTest" type="com.example.astraapi.entity.TestingTestEntity">
+        <id column="id" property="id"/>
+        <result column="question" property="question"/>
+        <result column="comment" property="comment"/>
+
+        <collection property="variants" javaType="List" ofType="com.example.astraapi.entity.TestVariantEntity">
+            <id column="variantId" property="id"/>
+            <result column="variantTestId" property="testId"/>
+            <result column="variantTitle" property="title"/>
+            <result column="variantExplanation" property="explanation"/>
+            <result column="variantIsCorrect" property="correct"/>
         </collection>
     </resultMap>
 </mapper>
