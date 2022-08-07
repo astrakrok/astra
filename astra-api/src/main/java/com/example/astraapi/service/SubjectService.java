@@ -10,4 +10,6 @@ public interface SubjectService {
   IdDto save(RequestSubjectDto requestSubjectDto);
 
   List<ResponseSubjectDto> getAll();
+
+  void update(Long id, RequestSubjectDto requestSubjectDto);
 }

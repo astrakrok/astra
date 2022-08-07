@@ -7,6 +7,7 @@
         insert into public.subjects (title)
         values (#{entity.title});
     </insert>
+
     <select id="getAll" resultType="com.example.astraapi.entity.SubjectDetailEntity" resultMap="subjects">
         select sub.id     as subjectId,
                sub.title  as subjectTitle,
@@ -18,6 +19,12 @@
                  join public.specializations spec
                       on spec.id = ss.specialization_id
     </select>
+
+    <update id="update">
+        update public.subjects
+        set title = #{entity.title}
+        where id = #{id}
+    </update>
 
     <resultMap type="com.example.astraapi.entity.SubjectDetailEntity" id="subjects">
         <id column="subjectId" property="id"/>

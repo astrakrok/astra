@@ -8,4 +8,18 @@
             (#{id}, #{subjectId})
         </foreach>
     </insert>
+
+    <delete id="delete">
+        delete from public.subjects_specializations ss where ss.subject_id=#{subjectId} and ss.specialization_id in (
+        <foreach collection="specializationIds" item="specializationId" separator=",">
+            #{specializationId}
+        </foreach>
+        )
+    </delete>
+
+    <select id="getSpecializationIdBySubjectId" resultType="java.lang.Long">
+        select specialization_id
+        from astra.public.subjects_specializations
+        where subject_id = #{subjectId}
+    </select>
 </mapper>
