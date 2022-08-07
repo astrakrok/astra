@@ -1,12 +1,13 @@
-import {Link} from "react-router-dom";
-import {page} from "../../constant/page";
 import Badge from "../Badge/Badge";
 import Tooltipped from "../Tooltipped/Tooltipped";
 import Spacer from "../Spacer/Spacer";
 import Divider from "../Divider/Divider";
 import "./SubjectListItem.css";
 
-const SubjectListItem = ({subject}) => {
+const SubjectListItem = ({
+    subject,
+    onUpdateClick = () => {}
+}) => {
     return (
         <div className="full-width SubjectListItem">
             <div className="s-hflex">
@@ -24,10 +25,8 @@ const SubjectListItem = ({subject}) => {
                 <Divider orientation="none"/>
                 <Spacer width={10}/>
                 <div className="s-vflex-center options">
-                    <Tooltipped tooltip="Редагувати">
-                        <Link to={page.admin.subjects.id(subject.id).edit}>
-                            <i className="material-icons">create</i>
-                        </Link>
+                    <Tooltipped tooltip="Редагувати" onClick={onUpdateClick}>
+                        <i className="material-icons clickable">create</i>
                     </Tooltipped>
                 </div>
             </div>

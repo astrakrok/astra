@@ -6,9 +6,10 @@ import PopupConsumer from "../../../../../context/popup/PopupConsumer";
 import SubjectListItem from "../../../../SubjectListItem/SubjectListItem";
 import Button from "../../../../Button/Button";
 import Spacer from "../../../../Spacer/Spacer";
-import CreateSubjectForm from "../../../../form/CreateSubjectForm/CreateSubjectForm";
+import SubjectForm from "../../../../form/SubjectForm/SubjectForm";
 import "./AllSubjectsPage.css";
 import withTitle from "../../../../hoc/withTitle/withTitle";
+import {defaultSubject} from "../../../../../data/default/subject";
 
 const AllSubjectsPage = () => {
     const [subjects, setSubjects] = useState(null);
@@ -28,17 +29,27 @@ const AllSubjectsPage = () => {
         fetchSubjects();
     }
 
-    const createSubjectForm = setPopupState => {
+    const subjectForm = (setPopupState, subject) => {
         return (
-            <CreateSubjectForm onSuccess={() => onSubjectSaved(setPopupState)} />
+            <SubjectForm onSuccess={() => onSubjectSaved(setPopupState)} subject={subject} />
         );
     }
 
-    const openPopup = setPopupState => {
+    const openPopup = (setPopupState, subject = defaultSubject) => {
         setPopupState({
-            bodyGetter: () => createSubjectForm(setPopupState)
+            bodyGetter: () => subjectForm(setPopupState, subject)
         });
     }
+
+    const renderSubjectItem = item => (
+        <PopupConsumer key={item.id}>
+            {
+                ({setPopupState}) => (
+                    <SubjectListItem subject={item} onUpdateClick={() => openPopup(setPopupState, item)} />
+                )
+            }
+        </PopupConsumer>
+    )
 
     return (
         <div className="AllSubjectsPage container">
@@ -59,7 +70,7 @@ const AllSubjectsPage = () => {
                     <LoaderBoundary condition={subjects == null}>
                         {
                             (subjects && subjects.length > 0) ? (
-                                subjects.map(item => <SubjectListItem key={item.id} subject={item}/>)
+                                subjects.map(renderSubjectItem)
                             ) : (
                                 <InfoText>
                                     Предмети відсутні
