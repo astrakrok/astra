@@ -6,6 +6,7 @@ import com.example.astraapi.dto.ExaminationSearchDto;
 import com.example.astraapi.dto.ExaminationTestDto;
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.RequestTestDto;
+import com.example.astraapi.dto.TestFullDetailDto;
 import com.example.astraapi.dto.TestShortDetailDto;
 import com.example.astraapi.dto.TestVariantDto;
 import com.example.astraapi.dto.TrainingSearchDto;
@@ -24,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,6 +58,12 @@ public class TestServiceImpl implements TestService {
     return testRepository.getAll().stream()
         .map(testMapper::toShortDetailDto)
         .collect(Collectors.toList());
+  }
+
+  @Override
+  public Optional<TestFullDetailDto> getDetailedTest(Long id) {
+    return testRepository.getDetailedTestById(id)
+        .map(testMapper::toFullDetailDto);
   }
 
   @Override
