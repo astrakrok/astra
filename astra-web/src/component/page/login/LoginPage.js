@@ -2,21 +2,15 @@ import CardTemplate from "../../CardTemplate/CardTemplate";
 import withTitle from "../../hoc/withTitle/withTitle";
 import LoginContent from "./LoginContent/LoginContent";
 import LoginHeading from "./LoginHeading/LoginHeading";
-import {userRole} from "../../../constant/user.role";
 import "./LoginPage.css";
 import AuthConsumer from "../../../context/auth/AuthConsumer";
-import {saveJson} from "../../../handler/storage.handler";
-import {localStorageKey} from "../../../constant/local.storage.key";
+import {defaultPictureUrl} from "../../../data/default/user";
 
 const LoginPage = () => {
-    const handleLogin = async (tokenResponse, setUserData) => {
-        saveJson(localStorageKey.tokenData, tokenResponse);
+    const handleLogin = async (user, setUserData) => {
         setUserData({
-            roles: [userRole.user],
-            name: "Andrii",
-            surname: "Bosyk",
-            email: "example@gmail.com",
-            pictureUrl: "/images/avatar-1.png"
+            ...user,
+            pictureUrl: user.pictureUrl || defaultPictureUrl
         });
     }
 
@@ -30,7 +24,7 @@ const LoginPage = () => {
                                 <CardTemplate
                                     heading={<LoginHeading />}
                                     content={<LoginContent
-                                        onSuccess={tokenResponse => handleLogin(tokenResponse, setUserData)} />} />
+                                        onSuccess={user => handleLogin(user, setUserData)} />} />
                             );
                         }
                     }

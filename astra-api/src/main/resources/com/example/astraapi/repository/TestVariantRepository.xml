@@ -5,7 +5,7 @@
     <insert id="save">
         insert into public.tests_variants(test_id, title, explanation, is_correct) values
         <foreach collection="entities" item="entity" separator=",">
-            (#{testId}, #{entity.title}, #{entity.explanation}, #{entity.isCorrect})
+            (#{testId}, #{entity.title}, #{entity.explanation}, #{entity.correct})
         </foreach>
     </insert>
 </mapper>

@@ -2,10 +2,11 @@ import axios from "axios";
 import {httpStatus} from "../constant/http.status";
 import {route} from "../constant/app.route"
 import {clear, save} from "../handler/token.handler";
+import {errorMessage} from "../error/message";
 
 export const login = async loginData => {
     clear();
-    const response = await axios.post(route.token, loginData, {
+    const response = await axios.post(route.auth, loginData, {
         headers: {
             Authorization: null
         }
@@ -16,7 +17,14 @@ export const login = async loginData => {
     }));
     if (response.data.accessToken) {
         const tokens = response.data;
+        const userInfoResponse = await getUserInfo(response.data.accessToken);
+        if (userInfoResponse.data.error) {
+            return userInfoResponse.data;
+        }
         save(tokens);
+        return {
+            user: userInfoResponse.data
+        };
     }
     return response.data;
 }
@@ -38,6 +46,18 @@ export const signUp = async signUpData => {
         });
     });
     return response.data;
+}
+
+const getUserInfo = async accessToken => {
+    return await axios.get(`${route.users}/current`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        }
+    }).catch(() => ({
+        data: {
+            error: errorMessage.UNABLE_TO_GET_USER_INFO
+        }
+    }));
 }
 
 const formErrors = errors => {

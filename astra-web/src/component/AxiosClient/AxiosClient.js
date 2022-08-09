@@ -42,7 +42,7 @@ const AxiosClient = ({children}) => {
     const onResponseError = async error => {
         const request = error.config;
 
-        if (error.response.status === 401 && request.url === route.token) {
+        if (error.response.status === 401 && request.url === route.auth) {
             authorize();
             return Promise.reject(error);
         }

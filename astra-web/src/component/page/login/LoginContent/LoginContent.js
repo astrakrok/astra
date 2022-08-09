@@ -35,9 +35,10 @@ const LoginContent = ({
         }
         
         setStatus(loginStatus.inProgress);
-        const tokenResponse = await login(data);
-        if (tokenResponse.accessToken) {
-            await onSuccess(tokenResponse);
+        const userResponse = await login(data);
+        const user = userResponse.user;
+        if (user) {
+            await onSuccess(user);
             navigate(page.home);
         } else {
             setPopupState({

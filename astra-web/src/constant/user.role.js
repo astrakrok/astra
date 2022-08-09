@@ -1,6 +1,6 @@
 export const userRole = {
-    guest: "guest",
-    user: "user",
-    admin: "admin",
-    superAdmin: "superAdmin"
+    guest: "GUEST",
+    user: "USER",
+    admin: "ADMIN",
+    superAdmin: "SUPER_ADMIN"
 };

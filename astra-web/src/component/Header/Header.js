@@ -5,6 +5,7 @@ import ProfileActions from "./ProfileActions/ProfileActions";
 import AuthConsumer from "../../context/auth/AuthConsumer";
 import Spacer from '../Spacer/Spacer';
 import './Header.css';
+import {isGuest} from '../../handler/user.handler';
 
 const Header = () => {
     return (
@@ -15,16 +16,16 @@ const Header = () => {
                         <Logo responsive="true" />
                         <AuthConsumer>
                             {
-                                ({userData}) => userData ? (
+                                ({userData}) => isGuest(userData) ? (
+                                    <>
+                                        <div className="equal-flex" />
+                                        <AuthControl />
+                                    </>
+                                ) : (
                                     <>
                                         <SiteNavigation />
                                         <Spacer className="hide-on-small-only" width={40} />
                                         <ProfileActions />
-                                    </>
-                                ) : (
-                                    <>
-                                        <div className="equal-flex" />
-                                        <AuthControl />
                                     </>
                                 )
                             }

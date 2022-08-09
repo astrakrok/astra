@@ -1,19 +1,25 @@
 package com.example.astraapi.security;
 
-import com.example.astraapi.config.SecurityProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;
-import org.springframework.security.oauth2.jwt.*;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtDecoders;
+import org.springframework.security.oauth2.jwt.JwtValidators;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+  private final CorsProperties corsProperties;
   private final SecurityProperties properties;
+  private final JwtConverter jwtConverter;
 
   @Bean
   public JwtDecoder jwtDecoder() {
@@ -29,13 +35,25 @@ public class SecurityConfig {
   }
 
   @Bean
-  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http.csrf().disable()
-        .authorizeRequests()
-        .mvcMatchers("/api/v1/auth").permitAll()
-        .mvcMatchers("/api/v1/**").authenticated()
-        .and().oauth2ResourceServer().jwt();
-    return http.build();
+  public CorsConfiguration corsConfigurationSource() {
+    final CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOrigins(corsProperties.getOrigins());
+    configuration.setAllowedMethods(corsProperties.getMethods());
+    configuration.setAllowCredentials(true);
+    configuration.setAllowedHeaders(corsProperties.getHeaders());
+    return configuration;
   }
 
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http, CorsConfiguration corsConfiguration) throws Exception {
+    return http
+        .authorizeHttpRequests(auth -> auth
+            .mvcMatchers("/api/v1/auth").permitAll()
+            .mvcMatchers("/api/v1/**").authenticated())
+        .csrf().disable()
+        .cors().configurationSource(request -> corsConfiguration)
+        .and()
+        .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtConverter)))
+        .build();
+  }
 }

@@ -11,6 +11,11 @@ export const getDetailedTests = async () => {
     return response.data;
 }
 
+export const getFullDetailedTest = async id => {
+    const response = await client.get(`${route.tests}/${id}`);
+    return response.data;
+}
+
 export const getTesting = async options => {
     const url = trainingModeToUrl[options.mode];
     const response = await client.get(url, {
