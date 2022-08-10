@@ -11,4 +11,4 @@ FROM amazoncorretto:11-alpine
 
 COPY --from=build /workspace/app/build/libs/*.jar ./app.jar
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-Xmx256m", "-jar", "app.jar"]
