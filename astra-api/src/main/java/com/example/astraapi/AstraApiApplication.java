@@ -1,6 +1,6 @@
 package com.example.astraapi;
 
-import com.example.astraapi.config.CorsProperties;
+import com.example.astraapi.security.CorsProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

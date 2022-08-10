@@ -4,7 +4,7 @@ const baseUrl = env.baseApiUrl;
 
 export const route = {
     signUp: `${baseUrl}/api/v1/auth/signup`,
-    token: `${baseUrl}/api/v1/auth/token`,
+    auth: `${baseUrl}/api/v1/auth`,
     specializations: `${baseUrl}/api/v1/specializations`,
     subjects: `${baseUrl}/api/v1/subjects`,
     exams: `${baseUrl}/api/v1/exams`,

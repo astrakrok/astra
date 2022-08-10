@@ -4,7 +4,7 @@ import {get, save} from "../handler/token.handler"
 
 export const refreshTokens = async () => {
     const tokenData = get();
-    const response = await axios.put(route.token, {
+    const response = await axios.put(route.auth, {
         refreshToken: tokenData.refreshToken
     });
     const tokens = response.data;

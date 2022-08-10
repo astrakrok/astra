@@ -1,6 +1,7 @@
 package com.example.astraapi.config;
 
 import com.auth0.client.auth.AuthAPI;
+import com.example.astraapi.security.SecurityProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,7 +13,7 @@ public class BeanConfig {
 
   @Bean
   public AuthAPI auth() {
-    return new AuthAPI(properties.getDomain(),
+    return new AuthAPI(properties.getIssuerUri(),
         properties.getClientId(),
         properties.getClientSecret());
   }

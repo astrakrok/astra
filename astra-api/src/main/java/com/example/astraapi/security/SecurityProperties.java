@@ -1,4 +1,4 @@
-package com.example.astraapi.config;
+package com.example.astraapi.security;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +13,6 @@ public class SecurityProperties {
   private String audience;
   private String issuerUri;
   private String scope;
-  private String domain;
   private String clientId;
   private String clientSecret;
 }

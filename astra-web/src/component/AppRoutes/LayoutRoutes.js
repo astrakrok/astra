@@ -14,6 +14,7 @@ import ProfilePage from "../page/profile/ProfilePage";
 import SettingsPage from "../page/settings/SettingsPage";
 import TestingPage from "../page/testing/TestingPage";
 import LogoutPage from "../page/logout/LogoutPage";
+import EditTestPage from "../page/admin/tests/edit/EditTestPage";
 
 export const LayoutRoutes = () => {
     return (
@@ -33,6 +34,7 @@ export const LayoutRoutes = () => {
                     <Route path={page.admin.subjects.all} element={<AllSubjectsPage />} />
                     <Route path={page.admin.tests.all} element={<AllTestsPage />} />
                     <Route path={page.admin.tests.create} element={<CreateTestPage />} />
+                    <Route path={page.admin.tests.id().edit} element={<EditTestPage />} />
                     <Route path={page.admin.exams.all} element={<AllExamsPage />} />
                 </Routes>
             </main>

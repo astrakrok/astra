@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.astraapi.repository.UserRepository">
+    <select id="findUserWithRolesByEmail" resultMap="userWithRoles">
+        select u.id      as id,
+               u.name    as name,
+               u.surname as surname,
+               u.email   as email,
+               u.course  as course,
+               u.school  as school,
+               r.id      as roleId,
+               r.title   as roleTitle
+        from public.users u
+                 left join public.users_roles ur on u.id = ur.user_id
+                 left join public.roles r on r.id = ur.role_id
+        where u.email = #{email}
+    </select>
+
+    <resultMap id="userWithRoles" type="com.example.astraapi.entity.UserEntity">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="surname" property="surname"/>
+        <result column="email" property="email"/>
+        <result column="course" property="course"/>
+        <result column="school" property="school"/>
+
+        <collection property="roles" javaType="java.util.Set" ofType="com.example.astraapi.entity.RoleEntity">
+            <id column="roleId" property="id"/>
+            <result column="roleTitle" property="title"/>
+        </collection>
+    </resultMap>
+</mapper>

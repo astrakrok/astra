@@ -6,16 +6,18 @@ import {localStorageKey} from "../constant/local.storage.key";
 
 export const getUser = () => {
     if (isValidTokenData(getJson(localStorageKey.tokenData))) {
-        return getJson(localStorageKey.user);
+        return getJson(localStorageKey.userData);
     } else {
         return defaultUser;
     }
 }
 
 export const isGuest = () => {
-    return getJson(localStorageKey.localData) == null;
+    return getJson(localStorageKey.userData) == null;
 }
 
 export const isAdmin = user => {
-    return user && user.roles.includes(userRole.admin);
+    return user && (
+        user.roles.includes(userRole.admin) || user.roles.includes(userRole.superAdmin)
+    );
 }
