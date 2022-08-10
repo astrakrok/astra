@@ -16,6 +16,7 @@ import V from "max-validator";
 import "./RegisterContent.css";
 import {signUpSchema} from "../../../../validation/scheme/signUp";
 import DisplayBoundary from "../../../DisplayBoundary/DisplayBoundary";
+import {message} from "../../../../constant/message";
 
 const RegisterContent = () => {
     const [formState, setFormState] = useState({loading: loadingStatus.inProgress, errors: {}});
@@ -53,7 +54,7 @@ const RegisterContent = () => {
 
     const handleSignUp = async setPopupState => {
         setFormState({
-            loading: loadingStatus.inProgress,
+            loading: loadingStatus.loading,
             errors: {}
         });
         const signUpData = {
@@ -85,7 +86,7 @@ const RegisterContent = () => {
             return;
         }
         setPopupState({
-            bodyGetter: () => <MessagePopupBody message="Ви були успішно зареєстровані. Ввійдіть, щоб продовжити" />,
+            bodyGetter: () => <MessagePopupBody message={message.signUpSucceed} />,
             footerGetter: setPopupState => <LinkFooter title="Увійти" to={page.login} setPopupState={setPopupState} />
         });
         setFormState({

@@ -17,6 +17,9 @@ public class TrimmedLengthValidator implements ConstraintValidator<TrimmedLength
 
   @Override
   public boolean isValid(String value, ConstraintValidatorContext context) {
+    if (value == null) {
+      return false;
+    }
     int trimmedValueLength = getTrimmedValueLength(value);
     return trimmedValueLength <= this.max && trimmedValueLength >= this.min;
   }

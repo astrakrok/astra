@@ -48,7 +48,7 @@ public class SecurityConfig {
   public SecurityFilterChain filterChain(HttpSecurity http, CorsConfiguration corsConfiguration) throws Exception {
     return http
         .authorizeHttpRequests(auth -> auth
-            .mvcMatchers("/api/v1/auth").permitAll()
+            .mvcMatchers("/api/v1/auth", "/api/v1/auth/signup").permitAll()
             .mvcMatchers("/api/v1/**").authenticated())
         .csrf().disable()
         .cors().configurationSource(request -> corsConfiguration)
