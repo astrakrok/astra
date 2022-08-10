@@ -2,6 +2,15 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.astraapi.repository.UserRepository">
+    <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into public.users (name, surname, email, course, school)
+        values (#{entity.name},
+                #{entity.surname},
+                #{entity.email},
+                #{entity.course},
+                #{entity.school})
+    </insert>
+
     <select id="findUserWithRolesByEmail" resultMap="userWithRoles">
         select u.id      as id,
                u.name    as name,

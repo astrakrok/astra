@@ -34,7 +34,7 @@ const LoginContent = ({
             return;
         }
         
-        setStatus(loginStatus.inProgress);
+        setStatus(loginStatus.processing);
         const userResponse = await login(data);
         const user = userResponse.user;
         if (user) {
@@ -43,7 +43,8 @@ const LoginContent = ({
         } else {
             setPopupState({
                 bodyGetter: () => <MessagePopupBody message="Під час входу сталася помилка! Перевірте свій E-mail і пароль або спробуйте пізніше" />
-            })
+            });
+            setStatus(loginStatus.inProgress);
         }
     }
 

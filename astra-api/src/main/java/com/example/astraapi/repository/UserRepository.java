@@ -8,5 +8,7 @@ import java.util.Optional;
 
 @Mapper
 public interface UserRepository {
+  void save(@Param("entity") UserEntity entity);
+
   Optional<UserEntity> findUserWithRolesByEmail(@Param("email") String email);
 }
