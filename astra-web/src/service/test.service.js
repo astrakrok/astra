@@ -7,12 +7,12 @@ const trainingModeToUrl = {
 };
 
 export const getDetailedTests = async () => {
-    const response = await client.get(route.tests);
+    const response = await client.get(route.admin.tests);
     return response.data;
 }
 
 export const getFullDetailedTest = async id => {
-    const response = await client.get(`${route.tests}/${id}`);
+    const response = await client.get(`${route.admin.tests}/${id}`);
     return response.data;
 }
 
@@ -26,7 +26,7 @@ export const getTesting = async options => {
 
 export const saveTest = async test => {
     try {
-        const response = await client.post(route.tests, test);
+        const response = await client.post(route.admin.tests, test);
         return response.data;
     } catch (error) {
         return {
