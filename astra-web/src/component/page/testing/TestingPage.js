@@ -18,6 +18,18 @@ const TestingPage = () => {
     const [testing, setTesting] = useState(null);
     const [loading, setLoading] = useState(false);
 
+    const fetchTesting = async options => {
+        setLoading(true);
+        const result = options.mode === "training" ? (
+            await getTraining(options)
+        ) : (
+            await start(options)
+        );
+        setSearchParams(options);
+        setTesting(result);
+        setLoading(false);
+    }
+
     const getOptionsFromSearchParams = () => {
         const options = {
             examId: searchParams.get("examId"),
@@ -45,29 +57,22 @@ const TestingPage = () => {
             return;
         }
 
-        const fetchTesting = async () => {
-            setLoading(true);
-            const result = options.mode === "training" ? (
-                await getTraining(options)
-            ) : (
-                await start(options)
-            );
-            setSearchParams(options);
-            setTesting(result);
-            setLoading(false);
-        }
-
-        fetchTesting();
+        fetchTesting(options);
     }, [searchParams]);
 
     const Form = withSpecializationsAndExams(SelectTestingOptionsForm);
 
     const displayTesting = () => {
-        switch (searchParams.get("mode")) {
+        const options = getOptionsFromSearchParams();
+        switch (options.mode) {
             case "training":
                 return <TrainingTesting tests={testing} />
             case "examination":
-                return <ExaminationTesting id={testing.id} tests={testing.tests} finishedAt={testing.finishedAt} />
+                return <ExaminationTesting
+                    id={testing.id}
+                    tests={testing.tests}
+                    finishedAt={testing.finishedAt}
+                    onRefresh={() => fetchTesting(options)} />
             default:
                 return (
                     <InfoText>

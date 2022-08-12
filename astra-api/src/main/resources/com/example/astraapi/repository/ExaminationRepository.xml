@@ -31,9 +31,19 @@
 
     <select id="exists" resultType="boolean">
         select exists(
-                       select id from public.examinations where id = #{id} and finished_at > #{finishedAtAfter}
+                       select id
+                       from public.examinations
+                       where id = #{id}
+                         and user_id = #{userId}
+                         and finished_at > #{finishedAtAfter}
                    )
     </select>
+
+    <update id="updateFinishedAtById">
+        update public.examinations
+        set finished_at = #{finishedAt}
+        where id = #{id}
+    </update>
 
     <resultMap id="examinationWithAnswers" type="com.example.astraapi.entity.ExaminationEntity">
         <id column="id" property="id"/>

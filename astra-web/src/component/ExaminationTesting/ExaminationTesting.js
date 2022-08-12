@@ -35,7 +35,8 @@ const initialResult = {
 const ExaminationTesting = ({
     id,
     tests,
-    finishedAt
+    finishedAt,
+    onRefresh = () => {}
 }) => {
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -53,6 +54,10 @@ const ExaminationTesting = ({
             tests: tests.map(mapToTestState),
             currentTest: 0
         });
+    }, [id, tests, finishedAt]);
+
+    useEffect(() => {
+        onRefresh();
     }, [value]);
 
     const getMessagePopup = setPopupState => (
@@ -95,7 +100,7 @@ const ExaminationTesting = ({
         }));
         setPopupState();
         await sendUserAnswer(testingState.currentTest);
-        const result = await getResult();
+        const result = await getResult(id);
         setResult(previous => ({
             ...previous,
             status: loadingStatus.completed,

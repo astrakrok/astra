@@ -13,4 +13,6 @@ public interface ExaminationAnswerRepository {
   List<ExaminationAnswerEntity> getAllByExaminationId(@Param("examinationId") Long examinationId);
 
   void update(@Param("entity") ExaminationAnswerEntity entity);
+
+  List<ExaminationAnswerEntity> getDetailedAnswersByExaminationId(@Param("examinationId") Long examinationId);
 }
