@@ -6,7 +6,7 @@ import "./TrainingTest.css";
 
 const TrainingTest = ({
     onAnswer = () => {},
-    checked = true,
+    answered = false,
     order = null,
     testState
 }) => {
@@ -23,8 +23,12 @@ const TrainingTest = ({
         });
     }
 
+    const selectable = () => {
+        return testState.userAnswer == null && !answered;
+    }
+
     const trySelectVariant = variantId => {
-        if (testState.userAnswer != null) {
+        if (!selectable()) {
             return;
         }
         setSelected(variantId);
@@ -33,7 +37,7 @@ const TrainingTest = ({
     const renderVariant = variant => {
         const selectStatus = selected === variant.id ? "selected" : "skipped";
         const correctStatus = variant.isCorrect ? "correct" : "incorrect";
-        const checked = testState.userAnswer == null ? "" : "checked";
+        const checked = selectable() ? "" : "checked";
 
         return (
             <div key={variant.id} className="s-vflex variant">
@@ -42,13 +46,13 @@ const TrainingTest = ({
                     onChange={() => trySelectVariant(variant.id)}
                     contentClassName="title"
                     name={`variant${testState.id}`}
-                    disabled={testState.userAnswer != null}
+                    disabled={!selectable()}
                     checked={selected === variant.id}
                 >
                     <span className="line-break">{variant.title}</span>
                 </RadioButton>
                 {
-                    (testState.userAnswer != null) ? (
+                    !selectable() ? (
                         <div className="explanation line-break">
                             {variant.explanation}
                         </div>
@@ -64,7 +68,7 @@ const TrainingTest = ({
                 {order == null ? "" : order + "."} {testState.question}
             </div>
             {
-                (testState.userAnswer != null) ? (
+                !selectable() ? (
                     <div className="comment line-break">
                         {testState.comment}
                     </div>
@@ -74,7 +78,7 @@ const TrainingTest = ({
                 {
                     testState.variants.map(renderVariant)
                 }
-                <DisplayBoundary condition={checked}>
+                <DisplayBoundary condition={!answered}>
                     <div className="s-hflex-end" style={{marginTop: 20}}>
                         <Button onClick={check} disabled={testState.userAnswer != null || selected == null}>
                             Перевірити

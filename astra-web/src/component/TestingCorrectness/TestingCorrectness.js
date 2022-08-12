@@ -5,7 +5,7 @@ const TestingCorrectness = ({tests}) => {
     return (
         <>
             {
-                tests.map((test, index) => <TrainingTest key={index} testState={test} checked={false} order={index + 1} />)
+                tests.map((test, index) => <TrainingTest key={index} testState={test} answered={true} order={index + 1} />)
             }
         </>
     );
