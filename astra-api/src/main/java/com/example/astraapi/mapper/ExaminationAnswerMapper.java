@@ -1,7 +1,9 @@
 package com.example.astraapi.mapper;
 
+import com.example.astraapi.dto.AnsweredTestDto;
 import com.example.astraapi.dto.ExaminationAnswerDto;
 import com.example.astraapi.entity.ExaminationAnswerEntity;
+import com.example.astraapi.entity.TestingTestEntity;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
@@ -11,4 +13,6 @@ public interface ExaminationAnswerMapper {
   ExaminationAnswerEntity toEntity(ExaminationAnswerDto dto);
 
   ExaminationAnswerDto toDto(ExaminationAnswerEntity entity);
+
+  AnsweredTestDto toAnsweredTestDto(TestingTestEntity test, Long userAnswer);
 }

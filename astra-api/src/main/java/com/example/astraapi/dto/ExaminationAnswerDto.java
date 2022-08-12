@@ -18,7 +18,6 @@ public class ExaminationAnswerDto {
   @NotNull
   @Positive
   private Long testId;
-  @NotNull
   @Positive
   private Long variantId;
 }

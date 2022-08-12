@@ -2,6 +2,7 @@ package com.example.astraapi.service.impl;
 
 import com.example.astraapi.config.ExaminationProperties;
 import com.example.astraapi.dto.ExaminationAnswerDto;
+import com.example.astraapi.dto.ExaminationResultDto;
 import com.example.astraapi.dto.ExaminationSearchDto;
 import com.example.astraapi.dto.ExaminationStateDto;
 import com.example.astraapi.dto.ExaminationTestDto;
@@ -53,10 +54,19 @@ public class ExaminationServiceImpl implements ExaminationService {
   }
 
   @Override
-  public void updateAnswer(Long examinationId, ExaminationAnswerDto examinationAnswerDto) {
-    validateExamination(examinationId);
-    examinationAnswerDto.setExaminationId(examinationId);
+  public void updateAnswer(Long id, ExaminationAnswerDto examinationAnswerDto) {
+    validateExamination(id);
+    examinationAnswerDto.setExaminationId(id);
     examinationAnswerService.updateAnswer(examinationAnswerDto);
+  }
+
+  @Override
+  @Transactional
+  public ExaminationResultDto finish(Long id) {
+    validateExamination(id);
+    LocalDateTime finishedAt = timeZoneService.toUtc(LocalDateTime.now());
+    examinationRepository.updateFinishedAtById(id, finishedAt);
+    return examinationAnswerService.getResult(id);
   }
 
   private ExaminationEntity createExamination(ExaminationSearchDto searchDto) {
@@ -78,9 +88,10 @@ public class ExaminationServiceImpl implements ExaminationService {
     return examinationAnswerService.getExaminationTests(answers);
   }
 
-  private void validateExamination(Long examinationId) {
+  private void validateExamination(Long id) {
+    Long userId = authContext.getUser().getId();
     LocalDateTime now = timeZoneService.toUtc(LocalDateTime.now());
-    if (!examinationRepository.exists(examinationId, now)) {
+    if (!examinationRepository.exists(id, userId, now)) {
       throw new IllegalArgumentException("You cannot modify answers for expired or non-existing examination");
     }
   }

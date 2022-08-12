@@ -19,5 +19,10 @@ public interface ExaminationRepository {
 
   boolean exists(
       @Param("id") Long id,
+      @Param("userId") Long userId,
       @Param("finishedAtAfter") LocalDateTime finishedAtAfter);
+
+  void updateFinishedAtById(
+      @Param("id") Long id,
+      @Param("finishedAt") LocalDateTime finishedAt);
 }

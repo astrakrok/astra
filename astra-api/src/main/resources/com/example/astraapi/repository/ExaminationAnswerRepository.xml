@@ -12,7 +12,7 @@
         </foreach>
     </insert>
 
-    <select id="getAllByExaminationId" resultMap="answersWithTests">
+    <select id="getAllByExaminationId" resultMap="answerWithTest">
         select ea.id             as id,
                ea.examination_id as examinationId,
                ea.variant_id     as variantId,
@@ -35,7 +35,26 @@
           and test_id = #{entity.testId}
     </update>
 
-    <resultMap id="answersWithTests" type="com.example.astraapi.entity.ExaminationAnswerEntity">
+    <select id="getDetailedAnswersByExaminationId" resultMap="detailedAnswer">
+        select ea.id             as id,
+               ea.examination_id as examinationId,
+               ea.variant_id     as variantId,
+               ea.test_id        as testId,
+               t.id              as testId,
+               t.question        as testQuestion,
+               t.comment         as testComment,
+               tv.id             as tvId,
+               tv.test_id        as tvTestId,
+               tv.title          as tvTitle,
+               tv.explanation    as tvExplanation,
+               tv.is_correct     as tvIsCorrect
+        from public.examinations_answers ea
+                 left join public.tests t on t.id = ea.test_id
+                 left join public.tests_variants tv on tv.test_id = t.id
+        where ea.examination_id = #{examinationId}
+    </select>
+
+    <resultMap id="answerWithTest" type="com.example.astraapi.entity.ExaminationAnswerEntity">
         <id column="id" property="id"/>
         <result column="examinationId" property="examinationId"/>
         <result column="variantId" property="variantId"/>
@@ -50,6 +69,28 @@
                 <id column="tvId" property="id"/>
                 <result column="tvTestId" property="testId"/>
                 <result column="tvTitle" property="title"/>
+            </collection>
+        </association>
+    </resultMap>
+
+    <resultMap id="detailedAnswer" type="com.example.astraapi.entity.ExaminationAnswerEntity">
+        <id column="id" property="id"/>
+        <result column="examinationId" property="examinationId"/>
+        <result column="variantId" property="variantId"/>
+        <result column="testId" property="testId"/>
+
+        <association property="test" javaType="com.example.astraapi.entity.TestingTestEntity">
+            <id column="testId" property="id"/>
+            <result column="testQuestion" property="question"/>
+            <result column="testComment" property="comment"/>
+
+            <collection property="variants" javaType="java.util.List"
+                        ofType="com.example.astraapi.entity.TestVariantEntity">
+                <id column="tvId" property="id"/>
+                <result column="tvTestId" property="testId"/>
+                <result column="tvTitle" property="title"/>
+                <result column="tvExplanation" property="explanation"/>
+                <result column="tvIsCorrect" property="correct"/>
             </collection>
         </association>
     </resultMap>

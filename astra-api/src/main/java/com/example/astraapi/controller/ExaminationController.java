@@ -1,6 +1,7 @@
 package com.example.astraapi.controller;
 
 import com.example.astraapi.dto.ExaminationAnswerDto;
+import com.example.astraapi.dto.ExaminationResultDto;
 import com.example.astraapi.dto.ExaminationSearchDto;
 import com.example.astraapi.dto.ExaminationStateDto;
 import com.example.astraapi.meta.Endpoint;
@@ -32,5 +33,10 @@ public class ExaminationController {
       @Valid @RequestBody ExaminationAnswerDto examinationAnswerDto
   ) {
     examinationService.updateAnswer(id, examinationAnswerDto);
+  }
+
+  @PutMapping("/{id}/result")
+  public ExaminationResultDto finishTest(@PathVariable("id") Long id) {
+    return examinationService.finish(id);
   }
 }

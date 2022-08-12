@@ -1,8 +1,11 @@
 package com.example.astraapi.service.impl;
 
+import com.example.astraapi.dto.AnsweredTestDto;
 import com.example.astraapi.dto.ExaminationAnswerDto;
+import com.example.astraapi.dto.ExaminationResultDto;
 import com.example.astraapi.dto.ExaminationSearchDto;
 import com.example.astraapi.dto.ExaminationTestDto;
+import com.example.astraapi.dto.TestVariantDto;
 import com.example.astraapi.entity.ExaminationAnswerEntity;
 import com.example.astraapi.mapper.ExaminationAnswerMapper;
 import com.example.astraapi.repository.ExaminationAnswerRepository;
@@ -15,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -55,6 +59,17 @@ public class ExaminationAnswerServiceImpl implements ExaminationAnswerService {
     examinationAnswerRepository.update(examinationAnswerEntity);
   }
 
+  @Override
+  public ExaminationResultDto getResult(Long examinationId) {
+    List<ExaminationAnswerEntity> answerEntities = examinationAnswerRepository.getDetailedAnswersByExaminationId(examinationId);
+    List<AnsweredTestDto> answeredTests = getAnsweredTests(answerEntities);
+    return new ExaminationResultDto(
+        answeredTests,
+        getCorrectCount(answeredTests),
+        (long) answeredTests.size()
+    );
+  }
+
   private List<Long> getTestsIds(List<ExaminationAnswerDto> answers) {
     return answers.stream()
         .map(ExaminationAnswerDto::getTestId)
@@ -63,7 +78,7 @@ public class ExaminationAnswerServiceImpl implements ExaminationAnswerService {
 
   private Map<Long, Long> getTestIdToUserAnswerMap(List<ExaminationAnswerDto> answers) {
     Map<Long, Long> testIdToUserAnswer = new HashMap<>();
-    for (ExaminationAnswerDto answer: answers) {
+    for (ExaminationAnswerDto answer : answers) {
       testIdToUserAnswer.put(
           answer.getTestId(),
           answer.getVariantId()
@@ -76,5 +91,31 @@ public class ExaminationAnswerServiceImpl implements ExaminationAnswerService {
     Long testId = test.getId();
     Long userAnswer = testIdToUSerAnswer.get(testId);
     test.setUserAnswer(userAnswer);
+  }
+
+  private List<AnsweredTestDto> getAnsweredTests(List<ExaminationAnswerEntity> entities) {
+    return entities.stream()
+        .map(entity -> examinationAnswerMapper.toAnsweredTestDto(entity.getTest(), entity.getVariantId()))
+        .collect(Collectors.toList());
+  }
+
+  private Long getCorrectCount(List<AnsweredTestDto> answers) {
+    return answers.stream()
+        .filter(this::isCorrectUserAnswer)
+        .count();
+  }
+
+  private boolean isCorrectUserAnswer(AnsweredTestDto answer) {
+    return Objects.equals(
+        answer.getUserAnswer(),
+        getCorrectTestVariantId(answer.getVariants()));
+  }
+
+  private Long getCorrectTestVariantId(List<TestVariantDto> variants) {
+    return variants.stream()
+        .filter(TestVariantDto::isCorrect)
+        .findFirst()
+        .map(TestVariantDto::getId)
+        .orElse(null);
   }
 }
