@@ -1,4 +1,4 @@
-package com.example.astraapi.controller;
+package com.example.astraapi.controller.admin;
 
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.RequestSubjectDto;
@@ -18,9 +18,9 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping(Endpoint.SUBJECTS)
+@RequestMapping(Endpoint.ADMIN_SUBJECTS)
 @RequiredArgsConstructor
-public class SubjectController {
+public class AdminSubjectController {
   private final SubjectService service;
 
   @PostMapping

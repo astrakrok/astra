@@ -3,12 +3,12 @@ import {errorMessage} from "../error/message";
 import {client} from "../shared/js/axios";
 
 export const getSubjectsDetails = async () => {
-    const response = await client.get(route.subjects);
+    const response = await client.get(route.admin.subjects);
     return response.data;
 }
 
 export const create = async subject => {
-    const response = await client.post(route.subjects, subject)
+    const response = await client.post(route.admin.subjects, subject)
         .catch(() => ({
             data: {
                 error: errorMessage.UNEXPECTED_ERROR
@@ -18,7 +18,7 @@ export const create = async subject => {
 }
 
 export const update = async subject => {
-    const response = await client.put(`${route.subjects}/${subject.id}`, subject)
+    const response = await client.put(`${route.admin.subjects}/${subject.id}`, subject)
         .catch(() => ({
             data: {
                 error: errorMessage.UNEXPECTED_ERROR

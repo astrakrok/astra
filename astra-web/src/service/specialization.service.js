@@ -7,6 +7,6 @@ export const getAll = async () => {
 }
 
 export const create = async specialization => {
-    const response = await client.post(route.specializations, specialization);
+    const response = await client.post(route.admin.specializations, specialization);
     return response.data;
 }

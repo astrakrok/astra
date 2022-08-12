@@ -2,6 +2,7 @@ package com.example.astraapi.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
@@ -46,10 +47,29 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http, CorsConfiguration corsConfiguration) throws Exception {
+    String[] authorized = {"USER", "ADMIN", "SUPER_ADMIN"};
+    String[] admin = {"ADMIN", "SUPER_ADMIN"};
+    String[] user = {"USER"};
     return http
         .authorizeHttpRequests(auth -> auth
-            .mvcMatchers("/api/v1/auth", "/api/v1/auth/signup").permitAll()
-            .mvcMatchers("/api/v1/**").authenticated())
+            .mvcMatchers(
+                "/api/v1/auth",
+                "/api/v1/auth/signup")
+            .permitAll()
+            .mvcMatchers(
+                "/api/v1/admin/**")
+            .hasAnyAuthority(admin)
+            .mvcMatchers(
+                HttpMethod.GET,
+                "/api/v1/exams",
+                "/api/v1/specializations",
+                "/api/v1/subjects")
+            .hasAnyAuthority(authorized)
+            .mvcMatchers(
+                "/api/v1/users/current")
+            .hasAnyAuthority(authorized)
+            .mvcMatchers("/api/v1/**")
+            .hasAnyRole(user))
         .csrf().disable()
         .cors().configurationSource(request -> corsConfiguration)
         .and()
