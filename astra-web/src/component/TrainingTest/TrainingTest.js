@@ -45,11 +45,11 @@ const TrainingTest = ({
                     disabled={testState.userAnswer != null}
                     checked={selected === variant.id}
                 >
-                    {variant.title}
+                    <span className="line-break">{variant.title}</span>
                 </RadioButton>
                 {
                     (testState.userAnswer != null) ? (
-                        <div className="explanation">
+                        <div className="explanation line-break">
                             {variant.explanation}
                         </div>
                     ) : null
@@ -60,12 +60,12 @@ const TrainingTest = ({
 
     return (
         <div className="TrainingTest">
-            <div className="question">
+            <div className="question line-break">
                 {order == null ? "" : order + "."} {testState.question}
             </div>
             {
                 (testState.userAnswer != null) ? (
-                    <div className="comment">
+                    <div className="comment line-break">
                         {testState.comment}
                     </div>
                 ) : null

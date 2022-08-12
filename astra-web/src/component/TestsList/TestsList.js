@@ -34,7 +34,7 @@ const TestsList = ({tests}) => {
         return (
             <tr key={test.id} className="clickable" onClick={() => openEditTestPage(test)}>
                 <td className="center">{index + 1}</td>
-                <td>{test.question}</td>
+                <td className="line-break">{test.question}</td>
                 <td>
                     <div className="s-vflex-center">
                         {

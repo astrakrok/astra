@@ -18,8 +18,11 @@ public interface TestRepository {
 
   Optional<TestFullDetailEntity> getDetailedTestById(@Param("id") Long id);
 
-  List<TestingTestEntity> getTestingBySpecializationIdAndGoodId(
+  List<TestingTestEntity> getTestingBySpecializationIdAndExamId(
       @Param("specializationId") Long specializationId,
       @Param("examId") Long examId,
       @Param("count") Long count);
+
+  List<TestingTestEntity> getTestsByIds(
+      @Param("ids") List<Long> ids);
 }

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.astraapi.repository.ExaminationRepository">
+    <insert id="save" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
+        insert into public.examinations (user_id, specialization_id, exam_id, finished_at)
+        values (#{entity.userId},
+                #{entity.specializationId},
+                #{entity.examId},
+                #{entity.finishedAt})
+    </insert>
+
+    <select id="findExaminationWithAnswers" resultMap="examinationWithAnswers">
+        select e.id                as id,
+               e.user_id           as userId,
+               e.specialization_id as specializationId,
+               e.exam_id           as examId,
+               e.finished_at       as finishedAt,
+               ea.id               as eaId,
+               ea.test_id          as eaTestId,
+               ea.variant_id       as eaVariantId
+        from public.examinations e
+                 left join public.examinations_answers ea on ea.examination_id = e.id
+        where e.user_id = #{userId}
+          and e.specialization_id = #{specializationId}
+          and e.exam_id = #{examId}
+          <![CDATA[
+          and e.finished_at > #{finishedAt}
+        ]]>
+    </select>
+
+    <select id="exists" resultType="boolean">
+        select exists(
+                       select id from public.examinations where id = #{id} and finished_at > #{finishedAtAfter}
+                   )
+    </select>
+
+    <resultMap id="examinationWithAnswers" type="com.example.astraapi.entity.ExaminationEntity">
+        <id column="id" property="id"/>
+        <result column="userId" property="userId"/>
+        <result column="specializationId" property="specializationId"/>
+        <result column="examId" property="examId"/>
+        <result column="finishedAt" property="finishedAt"/>
+
+        <collection property="answers" javaType="java.util.List"
+                    ofType="com.example.astraapi.entity.ExaminationAnswerEntity">
+            <id column="eaId" property="id"/>
+            <result column="eaTestId" property="testId"/>
+            <result column="eaVariantId" property="variantId"/>
+        </collection>
+    </resultMap>
+</mapper>

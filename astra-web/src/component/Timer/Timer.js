@@ -2,8 +2,9 @@ import useTimer from "../../hook/useTimer";
 import {addZeroToBegin} from "../../handler/time.handler";
 import "./Timer.css";
 
-const Timer = ({duration, onExpire}) => {
-    const [hours, minutes, seconds] = useTimer(duration, onExpire);
+// finishedAt must be UTC timestamp
+const Timer = ({finishedAt, onExpire}) => {
+    const [hours, minutes, seconds] = useTimer(finishedAt, onExpire);
 
     return (
         <div className="Timer s-hflex">

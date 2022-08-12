@@ -1,6 +1,20 @@
 import {route} from "../constant/app.route";
 import {client} from "../shared/js/axios";
 
+const mapDateToSeconds = timestamp => {
+    const milliseconds = new Date(timestamp + "Z").getTime();
+    return Math.round(milliseconds / 1000);
+}
+
+export const start = async data => {
+    const response = await client.post(route.examinations, data);
+    const result = response.data;
+    return {
+        ...result,
+        finishedAt: mapDateToSeconds(result.finishedAt)
+    };
+}
+
 export const getResult = (examId, specializationId) => {
     return {
         tests: [
@@ -106,8 +120,9 @@ export const getResult = (examId, specializationId) => {
     };
 }
 
-export const updateAnswer = async data => {
-    const response = await client.put(route.examinations, data)
+export const updateAnswer = async (id, data) => {
+    const url = route.examinations + "/" + id;
+    const response = await client.put(url, data)
         .catch(error => ({
             data: {
                 error

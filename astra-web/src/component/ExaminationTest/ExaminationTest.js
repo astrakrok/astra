@@ -23,8 +23,9 @@ const ExaminationTest = ({
     );
 
     const checkStatusForAlert = () => ["pending", "processed", "failed"].includes(test.status);
+    
     const renderLastAnswer = test => {
-        if (test.lastProcessed === null) {
+        if (test.lastProcessed == null) {
             return null;
         }
         return "Остання зарахована відповідь була - " + (test.variants

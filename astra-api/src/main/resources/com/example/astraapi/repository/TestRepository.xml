@@ -46,7 +46,7 @@
         where t.id = #{id}
     </select>
 
-    <select id="getTestingBySpecializationIdAndGoodId" resultMap="testingTest">
+    <select id="getTestingBySpecializationIdAndExamId" resultMap="testingTest">
         select *
         from (
                  select *
@@ -81,6 +81,23 @@
         order by random()
     </select>
 
+    <select id="getTestsByIds" resultMap="testingTest">
+        select
+        t.id as id,
+        t.question as question,
+        tv.id as variantId,
+        tv.test_id as variantTestId,
+        tv.title as variantTitle
+        from public.tests t
+        left join public.tests_variants tv on t.id = tv.test_id
+        where t.id in (
+        <foreach collection="ids" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+        order by random()
+    </select>
+
     <resultMap id="testShortDetail" type="com.example.astraapi.entity.TestShortDetailEntity">
         <id column="id" property="id"/>
         <result column="question" property="question"/>
@@ -99,25 +116,25 @@
     </resultMap>
 
     <resultMap id="testFullDetail" type="com.example.astraapi.entity.TestFullDetailEntity">
-        <id column="id" property="id" />
-        <result column="question" property="question" />
-        <result column="comment" property="comment" />
+        <id column="id" property="id"/>
+        <result column="question" property="question"/>
+        <result column="comment" property="comment"/>
 
         <collection property="variants" javaType="List" ofType="com.example.astraapi.entity.TestVariantEntity">
-            <id column="variantId" property="id" />
-            <result column="variantTitle" property="title" />
-            <result column="variantExplanation" property="explanation" />
-            <result column="variantIsCorrect" property="correct" />
+            <id column="variantId" property="id"/>
+            <result column="variantTitle" property="title"/>
+            <result column="variantExplanation" property="explanation"/>
+            <result column="variantIsCorrect" property="correct"/>
         </collection>
 
         <collection property="exams" javaType="List" ofType="com.example.astraapi.entity.ExamEntity">
-            <id column="examId" property="id" />
-            <result column="examTitle" property="title" />
+            <id column="examId" property="id"/>
+            <result column="examTitle" property="title"/>
         </collection>
 
         <collection property="subjects" javaType="List" ofType="com.example.astraapi.entity.SubjectEntity">
-            <id column="subjectId" property="id" />
-            <result column="subjectTitle" property="title" />
+            <id column="subjectId" property="id"/>
+            <result column="subjectTitle" property="title"/>
         </collection>
     </resultMap>
 
