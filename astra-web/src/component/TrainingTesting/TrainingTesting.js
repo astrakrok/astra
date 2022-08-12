@@ -10,6 +10,8 @@ import InfoText from "../InfoText/InfoText";
 import TestingControl from "../TestingControl/TestingControl";
 import TestingNavigation from "../TestingNavigation/TestingNavigation";
 import {mapTrainingToNavigationItem} from "../../mapper/test.mapper";
+import TestingCorrectness from "../TestingCorrectness/TestingCorrectness";
+import InfoHeader from "../InfoHeader/InfoHeader";
 
 const initialStatus = {
     correctCount: 0,
@@ -112,6 +114,9 @@ const TrainingTesting = ({tests}) => {
                         <TestingStatistic statistic={getTestingStatistic()} />
                         <Spacer height={50} />
                         <TestingControl onNew={startNew} onRepeat={restartTesting} />
+                        <Spacer height={100} />
+                        <InfoHeader text="Ваш результат" />
+                        <TestingCorrectness tests={testingState} />
                     </div>
                 ) : (
                     <>
