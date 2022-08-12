@@ -20,6 +20,7 @@ import TestCompletionWarning from "../popup-component/TestCompletionWarning/Test
 import LoaderBoundary from "../LoaderBoundary/LoaderBoundary";
 import {loadingStatus} from "../../constant/loading.status";
 import InfoText from "../InfoText/InfoText";
+import {scrollToTop} from "../../handler/scroll.handler";
 
 const mapToTestState = test => ({
     ...test,
@@ -106,6 +107,7 @@ const ExaminationTesting = ({
             status: loadingStatus.completed,
             data: result
         }));
+        scrollToTop();
         setResult(result);
     }
 

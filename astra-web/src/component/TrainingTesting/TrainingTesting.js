@@ -12,6 +12,7 @@ import TestingNavigation from "../TestingNavigation/TestingNavigation";
 import {mapTrainingToNavigationItem} from "../../mapper/test.mapper";
 import TestingCorrectness from "../TestingCorrectness/TestingCorrectness";
 import InfoHeader from "../InfoHeader/InfoHeader";
+import {scrollToTop} from "../../handler/scroll.handler";
 
 const initialStatus = {
     correctCount: 0,
@@ -76,6 +77,7 @@ const TrainingTesting = ({tests}) => {
         if (currentTest + 1 < testingState.length) {
             setCurrentTest(previousCurrentTest => previousCurrentTest + 1);
         } else {
+            scrollToTop();
             setStatus(previousStatus => ({
                 ...previousStatus,
                 stage: "completed"
