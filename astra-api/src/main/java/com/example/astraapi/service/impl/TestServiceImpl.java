@@ -1,7 +1,6 @@
 package com.example.astraapi.service.impl;
 
 import com.example.astraapi.config.ExaminationProperties;
-import com.example.astraapi.dto.ExaminationDto;
 import com.example.astraapi.dto.ExaminationSearchDto;
 import com.example.astraapi.dto.ExaminationTestDto;
 import com.example.astraapi.dto.IdDto;
@@ -68,7 +67,7 @@ public class TestServiceImpl implements TestService {
 
   @Override
   public List<TrainingTestDto> getTrainingTests(TrainingSearchDto searchDto) {
-    return testRepository.getTestingBySpecializationIdAndGoodId(
+    return testRepository.getTestingBySpecializationIdAndExamId(
             searchDto.getSpecializationId(),
             searchDto.getExamId(),
             searchDto.getCount()).stream()
@@ -77,19 +76,18 @@ public class TestServiceImpl implements TestService {
   }
 
   @Override
-  public ExaminationDto getExamination(ExaminationSearchDto searchDto) {
-    // TODO track user starting an examination
-    return new ExaminationDto(
-        getExaminationTests(searchDto),
-        examinationProperties.getDurationInMinutes()
-    );
-  }
-
-  private List<ExaminationTestDto> getExaminationTests(ExaminationSearchDto searchDto) {
-    return testRepository.getTestingBySpecializationIdAndGoodId(
+  public List<ExaminationTestDto> getExaminationTests(long count, ExaminationSearchDto searchDto) {
+    return testRepository.getTestingBySpecializationIdAndExamId(
             searchDto.getSpecializationId(),
             searchDto.getExamId(),
-            examinationProperties.getCount().longValue()).stream()
+            count).stream()
+        .map(testMapper::toExaminationDto)
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<ExaminationTestDto> getExaminationTests(List<Long> ids) {
+    return testRepository.getTestsByIds(ids).stream()
         .map(testMapper::toExaminationDto)
         .collect(Collectors.toList());
   }

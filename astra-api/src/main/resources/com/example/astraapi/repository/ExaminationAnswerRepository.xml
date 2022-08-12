@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.astraapi.repository.ExaminationAnswerRepository">
+    <insert id="saveAll">
+        insert into public.examinations_answers (examination_id, test_id, variant_id)
+        values
+        <foreach collection="entities" item="entity" open="(" separator="),(" close=")">
+            #{entity.examinationId},
+            #{entity.testId},
+            #{entity.variantId}
+        </foreach>
+    </insert>
+
+    <select id="getAllByExaminationId" resultMap="answersWithTests">
+        select ea.id             as id,
+               ea.examination_id as examinationId,
+               ea.variant_id     as variantId,
+               ea.test_id        as testId,
+               t.id              as testId,
+               t.question        as testQuestion,
+               tv.id             as tvId,
+               tv.test_id        as tvTestId,
+               tv.title          as tvTitle
+        from public.examinations_answers ea
+                 left join public.tests t on t.id = ea.test_id
+                 left join public.tests_variants tv on tv.test_id = t.id
+        where ea.examination_id = #{examinationId}
+    </select>
+
+    <update id="update">
+        update public.examinations_answers
+        set variant_id = #{entity.variantId}
+        where examination_id = #{entity.examinationId}
+          and test_id = #{entity.testId}
+    </update>
+
+    <resultMap id="answersWithTests" type="com.example.astraapi.entity.ExaminationAnswerEntity">
+        <id column="id" property="id"/>
+        <result column="examinationId" property="examinationId"/>
+        <result column="variantId" property="variantId"/>
+        <result column="testId" property="testId"/>
+
+        <association property="test" javaType="com.example.astraapi.entity.TestingTestEntity">
+            <id column="testId" property="id"/>
+            <result column="testQuestion" property="question"/>
+
+            <collection property="variants" javaType="java.util.List"
+                        ofType="com.example.astraapi.entity.TestVariantEntity">
+                <id column="tvId" property="id"/>
+                <result column="tvTestId" property="testId"/>
+                <result column="tvTitle" property="title"/>
+            </collection>
+        </association>
+    </resultMap>
+</mapper>

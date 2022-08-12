@@ -5,15 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExaminationTestDto {
+public class ExaminationStateDto {
   private Long id;
-  private String question;
-  private Long userAnswer;
-  private List<ExaminationVariantDto> variants;
+  private List<ExaminationTestDto> tests;
+  private LocalDateTime finishedAt;
 }

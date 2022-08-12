@@ -1,15 +1,19 @@
 import {useEffect, useState} from "react";
-import {getHoursAndMinutes, getMinutesAndSeconds} from "../handler/time.handler";
+import {getCurrentUtcSeconds, getHoursAndMinutes, getMinutesAndSeconds} from "../handler/time.handler";
 
 const useTimer = (seconds, callback) => {
-    const [time, setTime] = useState(seconds);
+    const currentUtcSeconds = getCurrentUtcSeconds();
+    const [time, setTime] = useState(seconds - currentUtcSeconds);
 
     useEffect(() => {
         const interval = time > 0 ? setInterval(() => {
-            setTime(previous => previous - 1);
+            const currentUtcSeconds = getCurrentUtcSeconds();
+            setTime(seconds - currentUtcSeconds);
         }, 1000) : callback();
 
-        return () => clearInterval(interval);
+        return () => {
+            return clearInterval(interval);
+        };
     }, [time]);
 
     const getTimeValues = time => {

@@ -9,6 +9,11 @@ export const getMinutesAndSeconds = totalSeconds => {
     return [minutes, seconds];
 }
 
+export const getCurrentUtcSeconds = () => {
+    const currentUtcMilliseconds = new Date().getTime();
+    return Math.round(currentUtcMilliseconds / 1000);
+}
+
 export const getHoursAndMinutes = totalMinutes => {
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;

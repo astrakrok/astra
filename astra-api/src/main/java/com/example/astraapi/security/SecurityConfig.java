@@ -69,7 +69,7 @@ public class SecurityConfig {
                 "/api/v1/users/current")
             .hasAnyAuthority(authorized)
             .mvcMatchers("/api/v1/**")
-            .hasAnyRole(user))
+            .hasAnyAuthority(user))
         .csrf().disable()
         .cors().configurationSource(request -> corsConfiguration)
         .and()

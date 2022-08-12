@@ -1,3 +1,7 @@
+.line-break {
+    white-space: break-spaces;
+}
+
 .long-text {
     white-space: nowrap;
     overflow: hidden;

@@ -23,8 +23,8 @@ import InfoText from "../InfoText/InfoText";
 
 const mapToTestState = test => ({
     ...test,
-    lastProcessed: null,
-    userAnswer: null
+    lastProcessed: test.userAnswer,
+    status: test.userAnswer == null ? null : "processed"
 });
 
 const initialResult = {
@@ -33,8 +33,9 @@ const initialResult = {
 };
 
 const ExaminationTesting = ({
+    id,
     tests,
-    duration
+    finishedAt
 }) => {
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -76,7 +77,7 @@ const ExaminationTesting = ({
             variantId: test.userAnswer
         };
 
-        await updateAnswer(data);
+        await updateAnswer(id, data);
     }
 
     const previousTest = () => {
@@ -149,7 +150,7 @@ const ExaminationTesting = ({
         if (!answerIsChanged) {
             return;
         }
-        const result = await updateAnswer(answer);
+        const result = await updateAnswer(id, answer);
         if (result.error) {
             setTestingState(previous => {
                 previous.tests[currentTestIndex].status = "failed";
@@ -195,7 +196,7 @@ const ExaminationTesting = ({
                                         <PopupConsumer>
                                             {
                                                 ({setPopupState}) => (
-                                                    <Timer duration={duration*60} onExpire={() => getMessagePopup(setPopupState)} />
+                                                    <Timer finishedAt={finishedAt} onExpire={() => getMessagePopup(setPopupState)} />
                                                 )
                                             }
                                         </PopupConsumer>

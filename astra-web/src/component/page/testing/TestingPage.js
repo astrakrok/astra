@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {getTesting} from "../../../service/test.service";
+import {getTraining} from "../../../service/test.service";
 import SelectTestingOptionsForm from "../../form/SelectTestingOptionsForm/SelectTestingOptionsForm";
 import withSpecializationsAndExams from "../../hoc/withSpecializationsAndExams/withSpecializationsAndExams";
 import withTitle from "../../hoc/withTitle/withTitle";
@@ -10,6 +10,7 @@ import {useSearchParams} from "react-router-dom";
 import ExaminationTesting from "../../ExaminationTesting/ExaminationTesting";
 import withAllAvailableHeight from "../../hoc/withAllAvailableHeight/withAllAvailableHeight";
 import "./TestingPage.css";
+import {start} from "../../../service/examination.service";
 
 const TestingPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
@@ -46,7 +47,11 @@ const TestingPage = () => {
 
         const fetchTesting = async () => {
             setLoading(true);
-            const result = await getTesting(options);
+            const result = options.mode === "training" ? (
+                await getTraining(options)
+            ) : (
+                await start(options)
+            );
             setSearchParams(options);
             setTesting(result);
             setLoading(false);
@@ -62,7 +67,7 @@ const TestingPage = () => {
             case "training":
                 return <TrainingTesting tests={testing} />
             case "examination":
-                return <ExaminationTesting tests={testing.tests} duration={testing.minutes} />
+                return <ExaminationTesting id={testing.id} tests={testing.tests} finishedAt={testing.finishedAt} />
             default:
                 return (
                     <InfoText>

@@ -1,7 +1,5 @@
 package com.example.astraapi.controller;
 
-import com.example.astraapi.dto.ExaminationDto;
-import com.example.astraapi.dto.ExaminationSearchDto;
 import com.example.astraapi.dto.TrainingSearchDto;
 import com.example.astraapi.dto.TrainingTestDto;
 import com.example.astraapi.meta.Endpoint;
@@ -23,10 +21,5 @@ public class TestController {
   @GetMapping("/training")
   public List<TrainingTestDto> getTrainingTesting(@Valid TrainingSearchDto searchDto) {
     return testService.getTrainingTests(searchDto);
-  }
-
-  @GetMapping("/examination")
-  public ExaminationDto getExaminationTests(@Valid ExaminationSearchDto searchDto) {
-    return testService.getExamination(searchDto);
   }
 }

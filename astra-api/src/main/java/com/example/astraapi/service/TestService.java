@@ -1,7 +1,7 @@
 package com.example.astraapi.service;
 
-import com.example.astraapi.dto.ExaminationDto;
 import com.example.astraapi.dto.ExaminationSearchDto;
+import com.example.astraapi.dto.ExaminationTestDto;
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.RequestTestDto;
 import com.example.astraapi.dto.TestFullDetailDto;
@@ -21,5 +21,7 @@ public interface TestService {
 
   List<TrainingTestDto> getTrainingTests(TrainingSearchDto searchDto);
 
-  ExaminationDto getExamination(ExaminationSearchDto searchDto);
+  List<ExaminationTestDto> getExaminationTests(long count, ExaminationSearchDto searchDto);
+
+  List<ExaminationTestDto> getExaminationTests(List<Long> ids);
 }

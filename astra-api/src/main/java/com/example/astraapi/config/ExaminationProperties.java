@@ -12,4 +12,5 @@ import org.springframework.context.annotation.Configuration;
 public class ExaminationProperties {
   private Integer count;
   private Integer durationInMinutes;
+  private Integer finishedAtDeviationSeconds;
 }

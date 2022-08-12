@@ -1,11 +1,6 @@
 import {route} from "../constant/app.route";
 import {client} from "../shared/js/axios";
 
-const trainingModeToUrl = {
-    training: route.tests + "/training",
-    examination: route.tests + "/examination"
-};
-
 export const getDetailedTests = async () => {
     const response = await client.get(route.admin.tests);
     return response.data;
@@ -16,8 +11,8 @@ export const getFullDetailedTest = async id => {
     return response.data;
 }
 
-export const getTesting = async options => {
-    const url = trainingModeToUrl[options.mode];
+export const getTraining = async options => {
+    const url = route.tests + "/training";
     const response = await client.get(url, {
         params: options
     });

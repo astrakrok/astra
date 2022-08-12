@@ -184,7 +184,7 @@ const TestForm = ({
     return (
         <div className="TestForm s-vflex">
             <InfoHeader text="Основна інформація" />
-            <Input placeholder="Питання" value={test.question} onChange={event => setTest({...test, question: event.target.value})} />
+            <Textarea placeholder="Питання" value={test.question} onChange={event => setTest({...test, question: event.target.value})} />
             <Textarea placeholder="Коментар" value={test.comment} onChange={event => setTest({...test, comment: event.target.value})} />
             <InfoHeader text="Відповіді" />
             <div className="answers s-vflex">
