@@ -14,5 +14,5 @@ public class ExaminationAnswerEntity {
   private Long examinationId;
   private Long testId;
   private Long variantId;
-  private TestingTestEntity test;
+  private TestFullDetailEntity test;
 }

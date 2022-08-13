@@ -8,7 +8,6 @@ import com.example.astraapi.dto.TrainingTestDto;
 import com.example.astraapi.entity.TestEntity;
 import com.example.astraapi.entity.TestFullDetailEntity;
 import com.example.astraapi.entity.TestShortDetailEntity;
-import com.example.astraapi.entity.TestingTestEntity;
 import com.example.astraapi.mapper.qualifier.TitleQualifier;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -26,7 +25,7 @@ public interface TestMapper {
 
   TestFullDetailDto toFullDetailDto(TestFullDetailEntity testFullDetailEntity);
 
-  TrainingTestDto toTrainingDto(TestingTestEntity entity);
+  TrainingTestDto toTrainingDto(TestFullDetailEntity entity);
 
-  ExaminationTestDto toExaminationDto(TestingTestEntity entity);
+  ExaminationTestDto toExaminationDto(TestFullDetailEntity entity);
 }

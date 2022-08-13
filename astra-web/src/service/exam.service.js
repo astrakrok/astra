@@ -7,7 +7,7 @@ export const getAll = async () => {
 }
 
 export const create = async exam => {
-    const response = await client.post(route.admin.exams, exam)
+    const response = await client.post(route.admin.exams.all, exam)
         .catch(() => ({
             data: {
                 error: "Сталась несподівано помилка. Перевірте правильність введених даних або спробуйте пізніше"
@@ -17,11 +17,17 @@ export const create = async exam => {
 }
 
 export const deleteExam = async examId => {
-    const response = await client.delete(`${route.admin.exams}/${examId}`);
+    const response = await client.delete(`${route.admin.exams.all}/${examId}`);
     return response.data;
 }
 
 export const update = async exam => {
-    const response = await client.put(`${route.admin.exams}/${exam.id}`, exam);
+    const response = await client.put(`${route.admin.exams.all}/${exam.id}`, exam);
+    return response.data;
+}
+
+export const getAvailableSpecializations = async examId => {
+    const url = route.admin.exams.id(examId).availableSpecializations;
+    const response = await client.get(url);
     return response.data;
 }

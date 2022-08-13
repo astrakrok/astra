@@ -15,6 +15,7 @@ import SettingsPage from "../page/settings/SettingsPage";
 import TestingPage from "../page/testing/TestingPage";
 import LogoutPage from "../page/logout/LogoutPage";
 import EditTestPage from "../page/admin/tests/edit/EditTestPage";
+import EditTestingPage from "../page/admin/testings/edit/EditTestingPage";
 
 export const LayoutRoutes = () => {
     return (
@@ -25,17 +26,18 @@ export const LayoutRoutes = () => {
                 <Routes>
                     <Route path={page.home} element={<HomePage />} />
                     <Route path={page.testing} element={<TestingPage />} />
-                    <Route path={page.profile} element={<ProfilePage />} />
-                    <Route path={page.login} element={<LoginPage />} />
-                    <Route path={page.logout} element={<LogoutPage />} />
-                    <Route path={page.register} element={<RegisterPage />} />
-                    <Route path={page.settings} element={<SettingsPage />} />
-                    <Route path={page.admin.specializations.all} element={<AllSpecializationsPage />} />
-                    <Route path={page.admin.subjects.all} element={<AllSubjectsPage />} />
-                    <Route path={page.admin.tests.all} element={<AllTestsPage />} />
-                    <Route path={page.admin.tests.create} element={<CreateTestPage />} />
-                    <Route path={page.admin.tests.id().edit} element={<EditTestPage />} />
-                    <Route path={page.admin.exams.all} element={<AllExamsPage />} />
+                    <Route path={page.profile} element={<ProfilePage/>}/>
+                    <Route path={page.login} element={<LoginPage/>}/>
+                    <Route path={page.logout} element={<LogoutPage/>}/>
+                    <Route path={page.register} element={<RegisterPage/>}/>
+                    <Route path={page.settings} element={<SettingsPage/>}/>
+                    <Route path={page.admin.specializations.all} element={<AllSpecializationsPage/>}/>
+                    <Route path={page.admin.subjects.all} element={<AllSubjectsPage/>}/>
+                    <Route path={page.admin.tests.all} element={<AllTestsPage/>}/>
+                    <Route path={page.admin.tests.create} element={<CreateTestPage/>}/>
+                    <Route path={page.admin.tests.id().edit} element={<EditTestPage/>}/>
+                    <Route path={page.admin.exams.all} element={<AllExamsPage/>}/>
+                    <Route path={page.admin.testings.id().edit} element={<EditTestingPage/>}/>
                 </Routes>
             </main>
 

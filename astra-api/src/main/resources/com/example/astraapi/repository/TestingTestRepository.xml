@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.astraapi.repository.TestingTestRepository">
+    <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="entity.id">
+        insert into public.testings_tests(testing_id, test_id)
+        values (#{entity.testingId}, #{entity.testId})
+    </insert>
+
+    <select id="hasValidSpecialization" resultType="boolean">
+        select exists(
+                       select t.specialization_id
+                       from public.testings t
+                                join lateral (
+                           select ss.specialization_id as specializationId
+                           from public.tests_subjects ts
+                                    left join public.subjects_specializations ss on ss.subject_id = ts.subject_id
+                                    left join public.specializations s on s.id = ss.specialization_id
+                           where ts.test_id = #{testId}
+                           ) as joined on true
+                       where t.id = #{testingId}
+                         and t.specialization_id = joined.specializationId
+                   )
+    </select>
+
+    <delete id="deleteByTestingIdAndTestId">
+        delete
+        from public.testings_tests tt
+        where tt.test_id = #{testId}
+          and tt.testing_id = #{testingId}
+    </delete>
+</mapper>

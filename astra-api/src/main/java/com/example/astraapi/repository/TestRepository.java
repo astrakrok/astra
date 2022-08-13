@@ -3,7 +3,6 @@ package com.example.astraapi.repository;
 import com.example.astraapi.entity.TestEntity;
 import com.example.astraapi.entity.TestFullDetailEntity;
 import com.example.astraapi.entity.TestShortDetailEntity;
-import com.example.astraapi.entity.TestingTestEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,11 +17,11 @@ public interface TestRepository {
 
   Optional<TestFullDetailEntity> getDetailedTestById(@Param("id") Long id);
 
-  List<TestingTestEntity> getTestingBySpecializationIdAndExamId(
+  List<TestFullDetailEntity> getTestingBySpecializationIdAndExamId(
       @Param("specializationId") Long specializationId,
       @Param("examId") Long examId,
       @Param("count") Long count);
 
-  List<TestingTestEntity> getTestsByIds(
+  List<TestFullDetailEntity> getTestsByIds(
       @Param("ids") List<Long> ids);
 }

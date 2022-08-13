@@ -11,24 +11,36 @@
 }
 
 .ExamItem .wrapper .title,
+.ExamItem .wrapper .tests,
 .ExamItem .wrapper .edit,
 .ExamItem .wrapper .delete {
     padding: 10px 0;
 }
 
+.ExamItem .wrapper .tests,
 .ExamItem .wrapper .edit,
 .ExamItem .wrapper .delete {
     cursor: pointer;
     transition: all 0.3s;
+}
+
+.ExamItem .wrapper .tests {
+    border-right: 1px solid white;
+}
+
+.ExamItem .wrapper .edit,
+.ExamItem .wrapper .delete {
     border-left: 1px solid white;
 }
 
+.ExamItem .wrapper .tests,
 .ExamItem .wrapper .edit,
 .ExamItem .wrapper .delete {
     padding: 0 8px;
 }
 
-.ExamItem .wrapper .edit:hover {
+.ExamItem .wrapper .edit:hover,
+.ExamItem .wrapper .tests:hover {
     color: var(--primary-color);
 }
 

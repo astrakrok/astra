@@ -138,7 +138,7 @@
         </collection>
     </resultMap>
 
-    <resultMap id="testingTest" type="com.example.astraapi.entity.TestingTestEntity">
+    <resultMap id="testingTest" type="com.example.astraapi.entity.TestFullDetailEntity">
         <id column="id" property="id"/>
         <result column="question" property="question"/>
         <result column="comment" property="comment"/>

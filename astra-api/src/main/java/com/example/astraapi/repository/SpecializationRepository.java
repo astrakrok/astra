@@ -11,4 +11,6 @@ public interface SpecializationRepository {
   void save(@Param("entity") SpecializationEntity specializationEntity);
 
   List<SpecializationEntity> getAll();
+
+  List<SpecializationEntity> getNotSelectedByExamId(@Param("examId") Long examId);
 }
