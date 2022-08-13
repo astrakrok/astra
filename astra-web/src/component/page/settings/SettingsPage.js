@@ -23,16 +23,16 @@ const SettingsPage = () => {
             <div className="row">
                 <div className="s-vflex">
                     <div className="s-vflex">
-                        <InfoHeader text="Фото" />
-                        <ChangeUserAvatarForm />
+                        <InfoHeader>Фото</InfoHeader>
+                        <ChangeUserAvatarForm/>
                     </div>
                     <div className="s-vflex-center main-info">
-                        <InfoHeader text="Про Вас" />
+                        <InfoHeader>Про Вас</InfoHeader>
                         <ResponsiveColumns
                             className="columns"
                             isSeparated={true}
                             firstColumn={renderUserInfoForm()}
-                            secondColumn={<ChangePasswordForm />} />
+                            secondColumn={<ChangePasswordForm/>}/>
                     </div>
                 </div>
             </div>

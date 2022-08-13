@@ -1,6 +1,7 @@
 import {useNavigate} from "react-router-dom";
 import {page} from "../../constant/page";
 import Badge from "../Badge/Badge";
+import Table from "../Table/Table";
 import "./TestsList.css";
 
 const TestsList = ({tests}) => {
@@ -54,21 +55,21 @@ const TestsList = ({tests}) => {
     }
 
     return (
-        <table className="TestsList">
+        <Table type="secondary">
             <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Питання</th>
-                    <th>Іспити</th>
-                    <th>Спеціалізації</th>
-                </tr>
+            <tr>
+                <th>#</th>
+                <th>Питання</th>
+                <th>Іспити</th>
+                <th>Спеціалізації</th>
+            </tr>
             </thead>
             <tbody>
-                {
-                    tests.map(renderTestTableItem)
-                }
+            {
+                tests.map(renderTestTableItem)
+            }
             </tbody>
-        </table>
+        </Table>
     );
 }
 

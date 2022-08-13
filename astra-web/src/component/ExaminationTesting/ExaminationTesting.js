@@ -186,13 +186,16 @@ const ExaminationTesting = ({
         <div className="ExaminationTesting full-width s-vflex">
             {
                 result.status !== loadingStatus.inProgress ? (
-                    <LoaderBoundary condition={result.status === loadingStatus.loading} className="full-width s-hflex-center">
-                        <TestingStatistic statistic={{correctCount: result.correctCount, total: result.total}} />
-                        <Spacer height={50} />
-                        <TestingControl onNew={startNew} onRepeat={repeat} />
-                        <Spacer height={100} />
-                        <InfoHeader text="Ваш результат" />
-                        <TestingCorrectness tests={result.tests} />
+                    <LoaderBoundary condition={result.status === loadingStatus.loading}
+                                    className="full-width s-hflex-center">
+                        <TestingStatistic statistic={{correctCount: result.correctCount, total: result.total}}/>
+                        <Spacer height={50}/>
+                        <TestingControl onNew={startNew} onRepeat={repeat}/>
+                        <Spacer height={100}/>
+                        <InfoHeader>
+                            Ваш результат
+                        </InfoHeader>
+                        <TestingCorrectness tests={result.tests}/>
                     </LoaderBoundary>
                 ) : (
                     <>

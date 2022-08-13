@@ -12,3 +12,15 @@ export const create = async data => {
     const response = await client.post(url, data);
     return response.data;
 }
+
+export const getTestingInfo = async id => {
+    const url = route.admin.testings.id(id).info;
+    const response = await client.get(url);
+    return response.data;
+}
+
+export const getTests = async id => {
+    const url = route.admin.testings.id(id).tests;
+    const response = await client.get(url);
+    return response.data;
+}

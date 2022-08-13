@@ -13,7 +13,5 @@ public interface TestingTestRepository {
       @Param("testId") Long testId
   );
 
-  void deleteByTestingIdAndTestId(
-      @Param("testingId") Long testingId,
-      @Param("testId") Long testId);
+  void deleteById(@Param("id") Long id);
 }

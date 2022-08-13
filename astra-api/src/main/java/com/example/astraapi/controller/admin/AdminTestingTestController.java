@@ -25,11 +25,8 @@ public class AdminTestingTestController {
     return testingTestService.save(dto);
   }
 
-  @DeleteMapping("/{testingId}/tests/{testId}")
-  public void deleteTest(
-      @PathVariable("testingId") Long testingId,
-      @PathVariable("testId") Long testId
-  ) {
-    testingTestService.delete(testingId, testId);
+  @DeleteMapping("/{id}")
+  public void deleteTest(@PathVariable("id") Long id) {
+    testingTestService.delete(id);
   }
 }

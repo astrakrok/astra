@@ -17,7 +17,22 @@ const getAdminRoutes = () => {
         },
         testings: {
             all: prefix + "/testings",
-            exams: prefix + "/testings/exams"
+            exams: prefix + "/testings/exams",
+            id: id => {
+                const url = prefix + `/testings/${id}`;
+                return {
+                    info: url + "/info",
+                    tests: url + "/tests"
+                }
+            }
+        },
+        testingsTests: {
+            id: id => {
+                const url = prefix + `/testings-tests/${id}`;
+                return {
+                    this: url
+                }
+            }
         },
         subjects: prefix + "/subjects",
         specializations: prefix + "/specializations",
