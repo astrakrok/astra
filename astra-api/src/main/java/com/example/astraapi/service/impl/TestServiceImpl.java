@@ -13,7 +13,6 @@ import com.example.astraapi.dto.TrainingTestDto;
 import com.example.astraapi.entity.TestEntity;
 import com.example.astraapi.mapper.TestMapper;
 import com.example.astraapi.repository.TestRepository;
-import com.example.astraapi.service.TestExamService;
 import com.example.astraapi.service.TestService;
 import com.example.astraapi.service.TestSubjectService;
 import com.example.astraapi.service.TestVariantService;
@@ -34,7 +33,6 @@ public class TestServiceImpl implements TestService {
   private final TestRepository testRepository;
   private final Validator<Collection<TestVariantDto>> testVariantsValidator;
   private final TestVariantService testVariantService;
-  private final TestExamService testExamService;
   private final TestSubjectService testSubjectService;
 
   @Override
@@ -46,7 +44,6 @@ public class TestServiceImpl implements TestService {
     testRepository.save(entity);
     Long testId = entity.getId();
     testVariantService.save(testId, testVariants);
-    testExamService.save(testId, testDto.getExamIds());
     testSubjectService.save(testId, testDto.getSubjectIds());
     return new IdDto(entity.getId());
   }
@@ -66,9 +63,8 @@ public class TestServiceImpl implements TestService {
 
   @Override
   public List<TrainingTestDto> getTrainingTests(TrainingSearchDto searchDto) {
-    return testRepository.getTestingBySpecializationIdAndExamId(
-            searchDto.getSpecializationId(),
-            searchDto.getExamId(),
+    return testRepository.getTestsByTestingId(
+            searchDto.getTestingId(),
             searchDto.getCount()).stream()
         .map(testMapper::toTrainingDto)
         .collect(Collectors.toList());
@@ -76,9 +72,8 @@ public class TestServiceImpl implements TestService {
 
   @Override
   public List<ExaminationTestDto> getExaminationTests(long count, ExaminationSearchDto searchDto) {
-    return testRepository.getTestingBySpecializationIdAndExamId(
-            searchDto.getSpecializationId(),
-            searchDto.getExamId(),
+    return testRepository.getTestsByTestingId(
+            searchDto.getTestingId(),
             count).stream()
         .map(testMapper::toExaminationDto)
         .collect(Collectors.toList());

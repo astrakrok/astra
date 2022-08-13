@@ -12,10 +12,11 @@ import CreateTestPage from "../page/admin/tests/create/CreateTestPage";
 import AllExamsPage from "../page/admin/exams/all/AllExamsPage";
 import ProfilePage from "../page/profile/ProfilePage";
 import SettingsPage from "../page/settings/SettingsPage";
-import TestingPage from "../page/testing/TestingPage";
+import NewTestingPage from "../page/new-testing/NewTestingPage";
 import LogoutPage from "../page/logout/LogoutPage";
 import EditTestPage from "../page/admin/tests/edit/EditTestPage";
 import EditTestingPage from "../page/admin/testings/edit/EditTestingPage";
+import TestingPage from "../page/testing/TestingPage";
 
 export const LayoutRoutes = () => {
     return (
@@ -25,7 +26,8 @@ export const LayoutRoutes = () => {
             <main className="s-vflex-center">
                 <Routes>
                     <Route path={page.home} element={<HomePage />} />
-                    <Route path={page.testing} element={<TestingPage />} />
+                    <Route path={page.testing} element={<TestingPage/>}/>
+                    <Route path={page.newTesting} element={<NewTestingPage/>}/>
                     <Route path={page.profile} element={<ProfilePage/>}/>
                     <Route path={page.login} element={<LoginPage/>}/>
                     <Route path={page.logout} element={<LogoutPage/>}/>

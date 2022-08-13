@@ -21,7 +21,6 @@ public class RequestTestDto {
   private String comment;
   @Size(min = 1)
   private List<TestVariantDto> variants;
-  private Set<Long> examIds;
   @Size(min = 1)
   private Set<Long> subjectIds;
 }

@@ -2,13 +2,13 @@ import {route} from "../constant/app.route";
 import {client} from "../shared/js/axios";
 
 export const getExamTestings = async examId => {
-    const url = route.admin.testings.exams + "/" + examId;
+    const url = route.testings.exams.id(examId).this;
     const response = await client.get(url);
     return response.data;
 }
 
 export const create = async data => {
-    const url = route.admin.testingsTests.all;
+    const url = route.admin.testings.all;
     const response = await client.post(url, data)
         .catch(error => ({
             data: {

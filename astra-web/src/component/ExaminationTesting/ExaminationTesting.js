@@ -39,7 +39,7 @@ const ExaminationTesting = ({
     finishedAt,
     onRefresh = () => {}
 }) => {
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
 
     const [value, refresh] = useRefresh();
 
@@ -123,10 +123,6 @@ const ExaminationTesting = ({
         return testingState.currentTest + 1 === testingState.tests.length;
     }
 
-    const startNew = () => {
-        setSearchParams({});
-    }
-
     const repeat = () => {
         refresh();
     }
@@ -190,7 +186,7 @@ const ExaminationTesting = ({
                                     className="full-width s-hflex-center">
                         <TestingStatistic statistic={{correctCount: result.correctCount, total: result.total}}/>
                         <Spacer height={50}/>
-                        <TestingControl onNew={startNew} onRepeat={repeat}/>
+                        <TestingControl onRepeat={repeat}/>
                         <Spacer height={100}/>
                         <InfoHeader>
                             Ваш результат

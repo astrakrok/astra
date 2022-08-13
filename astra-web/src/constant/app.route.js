@@ -2,6 +2,19 @@ import {env} from "./env";
 
 const baseUrl = env.baseApiUrl;
 
+const getTestingsRoutes = () => {
+    const prefix = `${baseUrl}/api/v1/testings`;
+    return {
+        exams: {
+            id: id => {
+                return {
+                    this: prefix + "/exams/" + id
+                }
+            }
+        }
+    }
+}
+
 const getAdminRoutes = () => {
     const prefix = `${baseUrl}/api/v1/admin`;
     return {
@@ -17,7 +30,6 @@ const getAdminRoutes = () => {
         },
         testings: {
             all: prefix + "/testings",
-            exams: prefix + "/testings/exams",
             id: id => {
                 const url = prefix + `/testings/${id}`;
                 return {
@@ -53,5 +65,6 @@ export const route = {
     tests: `${baseUrl}/api/v1/tests`,
     examinations: `${baseUrl}/api/v1/examinations`,
     users: `${baseUrl}/api/v1/users`,
+    testings: getTestingsRoutes(),
     admin: getAdminRoutes()
 };

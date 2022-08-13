@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {create, getTestingInfo, getTests} from "../../../../../service/testing.service";
-import {deleteById} from "../../../../../service/testing.test.service";
+import {getTestingInfo, getTests} from "../../../../../service/testing.service";
+import {create, deleteById} from "../../../../../service/testing.test.service";
 import Button from "../../../../Button/Button";
 import InfoHeader from "../../../../InfoHeader/InfoHeader";
 import InfoText from "../../../../InfoText/InfoText";

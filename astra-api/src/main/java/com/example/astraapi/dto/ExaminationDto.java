@@ -14,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 public class ExaminationDto {
   private Long id;
-  private Long examId;
-  private Long specializationId;
+  private Long testingId;
   private List<ExaminationAnswerDto> answers = new ArrayList<>();
 }

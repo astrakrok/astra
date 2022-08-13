@@ -63,7 +63,8 @@ public class SecurityConfig {
                 HttpMethod.GET,
                 "/api/v1/exams",
                 "/api/v1/specializations",
-                "/api/v1/subjects")
+                "/api/v1/subjects",
+                "/api/v1/testings/exams/*")
             .hasAnyAuthority(authorized)
             .mvcMatchers(
                 "/api/v1/users/current")

@@ -1,17 +1,17 @@
 import Button from "../Button/Button";
 import Spacer from "../Spacer/Spacer";
+import {page} from "../../constant/page";
 import "./TestingControl.css";
 
 const TestingControl = ({
-    onNew = () => {},
     onRepeat = () => {}
 }) => {
     return (
         <div className="s-hflex-center">
-            <Button onClick={onNew}>
+            <Button to={page.testing}>
                 Почати новий іспит
             </Button>
-            <Spacer width={20} />
+            <Spacer width={20}/>
             <Button isFilled={true} onClick={onRepeat}>
                 Пройти знову
             </Button>

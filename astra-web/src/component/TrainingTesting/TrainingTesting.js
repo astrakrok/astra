@@ -3,7 +3,6 @@ import Button from "../Button/Button";
 import TrainingTest from "../TrainingTest/TrainingTest";
 import TestingStatistic from "../TestingStatistic/TestingStatistic";
 import "./TrainingTesting.css";
-import {useSearchParams} from "react-router-dom";
 import Spacer from "../Spacer/Spacer";
 import useRefresh from "../../hook/useRefresh";
 import InfoText from "../InfoText/InfoText";
@@ -29,8 +28,6 @@ const initialTestingState = tests => {
 };
 
 const TrainingTesting = ({tests}) => {
-    const [, setSearchParams] = useSearchParams();
-
     const [value, refresh] = useRefresh();
     const [status, setStatus] = useState(initialStatus);
     const [testingState, setTestingState] = useState(initialTestingState(tests));
@@ -92,10 +89,6 @@ const TrainingTesting = ({tests}) => {
         };
     }
 
-    const startNew = () => {
-        setSearchParams({});
-    }
-
     const restartTesting = () => {
         refresh();
     }
@@ -115,7 +108,7 @@ const TrainingTesting = ({tests}) => {
                     <div className="s-vflex">
                         <TestingStatistic statistic={getTestingStatistic()}/>
                         <Spacer height={50}/>
-                        <TestingControl onNew={startNew} onRepeat={restartTesting}/>
+                        <TestingControl onRepeat={restartTesting}/>
                         <Spacer height={100}/>
                         <InfoHeader>Ваш результат</InfoHeader>
                         <TestingCorrectness tests={testingState}/>

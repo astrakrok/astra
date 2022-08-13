@@ -8,11 +8,12 @@ export const page = {
     home: "/",
     login: "/login",
     register: "/register",
+    newTesting: "/new-testing",
     testing: "/testing",
     profile: "/profile",
     settings: "/settings",
     logout: "/logout",
-    
+
     admin: {
         login: "/admin/login",
         exams: {
