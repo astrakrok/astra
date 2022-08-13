@@ -32,8 +32,8 @@ public class TestingTestServiceImpl implements TestingTestService {
 
   private void validateTestSpecialization(RequestTestingTestDto testingTestDto) {
     boolean hasValidSpecialization = testingTestRepository.hasValidSpecialization(
-        testingTestDto.getTestId(),
-        testingTestDto.getTestingId());
+        testingTestDto.getTestingId(),
+        testingTestDto.getTestId());
     if (!hasValidSpecialization) {
       throw new IllegalArgumentException("You cannot add this test to this testing");
     }

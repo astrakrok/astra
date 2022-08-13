@@ -1,4 +1,4 @@
-package com.example.astraapi.entity;
+package com.example.astraapi.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,9 +12,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TestEntity {
+public class TestingShortTestDto {
   private Long id;
   private String question;
-  private String comment;
-  private List<TestVariantEntity> variants = new ArrayList<>();
+  private List<TestingShortTestVariantDto> variants = new ArrayList<>();
 }

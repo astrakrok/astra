@@ -3,6 +3,7 @@ package com.example.astraapi.controller.admin;
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.RequestTestingDto;
 import com.example.astraapi.dto.TestingInfoDto;
+import com.example.astraapi.dto.TestingShortTestDto;
 import com.example.astraapi.dto.TestingTestQuestionDto;
 import com.example.astraapi.dto.TestingWithSpecializationDto;
 import com.example.astraapi.meta.Endpoint;
@@ -43,5 +44,10 @@ public class AdminTestingController {
   @GetMapping("/{id}/tests")
   public List<TestingTestQuestionDto> getTestsQuestions(@PathVariable("id") Long id) {
     return testingService.getTestsQuestions(id);
+  }
+
+  @GetMapping("/{id}/tests/available")
+  public List<TestingShortTestDto> getAvailableTestingTests(@PathVariable("id") Long id) {
+    return testingService.getNotSelectedTestingTests(id);
   }
 }

@@ -3,11 +3,13 @@ package com.example.astraapi.service.impl;
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.RequestTestingDto;
 import com.example.astraapi.dto.TestingInfoDto;
+import com.example.astraapi.dto.TestingShortTestDto;
 import com.example.astraapi.dto.TestingTestQuestionDto;
 import com.example.astraapi.dto.TestingWithSpecializationDto;
 import com.example.astraapi.entity.TestingEntity;
 import com.example.astraapi.mapper.TestingMapper;
 import com.example.astraapi.repository.TestingRepository;
+import com.example.astraapi.service.TestService;
 import com.example.astraapi.service.TestingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class TestingServiceImpl implements TestingService {
+  private final TestService testService;
   private final TestingMapper testingMapper;
   private final TestingRepository testingRepository;
 
@@ -47,5 +50,10 @@ public class TestingServiceImpl implements TestingService {
     return testingRepository.getTestingTestsByTestingId(id).stream()
         .map(testingMapper::toTestQuestionDto)
         .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<TestingShortTestDto> getNotSelectedTestingTests(Long id) {
+    return testService.getNotYetSelectedTestingTests(id);
   }
 }

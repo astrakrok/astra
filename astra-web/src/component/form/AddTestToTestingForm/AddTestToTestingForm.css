@@ -1,0 +1,13 @@
+.AddTestToTestingForm .variant,
+.AddTestToTestingForm .select-test-error {
+    padding: 10px;
+    font-size: 1.3rem;
+}
+
+.AddTestToTestingForm .variant .order {
+    font-weight: bold;
+}
+
+.AddTestToTestingForm .no-tests-error {
+    font-size: 1.5rem;
+}
