@@ -1,8 +1,14 @@
 import "./FormError.css";
 
-const FormError = ({message}) => {
+const FormError = props => {
+    const {
+        message,
+        className = "",
+        ...otherProps
+    } = props;
+
     return (
-        <div className="FormError">
+        <div className={`FormError ${className}`} {...otherProps}>
             {message}
         </div>
     );

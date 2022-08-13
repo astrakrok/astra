@@ -60,7 +60,7 @@
         <result column="variantId" property="variantId"/>
         <result column="testId" property="testId"/>
 
-        <association property="test" javaType="com.example.astraapi.entity.TestingTestEntity">
+        <association property="test" javaType="com.example.astraapi.entity.TestFullDetailEntity">
             <id column="testId" property="id"/>
             <result column="testQuestion" property="question"/>
 
@@ -79,7 +79,7 @@
         <result column="variantId" property="variantId"/>
         <result column="testId" property="testId"/>
 
-        <association property="test" javaType="com.example.astraapi.entity.TestingTestEntity">
+        <association property="test" javaType="com.example.astraapi.entity.TestFullDetailEntity">
             <id column="testId" property="id"/>
             <result column="testQuestion" property="question"/>
             <result column="testComment" property="comment"/>

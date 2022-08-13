@@ -3,10 +3,12 @@ package com.example.astraapi.service.impl;
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.RequestExamDto;
 import com.example.astraapi.dto.ResponseExamDto;
+import com.example.astraapi.dto.SpecializationDto;
 import com.example.astraapi.entity.ExamEntity;
 import com.example.astraapi.mapper.ExamMapper;
 import com.example.astraapi.repository.ExamRepository;
 import com.example.astraapi.service.ExamService;
+import com.example.astraapi.service.SpecializationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ExamServiceImpl implements ExamService {
+  private final SpecializationService specializationService;
   private final ExamRepository examRepository;
   private final ExamMapper examMapper;
 
@@ -42,5 +45,10 @@ public class ExamServiceImpl implements ExamService {
   public void update(Long id, RequestExamDto examDto) {
     ExamEntity entity = examMapper.toEntity(examDto);
     examRepository.updateById(id, entity);
+  }
+
+  @Override
+  public List<SpecializationDto> getAvailableSpecializations(Long id) {
+    return specializationService.getNotSelectedForExam(id);
   }
 }

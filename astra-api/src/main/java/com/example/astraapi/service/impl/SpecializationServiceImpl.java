@@ -31,4 +31,11 @@ public class SpecializationServiceImpl implements SpecializationService {
         .map(mapper::toDto)
         .collect(Collectors.toList());
   }
+
+  @Override
+  public List<SpecializationDto> getNotSelectedForExam(Long examId) {
+    return repository.getNotSelectedByExamId(examId).stream()
+        .map(mapper::toDto)
+        .collect(Collectors.toList());
+  }
 }

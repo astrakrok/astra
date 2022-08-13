@@ -51,5 +51,5 @@ export const permission = {
     [page.admin.tests.create]: admin,
     [page.admin.tests.id().edit]: admin,
     [page.admin.exams.all]: admin,
-    [page.admin.login]: notAuthorized
+    [page.admin.testings.id().edit]: admin
 };

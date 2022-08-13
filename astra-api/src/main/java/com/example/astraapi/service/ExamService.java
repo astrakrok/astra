@@ -3,6 +3,7 @@ package com.example.astraapi.service;
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.RequestExamDto;
 import com.example.astraapi.dto.ResponseExamDto;
+import com.example.astraapi.dto.SpecializationDto;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface ExamService {
   void delete(Long id);
 
   void update(Long id, RequestExamDto examDto);
+
+  List<SpecializationDto> getAvailableSpecializations(Long id);
 }

@@ -10,6 +10,7 @@ import ExamForm from "../../../../form/ExamForm/ExamForm";
 import ExamItem from "../../../../ExamItem/ExamItem";
 import withTitle from "../../../../hoc/withTitle/withTitle";
 import ActionDialog from "../../../../popup-component/ActionDialog/ActionDialog";
+import ExamSpecializationsForm from "../../../../form/ExamSpecializationsForm/ExamSpecializationsForm";
 
 const AllExamsPage = () => {
     const [exams, setExams] = useState(null);
@@ -28,15 +29,21 @@ const AllExamsPage = () => {
         fetchExams();
     }
 
+    const openSpecializationsListPopup = (setPopupState, exam) => {
+        setPopupState({
+            bodyGetter: () => <ExamSpecializationsForm exam={exam}/>
+        });
+    }
+
     const openCreateExamPopup = setPopupState => {
         setPopupState({
-            bodyGetter: () => <ExamForm onSuccess={() => examSaved(setPopupState)} />
+            bodyGetter: () => <ExamForm onSuccess={() => examSaved(setPopupState)}/>
         });
     }
 
     const openUpdateExamPopup = (setPopupState, exam) => {
         setPopupState({
-            bodyGetter: () => <ExamForm initialExam={exam} onSuccess={() => examSaved(setPopupState)} />
+            bodyGetter: () => <ExamForm initialExam={exam} onSuccess={() => examSaved(setPopupState)}/>
         });
     }
 
@@ -47,14 +54,15 @@ const AllExamsPage = () => {
 
     const renderExamItem = exam => {
         return (
-            <div key={exam.id} className="col xs12 s6 m4 l3">
+            <div key={exam.id} className="col s12 m6 l4">
                 <PopupConsumer>
                     {
                         ({setPopupState}) => (
                             <ExamItem
                                 exam={exam}
+                                onTestsClick={() => openSpecializationsListPopup(setPopupState, exam)}
                                 onUpdateClick={() => openUpdateExamPopup(setPopupState, exam)}
-                                onDeleteClick={() => showExamDeletionWarning(setPopupState, exam.id)} />
+                                onDeleteClick={() => showExamDeletionWarning(setPopupState, exam.id)}/>
                         )
                     }
                 </PopupConsumer>

@@ -7,8 +7,19 @@
         insert into public.specializations (title)
         values (#{entity.title})
     </insert>
+
     <select id="getAll" resultType="com.example.astraapi.entity.SpecializationEntity">
         select *
         from public.specializations
+    </select>
+
+    <select id="getNotSelectedByExamId" resultType="com.example.astraapi.entity.SpecializationEntity">
+        select *
+        from public.specializations
+        where id not in (
+            select specialization_id
+            from public.testings
+            where exam_id = #{examId}
+        )
     </select>
 </mapper>

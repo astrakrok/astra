@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.astraapi.repository.TestingRepository">
+    <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="entity.id">
+        insert into public.testings(exam_id, specialization_id)
+        values (#{entity.examId}, #{entity.specializationId})
+    </insert>
+
+    <select id="getByExamIdWithSpecialization" resultMap="testingWithSpecialization">
+        select t.id      as id,
+               t.exam_id as examId,
+               s.id      as specializationId,
+               s.title   as specializationTitle
+        from public.testings t
+                 left join public.specializations s on s.id = t.specialization_id
+        where t.exam_id = #{examId}
+    </select>
+
+    <resultMap id="testingWithSpecialization" type="com.example.astraapi.entity.TestingWithSpecializationEntity">
+        <id column="id" property="id"/>
+        <result column="examId" property="examId"/>
+
+        <association property="specialization" javaType="com.example.astraapi.entity.SpecializationEntity">
+            <id column="specializationId" property="id"/>
+            <result column="specializationTitle" property="title"/>
+        </association>
+    </resultMap>
+</mapper>

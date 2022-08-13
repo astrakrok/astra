@@ -1,0 +1,8 @@
+.ExamSpecializationsForm .testings .item {
+    font-size: 1.5rem;
+    padding: 10px 0;
+}
+
+.ExamSpecializationsForm .testings .error {
+    font-size: 1.3rem;
+}

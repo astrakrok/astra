@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TestingTestEntity {
+public class TestingWithSpecializationEntity {
   private Long id;
-  private Long testingId;
-  private Long testId;
+  private Long examId;
+  private SpecializationEntity specialization;
 }

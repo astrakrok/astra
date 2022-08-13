@@ -5,7 +5,20 @@ const baseUrl = env.baseApiUrl;
 const getAdminRoutes = () => {
     const prefix = `${baseUrl}/api/v1/admin`;
     return {
-        exams: prefix + "/exams",
+        exams: {
+            all: prefix + "/exams",
+            id: id => {
+                const url = prefix + `/exams/${id}`;
+                return {
+                    specializations: url + "/specializations",
+                    availableSpecializations: url + "/specializations/available"
+                }
+            }
+        },
+        testings: {
+            all: prefix + "/testings",
+            exams: prefix + "/testings/exams"
+        },
         subjects: prefix + "/subjects",
         specializations: prefix + "/specializations",
         tests: prefix + "/tests"

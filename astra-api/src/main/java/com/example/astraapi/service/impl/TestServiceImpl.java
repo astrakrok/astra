@@ -1,6 +1,5 @@
 package com.example.astraapi.service.impl;
 
-import com.example.astraapi.config.ExaminationProperties;
 import com.example.astraapi.dto.ExaminationSearchDto;
 import com.example.astraapi.dto.ExaminationTestDto;
 import com.example.astraapi.dto.IdDto;
@@ -36,7 +35,6 @@ public class TestServiceImpl implements TestService {
   private final TestVariantService testVariantService;
   private final TestExamService testExamService;
   private final TestSubjectService testSubjectService;
-  private final ExaminationProperties examinationProperties;
 
   @Override
   @Transactional

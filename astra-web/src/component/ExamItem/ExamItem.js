@@ -2,13 +2,20 @@ import Tooltipped from "../Tooltipped/Tooltipped";
 import "./ExamItem.css";
 
 const ExamItem = ({
-    exam,
-    onUpdateClick = () => {},
-    onDeleteClick = () => {}
-}) => {
+                      exam,
+                      onTestsClick = () => {
+                      },
+                      onUpdateClick = () => {
+                      },
+                      onDeleteClick = () => {
+                      }
+                  }) => {
     return (
         <div className="ExamItem s-hflex">
             <div className="wrapper full-width s-hflex">
+                <Tooltipped className="tests s-vflex-center" tooltip="Тести" position="top" onClick={onTestsClick}>
+                    <i className="material-icons">format_list_bulleted</i>
+                </Tooltipped>
                 <div className="title equal-flex s-vflex-center center">
                     {exam.title}
                 </div>
