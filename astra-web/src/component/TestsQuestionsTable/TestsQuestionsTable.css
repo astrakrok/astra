@@ -1,0 +1,4 @@
+.TestsQuestionsTable .delete i {
+    color: var(--red-color);
+    font-weight: bold;
+}
