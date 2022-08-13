@@ -4,6 +4,7 @@ import com.example.astraapi.dto.ExaminationTestDto;
 import com.example.astraapi.dto.RequestTestDto;
 import com.example.astraapi.dto.TestFullDetailDto;
 import com.example.astraapi.dto.TestShortDetailDto;
+import com.example.astraapi.dto.TestingShortTestDto;
 import com.example.astraapi.dto.TrainingTestDto;
 import com.example.astraapi.entity.TestEntity;
 import com.example.astraapi.entity.TestFullDetailEntity;
@@ -28,4 +29,6 @@ public interface TestMapper {
   TrainingTestDto toTrainingDto(TestFullDetailEntity entity);
 
   ExaminationTestDto toExaminationDto(TestFullDetailEntity entity);
+
+  TestingShortTestDto toShortTestDto(TestEntity entity);
 }

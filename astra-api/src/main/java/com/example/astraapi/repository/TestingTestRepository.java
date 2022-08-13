@@ -10,8 +10,7 @@ public interface TestingTestRepository {
 
   boolean hasValidSpecialization(
       @Param("testingId") Long testingId,
-      @Param("testId") Long testId
-  );
+      @Param("testId") Long testId);
 
   void deleteById(@Param("id") Long id);
 }

@@ -24,4 +24,6 @@ public interface TestRepository {
 
   List<TestFullDetailEntity> getTestsByIds(
       @Param("ids") List<Long> ids);
+
+  List<TestEntity> getNotRelatedTestingTests(@Param("testingId") Long testingId);
 }

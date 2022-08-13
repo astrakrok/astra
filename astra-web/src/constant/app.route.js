@@ -22,11 +22,15 @@ const getAdminRoutes = () => {
                 const url = prefix + `/testings/${id}`;
                 return {
                     info: url + "/info",
-                    tests: url + "/tests"
+                    tests: {
+                        selected: url + "/tests",
+                        available: url + "/tests/available"
+                    }
                 }
             }
         },
         testingsTests: {
+            all: prefix + "/testings-tests",
             id: id => {
                 const url = prefix + `/testings-tests/${id}`;
                 return {

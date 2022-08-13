@@ -98,6 +98,28 @@
         order by random()
     </select>
 
+    <select id="getNotRelatedTestingTests" resultMap="testWithVariants">
+        select distinct t.id       as id,
+                        t.question as question,
+                        tv.id      as variantId,
+                        tv.title   as variantTitle
+        from public.tests t
+                 left join tests_subjects ts on t.id = ts.test_id
+                 left join subjects_specializations ss on ts.subject_id = ss.subject_id
+                 left join tests_variants tv on t.id = tv.test_id
+        where specialization_id = (
+            select specialization_id
+            from public.testings
+            where testings.id = #{testingId}
+        )
+          and t.id not in (
+            select tt.test_id
+            from public.testings_tests tt
+            where tt.testing_id = #{testingId}
+        )
+        order by id, variantId
+    </select>
+
     <resultMap id="testShortDetail" type="com.example.astraapi.entity.TestShortDetailEntity">
         <id column="id" property="id"/>
         <result column="question" property="question"/>
@@ -149,6 +171,17 @@
             <result column="variantTitle" property="title"/>
             <result column="variantExplanation" property="explanation"/>
             <result column="variantIsCorrect" property="correct"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="testWithVariants" type="com.example.astraapi.entity.TestEntity">
+        <id column="id" property="id"/>
+        <result column="question" property="question"/>
+
+        <collection property="variants" javaType="java.util.List"
+                    ofType="com.example.astraapi.entity.TestVariantEntity">
+            <id column="variantId" property="id"/>
+            <result column="variantTitle" property="title"/>
         </collection>
     </resultMap>
 </mapper>

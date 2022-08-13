@@ -6,6 +6,7 @@ import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.RequestTestDto;
 import com.example.astraapi.dto.TestFullDetailDto;
 import com.example.astraapi.dto.TestShortDetailDto;
+import com.example.astraapi.dto.TestingShortTestDto;
 import com.example.astraapi.dto.TrainingSearchDto;
 import com.example.astraapi.dto.TrainingTestDto;
 
@@ -24,4 +25,6 @@ public interface TestService {
   List<ExaminationTestDto> getExaminationTests(long count, ExaminationSearchDto searchDto);
 
   List<ExaminationTestDto> getExaminationTests(List<Long> ids);
+
+  List<TestingShortTestDto> getNotYetSelectedTestingTests(Long testingId);
 }

@@ -23,8 +23,11 @@
 }
 
 .Popup .popup-container.tiny {
-    width: 100%;
     max-width: 400px;
+}
+
+.Popup .popup-container.medium {
+    max-width: 600px;
 }
 
 .Popup .popup-wrapper {
