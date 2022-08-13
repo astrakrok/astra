@@ -15,6 +15,5 @@ public class TestShortDetailEntity {
   private Long id;
   private String question;
   private String comment;
-  private List<ExamEntity> exams;
   private List<SpecializationEntity> specializations;
 }

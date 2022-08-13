@@ -13,8 +13,7 @@ public interface ExaminationRepository {
 
   Optional<ExaminationEntity> findExaminationWithAnswers(
       @Param("userId") Long userId,
-      @Param("specializationId") Long specializationId,
-      @Param("examId") Long examId,
+      @Param("testingId") Long testingId,
       @Param("finishedAt") LocalDateTime finishedAt);
 
   boolean exists(

@@ -35,8 +35,7 @@ public class ExaminationServiceImpl implements ExaminationService {
   public ExaminationStateDto start(ExaminationSearchDto searchDto) {
     ExaminationEntity examination = examinationRepository.findExaminationWithAnswers(
             authContext.getUser().getId(),
-            searchDto.getSpecializationId(),
-            searchDto.getExamId(),
+            searchDto.getTestingId(),
             timeZoneService.toUtc(LocalDateTime.now()))
         .orElseGet(() -> createExamination(searchDto));
     List<ExaminationTestDto> tests = examination.getAnswers().isEmpty() ? (
@@ -76,8 +75,7 @@ public class ExaminationServiceImpl implements ExaminationService {
     LocalDateTime finishedAtUtc = timeZoneService.toUtc(finishedAt);
     ExaminationEntity examinationEntity = examinationMapper.toEntity(
         authContext.getUser().getId(),
-        searchDto.getSpecializationId(),
-        searchDto.getExamId(),
+        searchDto.getTestingId(),
         finishedAtUtc);
     examinationRepository.save(examinationEntity);
     return examinationEntity;

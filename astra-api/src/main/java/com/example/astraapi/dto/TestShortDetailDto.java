@@ -15,6 +15,5 @@ public class TestShortDetailDto {
   private Long id;
   private String question;
   private String comment;
-  private List<ResponseExamDto> exams;
   private List<SpecializationDto> specializations;
 }

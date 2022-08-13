@@ -7,7 +7,9 @@ const Button = props => {
         isFilled = false,
         to = null,
         disabled = false,
-        onClick = () => {},
+        onClick = () => {
+        },
+        isSubmit = false,
         ...other
     } = props;
 
@@ -23,7 +25,7 @@ const Button = props => {
     return (
         <div className={`Button${isFilled ? " filled" : ""}${disabled ? " disabled" : ""} ${type}`}>
             {
-                <button {...other} onClick={handleClick}>
+                <button {...other} onClick={handleClick} type={`${isSubmit ? "submit" : "button"}`}>
                     {props.children}
                 </button>
             }

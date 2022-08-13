@@ -44,7 +44,7 @@ const SiteNavigation = () => {
                             <Dropdown id="management" trigger={getAdminDropdownTrigger()} content={getAdminDropdownContent()} />
                         ) : (
                             <>
-                                <Link to={page.testing} className="link">Почати іспит</Link>
+                                <Link to={page.newTesting} className="link">Почати іспит</Link>
                             </>
                         )
                     }

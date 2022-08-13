@@ -3,27 +3,24 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.astraapi.repository.ExaminationRepository">
     <insert id="save" useGeneratedKeys="true" keyProperty="id" keyColumn="id">
-        insert into public.examinations (user_id, specialization_id, exam_id, finished_at)
+        insert into public.examinations (user_id, testing_id, finished_at)
         values (#{entity.userId},
-                #{entity.specializationId},
-                #{entity.examId},
+                #{entity.testingId},
                 #{entity.finishedAt})
     </insert>
 
     <select id="findExaminationWithAnswers" resultMap="examinationWithAnswers">
-        select e.id                as id,
-               e.user_id           as userId,
-               e.specialization_id as specializationId,
-               e.exam_id           as examId,
-               e.finished_at       as finishedAt,
-               ea.id               as eaId,
-               ea.test_id          as eaTestId,
-               ea.variant_id       as eaVariantId
+        select e.id          as id,
+               e.user_id     as userId,
+               e.testing_id  as testingId,
+               e.finished_at as finishedAt,
+               ea.id         as eaId,
+               ea.test_id    as eaTestId,
+               ea.variant_id as eaVariantId
         from public.examinations e
                  left join public.examinations_answers ea on ea.examination_id = e.id
         where e.user_id = #{userId}
-          and e.specialization_id = #{specializationId}
-          and e.exam_id = #{examId}
+          and e.testing_id = #{testingId}
           <![CDATA[
           and e.finished_at > #{finishedAt}
         ]]>
@@ -48,8 +45,7 @@
     <resultMap id="examinationWithAnswers" type="com.example.astraapi.entity.ExaminationEntity">
         <id column="id" property="id"/>
         <result column="userId" property="userId"/>
-        <result column="specializationId" property="specializationId"/>
-        <result column="examId" property="examId"/>
+        <result column="testingId" property="testingId"/>
         <result column="finishedAt" property="finishedAt"/>
 
         <collection property="answers" javaType="java.util.List"

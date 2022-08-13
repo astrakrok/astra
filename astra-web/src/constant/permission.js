@@ -40,6 +40,9 @@ export const permission = {
         userRole.guest,
         userRole.user
     ],
+    [page.newTesting]: [
+        userRole.user
+    ],
     [page.testing]: [
         userRole.user
     ],

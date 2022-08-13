@@ -10,8 +10,7 @@ import java.time.LocalDateTime;
 public interface ExaminationMapper {
   ExaminationEntity toEntity(
       Long userId,
-      Long specializationId,
-      Long examId,
+      Long testingId,
       LocalDateTime finishedAt);
 
   ExaminationDto toDto(ExaminationEntity entity);

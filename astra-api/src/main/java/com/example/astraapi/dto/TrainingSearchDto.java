@@ -15,10 +15,7 @@ import javax.validation.constraints.Positive;
 public class TrainingSearchDto {
   @NotNull
   @Positive
-  private long specializationId;
-  @NotNull
-  @Positive
-  private long examId;
+  private long testingId;
   @NotNull
   @Positive
   private long count;

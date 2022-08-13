@@ -16,8 +16,7 @@ import java.util.List;
 public class ExaminationEntity {
   private Long id;
   private Long userId;
-  private Long specializationId;
-  private Long examId;
+  private Long testingId;
   private LocalDateTime finishedAt;
   private List<ExaminationAnswerEntity> answers = new ArrayList<>();
 }

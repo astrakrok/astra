@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {testingModes} from "../../../constant/testing.mode";
 import {questionsModes} from "../../../constant/questions.mode";
 import SingleSelect from "../../SingleSelect/SingleSelect";
@@ -6,47 +6,41 @@ import Button from "../../Button/Button";
 import Spacer from "../../Spacer/Spacer";
 import DisplayBoundary from "../../DisplayBoundary/DisplayBoundary";
 import "./SelectTestingOptionsForm.css";
-
-const examToSelectValue = exam => {
-    return exam ? {
-        label: exam.title,
-        value: exam.id
-    } : null;
-}
-
-const specializationToSelectValue = specialization => {
-    return specialization ? {
-        label: specialization.title,
-        value: specialization.id
-    } : null;
-}
-
-const findExamById = (exams, examId) => exams.find(item => item.id === examId);
-
-const findSpecializationById = (specializations, specializationId) => specializations.find(item => item.id === specializationId);
-
-const findTestingModyByValue = value => testingModes.find(item => item.value === value);
-
-const findQuestionModeByValue = value => questionsModes.find(item => item.value === value);
+import InfoHeader from "../../InfoHeader/InfoHeader";
+import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
+import {getExamTestings} from "../../../service/testing.service";
 
 const SelectTestingOptionsForm = ({
-    exams,
-    specializations,
-    initialOptions = {},
-    onSelect = () => {}
-}) => {
-    const [exam, setExam] = useState(examToSelectValue(findExamById(exams, initialOptions.examId*1)));
-    const [specialization, setSpecialization] = useState(specializationToSelectValue(findSpecializationById(specializations, initialOptions.specializationId*1)));
-    const [mode, setMode] = useState(findTestingModyByValue(initialOptions.mode));
-    const [count, setCount] = useState(findQuestionModeByValue(initialOptions.count));
+                                      exams,
+                                      onSelect = () => {
+                                      }
+                                  }) => {
+    const [exam, setExam] = useState(null);
+    const [selectedTesting, setSelectedTesting] = useState(null);
+    const [mode, setMode] = useState();
+    const [count, setCount] = useState();
+    const [testings, setTestings] = useState([]);
 
     const examsOptions = exams.map(exam => ({value: exam.id, label: exam.title}));
-    const specializationsOptions = specializations.map(specialization => ({value: specialization.id, label: specialization.title}));
 
-    const selected = () => {
+    const fetchTestings = async () => {
+        setTestings(null);
+        const testings = await getExamTestings(exam.value);
+        setTestings(testings);
+    }
+
+    useEffect(() => {
+        if (!exam) {
+            return;
+        }
+        setSelectedTesting(null);
+        fetchTestings();
+    }, [exam]);
+
+    const selected = event => {
+        event.preventDefault();
         const options = {
-            examId: exam.value,
-            specializationId: specialization.value,
+            testingId: selectedTesting.value,
             mode: mode.value
         };
         if (options.mode === "training") {
@@ -56,43 +50,72 @@ const SelectTestingOptionsForm = ({
     }
 
     const isValidOptions = () => {
-        const isValidMainData = [exam, specialization, mode].filter(item => item == null).length === 0;
+        const isValidMainData = [selectedTesting, mode].filter(item => item == null).length === 0;
         return isValidMainData && (mode.value === "examination" || (mode.value === "training" && count != null));
+    }
+
+    const getTestingsOptions = () => {
+        return testings == null ? null : testings.map(item => ({
+            label: item.specialization.title,
+            value: item.id
+        }));
+    }
+
+    const updateExam = newExam => {
+        if (!newExam && !exam) {
+            return;
+        } else if (newExam && exam) {
+            if (newExam.value !== exam.value) {
+                setExam(newExam);
+            }
+            return;
+        }
+        setExam(newExam);
     }
 
     return (
         <div className="SelectTestingOptionsForm s-vflex-center full-width">
-            <SingleSelect
-                placeholder="Виберіть рік"
-                options={examsOptions}
-                value={exam}
-                onChange={setExam} />
-            <Spacer height={20} />
-            <SingleSelect
-                placeholder="Виберіть спеціалізацію"
-                options={specializationsOptions}
-                value={specialization}
-                onChange={setSpecialization} />
-            <Spacer height={20} />
-            <SingleSelect
-                placeholder="Виберіть режим"
-                options={testingModes}
-                value={mode}
-                onChange={setMode} />
-            <Spacer height={20} />
-            <DisplayBoundary condition={mode && mode.value === "training"}>
+            <form method="post" onSubmit={selected}>
+                <div className="mode s-vflex">
+                    <InfoHeader>
+                        Режим
+                    </InfoHeader>
+                    <SingleSelect
+                        placeholder="Виберіть режим"
+                        options={testingModes}
+                        onChange={setMode}/>
+                    <Spacer height={20}/>
+                    <DisplayBoundary condition={mode && mode.value === "training"}>
+                        <SingleSelect
+                            placeholder="Виберіть кількість питань"
+                            options={questionsModes}
+                            onChange={setCount}/>
+                    </DisplayBoundary>
+                    <Spacer height={20}/>
+                </div>
+                <div className="testing s-vflex">
+                    <InfoHeader>
+                        Тестування
+                    </InfoHeader>
+                </div>
                 <SingleSelect
-                    placeholder="Виберіть кількість питань"
-                    options={questionsModes}
-                    value={count}
-                    onChange={setCount} />
-            </DisplayBoundary>
-            <Spacer height={20} />
-            <div className="s-hflex-center">
-                <Button onClick={selected} isFilled={true} disabled={!isValidOptions()}>
-                    Розпочати
-                </Button>
-            </div>
+                    placeholder="Виберіть рік"
+                    options={examsOptions}
+                    onChange={updateExam}/>
+                <Spacer height={20}/>
+                <LoaderBoundary condition={testings == null} className="s-hflex-center" size="small">
+                    <SingleSelect
+                        placeholder="Виберіть спеціалізацію"
+                        options={getTestingsOptions()}
+                        onChange={setSelectedTesting}/>
+                </LoaderBoundary>
+                <Spacer height={40}/>
+                <div className="s-hflex-center">
+                    <Button isFilled={true} disabled={!isValidOptions()} isSubmit="submit">
+                        Розпочати
+                    </Button>
+                </div>
+            </form>
         </div>
     );
 }

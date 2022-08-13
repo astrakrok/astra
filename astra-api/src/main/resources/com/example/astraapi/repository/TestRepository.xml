@@ -12,17 +12,13 @@
         select t.id       as id,
                t.question as question,
                t.comment  as comment,
-               e.id       as examId,
-               e.title    as examTitle,
                s.id       as specializationId,
                s.title    as specializationTitle
         from public.tests t
-                 left join public.tests_exams te on t.id = te.test_id
-                 left join public.exams e on te.exam_id = e.id
                  left join public.tests_subjects ts on t.id = ts.test_id
                  left join public.subjects_specializations ss on ts.subject_id = ss.subject_id
                  left join public.specializations s on ss.specialization_id = s.id
-        order by id, examId, specializationId
+        order by id, specializationId
     </select>
 
     <select id="getDetailedTestById" resultMap="testFullDetail">
@@ -46,23 +42,18 @@
         where t.id = #{id}
     </select>
 
-    <select id="getTestingBySpecializationIdAndExamId" resultMap="testingTest">
+    <select id="getTestsByTestingId" resultMap="testingTest">
         select *
         from (
                  select *
                  from (
-                          select distinct on (t.id) t.id                  as id,
-                                                    t.question            as question,
-                                                    t.comment             as comment,
-                                                    specializations.id    as specializationId,
-                                                    specializations.title as specializationTitle
-                          from public.tests t
-                                   left join tests_subjects ts on t.id = ts.test_id
-                                   left join public.subjects_specializations ss on ss.subject_id = ts.subject_id
-                                   left join public.specializations on ss.specialization_id = specializations.id
-                                   left join tests_exams te on t.id = te.test_id
-                          where specialization_id = #{specializationId}
-                            and te.exam_id = #{examId}
+                          select distinct on (t.id) t.id       as id,
+                                                    t.question as question,
+                                                    t.comment  as comment
+                          from public.testings
+                                   left join public.testings_tests tt on testings.id = tt.testing_id
+                                   left join public.tests t on t.id = tt.test_id
+                          where testings.id = #{testingId}
                           order by t.id
                       ) as subsubtable
                  order by random()
@@ -124,11 +115,6 @@
         <id column="id" property="id"/>
         <result column="question" property="question"/>
         <result column="comment" property="comment"/>
-
-        <collection property="exams" javaType="List" ofType="com.example.astraapi.entity.ExamEntity">
-            <id column="examId" property="id"/>
-            <result column="examTitle" property="title"/>
-        </collection>
 
         <collection property="specializations" javaType="List"
                     ofType="com.example.astraapi.entity.SpecializationEntity">
