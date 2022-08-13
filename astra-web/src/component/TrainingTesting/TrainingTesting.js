@@ -113,12 +113,12 @@ const TrainingTesting = ({tests}) => {
             {
                 (status.stage === "completed") ? (
                     <div className="s-vflex">
-                        <TestingStatistic statistic={getTestingStatistic()} />
-                        <Spacer height={50} />
-                        <TestingControl onNew={startNew} onRepeat={restartTesting} />
-                        <Spacer height={100} />
-                        <InfoHeader text="Ваш результат" />
-                        <TestingCorrectness tests={testingState} />
+                        <TestingStatistic statistic={getTestingStatistic()}/>
+                        <Spacer height={50}/>
+                        <TestingControl onNew={startNew} onRepeat={restartTesting}/>
+                        <Spacer height={100}/>
+                        <InfoHeader>Ваш результат</InfoHeader>
+                        <TestingCorrectness tests={testingState}/>
                     </div>
                 ) : (
                     <>

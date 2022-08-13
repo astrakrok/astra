@@ -23,10 +23,9 @@
                    )
     </select>
 
-    <delete id="deleteByTestingIdAndTestId">
+    <delete id="deleteById">
         delete
         from public.testings_tests tt
-        where tt.test_id = #{testId}
-          and tt.testing_id = #{testingId}
+        where tt.id = #{id}
     </delete>
 </mapper>

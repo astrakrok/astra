@@ -1,11 +1,12 @@
 import "./InfoHeader.css";
 
 const InfoHeader = ({
-    text
-}) => {
+                        children,
+                        className = ""
+                    }) => {
     return (
         <div className="InfoHeader s-hflex">
-            <p className="text">{text}</p>
+            <div className={`text ${className}`}>{children}</div>
         </div>
     );
 }

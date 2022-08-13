@@ -17,6 +17,28 @@
         where t.exam_id = #{examId}
     </select>
 
+    <select id="findTestingInfoById" resultMap="testingInfo">
+        select t.id    as id,
+               e.id    as examId,
+               e.title as examTitle,
+               s.id    as specializationId,
+               s.title as specializationTitle
+        from public.testings t
+                 left join public.exams e on e.id = t.exam_id
+                 left join public.specializations s on s.id = t.specialization_id
+        where t.id = #{id}
+    </select>
+
+    <select id="getTestingTestsByTestingId" resultMap="testingTestQuestion">
+        select tt.id         as id,
+               tt.testing_id as testingId,
+               t.id          as testId,
+               t.question    as testQuestion
+        from public.testings_tests tt
+                 left join public.tests t on t.id = tt.test_id
+        where tt.testing_id = #{testingId}
+    </select>
+
     <resultMap id="testingWithSpecialization" type="com.example.astraapi.entity.TestingWithSpecializationEntity">
         <id column="id" property="id"/>
         <result column="examId" property="examId"/>
@@ -24,6 +46,30 @@
         <association property="specialization" javaType="com.example.astraapi.entity.SpecializationEntity">
             <id column="specializationId" property="id"/>
             <result column="specializationTitle" property="title"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="testingInfo" type="com.example.astraapi.entity.TestingInfoEntity">
+        <id column="id" property="id"/>
+
+        <association property="exam" javaType="com.example.astraapi.entity.ExamEntity">
+            <id column="examId" property="id"/>
+            <result column="examTitle" property="title"/>
+        </association>
+
+        <association property="specialization" javaType="com.example.astraapi.entity.SpecializationEntity">
+            <id column="specializationId" property="id"/>
+            <result column="specializationTitle" property="title"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="testingTestQuestion" type="com.example.astraapi.entity.TestingTestQuestionEntity">
+        <id column="id" property="id"/>
+        <result column="testingId" property="testingId"/>
+
+        <association property="test" javaType="com.example.astraapi.entity.TestQuestionEntity">
+            <id column="testId" property="id"/>
+            <result column="testQuestion" property="question"/>
         </association>
     </resultMap>
 </mapper>

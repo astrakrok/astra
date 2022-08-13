@@ -26,8 +26,8 @@ public class TestingTestServiceImpl implements TestingTestService {
   }
 
   @Override
-  public void delete(Long testingId, Long testId) {
-    testingTestRepository.deleteByTestingIdAndTestId(testingId, testId);
+  public void delete(Long id) {
+    testingTestRepository.deleteById(id);
   }
 
   private void validateTestSpecialization(RequestTestingTestDto testingTestDto) {

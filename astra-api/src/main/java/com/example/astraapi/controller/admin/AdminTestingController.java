@@ -2,6 +2,8 @@ package com.example.astraapi.controller.admin;
 
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.RequestTestingDto;
+import com.example.astraapi.dto.TestingInfoDto;
+import com.example.astraapi.dto.TestingTestQuestionDto;
 import com.example.astraapi.dto.TestingWithSpecializationDto;
 import com.example.astraapi.meta.Endpoint;
 import com.example.astraapi.service.TestingService;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(Endpoint.ADMIN_TESTINGS)
@@ -30,5 +33,15 @@ public class AdminTestingController {
   @GetMapping("/exams/{examId}")
   public List<TestingWithSpecializationDto> getWithSpecializations(@PathVariable("examId") Long examId) {
     return testingService.getWithSpecializations(examId);
+  }
+
+  @GetMapping("/{id}/info")
+  public Optional<TestingInfoDto> getTestingInfo(@PathVariable("id") Long id) {
+    return testingService.getTestingInfo(id);
+  }
+
+  @GetMapping("/{id}/tests")
+  public List<TestingTestQuestionDto> getTestsQuestions(@PathVariable("id") Long id) {
+    return testingService.getTestsQuestions(id);
   }
 }

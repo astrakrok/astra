@@ -183,10 +183,12 @@ const TestForm = ({
 
     return (
         <div className="TestForm s-vflex">
-            <InfoHeader text="Основна інформація" />
-            <Textarea placeholder="Питання" value={test.question} onChange={event => setTest({...test, question: event.target.value})} />
-            <Textarea placeholder="Коментар" value={test.comment} onChange={event => setTest({...test, comment: event.target.value})} />
-            <InfoHeader text="Відповіді" />
+            <InfoHeader>Основна інформація</InfoHeader>
+            <Textarea placeholder="Питання" value={test.question}
+                      onChange={event => setTest({...test, question: event.target.value})}/>
+            <Textarea placeholder="Коментар" value={test.comment}
+                      onChange={event => setTest({...test, comment: event.target.value})}/>
+            <InfoHeader>Відповіді</InfoHeader>
             <div className="answers s-vflex">
                 <ul className="collection">
                     {
@@ -199,7 +201,7 @@ const TestForm = ({
                     </li>
                 </ul>
             </div>
-            <InfoHeader text="Предмети" />
+            <InfoHeader>Предмети</InfoHeader>
             <div className="subjects s-hflex">
                 {
                     test.subjects.map(renderSubject)
@@ -207,7 +209,8 @@ const TestForm = ({
                 <PopupConsumer>
                     {
                         ({setPopupState}) => (
-                            <Badge type="gray" wrapperClassName="add-subject-badge clickable" onClick={() => openSelectSubjectPopup(setPopupState)}>
+                            <Badge type="gray" wrapperClassName="add-subject-badge clickable"
+                                   onClick={() => openSelectSubjectPopup(setPopupState)}>
                                 <div className="s-vflex-center add-subject full-height">
                                     <i className="tiny material-icons">add</i>
                                 </div>
@@ -216,7 +219,7 @@ const TestForm = ({
                     }
                 </PopupConsumer>
             </div>
-            <InfoHeader text="Іспити" />
+            <InfoHeader>Іспити</InfoHeader>
             <div className="exams s-hflex">
                 {
                     test.exams.map(renderExam)
@@ -224,7 +227,8 @@ const TestForm = ({
                 <PopupConsumer>
                     {
                         ({setPopupState}) => (
-                            <Badge type="gray" wrapperClassName="add-exam-badge clickable" onClick={() => openSelectExamsPopup(setPopupState)}>
+                            <Badge type="gray" wrapperClassName="add-exam-badge clickable"
+                                   onClick={() => openSelectExamsPopup(setPopupState)}>
                                 <div className="s-vflex-center add-exam full-height">
                                     <i className="tiny material-icons">add</i>
                                 </div>

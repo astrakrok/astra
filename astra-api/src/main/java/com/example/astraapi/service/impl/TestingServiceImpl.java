@@ -2,6 +2,8 @@ package com.example.astraapi.service.impl;
 
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.RequestTestingDto;
+import com.example.astraapi.dto.TestingInfoDto;
+import com.example.astraapi.dto.TestingTestQuestionDto;
 import com.example.astraapi.dto.TestingWithSpecializationDto;
 import com.example.astraapi.entity.TestingEntity;
 import com.example.astraapi.mapper.TestingMapper;
@@ -11,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +33,19 @@ public class TestingServiceImpl implements TestingService {
   public List<TestingWithSpecializationDto> getWithSpecializations(Long examId) {
     return testingRepository.getByExamIdWithSpecialization(examId).stream()
         .map(testingMapper::toDto)
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public Optional<TestingInfoDto> getTestingInfo(Long id) {
+    return testingRepository.findTestingInfoById(id)
+        .map(testingMapper::toInfoDto);
+  }
+
+  @Override
+  public List<TestingTestQuestionDto> getTestsQuestions(Long id) {
+    return testingRepository.getTestingTestsByTestingId(id).stream()
+        .map(testingMapper::toTestQuestionDto)
         .collect(Collectors.toList());
   }
 }
