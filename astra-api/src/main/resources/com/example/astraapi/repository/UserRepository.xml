@@ -26,6 +26,15 @@
         where u.email = #{email}
     </select>
 
+    <update id="update">
+        update public.users
+        set name    = #{entity.name},
+            surname = #{entity.surname},
+            course  = #{entity.course},
+            school  = #{entity.school}
+        where email = #{entity.email}
+    </update>
+
     <resultMap id="userWithRoles" type="com.example.astraapi.entity.UserEntity">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
