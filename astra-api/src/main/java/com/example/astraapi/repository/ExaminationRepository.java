@@ -30,5 +30,7 @@ public interface ExaminationRepository {
       @Param("userId") Long userId,
       @Param("finishedAt") LocalDateTime finishedAt);
 
+  List<ExaminationEntity> getAllByFinishedAtBeforeOrderById(@Param("finishedAt") LocalDateTime finishedAt);
+
   void deleteById(@Param("id") Long id);
 }
