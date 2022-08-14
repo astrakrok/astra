@@ -41,8 +41,8 @@ const ProfilePage = () => {
                         </div>
                     </div>
                     <div className="statistic">
-                        <TextHeader text="Статистика" />
-                        <LoaderBoundary condition={statistic == null}>
+                        <TextHeader text="Статистика"/>
+                        <LoaderBoundary condition={statistic == null} className="s-hflex-center">
                             {
                                 (statistic && statistic.length > 0) ? (
                                     statistic.map(renderStatisticItem)

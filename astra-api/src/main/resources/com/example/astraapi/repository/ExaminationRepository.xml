@@ -42,6 +42,22 @@
         where id = #{id}
     </update>
 
+    <select id="getAllByUserIdAndFinishedAtBeforeOrderById" resultType="com.example.astraapi.entity.ExaminationEntity">
+        select *
+        from public.examinations e
+        where e.user_id = #{userId}
+        <![CDATA[
+          and e.finished_at < #{finishedAt}
+        ]]>
+        order by e.id
+    </select>
+
+    <delete id="deleteById">
+        delete
+        from public.examinations e
+        where e.id = #{id}
+    </delete>
+
     <resultMap id="examinationWithAnswers" type="com.example.astraapi.entity.ExaminationEntity">
         <id column="id" property="id"/>
         <result column="userId" property="userId"/>

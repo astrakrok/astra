@@ -13,4 +13,5 @@ public class ExaminationProperties {
   private Integer count;
   private Integer durationInMinutes;
   private Integer finishedAtDeviationSeconds;
+  private Integer thresholdPercentage;
 }

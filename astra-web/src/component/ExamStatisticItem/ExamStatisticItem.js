@@ -4,7 +4,7 @@ import corona from "./corona.png";
 import "./ExamStatisticItem.css";
 
 const ExamStatisticItem = ({statistic}) => {
-    const getSearch = () => `?examId=${statistic.exam.id}&specializationId=${statistic.specialization.id}`;
+    const getSearch = () => `?testingId=${statistic.testing.id}&mode=examination`;
 
     const getNavigation = () => ({
         pathname: page.testing,
@@ -17,7 +17,7 @@ const ExamStatisticItem = ({statistic}) => {
                 <Link to={getNavigation()}>
                     <div className="s-hflex content full-width full-height">
                         <div className="title s-vflex-center equal-flex">
-                            {statistic.exam.title} ({statistic.specialization.title})
+                            {statistic.testing.exam.title} ({statistic.testing.specialization.title})
                         </div>
                         <div className="percentage s-hflex">
                             <div className="last s-vflex-center">
