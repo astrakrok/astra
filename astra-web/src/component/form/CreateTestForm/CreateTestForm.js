@@ -11,8 +11,7 @@ const CreateTestForm = () => {
             question: test.question,
             comment: test.comment,
             variants: test.variants,
-            subjectIds: test.subjects.map(item => item.id),
-            examIds: test.exams.map(item => item.id)
+            subjectIds: test.subjects.map(item => item.id)
         });
 
         const message = data.id ? "Тест успішно створений" : "Під час створення тесту виникла помилка :(";

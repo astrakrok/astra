@@ -4,15 +4,13 @@ import InfoHeader from "../../InfoHeader/InfoHeader";
 import Input from "../../Input/Input";
 import Textarea from "../../Textarea/Textarea";
 import Badge from "../../Badge/Badge";
-import Spacer from "../../Spacer/Spacer";
 import PopupConsumer from "../../../context/popup/PopupConsumer";
-import SelectExams from "../../popup-component/SelectExams/SelectExams";
 import SelectSubject from "../../SelectSubject/SelectSubject";
 import {defaultEmptyTest} from "../../../data/default/test";
 import withSubjectsDetails from "../../hoc/withSubjectsDetails/withSubjectsDetails";
-import withExams from "../../hoc/withExams/withExams";
 import "./TestForm.css";
 import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
+import Spacer from "../../Spacer/Spacer";
 
 const TestForm = ({
     initialTest = defaultEmptyTest,
@@ -60,21 +58,18 @@ const TestForm = ({
         });
     }
 
-    const removeExam = index => {
-        const exams = test.exams.filter((_, itemIndex) => itemIndex !== index);
-        setTest({
-            ...test,
-            exams
-        });
-    }
-
     const renderVariant = (variant, index) => {
         return (
             <li className={`collection-item ${variant.isCorrect ? "correct" : ""}`} key={index}>
                 <div className="s-vflex">
                     <div className="content">
-                        <Input value={variant.title} placeholder="Варіант" onChange={event => updateVariant({...variant, title: event.target.value}, index)} />
-                        <Textarea placeholder="Пояснення" value={variant.explanation}  onChange={event => updateVariant({...variant, explanation: event.target.value}, index)} />
+                        <Input value={variant.title} placeholder="Варіант"
+                               onChange={event => updateVariant({...variant, title: event.target.value}, index)}/>
+                        <Spacer height={20}/>
+                        <Textarea placeholder="Пояснення" value={variant.explanation} onChange={event => updateVariant({
+                            ...variant,
+                            explanation: event.target.value
+                        }, index)}/>
                     </div>
                     <div className="s-hflex">
                         <div className="clickable equal-flex make-correct s-hflex-center" onClick={() => updateCorrectVariant(index)}>
@@ -102,19 +97,6 @@ const TestForm = ({
         );
     }
 
-    const renderExam = (exam, index) => {
-        return (
-            <Badge key={exam.id} type="primary">
-                <div className="s-hflex">
-                    <span>{exam.title}</span>
-                    <div className="delete-exam s-vflex-center"  onClick={() => removeExam(index)}>
-                        <i className="tiny material-icons">close</i>
-                    </div>
-                </div>
-            </Badge>
-        );
-    }
-
     const addEmptyVariant = () => {
         setTest({
             ...test,
@@ -130,22 +112,6 @@ const TestForm = ({
         })
     }
 
-    const changeSelectedExams = selected => {
-        setTest({
-            ...test,
-            exams: selected.map(item => ({id: item.value, title: item.label}))
-        });
-    }
-
-    const handleExamSaving = (exam, setPopupState) => {
-        setTest({
-            ...test,
-            exams: [...test.exams, exam]
-        });
-
-        setPopupState();
-    }
-
     const handleSubjectSaving = (subject, setPopupState) => {
         const subjects = test.subjects.filter(item => item.id !== subject.id);
         setTest({
@@ -154,19 +120,6 @@ const TestForm = ({
         });
 
         setPopupState();
-    }
-
-    const openSelectExamsPopup = setPopupState => {
-        const SelectExamsForm = withExams(SelectExams, "small");
-
-        setPopupState({
-            bodyGetter: () => (
-                <SelectExamsForm
-                    onChange={changeSelectedExams}
-                    selectedExams={test.exams}
-                    onSave={exam => handleExamSaving(exam, setPopupState)} />
-            )
-        });
     }
 
     const openSelectSubjectPopup = setPopupState => {
@@ -219,25 +172,6 @@ const TestForm = ({
                     }
                 </PopupConsumer>
             </div>
-            <InfoHeader>Іспити</InfoHeader>
-            <div className="exams s-hflex">
-                {
-                    test.exams.map(renderExam)
-                }
-                <PopupConsumer>
-                    {
-                        ({setPopupState}) => (
-                            <Badge type="gray" wrapperClassName="add-exam-badge clickable"
-                                   onClick={() => openSelectExamsPopup(setPopupState)}>
-                                <div className="s-vflex-center add-exam full-height">
-                                    <i className="tiny material-icons">add</i>
-                                </div>
-                            </Badge>
-                        )
-                    }
-                </PopupConsumer>
-            </div>
-            <Spacer height={50} />
             <div className="s-hflex-end">
                 <LoaderBoundary condition={loading} size="small">
                     <Button onClick={save}>Зберегти</Button>
