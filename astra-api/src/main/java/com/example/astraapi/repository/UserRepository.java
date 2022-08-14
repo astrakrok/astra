@@ -11,4 +11,6 @@ public interface UserRepository {
   void save(@Param("entity") UserEntity entity);
 
   Optional<UserEntity> findUserWithRolesByEmail(@Param("email") String email);
+
+  void update(@Param("entity") UserEntity entity);
 }

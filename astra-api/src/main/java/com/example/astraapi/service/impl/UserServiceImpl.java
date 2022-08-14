@@ -1,6 +1,7 @@
 package com.example.astraapi.service.impl;
 
 import com.example.astraapi.dto.IdDto;
+import com.example.astraapi.dto.UpdateUserDto;
 import com.example.astraapi.dto.UserDto;
 import com.example.astraapi.entity.UserEntity;
 import com.example.astraapi.mapper.UserMapper;
@@ -41,5 +42,12 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserDto getCurrentUser() {
     return authContext.getUser();
+  }
+
+  @Override
+  public void update(UpdateUserDto user) {
+    String email = authContext.getUser().getEmail();
+    UserEntity userEntity = userMapper.toEntity(user, email);
+    userRepository.update(userEntity);
   }
 }

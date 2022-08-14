@@ -67,7 +67,8 @@ public class SecurityConfig {
                 "/api/v1/testings/exams/*")
             .hasAnyAuthority(authorized)
             .mvcMatchers(
-                "/api/v1/users/current")
+                "/api/v1/users/current",
+                "/api/v1/users")
             .hasAnyAuthority(authorized)
             .mvcMatchers("/api/v1/**")
             .hasAnyAuthority(user))
