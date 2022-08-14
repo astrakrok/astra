@@ -40,6 +40,7 @@ public class ExaminationServiceImpl implements ExaminationService {
   @Override
   @Transactional
   public ExaminationStateDto start(ExaminationSearchDto searchDto) {
+    aggregateAllCompletedExamination();
     ExaminationEntity examination = examinationRepository.findExaminationWithAnswers(
             authContext.getUser().getId(),
             searchDto.getTestingId(),
@@ -90,6 +91,15 @@ public class ExaminationServiceImpl implements ExaminationService {
     List<ExaminationStatisticDto> statistics = examinationStatisticService.getStatistics(userId);
     updateStatisticsSuccess(statistics);
     return statistics;
+  }
+
+  private void aggregateAllCompletedExamination() {
+    LocalDateTime now = LocalDateTime.now();
+    LocalDateTime finishedAtBefore = timeZoneService.toUtc(now);
+    List<ExaminationDto> examinations = examinationRepository.getAllByFinishedAtBeforeOrderById(finishedAtBefore).stream()
+        .map(examinationMapper::toDto)
+        .collect(Collectors.toList());
+    examinations.forEach(examination -> transactionService.execute(() -> processExamination(examination)));
   }
 
   private ExaminationEntity createExamination(ExaminationSearchDto searchDto) {
