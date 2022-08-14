@@ -3,6 +3,5 @@ export const defaultEmptyTest = {
     question: "",
     comment: "",
     variants: [],
-    subjects: [],
-    exams: []
+    subjects: []
 };

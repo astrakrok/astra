@@ -29,13 +29,9 @@
                tv.title       as variantTitle,
                tv.explanation as variantExplanation,
                tv.is_correct  as variantIsCorrect,
-               e.id           as examId,
-               e.title        as examTitle,
                s.id           as subjectId,
                s.title        as subjectTitle
         from public.tests t
-                 left join public.tests_exams te on t.id = te.test_id
-                 left join public.exams e on te.exam_id = e.id
                  left join public.tests_variants tv on t.id = tv.test_id
                  left join public.tests_subjects ts on t.id = ts.test_id
                  left join public.subjects s on ts.subject_id = s.id
