@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.astraapi.repository.ExaminationStatisticRepository">
+    <select id="calculateStatistic" resultType="com.example.astraapi.entity.projection.ExaminationStatisticProjection">
+        select sum(case when sub.is_correct then 1 else 0 end) as correctCount,
+               count(ea.id)                                    as totalCount
+        from public.examinations_answers ea
+                 left join lateral (
+            select tv.is_correct from tests_variants tv where tv.id = ea.variant_id
+            ) as sub on true
+        where examination_id = #{examinationId}
+    </select>
+
+    <select id="findByUserIdAndTestingId" resultType="com.example.astraapi.entity.ExaminationStatisticEntity">
+        select *
+        from public.examinations_statistics es
+        where es.user_id = #{userId}
+          and es.testing_id = #{testingId}
+    </select>
+
+    <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="entity.id">
+        insert into public.examinations_statistics(testing_id, user_id, last_percentage, best_percentage)
+        values (#{entity.testingId},
+                #{entity.userId},
+                #{entity.lastPercentage},
+                #{entity.bestPercentage})
+    </insert>
+
+    <update id="updatePercentage">
+        update public.examinations_statistics
+        set last_percentage = #{entity.lastPercentage},
+            best_percentage = #{entity.bestPercentage}
+        where id = #{entity.id}
+    </update>
+
+    <select id="getAllWithTestingByUserId" resultMap="statisticInfo">
+        select es.id              as id,
+               es.last_percentage as lastPercentage,
+               es.best_percentage as bestPercentage,
+               t.id               as testingId,
+               e.id               as examId,
+               e.title            as examTitle,
+               s.id               as specializationId,
+               s.title            as specializationTitle
+        from public.examinations_statistics es
+                 left join public.testings t on t.id = es.testing_id
+                 left join public.exams e on e.id = t.exam_id
+                 left join public.specializations s on s.id = t.specialization_id
+        where es.user_id = #{userId}
+    </select>
+
+    <resultMap id="statisticInfo" type="com.example.astraapi.entity.ExaminationStatisticInfoEntity">
+        <id column="id" property="id"/>
+        <result column="lastPercentage" property="lastPercentage"/>
+        <result column="bestPercentage" property="bestPercentage"/>
+
+        <association property="testing" resultMap="testingInfo"/>
+    </resultMap>
+
+    <resultMap id="testingInfo" type="com.example.astraapi.entity.TestingInfoEntity">
+        <id column="testingId" property="id"/>
+
+        <association property="exam" javaType="com.example.astraapi.entity.ExamEntity">
+            <id column="examId" property="id"/>
+            <result column="examTitle" property="title"/>
+        </association>
+
+        <association property="specialization" javaType="com.example.astraapi.entity.SpecializationEntity">
+            <id column="specializationId" property="id"/>
+            <result column="specializationTitle" property="title"/>
+        </association>
+    </resultMap>
+</mapper>

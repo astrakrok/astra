@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Mapper
@@ -24,4 +25,10 @@ public interface ExaminationRepository {
   void updateFinishedAtById(
       @Param("id") Long id,
       @Param("finishedAt") LocalDateTime finishedAt);
+
+  List<ExaminationEntity> getAllByUserIdAndFinishedAtBeforeOrderById(
+      @Param("userId") Long userId,
+      @Param("finishedAt") LocalDateTime finishedAt);
+
+  void deleteById(@Param("id") Long id);
 }
