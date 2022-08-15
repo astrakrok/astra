@@ -57,6 +57,7 @@ const getAdminRoutes = () => {
 }
 
 export const route = {
+    password: `${baseUrl}/api/v1/auth/password`,
     signUp: `${baseUrl}/api/v1/auth/signup`,
     auth: `${baseUrl}/api/v1/auth`,
     specializations: `${baseUrl}/api/v1/specializations`,

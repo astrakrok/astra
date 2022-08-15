@@ -15,7 +15,6 @@ export const page = {
     logout: "/logout",
 
     admin: {
-        login: "/admin/login",
         exams: {
             all: adminExams
         },

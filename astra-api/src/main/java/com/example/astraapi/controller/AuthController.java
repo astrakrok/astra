@@ -1,5 +1,6 @@
 package com.example.astraapi.controller;
 
+import com.example.astraapi.dto.ChangePasswordDto;
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.LoginDto;
 import com.example.astraapi.dto.RefreshTokenDto;
@@ -40,5 +41,11 @@ public class AuthController {
     return ResponseEntity
         .status(HttpStatus.CREATED)
         .body(idDto);
+  }
+
+  @PutMapping("/password")
+  public void changePassword(@Valid @RequestBody ChangePasswordDto changePasswordDto) throws InterruptedException {
+    Thread.sleep(3000);
+    authService.changePassword(changePasswordDto);
   }
 }
