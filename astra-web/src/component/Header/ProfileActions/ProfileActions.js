@@ -1,5 +1,5 @@
 import {page} from "../../../constant/page";
-import {isAdmin} from "../../../handler/user.handler";
+import {isAdmin, isSuperAdmin} from "../../../handler/user.handler";
 import Dropdown from "../../Dropdown/Dropdown";
 import IconTitle from "../../IconTitle/IconTitle";
 import CardTemplate from "../../CardTemplate/CardTemplate";
@@ -32,21 +32,32 @@ const ProfileActions = () => {
                     ({userData}) => {
                         return isAdmin(userData) ? null : (
                             <Link to={page.profile}>
-                                <IconTitle icon="perm_identity" title="Профіль" />
+                                <IconTitle icon="perm_identity" title="Профіль"/>
                             </Link>
                         )
                     }
                 }
             </AuthConsumer>,
+            <AuthConsumer>
+                {
+                    ({userData}) => {
+                        return isSuperAdmin(userData) ? (
+                            <Link to={page.configuration}>
+                                <IconTitle icon="perm_data_setting" title="Конфігурація"/>
+                            </Link>
+                        ) : null
+                    }
+                }
+            </AuthConsumer>,
             <Link to={page.settings}>
-                <IconTitle icon="settings" title="Налаштування" />
+                <IconTitle icon="settings" title="Налаштування"/>
             </Link>,
-            <Divider />,
+            <Divider/>,
             <AuthConsumer>
                 {
                     ({setUserData}) => (
                         <Link to="" onClick={() => setUserData(null)}>
-                            <IconTitle icon="exit_to_app" title="Вийти" />
+                            <IconTitle icon="exit_to_app" title="Вийти"/>
                         </Link>
                     )
                 }

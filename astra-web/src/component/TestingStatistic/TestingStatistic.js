@@ -2,7 +2,10 @@ import {DonutChart} from "react-circle-chart";
 import InfoText from "../InfoText/InfoText";
 import "./TestingStatistic.css";
 
-const TestingStatistic = ({statistic}) => {
+const TestingStatistic = ({
+                              statistic,
+                              isSuccess = null
+                          }) => {
     const percent = Math.round(statistic.correctCount / statistic.total * 100);
 
     return (
@@ -15,7 +18,10 @@ const TestingStatistic = ({statistic}) => {
             <div className="s-hflex-center">
                 <DonutChart trackWidth="lg" size="sm" items={[{
                     value: percent,
-                    label: "Правильність"
+                    label: "Правильність",
+                    color: isSuccess == null ? null : (
+                        isSuccess ? "#238b32" : "#f44336"
+                    )
                 }]} />
             </div>
         </div>

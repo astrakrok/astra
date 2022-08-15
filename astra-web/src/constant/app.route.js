@@ -50,6 +50,7 @@ const getAdminRoutes = () => {
                 }
             }
         },
+        properties: prefix + "/properties",
         subjects: prefix + "/subjects",
         specializations: prefix + "/specializations",
         tests: prefix + "/tests"

@@ -21,3 +21,7 @@ export const isAdmin = user => {
         user.roles.includes(userRole.admin) || user.roles.includes(userRole.superAdmin)
     );
 }
+
+export const isSuperAdmin = user => {
+    return user && user.roles.includes(userRole.superAdmin);
+}

@@ -12,6 +12,7 @@ export const page = {
     testing: "/testing",
     profile: "/profile",
     settings: "/settings",
+    configuration: "/configuration",
     logout: "/logout",
 
     admin: {

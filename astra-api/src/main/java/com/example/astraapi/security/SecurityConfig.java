@@ -57,6 +57,10 @@ public class SecurityConfig {
                 "/api/v1/auth/signup")
             .permitAll()
             .mvcMatchers(
+                "/api/v1/properties",
+                "/api/v1/properties/**")
+            .hasAnyAuthority("SUPER_ADMIN")
+            .mvcMatchers(
                 "/api/v1/admin/**")
             .hasAnyAuthority(admin)
             .mvcMatchers(

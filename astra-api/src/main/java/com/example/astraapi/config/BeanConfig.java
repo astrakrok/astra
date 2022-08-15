@@ -1,10 +1,15 @@
 package com.example.astraapi.config;
 
 import com.auth0.client.auth.AuthAPI;
+import com.example.astraapi.meta.ConfigProperty;
 import com.example.astraapi.security.SecurityProperties;
+import com.example.astraapi.validator.ConfigPropertyValidator;
+import com.example.astraapi.validator.impl.ExaminationThresholdConfigPropertyValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.Map;
 
 @Configuration
 @RequiredArgsConstructor
@@ -16,5 +21,12 @@ public class BeanConfig {
     return new AuthAPI(properties.getIssuerUri(),
         properties.getClientId(),
         properties.getClientSecret());
+  }
+
+  @Bean
+  public Map<ConfigProperty, ConfigPropertyValidator> getConfigPropertyValidators() {
+    return Map.of(
+        ConfigProperty.EXAMINATION_THRESHOLD_PERCENTAGE, new ExaminationThresholdConfigPropertyValidator()
+    );
   }
 }

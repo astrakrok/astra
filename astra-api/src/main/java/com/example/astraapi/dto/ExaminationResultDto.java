@@ -1,5 +1,6 @@
 package com.example.astraapi.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,4 +17,6 @@ public class ExaminationResultDto {
   private List<AnsweredTestDto> tests = new ArrayList<>();
   private Long correctCount;
   private Long total;
+  @JsonProperty("isSuccess")
+  private boolean success;
 }

@@ -7,9 +7,12 @@ import com.example.astraapi.dto.ExaminationSearchDto;
 import com.example.astraapi.dto.ExaminationTestDto;
 import com.example.astraapi.dto.TestVariantDto;
 import com.example.astraapi.entity.ExaminationAnswerEntity;
+import com.example.astraapi.entity.PropertyEntity;
 import com.example.astraapi.mapper.ExaminationAnswerMapper;
+import com.example.astraapi.meta.ConfigProperty;
 import com.example.astraapi.repository.ExaminationAnswerRepository;
 import com.example.astraapi.service.ExaminationAnswerService;
+import com.example.astraapi.service.PropertyService;
 import com.example.astraapi.service.TestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,6 +29,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ExaminationAnswerServiceImpl implements ExaminationAnswerService {
   private final TestService testService;
+  private final PropertyService propertyService;
   private final ExaminationAnswerMapper examinationAnswerMapper;
   private final ExaminationAnswerRepository examinationAnswerRepository;
 
@@ -67,11 +71,29 @@ public class ExaminationAnswerServiceImpl implements ExaminationAnswerService {
   public ExaminationResultDto getResult(Long examinationId) {
     List<ExaminationAnswerEntity> answerEntities = examinationAnswerRepository.getDetailedAnswersByExaminationId(examinationId);
     List<AnsweredTestDto> answeredTests = getAnsweredTests(answerEntities);
+    PropertyEntity property = propertyService.getProperty(ConfigProperty.EXAMINATION_THRESHOLD_PERCENTAGE.getName())
+        .orElseThrow(() -> new IllegalArgumentException("No such property"));
+    Long correctCount = getCorrectCount(answeredTests);
+    Long total = (long) answeredTests.size();
+    Long correctness = getCorrectness(correctCount, total);
+    Long threshold = getThresholdValue(property);
     return new ExaminationResultDto(
         answeredTests,
-        getCorrectCount(answeredTests),
-        (long) answeredTests.size()
+        correctCount,
+        total,
+        correctness >= threshold
     );
+  }
+
+  private Long getThresholdValue(PropertyEntity threshold) {
+    return Long.parseLong(threshold.getValue());
+  }
+
+  private Long getCorrectness(Long correctCount, Long total) {
+    if (total == null || total == 0) {
+      return 0L;
+    }
+    return Math.round(correctCount * 100.0 / total);
   }
 
   private List<Long> getTestsIds(List<ExaminationAnswerDto> answers) {
