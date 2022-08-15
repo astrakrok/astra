@@ -184,7 +184,9 @@ const ExaminationTesting = ({
                 result.status !== loadingStatus.inProgress ? (
                     <LoaderBoundary condition={result.status === loadingStatus.loading}
                                     className="full-width s-hflex-center">
-                        <TestingStatistic statistic={{correctCount: result.correctCount, total: result.total}}/>
+                        <TestingStatistic
+                            isSuccess={result.isSuccess}
+                            statistic={{correctCount: result.correctCount, total: result.total}}/>
                         <Spacer height={50}/>
                         <TestingControl onRepeat={repeat}/>
                         <Spacer height={100}/>

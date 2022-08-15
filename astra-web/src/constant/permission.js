@@ -32,14 +32,7 @@ export const permission = {
     [page.login]: notAuthorized,
     [page.logout]: authorized,
     [page.register]: notAuthorized,
-    [page.team]: [
-        userRole.guest,
-        userRole.user
-    ],
-    [page.joinTeam]: [
-        userRole.guest,
-        userRole.user
-    ],
+    [page.configuration]: [userRole.superAdmin],
     [page.newTesting]: [
         userRole.user
     ],
