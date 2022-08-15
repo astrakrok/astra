@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import Button from "../Button/Button";
 import DisplayBoundary from "../DisplayBoundary/DisplayBoundary";
 import RadioButton from "../RadioButton/RadioButton";
+import parse from "html-react-parser";
 import "./TrainingTest.css";
 
 const TrainingTest = ({
@@ -54,7 +55,7 @@ const TrainingTest = ({
                 {
                     !selectable() ? (
                         <div className="explanation line-break">
-                            {variant.explanation}
+                            {parse(variant.explanation)}
                         </div>
                     ) : null
                 }
@@ -70,7 +71,7 @@ const TrainingTest = ({
             {
                 !selectable() ? (
                     <div className="comment line-break">
-                        {testState.comment}
+                        {parse(testState.comment)}
                     </div>
                 ) : null
             }
