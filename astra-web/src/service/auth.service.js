@@ -1,4 +1,5 @@
 import axios from "axios";
+import {client} from "../shared/js/axios";
 import {httpStatus} from "../constant/http.status";
 import {route} from "../constant/app.route"
 import {clear, save} from "../handler/token.handler";
@@ -45,6 +46,16 @@ export const signUp = async signUpData => {
             global: ["На жаль, сталась несподівано помилка. Спробуйте пізніше"]
         });
     });
+    return response.data;
+}
+
+export const changeUserPassword = async changePasswordData => {
+    const response = await client.put(route.password, changePasswordData)
+        .catch(() => ({
+            data: {
+                error: errorMessage.UNABLE_TO_CHANGE_PASSWORD
+            }
+        }));
     return response.data;
 }
 
