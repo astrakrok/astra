@@ -18,5 +18,6 @@ public class UserEntity {
   private String email;
   private String course;
   private String school;
+  private Long specializationId;
   private Set<RoleEntity> roles;
 }

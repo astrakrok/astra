@@ -17,4 +17,5 @@ public class UpdateUserDto {
   private String surname;
   private String course;
   private String school;
+  private Long specializationId;
 }

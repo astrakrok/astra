@@ -19,5 +19,6 @@ public class UserDto {
   private String email;
   private String course;
   private String school;
+  private Long specializationId;
   private Set<String> roles = new HashSet<>();
 }

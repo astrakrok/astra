@@ -3,23 +3,25 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.astraapi.repository.UserRepository">
     <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-        insert into public.users (name, surname, email, course, school)
+        insert into public.users (name, surname, email, course, school, specialization_id)
         values (#{entity.name},
                 #{entity.surname},
                 #{entity.email},
                 #{entity.course},
-                #{entity.school})
+                #{entity.school},
+                #{entity.specializationId})
     </insert>
 
     <select id="findUserWithRolesByEmail" resultMap="userWithRoles">
-        select u.id      as id,
-               u.name    as name,
-               u.surname as surname,
-               u.email   as email,
-               u.course  as course,
-               u.school  as school,
-               r.id      as roleId,
-               r.title   as roleTitle
+        select u.id                as id,
+               u.name              as name,
+               u.surname           as surname,
+               u.email             as email,
+               u.course            as course,
+               u.school            as school,
+               u.specialization_id as specializationId,
+               r.id                as roleId,
+               r.title             as roleTitle
         from public.users u
                  left join public.users_roles ur on u.id = ur.user_id
                  left join public.roles r on r.id = ur.role_id
@@ -28,10 +30,11 @@
 
     <update id="update">
         update public.users
-        set name    = #{entity.name},
-            surname = #{entity.surname},
-            course  = #{entity.course},
-            school  = #{entity.school}
+        set name              = #{entity.name},
+            surname           = #{entity.surname},
+            course            = #{entity.course},
+            school            = #{entity.school},
+            specialization_id = #{entity.specializationId}
         where email = #{entity.email}
     </update>
 
@@ -42,6 +45,7 @@
         <result column="email" property="email"/>
         <result column="course" property="course"/>
         <result column="school" property="school"/>
+        <result column="specializationId" property="specializationId"/>
 
         <collection property="roles" javaType="java.util.Set" ofType="com.example.astraapi.entity.RoleEntity">
             <id column="roleId" property="id"/>

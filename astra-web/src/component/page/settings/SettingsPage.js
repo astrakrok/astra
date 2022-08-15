@@ -5,13 +5,16 @@ import ChangeUserInfoForm from "../../form/ChangeUserInfoForm/ChangeUserInfoForm
 import ChangePasswordForm from "../../form/ChangePasswordForm/ChangePasswordForm";
 import AuthConsumer from "../../../context/auth/AuthConsumer";
 import "./SettingsPage.css";
+import withSpecializations from "../../hoc/withSpecializations/withSpecializations";
 
 const SettingsPage = () => {
+    const UserInfoForm = withSpecializations(ChangeUserInfoForm);
+
     const renderUserInfoForm = () => (
         <AuthConsumer>
             {
                 ({userData, setUserData}) => (
-                    <ChangeUserInfoForm user={userData} onSuccess={newUserData => setUserData(newUserData)} />
+                    <UserInfoForm user={userData} onSuccess={newUserData => setUserData(newUserData)}/>
                 )
             }
         </AuthConsumer>

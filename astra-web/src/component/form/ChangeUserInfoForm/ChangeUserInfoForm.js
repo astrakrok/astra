@@ -10,22 +10,41 @@ import "./ChangeUserInfoForm.css";
 import {updateUserSchema} from "../../../validation/scheme/updateUser";
 import ErrorsArea from "../../ErrorsArea/ErrorsArea";
 import DisplayBoundary from "../../DisplayBoundary/DisplayBoundary";
+import SingleSelect from "../../SingleSelect/SingleSelect";
+import PopupConsumer from "../../../context/popup/PopupConsumer";
+import MessagePopupBody from "../../popup-component/MessagePopupBody/MessagePopupBody";
+import {message} from "../../../constant/message";
+
+const findSpecializationById = (specializations, specializationId) => {
+    const specialization = specializations.find(item => item.id === specializationId);
+    if (specialization) {
+        return {
+            value: specialization.id,
+            label: specialization.title
+        };
+    }
+    return null;
+};
 
 const ChangeUserInfoForm = ({
+                                specializations,
                                 user = defaultUser,
                                 onSuccess = () => {
-                                }
+                                },
                             }) => {
     const [name, setName] = useState(user.name);
     const [surname, setSurname] = useState(user.surname);
     const [course, setCourse] = useState(user.course);
     const [school, setSchool] = useState(user.school);
+    const [selectedSpecialization, setSelectedSpecialization] = useState(findSpecializationById(specializations, user.specializationId));
     const [formState, setFormState] = useState({
         loading: false,
         errors: {}
     });
 
-    const changeUserInfo = async () => {
+    const specializationsOptions = () => specializations.map(item => ({label: item.title, value: item.id}));
+
+    const changeUserInfo = async setPopupState => {
         setFormState({
             loading: true,
             errors: {}
@@ -34,7 +53,8 @@ const ChangeUserInfoForm = ({
             name,
             surname,
             course,
-            school
+            school,
+            specializationId: selectedSpecialization ? selectedSpecialization.value : null
         };
         const validationResult = V.validate(newUserData, updateUserSchema);
         if (validationResult.hasError) {
@@ -49,6 +69,9 @@ const ChangeUserInfoForm = ({
             setFormState({
                 loading: false,
                 errors: {}
+            });
+            setPopupState({
+                bodyGetter: () => <MessagePopupBody message={message.changeUserInfoSucceed}/>
             });
             onSuccess({
                 ...user,
@@ -78,6 +101,15 @@ const ChangeUserInfoForm = ({
             <Spacer height={10}/>
             <Input value={school} onChange={event => setSchool(event.target.value)} placeholder="Навчальний заклад"/>
             <Spacer height={10}/>
+            <div className="specialization-select s-vflex">
+                <label>Спеціалізація</label>
+                <SingleSelect
+                    placeholder="Оберіть спеціалізацію"
+                    options={specializationsOptions()}
+                    onChange={setSelectedSpecialization}
+                    value={selectedSpecialization}/>
+            </div>
+            <Spacer height={20}/>
             <LoaderBoundary condition={formState.loading} size="small" className="s-hflex-center">
                 <DisplayBoundary condition={formState.errors.global}>
                     <Spacer height={20}/>
@@ -85,9 +117,15 @@ const ChangeUserInfoForm = ({
                     <Spacer height={10}/>
                 </DisplayBoundary>
                 <div className="s-hflex-end">
-                    <Button isFilled={true} onClick={changeUserInfo}>
-                        Зберегти
-                    </Button>
+                    <PopupConsumer>
+                        {
+                            ({setPopupState}) => (
+                                <Button isFilled={true} onClick={() => changeUserInfo(setPopupState)}>
+                                    Зберегти
+                                </Button>
+                            )
+                        }
+                    </PopupConsumer>
                 </div>
             </LoaderBoundary>
         </div>
