@@ -26,10 +26,15 @@ const TestForm = ({
         setLoading(false);
     }
 
-    const updateVariant = (variant, index) => {
-        test.variants[index] = variant;
-        setTest({
-            ...test
+    const updateVariant = (values, index) => {
+        setTest(previous => {
+            previous.variants[index] = {
+                ...previous.variants[index],
+                ...values
+            };
+            return {
+                ...previous
+            };
         });
     }
 
@@ -65,18 +70,23 @@ const TestForm = ({
                 <div className="s-vflex">
                     <div className="content">
                         <Input value={variant.title} placeholder="Варіант"
-                               onChange={event => updateVariant({...variant, title: event.target.value}, index)}/>
+                               onChange={event => updateVariant({title: event.target.value}, index)}/>
                         <Spacer height={20}/>
-                        <Textarea placeholder="Пояснення" value={variant.explanation} onChange={event => updateVariant({
-                            ...variant,
-                            explanation: event.target.value
-                        }, index)}/>
+                        <Editor
+                            placeholder="Пояснення"
+                            value={variant.explanation}
+                            onChange={content => updateVariant({
+                                explanation: content
+                            }, index)}
+                        />
                     </div>
                     <div className="s-hflex">
-                        <div className="clickable equal-flex make-correct s-hflex-center" onClick={() => updateCorrectVariant(index)}>
+                        <div className="clickable equal-flex make-correct s-hflex-center"
+                             onClick={() => updateCorrectVariant(index)}>
                             <i className="material-icons">check</i>
                         </div>
-                        <div className="clickable equal-flex delete-variant s-hflex-center" onClick={() => removeVariant(index)}>
+                        <div className="clickable equal-flex delete-variant s-hflex-center"
+                             onClick={() => removeVariant(index)}>
                             <i className="material-icons">close</i>
                         </div>
                     </div>
@@ -129,10 +139,17 @@ const TestForm = ({
         setPopupState({
             bodyGetter: () => (
                 <div className="s-hflex-center">
-                    <SelectSubjectForm onSave={subject => handleSubjectSaving(subject, setPopupState)} />
+                    <SelectSubjectForm onSave={subject => handleSubjectSaving(subject, setPopupState)}/>
                 </div>
             )
         });
+    }
+
+    const updateTestComment = content => {
+        setTest(previous => ({
+            ...previous,
+            comment: content
+        }));
     }
 
     return (
@@ -143,7 +160,7 @@ const TestForm = ({
             <Editor
                 placeholder="Коментар"
                 value={test.comment}
-                onChange={content => setTest({...test, comment: content})}/>
+                onChange={updateTestComment}/>
             <Spacer height={20}/>
             <InfoHeader>Відповіді</InfoHeader>
             <div className="answers s-vflex">
