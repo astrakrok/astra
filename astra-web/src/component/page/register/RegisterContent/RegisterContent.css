@@ -5,3 +5,13 @@
 .register-form .completed-icon i {
     color: var(--green-color);
 }
+
+.register-form .specialization-select .select * {
+    color: black !important;
+    font-weight: 600 !important;
+}
+
+.register-form .specialization-select label {
+    margin-bottom: 5px;
+    font-size: 16px;
+}

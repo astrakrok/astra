@@ -28,4 +28,5 @@ public class SignUpDto {
   @NotNull
   @Pattern(regexp = Regex.PASSWORD)
   private String password;
+  private Long specializationId;
 }
