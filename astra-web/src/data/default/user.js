@@ -8,6 +8,5 @@ export const defaultUser = {
     surname: "Anonymous",
     course: null,
     school: null,
-    email: "empty@email.com",
-    pictureUrl: defaultPictureUrl
+    email: "empty@email.com"
 }

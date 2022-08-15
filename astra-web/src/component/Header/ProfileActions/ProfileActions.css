@@ -1,11 +1,10 @@
-.ProfileActions {
-    --picture-size: 60px;
+.ProfileActions .menu-trigger i {
+    font-size: 3rem;
+    transition: all 0.3s;
 }
 
-.ProfileActions .avatar-container {
-    width: var(--picture-size);
-    height: var(--picture-size);
-    overflow: hidden;
+.ProfileActions .menu-trigger i:hover {
+    color: var(--primary-color);
 }
 
 .ProfileActions .actions-wrapper {
