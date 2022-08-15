@@ -33,3 +33,7 @@ main {
     margin: 0;
     font-size: 18px;
 }
+
+strong {
+    font-weight: bolder;
+}

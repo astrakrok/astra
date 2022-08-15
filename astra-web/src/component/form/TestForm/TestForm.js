@@ -11,6 +11,7 @@ import withSubjectsDetails from "../../hoc/withSubjectsDetails/withSubjectsDetai
 import "./TestForm.css";
 import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 import Spacer from "../../Spacer/Spacer";
+import Editor from "../../Editor/Editor";
 
 const TestForm = ({
     initialTest = defaultEmptyTest,
@@ -139,8 +140,11 @@ const TestForm = ({
             <InfoHeader>Основна інформація</InfoHeader>
             <Textarea placeholder="Питання" value={test.question}
                       onChange={event => setTest({...test, question: event.target.value})}/>
-            <Textarea placeholder="Коментар" value={test.comment}
-                      onChange={event => setTest({...test, comment: event.target.value})}/>
+            <Editor
+                placeholder="Коментар"
+                value={test.comment}
+                onChange={content => setTest({...test, comment: content})}/>
+            <Spacer height={20}/>
             <InfoHeader>Відповіді</InfoHeader>
             <div className="answers s-vflex">
                 <ul className="collection">
