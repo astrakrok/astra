@@ -3,7 +3,6 @@ import InfoHeader from "../../InfoHeader/InfoHeader";
 import withTitle from "../../hoc/withTitle/withTitle";
 import ChangeUserInfoForm from "../../form/ChangeUserInfoForm/ChangeUserInfoForm";
 import ChangePasswordForm from "../../form/ChangePasswordForm/ChangePasswordForm";
-import ChangeUserAvatarForm from "../../form/ChangeUserAvatarForm/ChangeUserAvatarForm";
 import AuthConsumer from "../../../context/auth/AuthConsumer";
 import "./SettingsPage.css";
 
@@ -22,10 +21,6 @@ const SettingsPage = () => {
         <div className="SettingsPage container">
             <div className="row">
                 <div className="s-vflex">
-                    <div className="s-vflex">
-                        <InfoHeader>Фото</InfoHeader>
-                        <ChangeUserAvatarForm/>
-                    </div>
                     <div className="s-vflex-center main-info">
                         <InfoHeader>Про Вас</InfoHeader>
                         <ResponsiveColumns

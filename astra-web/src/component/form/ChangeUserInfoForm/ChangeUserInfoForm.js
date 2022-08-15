@@ -46,6 +46,10 @@ const ChangeUserInfoForm = ({
         }
         const result = await update(newUserData);
         if (!result.error) {
+            setFormState({
+                loading: false,
+                errors: {}
+            });
             onSuccess({
                 ...user,
                 ...newUserData

@@ -60,13 +60,9 @@ const ProfileActions = () => {
 
     const getDropdownTrigger = () => {
         return (
-            <AuthConsumer>
-                {
-                    ({userData}) => (
-                        <img src={userData.pictureUrl} alt="avatar" className="full-width full-height" />
-                    )
-                }
-            </AuthConsumer>
+            <div className="menu-trigger">
+                <i className="material-icons">menu</i>
+            </div>
         );
     };
 
@@ -78,8 +74,8 @@ const ProfileActions = () => {
 
     return (
         <div className="s-vflex-center ProfileActions">
-            <div className="border50p z-depth-2 avatar-container">
-                <Dropdown id="profile" trigger={getDropdownTrigger()} content={getDropdownContent()} />
+            <div className="border50p avatar-container">
+                <Dropdown id="profile" trigger={getDropdownTrigger()} content={getDropdownContent()}/>
             </div>
         </div>
     );
