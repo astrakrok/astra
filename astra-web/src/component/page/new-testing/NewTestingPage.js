@@ -23,9 +23,7 @@ const NewTestingPage = () => {
     return (
         <div className="container">
             <div className="row">
-                <div className="s-hflex-center">
-                    <Form onSelect={applyFilters}/>
-                </div>
+                <Form onSelect={applyFilters}/>
             </div>
         </div>
     );
