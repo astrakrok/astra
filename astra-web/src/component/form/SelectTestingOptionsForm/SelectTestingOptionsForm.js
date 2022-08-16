@@ -76,48 +76,52 @@ const SelectTestingOptionsForm = ({
     }
 
     return (
-        <div className="SelectTestingOptionsForm s-vflex-center full-width">
-            <form method="post" onSubmit={selected}>
-                <div className="mode s-vflex">
-                    <InfoHeader>
-                        Режим
-                    </InfoHeader>
-                    <SingleSelect
-                        placeholder="Виберіть режим"
-                        options={testingModes}
-                        onChange={setMode}/>
-                    <Spacer height={20}/>
-                    <DisplayBoundary condition={mode && mode.value === "training"}>
+        <div className="s-vflex">
+            <div className="s-hflex-center">
+                <div className="SelectTestingOptionsForm s-vflex-center full-width">
+                    <form method="post" onSubmit={selected}>
+                        <div className="mode s-vflex">
+                            <InfoHeader>
+                                Режим
+                            </InfoHeader>
+                            <SingleSelect
+                                placeholder="Виберіть режим"
+                                options={testingModes}
+                                onChange={setMode}/>
+                            <Spacer height={20}/>
+                            <DisplayBoundary condition={mode && mode.value === "training"}>
+                                <SingleSelect
+                                    placeholder="Виберіть кількість питань"
+                                    options={questionsModes}
+                                    onChange={setCount}/>
+                            </DisplayBoundary>
+                            <Spacer height={20}/>
+                        </div>
+                        <div className="testing s-vflex">
+                            <InfoHeader>
+                                Тестування
+                            </InfoHeader>
+                        </div>
                         <SingleSelect
-                            placeholder="Виберіть кількість питань"
-                            options={questionsModes}
-                            onChange={setCount}/>
-                    </DisplayBoundary>
-                    <Spacer height={20}/>
+                            placeholder="Виберіть рік"
+                            options={examsOptions}
+                            onChange={updateExam}/>
+                        <Spacer height={20}/>
+                        <LoaderBoundary condition={testings == null} className="s-hflex-center" size="small">
+                            <SingleSelect
+                                placeholder="Виберіть спеціалізацію"
+                                options={getTestingsOptions()}
+                                onChange={setSelectedTesting}/>
+                        </LoaderBoundary>
+                        <Spacer height={40}/>
+                        <div className="s-hflex-center">
+                            <Button isFilled={true} disabled={!isValidOptions()} isSubmit="submit">
+                                Розпочати
+                            </Button>
+                        </div>
+                    </form>
                 </div>
-                <div className="testing s-vflex">
-                    <InfoHeader>
-                        Тестування
-                    </InfoHeader>
-                </div>
-                <SingleSelect
-                    placeholder="Виберіть рік"
-                    options={examsOptions}
-                    onChange={updateExam}/>
-                <Spacer height={20}/>
-                <LoaderBoundary condition={testings == null} className="s-hflex-center" size="small">
-                    <SingleSelect
-                        placeholder="Виберіть спеціалізацію"
-                        options={getTestingsOptions()}
-                        onChange={setSelectedTesting}/>
-                </LoaderBoundary>
-                <Spacer height={40}/>
-                <div className="s-hflex-center">
-                    <Button isFilled={true} disabled={!isValidOptions()} isSubmit="submit">
-                        Розпочати
-                    </Button>
-                </div>
-            </form>
+            </div>
             <Spacer height={40}/>
             <div className="testing-info">
                 {

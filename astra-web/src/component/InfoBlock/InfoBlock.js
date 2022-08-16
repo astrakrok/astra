@@ -11,7 +11,7 @@ const InfoBlock = ({
                 <div className="info-icon s-vflex-center">
                     <i className="material-icons medium">info_outline</i>
                 </div>
-                <Spacer width={10}/>
+                <Spacer width={30}/>
                 <div className="info s-vflex-center">
                     {typeof children === "string" ? parse(children) : children}
                 </div>

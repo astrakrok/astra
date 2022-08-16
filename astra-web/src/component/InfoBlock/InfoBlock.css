@@ -1,8 +1,8 @@
 .InfoBlock {
     border-radius: 5px;
-    background-color: var(--light-primary-color);
+    background-color: #ffbf9077;
     border: 1px solid var(--primary-color);
-    padding: 10px 5px;
+    padding: 10px 25px;
     color: rgba(0, 0, 0, 0.7);
 }
 
