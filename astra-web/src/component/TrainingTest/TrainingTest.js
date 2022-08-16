@@ -64,7 +64,7 @@ const TrainingTest = ({
     }
 
     return (
-        <div className="TrainingTest">
+        <div className="TrainingTest" id={`test${testState.id}`}>
             <div className="question line-break">
                 {order == null ? "" : order + "."} {testState.question}
             </div>
