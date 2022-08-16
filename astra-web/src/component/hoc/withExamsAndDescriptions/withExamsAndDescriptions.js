@@ -27,7 +27,8 @@ const withExamsAndDescriptions = (
         }, []);
 
         return (
-            <LoaderBoundary size={loaderSize} condition={exams == null || descriptions == null}>
+            <LoaderBoundary size={loaderSize} condition={exams == null || descriptions == null}
+                            className="s-hflex-center">
                 <Component {...props} exams={exams} descriptions={descriptions}/>
             </LoaderBoundary>
         );
