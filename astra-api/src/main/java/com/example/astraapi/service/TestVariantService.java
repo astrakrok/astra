@@ -6,4 +6,6 @@ import java.util.Collection;
 
 public interface TestVariantService {
   void save(Long testId, Collection<TestVariantDto> testVariants);
+
+  void update(Long testId, Collection<TestVariantDto> testVariants);
 }

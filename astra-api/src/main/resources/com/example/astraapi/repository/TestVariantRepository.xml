@@ -8,4 +8,27 @@
             (#{testId}, #{entity.title}, #{entity.explanation}, #{entity.correct})
         </foreach>
     </insert>
+
+    <select id="getVariantsIdsByTestId" resultType="java.lang.Long">
+        select tv.id
+        from public.tests_variants tv
+        where tv.test_id = #{testId}
+    </select>
+
+    <delete id="delete">
+        delete from public.tests_variants where test_id = #{testId} and id in (
+        <foreach collection="variantsIds" item="variantId" separator=",">
+            #{variantId}
+        </foreach>
+        )
+    </delete>
+
+    <update id="update">
+        update public.tests_variants
+        set title       = #{entity.title},
+            explanation = #{entity.explanation},
+            is_correct  = #{entity.correct}
+        where id = #{entity.id}
+          and test_id = #{testId}
+    </update>
 </mapper>

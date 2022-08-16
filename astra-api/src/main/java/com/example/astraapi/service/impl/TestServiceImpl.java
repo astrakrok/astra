@@ -49,6 +49,16 @@ public class TestServiceImpl implements TestService {
   }
 
   @Override
+  @Transactional
+  public void update(Long id, RequestTestDto testDto) {
+    testVariantsValidator.validate(testDto.getVariants());
+    TestEntity testEntity = testMapper.toEntity(id, testDto);
+    testRepository.update(testEntity);
+    testVariantService.update(id, testDto.getVariants());
+    testSubjectService.update(id, testDto.getSubjectIds());
+  }
+
+  @Override
   public List<TestShortDetailDto> getAll() {
     return testRepository.getAll().stream()
         .map(testMapper::toShortDetailDto)

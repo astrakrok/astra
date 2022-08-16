@@ -22,6 +22,10 @@ public interface TestMapper {
   @Mapping(target = "comment", qualifiedByName = TitleQualifier.TRIM)
   TestEntity toEntity(RequestTestDto testDto);
 
+  @Mapping(target = "question", qualifiedByName = TitleQualifier.TRIM)
+  @Mapping(target = "comment", qualifiedByName = TitleQualifier.TRIM)
+  TestEntity toEntity(Long id, RequestTestDto testDto);
+
   TestShortDetailDto toShortDetailDto(TestShortDetailEntity testShortDetailEntity);
 
   TestFullDetailDto toFullDetailDto(TestFullDetailEntity testFullDetailEntity);

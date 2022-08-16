@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -20,7 +22,7 @@ public class RequestTestDto {
   @TrimmedLength(min = 10)
   private String comment;
   @Size(min = 1)
-  private List<TestVariantDto> variants;
+  private List<TestVariantDto> variants = new ArrayList<>();
   @Size(min = 1)
-  private Set<Long> subjectIds;
+  private Set<Long> subjectIds = new HashSet<>();
 }

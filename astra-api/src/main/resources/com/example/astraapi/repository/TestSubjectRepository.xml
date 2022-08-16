@@ -8,4 +8,18 @@
             (#{testId}, #{subjectId})
         </foreach>
     </insert>
+
+    <select id="getSubjectsIdsByTestId" resultType="java.lang.Long">
+        select ts.subject_id
+        from public.tests_subjects ts
+        where ts.test_id = #{testId}
+    </select>
+
+    <delete id="delete">
+        delete from public.tests_subjects where test_id = #{testId} and subject_id in (
+        <foreach collection="subjectsIds" item="subjectId" separator=",">
+            #{subjectId}
+        </foreach>
+        )
+    </delete>
 </mapper>

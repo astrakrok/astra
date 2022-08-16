@@ -19,5 +19,5 @@ public class TestVariantDto {
   @TrimmedLength(min = 10)
   private String explanation;
   @JsonProperty("isCorrect")
-  private boolean isCorrect;
+  private boolean correct;
 }

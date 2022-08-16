@@ -13,6 +13,8 @@ import java.util.Optional;
 public interface TestRepository {
   void save(@Param("entity") TestEntity testEntity);
 
+  void update(@Param("entity") TestEntity testEntity);
+
   List<TestShortDetailEntity> getAll();
 
   Optional<TestFullDetailEntity> getDetailedTestById(@Param("id") Long id);
