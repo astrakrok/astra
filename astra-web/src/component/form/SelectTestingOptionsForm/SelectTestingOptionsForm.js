@@ -9,9 +9,11 @@ import "./SelectTestingOptionsForm.css";
 import InfoHeader from "../../InfoHeader/InfoHeader";
 import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 import {getExamTestings} from "../../../service/testing.service";
+import InfoBlock from "../../InfoBlock/InfoBlock";
 
 const SelectTestingOptionsForm = ({
                                       exams,
+                                      descriptions,
                                       onSelect = () => {
                                       }
                                   }) => {
@@ -116,6 +118,18 @@ const SelectTestingOptionsForm = ({
                     </Button>
                 </div>
             </form>
+            <Spacer height={40}/>
+            <div className="testing-info">
+                {
+                    mode == null ? null : (
+                        <InfoBlock>
+                            {
+                                mode.value === "training" ? descriptions.trainingDescription : descriptions.examinationDescription
+                            }
+                        </InfoBlock>
+                    )
+                }
+            </div>
         </div>
     );
 }

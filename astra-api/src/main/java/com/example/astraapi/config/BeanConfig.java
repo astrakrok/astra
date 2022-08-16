@@ -5,6 +5,7 @@ import com.example.astraapi.meta.ConfigProperty;
 import com.example.astraapi.security.SecurityProperties;
 import com.example.astraapi.validator.ConfigPropertyValidator;
 import com.example.astraapi.validator.impl.ExaminationThresholdConfigPropertyValidator;
+import com.example.astraapi.validator.impl.TestingConfigPropertyValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,8 +26,11 @@ public class BeanConfig {
 
   @Bean
   public Map<ConfigProperty, ConfigPropertyValidator> getConfigPropertyValidators() {
+    TestingConfigPropertyValidator testingConfigPropertyValidator = new TestingConfigPropertyValidator();
     return Map.of(
-        ConfigProperty.EXAMINATION_THRESHOLD_PERCENTAGE, new ExaminationThresholdConfigPropertyValidator()
+        ConfigProperty.EXAMINATION_THRESHOLD_PERCENTAGE, new ExaminationThresholdConfigPropertyValidator(),
+        ConfigProperty.TRAINING_DESCRIPTION, testingConfigPropertyValidator,
+        ConfigProperty.EXAMINATION_DESCRIPTION, testingConfigPropertyValidator
     );
   }
 }

@@ -5,6 +5,7 @@ const baseUrl = env.baseApiUrl;
 const getTestingsRoutes = () => {
     const prefix = `${baseUrl}/api/v1/testings`;
     return {
+        description: prefix + "/description",
         exams: {
             id: id => {
                 return {
