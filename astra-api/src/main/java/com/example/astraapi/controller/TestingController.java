@@ -1,5 +1,6 @@
 package com.example.astraapi.controller;
 
+import com.example.astraapi.dto.TestingDescriptionDto;
 import com.example.astraapi.dto.TestingWithSpecializationDto;
 import com.example.astraapi.meta.Endpoint;
 import com.example.astraapi.service.TestingService;
@@ -20,5 +21,10 @@ public class TestingController {
   @GetMapping("/exams/{examId}")
   public List<TestingWithSpecializationDto> getWithSpecializations(@PathVariable("examId") Long examId) {
     return testingService.getWithSpecializations(examId);
+  }
+
+  @GetMapping("/description")
+  public TestingDescriptionDto getDescription() {
+    return testingService.getDescription();
   }
 }

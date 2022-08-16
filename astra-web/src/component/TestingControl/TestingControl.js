@@ -8,7 +8,7 @@ const TestingControl = ({
 }) => {
     return (
         <div className="s-hflex-center">
-            <Button to={page.testing}>
+            <Button to={page.newTesting}>
                 Почати новий іспит
             </Button>
             <Spacer width={20}/>

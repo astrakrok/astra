@@ -35,3 +35,9 @@ export const getAvailableTests = async id => {
     const response = await client.get(url);
     return response.data;
 }
+
+export const getDescriptions = async () => {
+    const url = route.testings.description;
+    const response = await client.get(url);
+    return response.data;
+}

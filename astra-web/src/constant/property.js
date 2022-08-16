@@ -1,3 +1,5 @@
 export const property = {
-    examinationThresholdPercentage: "examinationThresholdPercentage"
+    examinationThresholdPercentage: "examinationThresholdPercentage",
+    trainingDescription: "trainingDescription",
+    examinationDescription: "examinationDescription"
 };

@@ -2,14 +2,14 @@ import SelectTestingOptionsForm from "../../form/SelectTestingOptionsForm/Select
 import withTitle from "../../hoc/withTitle/withTitle";
 import {useNavigate} from "react-router-dom";
 import withAllAvailableHeight from "../../hoc/withAllAvailableHeight/withAllAvailableHeight";
+import withExamsAndDescriptions from "../../hoc/withExamsAndDescriptions/withExamsAndDescriptions";
 import "./NewTestingPage.css";
-import withExams from "../../hoc/withExams/withExams";
 import {page} from "../../../constant/page";
 
 const NewTestingPage = () => {
     const navigate = useNavigate();
 
-    const Form = withExams(SelectTestingOptionsForm);
+    const Form = withExamsAndDescriptions(SelectTestingOptionsForm);
 
     const applyFilters = options => {
         const search = `?mode=${options.mode}&testingId=${options.testingId}` +
