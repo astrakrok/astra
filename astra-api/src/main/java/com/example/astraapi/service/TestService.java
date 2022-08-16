@@ -16,6 +16,8 @@ import java.util.Optional;
 public interface TestService {
   IdDto save(RequestTestDto testDto);
 
+  void update(Long id, RequestTestDto testDto);
+
   List<TestShortDetailDto> getAll();
 
   Optional<TestFullDetailDto> getDetailedTest(Long id);

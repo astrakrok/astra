@@ -29,3 +29,14 @@ export const saveTest = async test => {
         };
     }
 }
+
+export const updateTest = async test => {
+    const url = route.admin.tests + "/" + test.id;
+    const response = await client.put(url, test)
+        .catch(() => ({
+            data: {
+                error: "Something went wrong..."
+            }
+        }));
+    return response.data;
+}

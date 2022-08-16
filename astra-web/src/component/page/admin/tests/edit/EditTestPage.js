@@ -3,6 +3,7 @@ import {useParams} from "react-router-dom";
 import {getFullDetailedTest} from "../../../../../service/test.service";
 import EditTestForm from "../../../../form/EditTestForm/EditTestForm";
 import LoaderBoundary from "../../../../LoaderBoundary/LoaderBoundary";
+import withTitle from "../../../../hoc/withTitle/withTitle";
 import "./EditTestPage.css";
 
 const EditTestPage = () => {
@@ -34,4 +35,4 @@ const EditTestPage = () => {
     );
 }
 
-export default EditTestPage;
+export default withTitle(EditTestPage, "Редагувати тест");

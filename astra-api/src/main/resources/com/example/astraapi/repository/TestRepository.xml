@@ -8,6 +8,13 @@
         values (#{entity.question}, #{entity.comment})
     </insert>
 
+    <update id="update">
+        update public.tests
+        set question = #{entity.question},
+            comment  = #{entity.comment}
+        where id = #{entity.id}
+    </update>
+
     <select id="getAll" resultMap="testShortDetail">
         select t.id       as id,
                t.question as question,
@@ -36,6 +43,7 @@
                  left join public.tests_subjects ts on t.id = ts.test_id
                  left join public.subjects s on ts.subject_id = s.id
         where t.id = #{id}
+        order by t.id, tv.id
     </select>
 
     <select id="getTestsByTestingId" resultMap="testingTest">
