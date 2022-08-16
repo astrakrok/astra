@@ -7,7 +7,7 @@ import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 import Spacer from "../../Spacer/Spacer";
 import V from "max-validator";
 import "./ChangeUserInfoForm.css";
-import {updateUserSchema} from "../../../validation/scheme/updateUser";
+import {updateUserSchema} from "../../../validation/schema/updateUser";
 import ErrorsArea from "../../ErrorsArea/ErrorsArea";
 import DisplayBoundary from "../../DisplayBoundary/DisplayBoundary";
 import SingleSelect from "../../SingleSelect/SingleSelect";

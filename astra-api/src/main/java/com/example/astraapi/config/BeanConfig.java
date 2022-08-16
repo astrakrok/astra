@@ -9,19 +9,21 @@ import com.example.astraapi.validator.impl.TestingConfigPropertyValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.Map;
 
 @Configuration
 @RequiredArgsConstructor
 public class BeanConfig {
-  private final SecurityProperties properties;
+  private final TelegramProperties telegramProperties;
+  private final SecurityProperties securityProperties;
 
   @Bean
   public AuthAPI auth() {
-    return new AuthAPI(properties.getIssuerUri(),
-        properties.getClientId(),
-        properties.getClientSecret());
+    return new AuthAPI(securityProperties.getIssuerUri(),
+        securityProperties.getClientId(),
+        securityProperties.getClientSecret());
   }
 
   @Bean
@@ -32,5 +34,10 @@ public class BeanConfig {
         ConfigProperty.TRAINING_DESCRIPTION, testingConfigPropertyValidator,
         ConfigProperty.EXAMINATION_DESCRIPTION, testingConfigPropertyValidator
     );
+  }
+
+  @Bean
+  public WebClient webClient() {
+    return WebClient.create(telegramProperties.getBaseUrl());
   }
 }

@@ -210,14 +210,18 @@ const ExaminationTesting = ({
                                         <PopupConsumer>
                                             {
                                                 ({setPopupState}) => (
-                                                    <Timer finishedAt={finishedAt} onExpire={() => getMessagePopup(setPopupState)} />
+                                                    <Timer finishedAt={finishedAt}
+                                                           onExpire={() => getMessagePopup(setPopupState)}/>
                                                 )
                                             }
                                         </PopupConsumer>
                                     </div>
                                     <div className="question">
-                                        <TestingNavigation items={getNavigationItems()} onSelect={showTest} />
-                                        <ExaminationTest test={testingState.tests[testingState.currentTest]} onSelect={selectVariant} onRetry={() => showTest(testingState.currentTest)} />
+                                        <TestingNavigation items={getNavigationItems()} onSelect={showTest}/>
+                                        <ExaminationTest order={testingState.currentTest + 1}
+                                                         test={testingState.tests[testingState.currentTest]}
+                                                         onSelect={selectVariant}
+                                                         onRetry={() => showTest(testingState.currentTest)}/>
                                     </div>
                                 </>
                             ) : (

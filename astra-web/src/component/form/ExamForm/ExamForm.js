@@ -6,7 +6,7 @@ import Spacer from "../../Spacer/Spacer";
 import ErrorsArea from "../../ErrorsArea/ErrorsArea";
 import {create, update} from "../../../service/exam.service";
 import {defaultExam} from "../../../data/default/exam";
-import {examSchema} from "../../../validation/scheme/exam";
+import {examSchema} from "../../../validation/schema/exam";
 import V from "max-validator";
 import "./ExamForm.css";
 import DisplayBoundary from "../../DisplayBoundary/DisplayBoundary";

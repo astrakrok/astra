@@ -2,15 +2,19 @@ import {useEffect, useState} from "react";
 import Button from "../Button/Button";
 import DisplayBoundary from "../DisplayBoundary/DisplayBoundary";
 import RadioButton from "../RadioButton/RadioButton";
+import Tooltipped from "../Tooltipped/Tooltipped";
+import PopupConsumer from "../../context/popup/PopupConsumer";
 import parse from "html-react-parser";
 import "./TrainingTest.css";
+import ErrorForm from "../form/ErrorForm/ErrorForm";
 
 const TrainingTest = ({
-    onAnswer = () => {},
-    answered = false,
-    order = null,
-    testState
-}) => {
+                          onAnswer = () => {
+                          },
+                          answered = false,
+                          order = null,
+                          testState
+                      }) => {
     const [selected, setSelected] = useState(testState.userAnswer);
 
     useEffect(() => {
@@ -33,6 +37,12 @@ const TrainingTest = ({
             return;
         }
         setSelected(variantId);
+    }
+
+    const openErrorForm = setPopupState => {
+        setPopupState({
+            bodyGetter: () => <ErrorForm/>
+        });
     }
 
     const renderVariant = variant => {
@@ -65,8 +75,25 @@ const TrainingTest = ({
 
     return (
         <div className="TrainingTest" id={`test${testState.id}`}>
-            <div className="question line-break">
-                {order == null ? "" : order + "."} {testState.question}
+            <div className="question line-break s-hflex">
+                <span className="text">
+                    {order == null ? "" : order + "."} {testState.question}
+                </span>
+                <span className="equal-flex"/>
+                <div>
+                    <PopupConsumer>
+                        {
+                            ({setPopupState}) => (
+                                <Tooltipped tooltip="Помилка" position="top">
+                                    <span className="error-form-trigger clickable"
+                                          onClick={() => openErrorForm(setPopupState)}>
+                                        <i className="material-icons small">priority_high</i>
+                                    </span>
+                                </Tooltipped>
+                            )
+                        }
+                    </PopupConsumer>
+                </div>
             </div>
             {
                 !selectable() ? (

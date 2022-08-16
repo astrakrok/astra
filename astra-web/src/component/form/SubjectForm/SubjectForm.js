@@ -10,7 +10,7 @@ import ErrorsArea from "../../ErrorsArea/ErrorsArea";
 import {defaultSubject} from "../../../data/default/subject";
 import V from "max-validator";
 import "./SubjectForm.css";
-import {subjectSchema} from "../../../validation/scheme/subject";
+import {subjectSchema} from "../../../validation/schema/subject";
 import DisplayBoundary from "../../DisplayBoundary/DisplayBoundary";
 import {toSelectValue} from "../../../mapper/specialization.mapper";
 
