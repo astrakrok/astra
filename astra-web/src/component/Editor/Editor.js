@@ -20,6 +20,7 @@ const Editor = ({
                 defaultValue={value}
                 onChange={onChange}
                 setOptions={{
+                    defaultTag: "div",
                     plugins: [
                         table,
                         fontSize,
