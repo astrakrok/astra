@@ -15,7 +15,7 @@ import {page} from "../../../../constant/page";
 import {signUp} from "../../../../service/auth.service";
 import V from "max-validator";
 import "./RegisterContent.css";
-import {signUpSchema} from "../../../../validation/scheme/signUp";
+import {signUpSchema} from "../../../../validation/schema/signUp";
 import DisplayBoundary from "../../../DisplayBoundary/DisplayBoundary";
 import {message} from "../../../../constant/message";
 

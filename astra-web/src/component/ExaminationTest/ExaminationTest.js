@@ -3,12 +3,18 @@ import DisplayBoundary from "../DisplayBoundary/DisplayBoundary";
 import RadioButton from "../RadioButton/RadioButton";
 import Preloader from "../Preloader/Preloader";
 import "./ExaminationTest.css";
+import ErrorForm from "../form/ErrorForm/ErrorForm";
+import PopupConsumer from "../../context/popup/PopupConsumer";
+import Tooltipped from "../Tooltipped/Tooltipped";
 
 const ExaminationTest = ({
-    test,
-    onRetry = () => {},
-    onSelect = () => {}
-}) => {
+                             test,
+                             order = null,
+                             onRetry = () => {
+                             },
+                             onSelect = () => {
+                             }
+                         }) => {
     const renderVariant = variant => (
         <div className="variant" key={variant.id}>
             <RadioButton
@@ -31,8 +37,15 @@ const ExaminationTest = ({
         return "Остання зарахована відповідь була - " + (test.variants
             .map((item, index) => ({
                 value: item.id,
-                index}))
+                index
+            }))
             .find(item => item.value === test.lastProcessed).index + 1);
+    }
+
+    const openErrorForm = setPopupState => {
+        setPopupState({
+            bodyGetter: () => <ErrorForm/>
+        });
     }
 
     return (
@@ -67,8 +80,25 @@ const ExaminationTest = ({
                     }
                 </div>
             </DisplayBoundary>
-            <div className="question">
-                {test.question}
+            <div className="question s-hflex">
+                <span className="text">
+                    {order == null ? "" : order + "."} {test.question}
+                </span>
+                <span className="equal-flex"/>
+                <div>
+                    <PopupConsumer>
+                        {
+                            ({setPopupState}) => (
+                                <Tooltipped tooltip="Помилка" position="top">
+                                    <span className="error-form-trigger clickable"
+                                          onClick={() => openErrorForm(setPopupState)}>
+                                        <i className="material-icons small">priority_high</i>
+                                    </span>
+                                </Tooltipped>
+                            )
+                        }
+                    </PopupConsumer>
+                </div>
             </div>
             <div className="variants s-vflex">
                 {

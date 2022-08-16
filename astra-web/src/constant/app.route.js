@@ -68,6 +68,7 @@ export const route = {
     tests: `${baseUrl}/api/v1/tests`,
     examinations: `${baseUrl}/api/v1/examinations`,
     users: `${baseUrl}/api/v1/users`,
+    notifications: `${baseUrl}/api/v1/notifications`,
     testings: getTestingsRoutes(),
     admin: getAdminRoutes()
 };

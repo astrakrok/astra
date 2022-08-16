@@ -2,6 +2,16 @@
     font-size: 1.25rem;
 }
 
+.TrainingTest .question .error-form-trigger {
+    opacity: 0.5;
+    transition: all 0.3s;
+}
+
+.TrainingTest .question .error-form-trigger:hover {
+    color: var(--red-color);
+    opacity: 1;
+}
+
 .TrainingTest .variants {
     margin-top: 10px;
     margin-bottom: 20px;

@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {changePasswordSchema} from "../../../validation/scheme/changePassword";
+import {changePasswordSchema} from "../../../validation/schema/changePassword";
 import {changeUserPassword} from "../../../service/auth.service";
 import Button from "../../Button/Button";
 import Input from "../../Input/Input";

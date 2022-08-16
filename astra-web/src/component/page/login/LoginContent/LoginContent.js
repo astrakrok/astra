@@ -12,7 +12,7 @@ import {login} from "../../../../service/auth.service";
 import PopupConsumer from "../../../../context/popup/PopupConsumer";
 import MessagePopupBody from "../../../popup-component/MessagePopupBody/MessagePopupBody";
 import V from "max-validator";
-import {loginSchema} from "../../../../validation/scheme/login";
+import {loginSchema} from "../../../../validation/schema/login";
 import ErrorsArea from "../../../ErrorsArea/ErrorsArea";
 
 const LoginContent = ({

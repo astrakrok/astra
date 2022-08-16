@@ -2,6 +2,10 @@
     margin-bottom: 20px;
 }
 
+.Textarea.no-margin {
+    margin-bottom: 0;
+}
+
 .Textarea textarea {
     border: 1px solid var(--primary-color);
     padding: 5px 8px;

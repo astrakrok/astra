@@ -1,0 +1,35 @@
+.ErrorForm {
+    padding: 5px 10px;
+}
+
+.ErrorForm .title {
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.ErrorForm .error-options {
+    margin-bottom: 10px;
+}
+
+.ErrorForm .error-options .options {
+    padding-left: 10px;
+}
+
+.ErrorForm .error-options .options .problem {
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.ErrorForm .feedback-result .success,
+.ErrorForm .feedback-result .failure {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.ErrorForm .feedback-result .success {
+    color: var(--green-color);
+}
+
+.ErrorForm .feedback-result .failure {
+    color: var(--red-color);
+}
