@@ -12,6 +12,7 @@ import {mapTrainingToNavigationItem} from "../../mapper/test.mapper";
 import TestingCorrectness from "../TestingCorrectness/TestingCorrectness";
 import InfoHeader from "../InfoHeader/InfoHeader";
 import {scrollToTop} from "../../handler/scroll.handler";
+import TestingResultNavigation from "../TestingResultNavigation/TestingResultNavigation";
 
 const initialStatus = {
     correctCount: 0,
@@ -111,6 +112,11 @@ const TrainingTesting = ({tests}) => {
                         <TestingControl onRepeat={restartTesting}/>
                         <Spacer height={100}/>
                         <InfoHeader>Ваш результат</InfoHeader>
+                        {
+                            testingState ? (
+                                <TestingResultNavigation tests={testingState}/>
+                            ) : null
+                        }
                         <TestingCorrectness tests={testingState}/>
                     </div>
                 ) : (

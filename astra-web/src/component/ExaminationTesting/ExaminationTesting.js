@@ -21,6 +21,7 @@ import LoaderBoundary from "../LoaderBoundary/LoaderBoundary";
 import {loadingStatus} from "../../constant/loading.status";
 import InfoText from "../InfoText/InfoText";
 import {scrollToTop} from "../../handler/scroll.handler";
+import TestingResultNavigation from "../TestingResultNavigation/TestingResultNavigation";
 
 const mapToTestState = test => ({
     ...test,
@@ -193,6 +194,11 @@ const ExaminationTesting = ({
                         <InfoHeader>
                             Ваш результат
                         </InfoHeader>
+                        {
+                            result.tests ? (
+                                <TestingResultNavigation tests={result.tests}/>
+                            ) : null
+                        }
                         <TestingCorrectness tests={result.tests}/>
                     </LoaderBoundary>
                 ) : (

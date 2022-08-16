@@ -5,6 +5,13 @@ export const mapTrainingToNavigationItem = (test, selected = false) => {
     }
 }
 
+export const mapCompletedToNavigationItem = test => {
+    return {
+        selected: false,
+        status: test.userAnswer === getCorrectVariant(test.variants) ? "correct" : "wrong"
+    };
+}
+
 export const mapExaminationToNavigationItem = (test, selected = false) => {
     return {
         selected,
