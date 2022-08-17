@@ -14,6 +14,7 @@ import MessagePopupBody from "../../../popup-component/MessagePopupBody/MessageP
 import V from "max-validator";
 import {loginSchema} from "../../../../validation/schema/login";
 import ErrorsArea from "../../../ErrorsArea/ErrorsArea";
+import Ref from "../../../Ref/Ref";
 
 const LoginContent = ({
     onSuccess = () => {}
@@ -58,16 +59,23 @@ const LoginContent = ({
                 <ErrorsArea errors={errors.password} />
                 <div className="button center">
                     <LoaderBoundary condition={status === loginStatus.processing} size="small">
-                        <PopupConsumer>
-                            {
-                                ({setPopupState}) => (
-                                    <Button onClick={() => handleLogin(setPopupState)}>
-                                        Увійти
-                                    </Button>
-                                )
-                            }
-                        </PopupConsumer>
+                        <>
+                            <Spacer height={10}/>
+                            <PopupConsumer>
+                                {
+                                    ({setPopupState}) => (
+                                        <Button onClick={() => handleLogin(setPopupState)}>
+                                            Увійти
+                                        </Button>
+                                    )
+                                }
+                            </PopupConsumer>
+                        </>
                     </LoaderBoundary>
+                </div>
+                <Spacer height={10}/>
+                <div className="s-hflex-center">
+                    <Ref className="link" to={page.resetPassword}>Забули пароль?</Ref>
                 </div>
             </div>
         );

@@ -1,6 +1,7 @@
 package com.example.astraapi.service;
 
 import com.example.astraapi.dto.ChangePasswordDto;
+import com.example.astraapi.dto.EmailDto;
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.LoginDto;
 import com.example.astraapi.dto.RefreshTokenDto;
@@ -15,4 +16,6 @@ public interface AuthService {
   IdDto signUp(SignUpDto signUpDto);
 
   void changePassword(ChangePasswordDto changePasswordDto);
+
+  void resetPassword(EmailDto emailDto);
 }

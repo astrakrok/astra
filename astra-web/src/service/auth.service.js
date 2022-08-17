@@ -49,6 +49,20 @@ export const signUp = async signUpData => {
     return response.data;
 }
 
+export const resetPassword = async email => {
+    clear();
+    const response = await axios.post(route.resetPassword, {email}, {
+        headers: {
+            Authorization: null
+        }
+    }).catch(() => ({
+        data: {
+            error: errorMessage.UNABLE_TO_RESET_PASSWORD
+        }
+    }));
+    return response.data;
+}
+
 export const changeUserPassword = async changePasswordData => {
     const response = await client.put(route.password, changePasswordData)
         .catch(() => ({
