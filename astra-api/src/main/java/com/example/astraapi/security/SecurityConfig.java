@@ -58,6 +58,10 @@ public class SecurityConfig {
                 "/api/v1/auth/password/reset")
             .permitAll()
             .mvcMatchers(
+                HttpMethod.GET,
+                "/api/v1/specializations")
+            .permitAll()
+            .mvcMatchers(
                 "/api/v1/properties",
                 "/api/v1/properties/**")
             .hasAnyAuthority("SUPER_ADMIN")
