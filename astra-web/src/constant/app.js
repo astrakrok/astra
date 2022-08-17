@@ -1,5 +1,6 @@
 export const app = {
     name: "AstraKROK",
     shortName: "Astra",
-    email: "astra.krok@gmail.com"
+    email: "astra.krok@gmail.com",
+    pageSize: 20
 };

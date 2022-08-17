@@ -1,24 +1,20 @@
-import {useEffect, useState} from "react";
 import {page} from "../../../../../constant/page";
 import {getDetailedTests} from "../../../../../service/test.service";
 import Button from "../../../../Button/Button";
 import withTitle from "../../../../hoc/withTitle/withTitle";
 import TestsList from "../../../../TestsList/TestsList";
-import LoaderBoundary from "../../../../LoaderBoundary/LoaderBoundary";
 import "./AllTestsPage.css";
 import InfoText from "../../../../InfoText/InfoText";
+import Paginated from "../../../../Paginated/Paginated";
 
 const AllTestsPage = () => {
-    const [tests, setTests] = useState(null);
-
-    useEffect(() => {
-        const fetchTests = async () => {
-            const result = await getDetailedTests();
-            setTests(result);
+    const fetchPage = async (pageSize, pageNumber) => {
+        const result = await getDetailedTests(pageSize, pageNumber);
+        return {
+            items: result,
+            totalPages: 20
         }
-
-        fetchTests();
-    }, []);
+    }
 
     return (
         <div className="AllTestsPage container">
@@ -27,17 +23,19 @@ const AllTestsPage = () => {
                     <Button to={page.admin.tests.create} isFilled={true}>Створити</Button>
                 </div>
                 <div className="tests-list s-hflex-center">
-                    <LoaderBoundary condition={tests == null}>
+                    <Paginated pageHandler={fetchPage}>
                         {
-                            (tests && tests.length > 0) ? (
-                                <TestsList tests={tests} />
-                            ) : (
-                                <InfoText>
-                                    Тести відсутні
-                                </InfoText>
+                            items => (
+                                items.length > 0 ? (
+                                    <TestsList tests={items}/>
+                                ) : (
+                                    <InfoText>
+                                        Тести відсутні
+                                    </InfoText>
+                                )
                             )
                         }
-                    </LoaderBoundary>
+                    </Paginated>
                 </div>
             </div>
         </div>

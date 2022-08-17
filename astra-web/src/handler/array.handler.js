@@ -12,3 +12,7 @@ export const getRandomSubArray = (array, minLength = 0) => {
     const randomCount = generate(minLength, array.length);
     return take(shuffle(array), randomCount);
 }
+
+export const range = (from, to) => {
+    return [...Array(to - from + 1).keys()].map(item => item + from);
+}
