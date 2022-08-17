@@ -33,6 +33,7 @@ export const permission = {
     [page.resetPassword]: notAuthorized,
     [page.logout]: authorized,
     [page.register]: notAuthorized,
+    [page.googleCallback]: notAuthorized,
     [page.configuration]: [userRole.superAdmin],
     [page.newTesting]: [
         userRole.user

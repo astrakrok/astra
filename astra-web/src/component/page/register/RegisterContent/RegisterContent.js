@@ -18,6 +18,7 @@ import "./RegisterContent.css";
 import {signUpSchema} from "../../../../validation/schema/signUp";
 import DisplayBoundary from "../../../DisplayBoundary/DisplayBoundary";
 import {message} from "../../../../constant/message";
+import SocialAuth from "../../../SocialAuth/SocialAuth";
 
 const RegisterContent = ({
                              specializations
@@ -170,22 +171,10 @@ const RegisterContent = ({
         );
     };
 
-    const getSecondColumn = () => {
-        return (
-            <div className="s-vflex-center full-height">
-                <Button className="full-width" isFilled={true}>Продовжити з Google</Button>
-                <Spacer height="25" />
-                <Button className="full-width" isFilled={true}>Продовжити з Facebook</Button>
-                <Spacer height="25" />
-                <Button className="full-width" isFilled={true}>Продовжити з Instagram</Button>
-            </div>
-        );
-    };
-
     return (
         <ResponsiveColumns
             firstColumn={getFirstColumn()}
-            secondColumn={getSecondColumn()}
+            secondColumn={<SocialAuth/>}
             isSeparated={true} />
     );
 }

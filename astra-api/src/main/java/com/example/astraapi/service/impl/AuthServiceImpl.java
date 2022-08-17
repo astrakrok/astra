@@ -10,12 +10,14 @@ import com.auth0.net.Request;
 import com.auth0.net.SignUpRequest;
 import com.auth0.net.TokenRequest;
 import com.example.astraapi.dto.ChangePasswordDto;
+import com.example.astraapi.dto.CodeDto;
 import com.example.astraapi.dto.EmailDto;
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.LoginDto;
 import com.example.astraapi.dto.RefreshTokenDto;
 import com.example.astraapi.dto.SignUpDto;
 import com.example.astraapi.dto.TokenDto;
+import com.example.astraapi.dto.UrlDto;
 import com.example.astraapi.dto.UserDto;
 import com.example.astraapi.exception.AlreadyExistsException;
 import com.example.astraapi.exception.AuthProviderException;
@@ -23,15 +25,20 @@ import com.example.astraapi.exception.ResourceNotFoundException;
 import com.example.astraapi.mapper.AuthMapper;
 import com.example.astraapi.mapper.TokenMapper;
 import com.example.astraapi.meta.Role;
+import com.example.astraapi.model.GoogleIdTokenPayload;
 import com.example.astraapi.security.SecurityProperties;
 import com.example.astraapi.service.AuthContext;
 import com.example.astraapi.service.AuthService;
 import com.example.astraapi.service.UserService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -42,6 +49,7 @@ public class AuthServiceImpl implements AuthService {
   private final UserService userService;
   private final AuthMapper authMapper;
   private final AuthContext authContext;
+  private final ObjectMapper objectMapper;
 
   @Override
   public TokenDto login(LoginDto loginDto) {
@@ -90,6 +98,39 @@ public class AuthServiceImpl implements AuthService {
   public void resetPassword(EmailDto emailDto) {
     Request<Void> request = auth.resetPassword(emailDto.getEmail(), securityProperties.getConnection());
     execute(request);
+  }
+
+  @Override
+  public UrlDto getGoogleLoginUrl() {
+    return new UrlDto(
+        securityProperties.getIssuerUri() +
+            "authorize" +
+            "?audience=" + securityProperties.getAudience() +
+            "&access_type=offline" +
+            "&response_type=code" +
+            "&client_id=" + securityProperties.getClientId() +
+            "&connection=google-oauth2" +
+            "&redirect_uri=http://localhost:3000/google/callback" +
+            "&connection_scope=openid email profile" +
+            "&scope=offline_access openid profile email"
+    );
+  }
+
+  @Override
+  public TokenDto googleLogin(CodeDto codeDto) {
+    TokenRequest request = auth.exchangeCode(codeDto.getCode(), "http://localhost:3000/google/callback");
+    TokenHolder tokenHolder = execute(request);
+    TokenDto tokenDto = tokenMapper.toDto(tokenHolder);
+    UserDto user = getUserInfoFromToken(tokenHolder.getIdToken());
+    if (user.getEmail() == null) {
+      throw new IllegalArgumentException("Cannot identify user - email is missing");
+    }
+    Optional<UserDto> possibleUser = userService.findUserWithRolesByEmail(user.getEmail());
+    if (possibleUser.isEmpty()) {
+      user.getRoles().add(Role.USER.name());
+      userService.save(user);
+    }
+    return tokenDto;
   }
 
   private User getAuth0UserByEmail(ManagementAPI managementAPI, String email) {
@@ -144,5 +185,25 @@ public class AuthServiceImpl implements AuthService {
 
   private void userExists(UserDto userDto) {
     throw new AlreadyExistsException("User with such email already exists");
+  }
+
+  private UserDto getUserInfoFromToken(String idToken) {
+    String[] chunks = idToken.split("\\.");
+    String payload = decodeIdTokenChunk(chunks[1]);
+    GoogleIdTokenPayload googleIdTokenPayload = parseGoogleIdTokenPayload(payload);
+    return authMapper.toUserDto(googleIdTokenPayload);
+  }
+
+  private String decodeIdTokenChunk(String chunk) {
+    Base64.Decoder decoder = Base64.getUrlDecoder();
+    return new String(decoder.decode(chunk));
+  }
+
+  private GoogleIdTokenPayload parseGoogleIdTokenPayload(String payload) {
+    try {
+      return objectMapper.readValue(payload, GoogleIdTokenPayload.class);
+    } catch (JsonProcessingException exception) {
+      throw new IllegalArgumentException("Unable to parse google id token");
+    }
   }
 }
