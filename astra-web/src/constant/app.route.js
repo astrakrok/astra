@@ -63,6 +63,7 @@ export const route = {
     resetPassword: `${baseUrl}/api/v1/auth/password/reset`,
     signUp: `${baseUrl}/api/v1/auth/signup`,
     auth: `${baseUrl}/api/v1/auth`,
+    googleOauth2: `${baseUrl}/api/v1/auth/oauth2/google`,
     specializations: `${baseUrl}/api/v1/specializations`,
     subjects: `${baseUrl}/api/v1/subjects`,
     exams: `${baseUrl}/api/v1/exams`,

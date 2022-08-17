@@ -15,6 +15,7 @@ export const page = {
     settings: "/settings",
     configuration: "/configuration",
     logout: "/logout",
+    googleCallback: "/google/callback",
 
     admin: {
         exams: {

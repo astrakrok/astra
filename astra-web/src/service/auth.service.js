@@ -17,15 +17,7 @@ export const login = async loginData => {
         }
     }));
     if (response.data.accessToken) {
-        const tokens = response.data;
-        const userInfoResponse = await getUserInfo(response.data.accessToken);
-        if (userInfoResponse.data.error) {
-            return userInfoResponse.data;
-        }
-        save(tokens);
-        return {
-            user: userInfoResponse.data
-        };
+        return await getUserData(response.data);
     }
     return response.data;
 }
@@ -63,6 +55,29 @@ export const resetPassword = async email => {
     return response.data;
 }
 
+export const getGoogleLoginUrl = async () => {
+    clear();
+    const response = await axios.get(route.googleOauth2, {
+        headers: {
+            Authorization: null
+        }
+    });
+    return response.data;
+}
+
+export const googleLogin = async code => {
+    clear();
+    const response = await axios.post(route.googleOauth2, {code}, {
+        header: {
+            Authorization: null
+        }
+    });
+    if (response.data.accessToken) {
+        return await getUserData(response.data);
+    }
+    return response.data;
+}
+
 export const changeUserPassword = async changePasswordData => {
     const response = await client.put(route.password, changePasswordData)
         .catch(() => ({
@@ -95,5 +110,16 @@ const formErrors = errors => {
         data: {
             errors
         }
+    };
+}
+
+const getUserData = async tokens => {
+    const userInfoResponse = await getUserInfo(tokens.accessToken);
+    if (userInfoResponse.data.error) {
+        return userInfoResponse.data;
+    }
+    save(tokens);
+    return {
+        user: userInfoResponse.data
     };
 }
