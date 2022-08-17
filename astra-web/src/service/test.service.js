@@ -1,8 +1,8 @@
 import {route} from "../constant/app.route";
 import {client} from "../shared/js/axios";
 
-export const getDetailedTests = async () => {
-    const response = await client.get(route.admin.tests);
+export const getDetailedTests = async (pageSize, pageNumber) => {
+    const response = await client.get(route.admin.tests + `?pageSize=${pageSize}&pageNumber=${pageNumber}`);
     return response.data;
 }
 

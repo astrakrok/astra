@@ -59,6 +59,11 @@ export const changeUserPassword = async changePasswordData => {
     return response.data;
 }
 
+export const logout = setUserData => {
+    setUserData(null);
+    clear();
+}
+
 const getUserInfo = async accessToken => {
     return await axios.get(`${route.users}/current`, {
         headers: {

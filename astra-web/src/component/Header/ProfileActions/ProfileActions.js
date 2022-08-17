@@ -8,6 +8,7 @@ import {Link} from "react-router-dom";
 import DropdownList from "../../DropdownList/DropdownList";
 import Divider from "../../Divider/Divider";
 import AuthConsumer from "../../../context/auth/AuthConsumer";
+import {logout} from "../../../service/auth.service";
 
 const ProfileActions = () => {
     const getUserInformation = () => {
@@ -56,7 +57,7 @@ const ProfileActions = () => {
             <AuthConsumer>
                 {
                     ({setUserData}) => (
-                        <Link to="" onClick={() => setUserData(null)}>
+                        <Link to="" onClick={() => logout(setUserData)}>
                             <IconTitle icon="exit_to_app" title="Вийти"/>
                         </Link>
                     )

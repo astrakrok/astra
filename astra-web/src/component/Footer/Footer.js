@@ -1,8 +1,6 @@
 import {app} from "../../constant/app";
-import {socialLinks} from "../../data/mock/social.links";
 import Logo from "../Logo/Logo";
 import Ref from "../Ref/Ref";
-import SocialLink from "../SocialLink/SocialLink";
 import "./Footer.css";
 
 const Footer = () => {
@@ -16,11 +14,6 @@ const Footer = () => {
                 </div>
                 <div className="s-vflex">
                     <Ref to={`mailto:${app.email}`}>{app.email}</Ref>
-                    <div className="social-links s-hflex">
-                        {
-                            socialLinks.map((social, index) => <SocialLink key={index} social={social} />)
-                        }
-                    </div>
                 </div>
             </div>
         </div>

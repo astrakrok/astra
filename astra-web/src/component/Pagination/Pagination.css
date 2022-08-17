@@ -1,0 +1,41 @@
+.Pagination .navigation {
+    border: 1px solid var(--secondary-color);
+    border-radius: 3px;
+    display: flex;
+    text-align: center;
+    margin: 3px;
+    font-weight: bold;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    transition: all 0.3s;
+}
+
+.Pagination .navigation.disabled,
+.Pagination .navigation.dots {
+    box-shadow: none;
+    border-color: grey;
+    color: grey;
+    cursor: default;
+    opacity: 0.5;
+}
+
+.Pagination .navigation:not(.disabled):not(.dots):hover,
+.Pagination .navigation.selected {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.Pagination .navigation.dots {
+    border: none;
+    font-weight: bold;
+    font-size: 2rem;;
+}
+
+.Pagination .navigation i {
+    font-size: 2rem;
+    font-weight: 600;
+}
