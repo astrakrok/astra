@@ -1,17 +1,10 @@
 package com.example.astraapi.service.impl;
 
-import com.example.astraapi.dto.ExaminationSearchDto;
-import com.example.astraapi.dto.ExaminationTestDto;
-import com.example.astraapi.dto.IdDto;
-import com.example.astraapi.dto.RequestTestDto;
-import com.example.astraapi.dto.TestFullDetailDto;
-import com.example.astraapi.dto.TestShortDetailDto;
-import com.example.astraapi.dto.TestVariantDto;
-import com.example.astraapi.dto.TestingShortTestDto;
-import com.example.astraapi.dto.TrainingSearchDto;
-import com.example.astraapi.dto.TrainingTestDto;
+import com.example.astraapi.dto.*;
 import com.example.astraapi.entity.TestEntity;
 import com.example.astraapi.mapper.TestMapper;
+import com.example.astraapi.model.Page;
+import com.example.astraapi.model.Pageable;
 import com.example.astraapi.repository.TestRepository;
 import com.example.astraapi.service.TestService;
 import com.example.astraapi.service.TestSubjectService;
@@ -59,10 +52,13 @@ public class TestServiceImpl implements TestService {
   }
 
   @Override
-  public List<TestShortDetailDto> getAll() {
-    return testRepository.getAll().stream()
-        .map(testMapper::toShortDetailDto)
-        .collect(Collectors.toList());
+  public Page<TestShortDetailDto> getAll(Pageable pageable) {
+    Page<TestShortDetailDto> page = testRepository.getAll(pageable);
+    if (page == null) {
+      return new Page<>();
+    }
+    page.setPageSize(pageable.getPageSize().intValue());
+    return page;
   }
 
   @Override

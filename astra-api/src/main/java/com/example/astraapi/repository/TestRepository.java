@@ -1,8 +1,10 @@
 package com.example.astraapi.repository;
 
+import com.example.astraapi.dto.TestShortDetailDto;
 import com.example.astraapi.entity.TestEntity;
 import com.example.astraapi.entity.TestFullDetailEntity;
-import com.example.astraapi.entity.TestShortDetailEntity;
+import com.example.astraapi.model.Page;
+import com.example.astraapi.model.Pageable;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,9 +15,9 @@ import java.util.Optional;
 public interface TestRepository {
   void save(@Param("entity") TestEntity testEntity);
 
-  void update(@Param("entity") TestEntity testEntity);
+  Page<TestShortDetailDto> getAll(@Param("pageable") Pageable pageable);
 
-  List<TestShortDetailEntity> getAll();
+  void update(@Param("entity") TestEntity testEntity);
 
   Optional<TestFullDetailEntity> getDetailedTestById(@Param("id") Long id);
 

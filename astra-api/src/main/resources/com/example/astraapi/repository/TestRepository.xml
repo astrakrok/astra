@@ -8,6 +8,7 @@
         values (#{entity.question}, #{entity.comment})
     </insert>
 
+
     <update id="update">
         update public.tests
         set question = #{entity.question},
@@ -20,12 +21,15 @@
                t.question as question,
                t.comment  as comment,
                s.id       as specializationId,
-               s.title    as specializationTitle
+               s.title    as specializationTitle,
+            count(t.id) over () as pageCount
         from public.tests t
                  left join public.tests_subjects ts on t.id = ts.test_id
                  left join public.subjects_specializations ss on ts.subject_id = ss.subject_id
                  left join public.specializations s on ss.specialization_id = s.id
+        group by t.id, s.id
         order by id, specializationId
+        offset #{pageable.offset} limit #{pageable.pageSize}
     </select>
 
     <select id="getDetailedTestById" resultMap="testFullDetail">
@@ -119,11 +123,19 @@
         <id column="id" property="id"/>
         <result column="question" property="question"/>
         <result column="comment" property="comment"/>
-
         <collection property="specializations" javaType="List"
                     ofType="com.example.astraapi.entity.SpecializationEntity">
             <id column="specializationId" property="id"/>
             <result column="specializationTitle" property="title"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="test" type="com.example.astraapi.model.Page">
+        <result property="rows" column="pageCount"/>
+        <collection property="items"
+                    javaType="List"
+                    ofType="com.example.astraapi.entity.TestShortDetailEntity"
+                    resultMap="testShortDetail">
         </collection>
     </resultMap>
 
