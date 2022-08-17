@@ -41,7 +41,7 @@ const TrainingTest = ({
 
     const openErrorForm = setPopupState => {
         setPopupState({
-            bodyGetter: () => <ErrorForm/>
+            bodyGetter: () => <ErrorForm initialValue={testState.question}/>
         });
     }
 
@@ -84,7 +84,7 @@ const TrainingTest = ({
                     <PopupConsumer>
                         {
                             ({setPopupState}) => (
-                                <Tooltipped tooltip="Помилка" position="top">
+                                <Tooltipped tooltip="Помилка" position="left">
                                     <span className="error-form-trigger clickable"
                                           onClick={() => openErrorForm(setPopupState)}>
                                         <i className="material-icons small">priority_high</i>

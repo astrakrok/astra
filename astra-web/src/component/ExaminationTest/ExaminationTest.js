@@ -44,7 +44,7 @@ const ExaminationTest = ({
 
     const openErrorForm = setPopupState => {
         setPopupState({
-            bodyGetter: () => <ErrorForm/>
+            bodyGetter: () => <ErrorForm initialValue={test.question}/>
         });
     }
 

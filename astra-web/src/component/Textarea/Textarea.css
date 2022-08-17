@@ -15,7 +15,6 @@
     outline: none;
     display: block;
     width: 100%;
-    overflow: hidden;
     resize: vertical;
     min-height: 120px;
     line-height: 1.15;
