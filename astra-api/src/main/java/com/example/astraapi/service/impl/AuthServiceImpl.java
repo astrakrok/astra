@@ -10,6 +10,7 @@ import com.auth0.net.Request;
 import com.auth0.net.SignUpRequest;
 import com.auth0.net.TokenRequest;
 import com.example.astraapi.dto.ChangePasswordDto;
+import com.example.astraapi.dto.EmailDto;
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.LoginDto;
 import com.example.astraapi.dto.RefreshTokenDto;
@@ -83,6 +84,12 @@ public class AuthServiceImpl implements AuthService {
     ManagementAPI managementApi = createManagementApi();
     User user = getAuth0UserByEmail(managementApi, email);
     changeUserPassword(managementApi, user, changePasswordDto.getNewPassword());
+  }
+
+  @Override
+  public void resetPassword(EmailDto emailDto) {
+    Request<Void> request = auth.resetPassword(emailDto.getEmail(), securityProperties.getConnection());
+    execute(request);
   }
 
   private User getAuth0UserByEmail(ManagementAPI managementAPI, String email) {

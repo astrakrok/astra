@@ -30,6 +30,7 @@ export const permission = {
     ],
     [page.settings]: authorized,
     [page.login]: notAuthorized,
+    [page.resetPassword]: notAuthorized,
     [page.logout]: authorized,
     [page.register]: notAuthorized,
     [page.configuration]: [userRole.superAdmin],

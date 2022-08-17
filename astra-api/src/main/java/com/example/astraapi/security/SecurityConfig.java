@@ -54,7 +54,8 @@ public class SecurityConfig {
         .authorizeHttpRequests(auth -> auth
             .mvcMatchers(
                 "/api/v1/auth",
-                "/api/v1/auth/signup")
+                "/api/v1/auth/signup",
+                "/api/v1/auth/password/reset")
             .permitAll()
             .mvcMatchers(
                 "/api/v1/properties",
