@@ -11,9 +11,8 @@ public interface TestService {
   IdDto save(RequestTestDto testDto);
 
   Page<TestShortDetailDto> getAll(Pageable pageable);
-  void update(Long id, RequestTestDto testDto);
 
-  List<TestShortDetailDto> getAll();
+  void update(Long id, RequestTestDto testDto);
 
   Optional<TestFullDetailDto> getDetailedTest(Long id);
 

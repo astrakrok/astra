@@ -16,13 +16,13 @@
         where id = #{entity.id}
     </update>
 
-    <select id="getAll" resultMap="testShortDetail">
-        select t.id       as id,
-               t.question as question,
-               t.comment  as comment,
-               s.id       as specializationId,
-               s.title    as specializationTitle,
-            count(t.id) over () as pageCount
+    <select id="getAll" resultMap="test">
+        select t.id                as id,
+               t.question          as question,
+               t.comment           as comment,
+               s.id                as specializationId,
+               s.title             as specializationTitle,
+               count(t.id) over () as pageCount
         from public.tests t
                  left join public.tests_subjects ts on t.id = ts.test_id
                  left join public.subjects_specializations ss on ts.subject_id = ss.subject_id
