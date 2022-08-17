@@ -33,3 +33,7 @@
 .ErrorForm .feedback-result .failure {
     color: var(--red-color);
 }
+
+.ErrorForm .problem-description {
+    font-size: 1.1rem;
+}

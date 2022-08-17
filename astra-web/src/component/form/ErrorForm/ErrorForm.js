@@ -102,6 +102,7 @@ const ErrorForm = ({
                 onSelect={updateFile}/>
             <Spacer height={10}/>
             <Textarea
+                className="problem-description"
                 noMargin={true}
                 withLabel={false}
                 placeholder="Опис проблеми"
