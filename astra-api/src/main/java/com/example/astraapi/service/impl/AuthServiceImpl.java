@@ -174,7 +174,7 @@ public class AuthServiceImpl implements AuthService {
     try {
       return request.execute();
     } catch (Auth0Exception exception) {
-      throw new AuthProviderException("An unexpected error occurred");
+      throw new AuthProviderException("An unexpected error occurred", exception);
     }
   }
 
