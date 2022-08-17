@@ -10,7 +10,7 @@ const TestsList = ({tests}) => {
     const renderTestSpecialization = specialization => {
         return (
             <div key={specialization.id} className="s-hflex-center">
-                <Badge>
+                <Badge className="full-width">
                     {specialization.title}
                 </Badge>
             </div>
