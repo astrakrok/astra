@@ -18,9 +18,11 @@ const problems = [
     "Щось не працює/здається зламаним"
 ];
 
-const ErrorForm = () => {
+const ErrorForm = ({
+                       initialValue = ""
+                   }) => {
     const [file, setFile] = useState(null);
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState(initialValue);
     const [selectedProblem, setSelectedProblem] = useState(problems[0]);
     const [formState, setFormState] = useState({
         loading: false,
@@ -124,7 +126,7 @@ const ErrorForm = () => {
                             )
                         }
                     </div>
-                    <div className="s-hflex-end">
+                    <div className="s-hflex-center">
                         <Button isFilled={true} onClick={notify}>
                             Відправити
                         </Button>

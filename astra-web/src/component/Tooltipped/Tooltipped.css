@@ -29,3 +29,7 @@
 .Tooltipped.top::before {
     transform: translateY(-100%);
 }
+
+.Tooltipped.left::before {
+    transform: translateX(-100%);
+}
