@@ -120,7 +120,9 @@ public class AuthServiceImpl implements AuthService {
 
   @Override
   public TokenDto googleLogin(CodeDto codeDto) {
-    TokenRequest request = auth.exchangeCode(codeDto.getCode(), "http://localhost:3000/google/callback");
+    TokenRequest request = auth.exchangeCode(
+        codeDto.getCode(),
+        googleProperties.getRedirectUri());
     TokenHolder tokenHolder = execute(request);
     TokenDto tokenDto = tokenMapper.toDto(tokenHolder);
     UserDto user = getUserInfoFromToken(tokenHolder.getIdToken());
@@ -174,7 +176,7 @@ public class AuthServiceImpl implements AuthService {
     try {
       return request.execute();
     } catch (Auth0Exception exception) {
-      throw new AuthProviderException("An unexpected error occurred");
+      throw new AuthProviderException("An unexpected error occurred", exception);
     }
   }
 
