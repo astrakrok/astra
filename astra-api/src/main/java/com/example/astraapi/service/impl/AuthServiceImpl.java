@@ -9,6 +9,7 @@ import com.auth0.json.mgmt.users.User;
 import com.auth0.net.Request;
 import com.auth0.net.SignUpRequest;
 import com.auth0.net.TokenRequest;
+import com.example.astraapi.config.GoogleProperties;
 import com.example.astraapi.dto.ChangePasswordDto;
 import com.example.astraapi.dto.CodeDto;
 import com.example.astraapi.dto.EmailDto;
@@ -46,6 +47,7 @@ public class AuthServiceImpl implements AuthService {
   private final TokenMapper tokenMapper;
   private final AuthAPI auth;
   private final SecurityProperties securityProperties;
+  private final GoogleProperties googleProperties;
   private final UserService userService;
   private final AuthMapper authMapper;
   private final AuthContext authContext;
@@ -109,10 +111,10 @@ public class AuthServiceImpl implements AuthService {
             "&access_type=offline" +
             "&response_type=code" +
             "&client_id=" + securityProperties.getClientId() +
-            "&connection=google-oauth2" +
-            "&redirect_uri=http://localhost:3000/google/callback" +
-            "&connection_scope=openid email profile" +
-            "&scope=offline_access openid profile email"
+            "&connection=" + googleProperties.getConnection() +
+            "&redirect_uri=" + googleProperties.getRedirectUri() +
+            "&connection_scope=" + googleProperties.getScope() +
+            "&scope=" + securityProperties.getScope()
     );
   }
 
