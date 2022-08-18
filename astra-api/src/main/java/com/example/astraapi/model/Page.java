@@ -27,4 +27,10 @@ public class Page<T> {
     }
     return (int) Math.ceil((float) rows / (float) pageSize);
   }
+
+  public void setPageSize(int pageSize) {
+    if (pageSize < 1) {
+      pagesCount = 1;
+    }
+  }
 }

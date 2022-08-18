@@ -8,7 +8,6 @@
         values (#{entity.question}, #{entity.comment})
     </insert>
 
-
     <update id="update">
         update public.tests
         set question = #{entity.question},
@@ -16,7 +15,7 @@
         where id = #{entity.id}
     </update>
 
-    <select id="getAll" resultMap="pagination">
+    <select id="getAll" resultMap="testPage">
         select t.id                as id,
                t.question          as question,
                t.comment           as comment,
@@ -130,7 +129,7 @@
         </collection>
     </resultMap>
 
-    <resultMap id="pagination" type="com.example.astraapi.model.Page">
+    <resultMap id="testPage" type="com.example.astraapi.model.Page">
         <result property="rows" column="pageCount"/>
         <collection property="items"
                     javaType="List"

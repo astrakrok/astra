@@ -23,4 +23,10 @@ public class Pageable {
     }
     return pageNumber * pageSize;
   }
+
+  public void setOffset(Long offset) {
+    if (offset < 1) {
+      pageNumber = Long.valueOf(0);
+    }
+  }
 }
