@@ -16,19 +16,24 @@
     </update>
 
     <select id="getAll" resultMap="testPage">
-        select t.id                as id,
-               t.question          as question,
-               t.comment           as comment,
-               s.id                as specializationId,
-               s.title             as specializationTitle,
-               count(t.id) over () as pageCount
-        from public.tests t
-                 left join public.tests_subjects ts on t.id = ts.test_id
+        select nested.id       as id,
+               nested.question as question,
+               nested.comment  as comment,
+               nested.rows     as rows,
+               s.id            as specializationId,
+               s.title         as specializationTitle
+        from (
+                 select t.id                as id,
+                        t.question          as question,
+                        t.comment           as comment,
+                        count(t.id) over () as rows
+                 from public.tests t
+                 order by id
+                 offset #{pageable.offset} limit #{pageable.pageSize}
+             ) as nested
+                 left join public.tests_subjects ts on nested.id = ts.test_id
                  left join public.subjects_specializations ss on ts.subject_id = ss.subject_id
                  left join public.specializations s on ss.specialization_id = s.id
-        group by t.id, s.id
-        order by id, specializationId
-        offset #{pageable.offset} limit #{pageable.pageSize}
     </select>
 
     <select id="getDetailedTestById" resultMap="testFullDetail">
@@ -130,7 +135,7 @@
     </resultMap>
 
     <resultMap id="testPage" type="com.example.astraapi.model.Page">
-        <result property="rows" column="pageCount"/>
+        <result property="rows" column="rows"/>
         <collection property="items"
                     javaType="List"
                     ofType="com.example.astraapi.entity.TestShortDetailEntity"

@@ -1,6 +1,15 @@
 package com.example.astraapi.service.impl;
 
-import com.example.astraapi.dto.*;
+import com.example.astraapi.dto.ExaminationSearchDto;
+import com.example.astraapi.dto.ExaminationTestDto;
+import com.example.astraapi.dto.IdDto;
+import com.example.astraapi.dto.RequestTestDto;
+import com.example.astraapi.dto.TestFullDetailDto;
+import com.example.astraapi.dto.TestShortDetailDto;
+import com.example.astraapi.dto.TestVariantDto;
+import com.example.astraapi.dto.TestingShortTestDto;
+import com.example.astraapi.dto.TrainingSearchDto;
+import com.example.astraapi.dto.TrainingTestDto;
 import com.example.astraapi.entity.TestEntity;
 import com.example.astraapi.mapper.TestMapper;
 import com.example.astraapi.model.Page;
@@ -57,7 +66,7 @@ public class TestServiceImpl implements TestService {
     if (page == null) {
       return new Page<>();
     }
-    page.setPageSize(pageable.getPageSize().intValue());
+    page.setPageSize(pageable.getPageSize());
     return page;
   }
 

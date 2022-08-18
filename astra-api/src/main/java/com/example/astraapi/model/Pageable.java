@@ -5,27 +5,27 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Pageable {
-  @Positive
-  private Long pageSize;
-  @Positive
-  private Long pageNumber;
+  @PositiveOrZero
+  private long pageSize;
+  @PositiveOrZero
+  private long pageNumber;
 
   public Long getOffset() {
     return pageNumber * pageSize;
   }
 
-  public void setPageNumber(Long pageNumber) {
+  public void setPageNumber(long pageNumber) {
     this.pageNumber = Math.max(0L, pageNumber);
   }
 
-  public void setPageSize(Long pageSize) {
+  public void setPageSize(long pageSize) {
     this.pageSize = Math.max(0L, pageSize);
   }
 }
