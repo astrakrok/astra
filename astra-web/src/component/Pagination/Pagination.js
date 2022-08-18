@@ -39,7 +39,7 @@ const Pagination = ({
                     renderPages(1, currentPage, currentPage)
                 ) : (
                     <>
-                        {renderPages(1, 1)}
+                        {renderPages(1, 2)}
                         {renderDots()}
                         {renderPages(currentPage - 1, currentPage, currentPage)}
                     </>
