@@ -6,6 +6,8 @@ import doubts from "./doubts.png";
 import creation from "./creation.png";
 import {page} from "../../../constant/page";
 import Spacer from "../../Spacer/Spacer";
+import DisplayBoundary from "../../DisplayBoundary/DisplayBoundary";
+import {isGuest} from "../../../handler/user.handler";
 import "./HomePage.css";
 
 const HomePage = () => {
@@ -21,11 +23,13 @@ const HomePage = () => {
                     <div className="equal-flex s-vflex-center">
                         <div className="info center">Якщо підготовка до КРОКу - сходи, то AstraKROK стане ліфтом;)</div>
                         <Spacer height={20}/>
-                        <div className="start s-hflex-center">
-                            <Button to={page.register}>
-                                Почати
-                            </Button>
-                        </div>
+                        <DisplayBoundary condition={isGuest()}>
+                            <div className="start s-hflex-center">
+                                <Button to={page.register}>
+                                    Почати
+                                </Button>
+                            </div>
+                        </DisplayBoundary>
                     </div>
                 </div>
                 <Spacer height={50}/>
@@ -53,12 +57,14 @@ const HomePage = () => {
                         <img className="full-width" src={creation} alt="creation"/>
                     </div>
                 </div>
-                <Spacer height={40}/>
-                <div className="join s-hflex-center">
-                    <Button to={page.register}>
-                        Приєднатися
-                    </Button>
-                </div>
+                <DisplayBoundary condition={isGuest()}>
+                    <Spacer height={40}/>
+                    <div className="join s-hflex-center">
+                        <Button to={page.register}>
+                            Приєднатися
+                        </Button>
+                    </div>
+                </DisplayBoundary>
             </div>
         </div>
     )
