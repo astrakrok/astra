@@ -21,40 +21,42 @@ const Paginated = ({
 
     const pageNumber = searchParams.get("page") * 1 || 1;
 
-    useEffect(() => {
-        const fetchPage = async () => {
-            setPage(previous => ({
-                ...previous,
-                items: null
-            }));
-            const page = await pageHandler(pageSize, pageNumber);
-            setPage(page);
-        }
+    const fetchPage = async pageNumber => {
+        setPage(previous => ({
+            ...previous,
+            items: null
+        }));
+        console.log(pageNumber, pageSize);
+        const page = await pageHandler(pageSize, pageNumber - 1);
+        setPage(page);
+    }
 
-        fetchPage();
+    useEffect(() => {
+        fetchPage(pageNumber);
     }, []);
 
-    const changePage = newPageNumber => {
+    const changePage = async newPageNumber => {
         if (pageNumber > page.totalPages || pageNumber < 1) {
             return;
         }
+        await fetchPage(newPageNumber);
         setSearchParams({
             page: newPageNumber
         });
     }
 
     return (
-        <div className="Paginated">
+        <div className="Paginated full-width">
             <div className="s-vflex">
-                <LoaderBoundary condition={page.items == null} className="s-hflex-center">
+                <LoaderBoundary condition={page.items == null} className="s-hflex-center loader">
                     {
-                        page.items ? children(page.items) : null
+                        page.items ? children(page.items, (pageNumber - 1) * pageSize) : null
                     }
                 </LoaderBoundary>
-                <DisplayBoundary condition={page.totalPages > 1}>
+                <DisplayBoundary condition={page.pagesCount > 1}>
                     <div className="s-hflex-center">
                         <Pagination
-                            pagesCount={page.totalPages}
+                            pagesCount={page.pagesCount}
                             currentPage={pageNumber}
                             onPreviousPageClicked={() => changePage(pageNumber - 1)}
                             onPageClicked={page => changePage(page)}
