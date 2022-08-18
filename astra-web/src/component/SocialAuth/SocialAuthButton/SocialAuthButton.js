@@ -1,18 +1,18 @@
 import {useState} from "react";
+import {getLoginUrl} from "../../../service/auth.service";
 import Button from "../../Button/Button";
 import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 import "./SocialAuthButton.css";
 
 const SocialAuthButton = ({
                               children,
-                              urlFetcher = () => {
-                              }
+                              providerName
                           }) => {
     const [loading, setLoading] = useState(false);
 
     const redirect = async () => {
         setLoading(true);
-        const result = await urlFetcher();
+        const result = await getLoginUrl(providerName);
         window.location.href = result.url;
     }
 

@@ -56,7 +56,8 @@ public class SecurityConfig {
                 "/api/v1/auth",
                 "/api/v1/auth/signup",
                 "/api/v1/auth/password/reset",
-                "/api/v1/auth/oauth2/google")
+                "/api/v1/auth/oauth2/google",
+                "/api/v1/auth/oauth2/facebook")
             .permitAll()
             .mvcMatchers(
                 HttpMethod.GET,

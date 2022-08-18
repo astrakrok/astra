@@ -1,12 +1,14 @@
 import {useContext, useEffect} from "react";
 import {useNavigate, useSearchParams} from "react-router-dom";
-import {page} from "../../../../constant/page";
-import {googleLogin} from "../../../../service/auth.service";
-import Preloader from "../../../Preloader/Preloader";
-import "./GoogleCallbackPage.css";
-import AuthContext from "../../../../context/auth/AuthContext";
+import {page} from "../../../constant/page";
+import {oauth2Login} from "../../../service/auth.service";
+import Preloader from "../../Preloader/Preloader";
+import "./OAuth2CallbackPage.css";
+import AuthContext from "../../../context/auth/AuthContext";
 
-const GoogleCallbackPage = () => {
+const OAuth2CallbackPage = ({
+                                providerName
+                            }) => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const {setUserData} = useContext(AuthContext);
@@ -14,7 +16,10 @@ const GoogleCallbackPage = () => {
     useEffect(() => {
         const login = async () => {
             const code = searchParams.get("code");
-            const userData = await googleLogin(code);
+            const userData = await oauth2Login(providerName, {
+                code: code,
+                redirectUri: window.location.href.split("?")[0]
+            });
             setUserData(userData.user);
             navigate(page.home);
         }
@@ -29,4 +34,4 @@ const GoogleCallbackPage = () => {
     );
 }
 
-export default GoogleCallbackPage;
+export default OAuth2CallbackPage;

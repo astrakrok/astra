@@ -1,3 +1,4 @@
+import {oauth2Provider} from "./oauth2.provider";
 import {page} from "./page";
 import {userRole} from "./user.role";
 
@@ -33,7 +34,8 @@ export const permission = {
     [page.resetPassword]: notAuthorized,
     [page.logout]: authorized,
     [page.register]: notAuthorized,
-    [page.googleCallback]: notAuthorized,
+    [page.oauth2Callback(oauth2Provider.google)]: notAuthorized,
+    [page.oauth2Callback(oauth2Provider.facebook)]: notAuthorized,
     [page.configuration]: [userRole.superAdmin],
     [page.newTesting]: [
         userRole.user

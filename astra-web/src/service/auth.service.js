@@ -55,9 +55,10 @@ export const resetPassword = async email => {
     return response.data;
 }
 
-export const getGoogleLoginUrl = async () => {
+export const getLoginUrl = async providerName => {
     clear();
-    const response = await axios.get(route.googleOauth2, {
+    const url = route.oauth2 + "/" + providerName;
+    const response = await axios.get(url, {
         headers: {
             Authorization: null
         }
@@ -65,9 +66,10 @@ export const getGoogleLoginUrl = async () => {
     return response.data;
 }
 
-export const googleLogin = async code => {
+export const oauth2Login = async (providerName, data) => {
     clear();
-    const response = await axios.post(route.googleOauth2, {code}, {
+    const url = route.oauth2 + "/" + providerName;
+    const response = await axios.post(url, data, {
         header: {
             Authorization: null
         }

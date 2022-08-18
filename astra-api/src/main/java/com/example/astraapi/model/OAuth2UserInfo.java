@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GoogleIdTokenPayload {
+public class OAuth2UserInfo {
   @JsonProperty("given_name")
   private String givenName;
   @JsonProperty("family_name")

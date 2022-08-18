@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.util.Base64;
 import java.util.Map;
 
 @Configuration
@@ -39,5 +40,10 @@ public class BeanConfig {
   @Bean
   public WebClient webClient() {
     return WebClient.create(telegramProperties.getBaseUrl());
+  }
+
+  @Bean
+  public Base64.Decoder base64Decoder() {
+    return Base64.getUrlDecoder();
   }
 }
