@@ -1,19 +1,24 @@
-import {getGoogleLoginUrl} from "../../service/auth.service";
-import Button from "../Button/Button";
+import {oauth2Provider} from "../../constant/oauth2.provider";
 import Spacer from "../Spacer/Spacer";
 import "./SocialAuth.css";
 import SocialAuthButton from "./SocialAuthButton/SocialAuthButton";
 
 export const SocialAuth = () => {
     return (
-        <div className="s-vflex-center full-height">
-            <SocialAuthButton urlFetcher={getGoogleLoginUrl}>
+        <div className="SocialAuth s-vflex-center full-height">
+            <SocialAuthButton providerName={oauth2Provider.google}>
                 Продовжити з Google
             </SocialAuthButton>
-            <Spacer height="25"/>
-            <Button className="full-width" isFilled={true}>Продовжити з Facebook</Button>
-            <Spacer height="25"/>
-            <Button className="full-width" isFilled={true}>Продовжити з Instagram</Button>
+            <Spacer height={10}/>
+            <div className="lined">
+                <Spacer width={10}/>
+                або
+                <Spacer width={10}/>
+            </div>
+            <Spacer height={10}/>
+            <SocialAuthButton providerName={oauth2Provider.facebook}>
+                Продовжити з Facebook
+            </SocialAuthButton>
         </div>
     );
 }

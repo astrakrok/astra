@@ -3,7 +3,7 @@ package com.example.astraapi.mapper;
 import com.example.astraapi.dto.SignUpDto;
 import com.example.astraapi.dto.UserDto;
 import com.example.astraapi.mapper.qualifier.TitleQualifier;
-import com.example.astraapi.model.GoogleIdTokenPayload;
+import com.example.astraapi.model.OAuth2UserInfo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -17,7 +17,7 @@ public interface AuthMapper {
 
   @Mapping(target = "name", source = "givenName")
   @Mapping(target = "surname", source = "familyName")
-  UserDto toUserDto(GoogleIdTokenPayload payload);
+  UserDto toUserDto(OAuth2UserInfo payload);
 
   SignUpDto toSignUpDto(UserDto userDto);
 }

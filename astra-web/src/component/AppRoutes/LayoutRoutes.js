@@ -19,22 +19,26 @@ import EditTestingPage from "../page/admin/testings/edit/EditTestingPage";
 import TestingPage from "../page/testing/TestingPage";
 import ConfigurationPage from "../page/admin/configuration/ConfigurationPage";
 import ResetPasswordPage from "../page/reset-password/ResetPasswordPage";
-import GoogleCallbackPage from "../page/callback/google/GoogleCallbackPage";
+import {oauth2Provider} from "../../constant/oauth2.provider";
+import OAuth2CallbackPage from "../page/oauth2-callback/OAuth2CallbackPage";
 
 export const LayoutRoutes = () => {
     return (
         <>
-            <Header />
+            <Header/>
 
             <main className="s-vflex-center">
                 <Routes>
-                    <Route path={page.home} element={<HomePage />} />
+                    <Route path={page.home} element={<HomePage/>}/>
                     <Route path={page.testing} element={<TestingPage/>}/>
                     <Route path={page.newTesting} element={<NewTestingPage/>}/>
                     <Route path={page.profile} element={<ProfilePage/>}/>
                     <Route path={page.login} element={<LoginPage/>}/>
                     <Route path={page.resetPassword} element={<ResetPasswordPage/>}/>
-                    <Route path={page.googleCallback} element={<GoogleCallbackPage/>}/>
+                    <Route path={page.oauth2Callback(oauth2Provider.google)}
+                           element={<OAuth2CallbackPage providerName={oauth2Provider.google}/>}/>
+                    <Route path={page.oauth2Callback(oauth2Provider.facebook)}
+                           element={<OAuth2CallbackPage providerName={oauth2Provider.facebook}/>}/>
                     <Route path={page.logout} element={<LogoutPage/>}/>
                     <Route path={page.register} element={<RegisterPage/>}/>
                     <Route path={page.settings} element={<SettingsPage/>}/>

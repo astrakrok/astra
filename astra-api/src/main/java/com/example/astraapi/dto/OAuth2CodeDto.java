@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CodeDto {
+public class OAuth2CodeDto {
   private String code;
+  private String redirectUri;
 }

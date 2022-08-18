@@ -14,7 +14,7 @@ const HomePage = () => {
     return (
         <div className="container HomePage">
             <div className="row">
-                <div className="s-hflex">
+                <div className="s-vflex m-hflex">
                     <div className="equal-flex">
                         <img className="full-width" src={entry} alt="entry"/>
                     </div>
@@ -28,7 +28,8 @@ const HomePage = () => {
                         </div>
                     </div>
                 </div>
-                <div className="s-hflex">
+                <Spacer height={50}/>
+                <div className="s-vflex m-hflex">
                     <div className="equal-flex s-vflex-center">
                         <div className="info center">Чи бувало в тебе таке, що розв’язуєш тести, робиш помилку і, от
                             халепа, не розумієш, чому твоя відповідь хибна?
@@ -38,10 +39,8 @@ const HomePage = () => {
                         <img className="full-width" src={doubts} alt="doubts"/>
                     </div>
                 </div>
-                <div className="s-hflex">
-                    <div className="equal-flex">
-                        <img className="full-width" src={creation} alt="creation"/>
-                    </div>
+                <Spacer height={50}/>
+                <div className="s-vflex m-hflex m-row-reverse">
                     <div className="equal-flex s-vflex-center">
                         <div className="info center">
                             У нас таке було. І ми знайшли вихід!
@@ -49,6 +48,9 @@ const HomePage = () => {
                             <br/>
                             Зробили для себе та поділилися зі світом!
                         </div>
+                    </div>
+                    <div className="equal-flex">
+                        <img className="full-width" src={creation} alt="creation"/>
                     </div>
                 </div>
                 <Spacer height={40}/>

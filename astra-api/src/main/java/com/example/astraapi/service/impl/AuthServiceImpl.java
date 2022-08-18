@@ -9,12 +9,11 @@ import com.auth0.json.mgmt.users.User;
 import com.auth0.net.Request;
 import com.auth0.net.SignUpRequest;
 import com.auth0.net.TokenRequest;
-import com.example.astraapi.config.GoogleProperties;
 import com.example.astraapi.dto.ChangePasswordDto;
-import com.example.astraapi.dto.CodeDto;
 import com.example.astraapi.dto.EmailDto;
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.LoginDto;
+import com.example.astraapi.dto.OAuth2CodeDto;
 import com.example.astraapi.dto.RefreshTokenDto;
 import com.example.astraapi.dto.SignUpDto;
 import com.example.astraapi.dto.TokenDto;
@@ -25,20 +24,20 @@ import com.example.astraapi.exception.AuthProviderException;
 import com.example.astraapi.exception.ResourceNotFoundException;
 import com.example.astraapi.mapper.AuthMapper;
 import com.example.astraapi.mapper.TokenMapper;
+import com.example.astraapi.meta.OAuth2Connection;
 import com.example.astraapi.meta.Role;
-import com.example.astraapi.model.GoogleIdTokenPayload;
+import com.example.astraapi.model.OAuth2UserInfo;
 import com.example.astraapi.security.SecurityProperties;
 import com.example.astraapi.service.AuthContext;
 import com.example.astraapi.service.AuthService;
+import com.example.astraapi.service.OAuth2Provider;
 import com.example.astraapi.service.UserService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -47,11 +46,10 @@ public class AuthServiceImpl implements AuthService {
   private final TokenMapper tokenMapper;
   private final AuthAPI auth;
   private final SecurityProperties securityProperties;
-  private final GoogleProperties googleProperties;
   private final UserService userService;
   private final AuthMapper authMapper;
   private final AuthContext authContext;
-  private final ObjectMapper objectMapper;
+  private final Map<OAuth2Connection, OAuth2Provider> providers;
 
   @Override
   public TokenDto login(LoginDto loginDto) {
@@ -103,34 +101,24 @@ public class AuthServiceImpl implements AuthService {
   }
 
   @Override
-  public UrlDto getGoogleLoginUrl() {
-    return new UrlDto(
-        securityProperties.getIssuerUri() +
-            "authorize" +
-            "?audience=" + securityProperties.getAudience() +
-            "&access_type=offline" +
-            "&response_type=code" +
-            "&client_id=" + securityProperties.getClientId() +
-            "&connection=" + googleProperties.getConnection() +
-            "&redirect_uri=" + googleProperties.getRedirectUri() +
-            "&connection_scope=" + googleProperties.getScope() +
-            "&scope=" + securityProperties.getScope()
-    );
+  public UrlDto getLoginUrl(OAuth2Connection connection) {
+    return providers.get(connection).getLoginUrl();
   }
 
   @Override
-  public TokenDto googleLogin(CodeDto codeDto) {
+  public TokenDto login(OAuth2Connection connection, OAuth2CodeDto codeDto) {
     TokenRequest request = auth.exchangeCode(
         codeDto.getCode(),
-        googleProperties.getRedirectUri());
+        codeDto.getRedirectUri());
     TokenHolder tokenHolder = execute(request);
     TokenDto tokenDto = tokenMapper.toDto(tokenHolder);
-    UserDto user = getUserInfoFromToken(tokenHolder.getIdToken());
-    if (user.getEmail() == null) {
+    OAuth2UserInfo userInfo = providers.get(connection).getUserInfo(tokenHolder.getIdToken());
+    if (userInfo.getEmail() == null) {
       throw new IllegalArgumentException("Cannot identify user - email is missing");
     }
-    Optional<UserDto> possibleUser = userService.findUserWithRolesByEmail(user.getEmail());
+    Optional<UserDto> possibleUser = userService.findUserWithRolesByEmail(userInfo.getEmail());
     if (possibleUser.isEmpty()) {
+      UserDto user = authMapper.toUserDto(userInfo);
       user.getRoles().add(Role.USER.name());
       userService.save(user);
     }
@@ -189,25 +177,5 @@ public class AuthServiceImpl implements AuthService {
 
   private void userExists(UserDto userDto) {
     throw new AlreadyExistsException("User with such email already exists");
-  }
-
-  private UserDto getUserInfoFromToken(String idToken) {
-    String[] chunks = idToken.split("\\.");
-    String payload = decodeIdTokenChunk(chunks[1]);
-    GoogleIdTokenPayload googleIdTokenPayload = parseGoogleIdTokenPayload(payload);
-    return authMapper.toUserDto(googleIdTokenPayload);
-  }
-
-  private String decodeIdTokenChunk(String chunk) {
-    Base64.Decoder decoder = Base64.getUrlDecoder();
-    return new String(decoder.decode(chunk));
-  }
-
-  private GoogleIdTokenPayload parseGoogleIdTokenPayload(String payload) {
-    try {
-      return objectMapper.readValue(payload, GoogleIdTokenPayload.class);
-    } catch (JsonProcessingException exception) {
-      throw new IllegalArgumentException("Unable to parse google id token");
-    }
   }
 }
