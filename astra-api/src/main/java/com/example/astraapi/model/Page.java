@@ -30,7 +30,7 @@ public class Page<T> {
 
   public void setPageSize(int pageSize) {
     if (pageSize < 1) {
-      pagesCount = 1;
+      pageSize = 1;
     }
     this.pageSize = pageSize;
   }
