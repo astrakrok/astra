@@ -32,5 +32,6 @@ public class Page<T> {
     if (pageSize < 1) {
       pagesCount = 1;
     }
+    this.pageSize = pageSize;
   }
 }
