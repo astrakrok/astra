@@ -30,4 +30,11 @@ public class Pageable {
     }
     this.pageNumber = pageNumber;
   }
+
+  public void setPageSize(Long pageSize) {
+    if (pageSize < 0) {
+      this.pageSize = Long.valueOf(0);
+    }
+    this.pageSize = pageSize;
+  }
 }
