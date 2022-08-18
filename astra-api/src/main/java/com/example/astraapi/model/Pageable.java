@@ -19,21 +19,21 @@ public class Pageable {
 
   public Long getOffset() {
     if (pageSize == 0) {
-      return Long.valueOf(1);
+      return 1l;
     }
     return pageNumber * pageSize;
   }
 
   public void setPageNumber(Long pageNumber) {
     if (pageNumber < 0) {
-      this.pageNumber = Long.valueOf(0);
+      this.pageNumber = 0l;
     }
     this.pageNumber = pageNumber;
   }
 
   public void setPageSize(Long pageSize) {
     if (pageSize < 0) {
-      this.pageSize = Long.valueOf(0);
+      this.pageSize = 0l;
     }
     this.pageSize = pageSize;
   }
