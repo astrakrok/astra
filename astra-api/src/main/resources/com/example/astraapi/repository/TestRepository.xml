@@ -34,6 +34,7 @@
                  left join public.tests_subjects ts on nested.id = ts.test_id
                  left join public.subjects_specializations ss on ts.subject_id = ss.subject_id
                  left join public.specializations s on ss.specialization_id = s.id
+        order by nested.id
     </select>
 
     <select id="getDetailedTestById" resultMap="testFullDetail">

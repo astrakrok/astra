@@ -4,13 +4,16 @@ import Badge from "../Badge/Badge";
 import Table from "../Table/Table";
 import "./TestsList.css";
 
-const TestsList = ({tests}) => {
+const TestsList = ({
+                       tests,
+                       orderFrom = 1
+                   }) => {
     const navigate = useNavigate();
 
     const renderTestSpecialization = specialization => {
         return (
             <div key={specialization.id} className="s-hflex-center">
-                <Badge className="full-width">
+                <Badge className="full-width center">
                     {specialization.title}
                 </Badge>
             </div>
@@ -24,8 +27,8 @@ const TestsList = ({tests}) => {
     const renderTestTableItem = (test, index) => {
         return (
             <tr key={test.id} className="clickable" onClick={() => openEditTestPage(test)}>
-                <td className="center">{index + 1}</td>
-                <td className="line-break">{test.question}</td>
+                <td className="center">{orderFrom + index + 1}</td>
+                <td className="line-break full-width">{test.question}</td>
                 <td>
                     <div className="s-vflex-center">
                         {

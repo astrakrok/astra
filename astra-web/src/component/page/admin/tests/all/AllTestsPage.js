@@ -9,11 +9,7 @@ import Paginated from "../../../../Paginated/Paginated";
 
 const AllTestsPage = () => {
     const fetchPage = async (pageSize, pageNumber) => {
-        const result = await getDetailedTests(pageSize, pageNumber);
-        return {
-            items: result,
-            totalPages: 20
-        }
+        return await getDetailedTests(pageSize, pageNumber);
     }
 
     return (
@@ -25,9 +21,9 @@ const AllTestsPage = () => {
                 <div className="tests-list s-hflex-center">
                     <Paginated pageHandler={fetchPage}>
                         {
-                            items => (
+                            (items, orderFrom) => (
                                 items.length > 0 ? (
-                                    <TestsList tests={items}/>
+                                    <TestsList tests={items} orderFrom={orderFrom}/>
                                 ) : (
                                     <InfoText>
                                         Тести відсутні
