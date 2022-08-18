@@ -22,16 +22,10 @@ public class Pageable {
   }
 
   public void setPageNumber(Long pageNumber) {
-    if (pageNumber < 0) {
-      this.pageNumber = 0L;
-    }
-    this.pageNumber = pageNumber;
+    this.pageNumber = Math.max(0L, pageNumber);
   }
 
   public void setPageSize(Long pageSize) {
-    if (pageSize < 0) {
-      this.pageSize = 0L;
-    }
-    this.pageSize = pageSize;
+    this.pageSize = Math.max(0L, pageSize);
   }
 }
