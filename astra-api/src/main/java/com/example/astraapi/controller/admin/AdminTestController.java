@@ -31,8 +31,8 @@ public class AdminTestController {
   }
 
 
-  @GetMapping()
-  public Page<TestShortDetailDto> getAll(Pageable pageable) {
+  @GetMapping
+  public Page<TestShortDetailDto> getAll(@Valid Pageable pageable) {
     return testService.getAll(pageable);
   }
 

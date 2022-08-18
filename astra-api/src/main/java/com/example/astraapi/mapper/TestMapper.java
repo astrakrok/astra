@@ -1,15 +1,11 @@
 package com.example.astraapi.mapper;
 
-import com.example.astraapi.dto.ExaminationTestDto;
-import com.example.astraapi.dto.RequestTestDto;
-import com.example.astraapi.dto.TestFullDetailDto;
-import com.example.astraapi.dto.TestShortDetailDto;
-import com.example.astraapi.dto.TestingShortTestDto;
-import com.example.astraapi.dto.TrainingTestDto;
+import com.example.astraapi.dto.*;
 import com.example.astraapi.entity.TestEntity;
 import com.example.astraapi.entity.TestFullDetailEntity;
 import com.example.astraapi.entity.TestShortDetailEntity;
 import com.example.astraapi.mapper.qualifier.TitleQualifier;
+import com.example.astraapi.model.Page;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -26,7 +22,7 @@ public interface TestMapper {
   @Mapping(target = "comment", qualifiedByName = TitleQualifier.TRIM)
   TestEntity toEntity(Long id, RequestTestDto testDto);
 
-  TestShortDetailDto toShortDetailDto(TestShortDetailEntity testShortDetailEntity);
+  Page<TestShortDetailDto> toShortDetailDto(Page<TestShortDetailEntity> testShortDetailEntity);
 
   TestFullDetailDto toFullDetailDto(TestFullDetailEntity testFullDetailEntity);
 

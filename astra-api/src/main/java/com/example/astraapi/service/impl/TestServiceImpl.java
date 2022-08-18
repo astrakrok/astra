@@ -53,7 +53,7 @@ public class TestServiceImpl implements TestService {
 
   @Override
   public Page<TestShortDetailDto> getAll(Pageable pageable) {
-    Page<TestShortDetailDto> page = testRepository.getAll(pageable);
+    Page<TestShortDetailDto> page = testMapper.toShortDetailDto(testRepository.getAll(pageable));
     if (page == null) {
       return new Page<>();
     }

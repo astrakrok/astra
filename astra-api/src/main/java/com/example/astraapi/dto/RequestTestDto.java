@@ -17,7 +17,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RequestTestDto {
-  private Long id;
   @TrimmedLength(min = 10)
   private String question;
   @TrimmedLength(min = 10)
