@@ -1,14 +1,8 @@
 package com.example.astraapi.service;
 
-import com.example.astraapi.dto.ExaminationSearchDto;
-import com.example.astraapi.dto.ExaminationTestDto;
-import com.example.astraapi.dto.IdDto;
-import com.example.astraapi.dto.RequestTestDto;
-import com.example.astraapi.dto.TestFullDetailDto;
-import com.example.astraapi.dto.TestShortDetailDto;
-import com.example.astraapi.dto.TestingShortTestDto;
-import com.example.astraapi.dto.TrainingSearchDto;
-import com.example.astraapi.dto.TrainingTestDto;
+import com.example.astraapi.dto.*;
+import com.example.astraapi.model.Page;
+import com.example.astraapi.model.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,9 +10,9 @@ import java.util.Optional;
 public interface TestService {
   IdDto save(RequestTestDto testDto);
 
-  void update(Long id, RequestTestDto testDto);
+  Page<TestShortDetailDto> getAll(Pageable pageable);
 
-  List<TestShortDetailDto> getAll();
+  void update(Long id, RequestTestDto testDto);
 
   Optional<TestFullDetailDto> getDetailedTest(Long id);
 

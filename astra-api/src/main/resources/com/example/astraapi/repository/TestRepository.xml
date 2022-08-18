@@ -15,17 +15,25 @@
         where id = #{entity.id}
     </update>
 
-    <select id="getAll" resultMap="testShortDetail">
-        select t.id       as id,
-               t.question as question,
-               t.comment  as comment,
-               s.id       as specializationId,
-               s.title    as specializationTitle
-        from public.tests t
-                 left join public.tests_subjects ts on t.id = ts.test_id
+    <select id="getAll" resultMap="testPage">
+        select nested.id       as id,
+               nested.question as question,
+               nested.comment  as comment,
+               nested.rows     as rows,
+               s.id            as specializationId,
+               s.title         as specializationTitle
+        from (
+                 select t.id                as id,
+                        t.question          as question,
+                        t.comment           as comment,
+                        count(t.id) over () as rows
+                 from public.tests t
+                 order by id
+                 offset #{pageable.offset} limit #{pageable.pageSize}
+             ) as nested
+                 left join public.tests_subjects ts on nested.id = ts.test_id
                  left join public.subjects_specializations ss on ts.subject_id = ss.subject_id
                  left join public.specializations s on ss.specialization_id = s.id
-        order by id, specializationId
     </select>
 
     <select id="getDetailedTestById" resultMap="testFullDetail">
@@ -119,11 +127,19 @@
         <id column="id" property="id"/>
         <result column="question" property="question"/>
         <result column="comment" property="comment"/>
-
         <collection property="specializations" javaType="List"
                     ofType="com.example.astraapi.entity.SpecializationEntity">
             <id column="specializationId" property="id"/>
             <result column="specializationTitle" property="title"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="testPage" type="com.example.astraapi.model.Page">
+        <result property="rows" column="rows"/>
+        <collection property="items"
+                    javaType="List"
+                    ofType="com.example.astraapi.entity.TestShortDetailEntity"
+                    resultMap="testShortDetail">
         </collection>
     </resultMap>
 

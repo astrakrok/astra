@@ -12,6 +12,8 @@ import com.example.astraapi.dto.TrainingSearchDto;
 import com.example.astraapi.dto.TrainingTestDto;
 import com.example.astraapi.entity.TestEntity;
 import com.example.astraapi.mapper.TestMapper;
+import com.example.astraapi.model.Page;
+import com.example.astraapi.model.Pageable;
 import com.example.astraapi.repository.TestRepository;
 import com.example.astraapi.service.TestService;
 import com.example.astraapi.service.TestSubjectService;
@@ -59,10 +61,13 @@ public class TestServiceImpl implements TestService {
   }
 
   @Override
-  public List<TestShortDetailDto> getAll() {
-    return testRepository.getAll().stream()
-        .map(testMapper::toShortDetailDto)
-        .collect(Collectors.toList());
+  public Page<TestShortDetailDto> getAll(Pageable pageable) {
+    Page<TestShortDetailDto> page = testMapper.toShortDetailDto(testRepository.getAll(pageable));
+    if (page == null) {
+      return new Page<>();
+    }
+    page.setPageSize(pageable.getPageSize());
+    return page;
   }
 
   @Override
