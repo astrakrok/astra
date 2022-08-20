@@ -169,7 +169,8 @@ const RegisterContent = ({
             <ErrorsArea errors={formState.errors.confirmPassword}/>
             <div className="button s-hflex-center">
                 <div className="s-vflex">
-                    <LoaderBoundary condition={formState.loading === loadingStatus.loading} size="small">
+                    <LoaderBoundary condition={formState.loading === loadingStatus.loading} size="small"
+                                    className="s-hflex-center">
                         {
                             formState.loading === loadingStatus.inProgress ? (
                                 <PopupConsumer>
