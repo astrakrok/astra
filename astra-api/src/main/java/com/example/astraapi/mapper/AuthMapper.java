@@ -11,13 +11,10 @@ import org.mapstruct.Mapping;
 public interface AuthMapper {
   @Mapping(target = "name", qualifiedByName = TitleQualifier.TRIM)
   @Mapping(target = "surname", qualifiedByName = TitleQualifier.TRIM)
-  @Mapping(target = "course", qualifiedByName = TitleQualifier.TRIM)
   @Mapping(target = "school", qualifiedByName = TitleQualifier.TRIM)
   UserDto toUserDto(SignUpDto signUpDto);
 
   @Mapping(target = "name", source = "givenName")
   @Mapping(target = "surname", source = "familyName")
   UserDto toUserDto(OAuth2UserInfo payload);
-
-  SignUpDto toSignUpDto(UserDto userDto);
 }

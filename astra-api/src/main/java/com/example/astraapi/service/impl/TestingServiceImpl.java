@@ -3,6 +3,7 @@ package com.example.astraapi.service.impl;
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.RequestTestingDto;
 import com.example.astraapi.dto.TestingDescriptionDto;
+import com.example.astraapi.dto.TestingDto;
 import com.example.astraapi.dto.TestingInfoDto;
 import com.example.astraapi.dto.TestingShortTestDto;
 import com.example.astraapi.dto.TestingTestQuestionDto;
@@ -72,5 +73,12 @@ public class TestingServiceImpl implements TestingService {
         properties.get(ConfigProperty.TRAINING_DESCRIPTION.getName()),
         properties.get(ConfigProperty.EXAMINATION_DESCRIPTION.getName())
     );
+  }
+
+  @Override
+  public List<TestingDto> getAvailableTestings() {
+    return testingRepository.getAvailable().stream()
+        .map(testingMapper::toDto)
+        .collect(Collectors.toList());
   }
 }

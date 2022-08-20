@@ -19,4 +19,6 @@ public interface TestingRepository {
   Optional<TestingInfoEntity> findTestingInfoById(@Param("id") Long id);
 
   List<TestingTestQuestionEntity> getTestingTestsByTestingId(@Param("testingId") Long testingId);
+
+  List<TestingEntity> getAvailable();
 }

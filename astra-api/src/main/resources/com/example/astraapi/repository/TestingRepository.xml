@@ -39,6 +39,22 @@
         where tt.testing_id = #{testingId}
     </select>
 
+    <select id="getAvailable" resultMap="testingWithExamAndSubject">
+        select t.id              as id,
+               e.id              as examId,
+               e.title           as examTitle,
+               s.id              as specializationId,
+               s.title           as specializationTitle,
+               count(tt.test_id) as testsCount
+        from public.testings t
+                 left join public.exams e on e.id = t.exam_id
+                 left join specializations s on s.id = t.specialization_id
+                 left join testings_tests tt on t.id = tt.testing_id
+        group by t.id, e.id, s.id
+        having count(tt.test_id) > 0
+        order by e.id, s.id
+    </select>
+
     <resultMap id="testingWithSpecialization" type="com.example.astraapi.entity.TestingWithSpecializationEntity">
         <id column="id" property="id"/>
         <result column="examId" property="examId"/>
@@ -70,6 +86,20 @@
         <association property="test" javaType="com.example.astraapi.entity.TestQuestionEntity">
             <id column="testId" property="id"/>
             <result column="testQuestion" property="question"/>
+        </association>
+    </resultMap>
+
+    <resultMap id="testingWithExamAndSubject" type="com.example.astraapi.entity.TestingEntity">
+        <id column="id" property="id"/>
+
+        <association property="exam" javaType="com.example.astraapi.entity.ExamEntity">
+            <id column="examId" property="id"/>
+            <result column="examTitle" property="title"/>
+        </association>
+
+        <association property="specialization" javaType="com.example.astraapi.entity.SpecializationEntity">
+            <id column="specializationId" property="id"/>
+            <result column="specializationTitle" property="title"/>
         </association>
     </resultMap>
 </mapper>

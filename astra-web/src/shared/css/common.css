@@ -1,3 +1,17 @@
+.lined {
+    display: flex;
+    flex-direction: row;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.lined::before,
+.lined::after {
+    content: "";
+    flex: 1 1;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.6);
+    margin: auto;
+}
+
 .line-break {
     white-space: break-spaces;
 }

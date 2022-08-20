@@ -1,4 +1,17 @@
+import {regex} from "../../constant/regex";
+
 export const updateUserSchema = {
-    name: "trimmedLength:Ім'я,2",
-    surname: "trimmedLength:Прізвище,2"
+    name: {
+        regex: regex.text
+    },
+    surname: {
+        regex: regex.text
+    },
+    course: {
+        regexOrNull: regex.oneToSixDigits
+    },
+    school: {
+        regexOrNull: regex.textWithSpaces(5),
+        trimmedLength: ["Навчальний заклад", "5"]
+    },
 }

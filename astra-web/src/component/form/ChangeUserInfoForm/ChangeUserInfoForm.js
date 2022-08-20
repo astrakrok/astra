@@ -98,8 +98,10 @@ const ChangeUserInfoForm = ({
             <ErrorsArea errors={formState.errors.surname}/>
             <Spacer height={10}/>
             <Input value={course} onChange={event => setCourse(event.target.value)} placeholder="Курс"/>
+            <ErrorsArea errors={formState.errors.course}/>
             <Spacer height={10}/>
             <Input value={school} onChange={event => setSchool(event.target.value)} placeholder="Навчальний заклад"/>
+            <ErrorsArea errors={formState.errors.school}/>
             <Spacer height={10}/>
             <div className="specialization-select s-vflex">
                 <label>Спеціалізація</label>

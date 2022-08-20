@@ -7,6 +7,11 @@ export const getExamTestings = async examId => {
     return response.data;
 }
 
+export const getAvailableTestings = async () => {
+    const response = await client.get(route.testings.available);
+    return response.data;
+}
+
 export const create = async data => {
     const url = route.admin.testings.all;
     const response = await client.post(url, data)

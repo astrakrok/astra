@@ -26,7 +26,6 @@ const Paginated = ({
             ...previous,
             items: null
         }));
-        console.log(pageNumber, pageSize);
         const page = await pageHandler(pageSize, pageNumber - 1);
         setPage(page);
     }

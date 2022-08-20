@@ -1,21 +1,27 @@
 package com.example.astraapi.dto;
 
-import com.example.astraapi.annotation.TrimmedLength;
+import com.example.astraapi.meta.Regex;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateUserDto {
-  @TrimmedLength(min = 2)
+  @Pattern(regexp = Regex.TEXT)
   private String name;
-  @TrimmedLength(min = 2)
+  @Pattern(regexp = Regex.TEXT)
   private String surname;
-  private String course;
+  @Min(1)
+  @Max(6)
+  private Integer course;
   private String school;
   private Long specializationId;
 }
