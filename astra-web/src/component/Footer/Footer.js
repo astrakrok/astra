@@ -8,8 +8,8 @@ const Footer = () => {
         <div className="container Footer">
             <div className="s-vflex m-hflex">
                 <div className="equal-flex">
-                    <Logo />
-                    <p className="description">Наша мета - якісна, інноваційна та доступна медична освіта</p>
+                    <Logo/>
+                    <p className="description">Наша мета - якісна та доступна медична освіта</p>
                     <p className="copyright">&copy; {app.name} {new Date().getFullYear()}</p>
                 </div>
                 <div className="s-vflex">

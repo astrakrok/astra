@@ -2,9 +2,10 @@ import "./Input.css";
 
 const Input = props => {
     const {
-        inputType="primary",
+        inputType = "primary",
         placeholder,
         withLabel = true,
+        className = "",
         ...otherProps
     } = props;
 
@@ -15,7 +16,7 @@ const Input = props => {
                     <label>{placeholder}</label>
                 ) : null
             }
-            <input type="input" placeholder={placeholder} {...otherProps} />
+            <input type="input" placeholder={placeholder} className={`browser-default ${className}`} {...otherProps} />
         </div>
     );
 }

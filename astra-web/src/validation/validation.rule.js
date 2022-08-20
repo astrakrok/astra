@@ -1,19 +1,48 @@
 import V from "max-validator";
 
+const validateByRegex = (value, regex) => {
+    return regex.value.test(value) ? true : {
+        value: value,
+        message: regex.message
+    };
+}
+
 export const initRules = () => {
     V.extend(
-        "regex",
-        (value, regexExpression) => {
-            return regexExpression.test(value) ? true : {
-                value: value
+        "notNull",
+        (value, field) => {
+            return (value != null) && (value !== "") ? true : {
+                field: field
             };
         },
-        "Default Error Message: :name must be a valid password"
+        "Value cannot be null"
     );
+
+    V.extend(
+        "regex",
+        (value, regex) => {
+            return validateByRegex(value, regex);
+        },
+        "Default Error Message: value is not valid for passed regex"
+    );
+
+    V.extend(
+        "regexOrNull",
+        (value, regex) => {
+            if (value == null || value === "") {
+                return true;
+            }
+            return validateByRegex(value, regex);
+        },
+        "Default Error Message: value is not valid for passed regex"
+    )
 
     V.extend(
         "trimmedLength",
         (value, field, min = 1, max = 255) => {
+            if (value == null || value === "") {
+                return true;
+            }
             const trimmed = value.trim();
             const length = trimmed.length;
             if (length >= min && length <= max) {

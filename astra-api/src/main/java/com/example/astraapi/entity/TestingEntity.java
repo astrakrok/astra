@@ -13,4 +13,6 @@ public class TestingEntity {
   private Long id;
   private Long examId;
   private Long specializationId;
+  private ExamEntity exam;
+  private SpecializationEntity specialization;
 }

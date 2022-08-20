@@ -3,6 +3,7 @@ package com.example.astraapi.service;
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.RequestTestingDto;
 import com.example.astraapi.dto.TestingDescriptionDto;
+import com.example.astraapi.dto.TestingDto;
 import com.example.astraapi.dto.TestingInfoDto;
 import com.example.astraapi.dto.TestingShortTestDto;
 import com.example.astraapi.dto.TestingTestQuestionDto;
@@ -23,4 +24,6 @@ public interface TestingService {
   List<TestingShortTestDto> getNotSelectedTestingTests(Long id);
 
   TestingDescriptionDto getDescription();
+
+  List<TestingDto> getAvailableTestings();
 }

@@ -6,6 +6,7 @@ const getTestingsRoutes = () => {
     const prefix = `${baseUrl}/api/v1/testings`;
     return {
         description: prefix + "/description",
+        available: prefix + "/available",
         exams: {
             id: id => {
                 return {

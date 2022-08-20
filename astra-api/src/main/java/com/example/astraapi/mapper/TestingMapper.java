@@ -1,6 +1,7 @@
 package com.example.astraapi.mapper;
 
 import com.example.astraapi.dto.RequestTestingDto;
+import com.example.astraapi.dto.TestingDto;
 import com.example.astraapi.dto.TestingInfoDto;
 import com.example.astraapi.dto.TestingTestQuestionDto;
 import com.example.astraapi.dto.TestingWithSpecializationDto;
@@ -19,4 +20,6 @@ public interface TestingMapper {
   TestingInfoDto toInfoDto(TestingInfoEntity entity);
 
   TestingTestQuestionDto toTestQuestionDto(TestingTestQuestionEntity entity);
+
+  TestingDto toDto(TestingEntity entity);
 }

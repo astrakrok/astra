@@ -9,6 +9,9 @@ import MessagePopupBody from "../../popup-component/MessagePopupBody/MessagePopu
 import "./ResetPasswordPage.css";
 import {resetPassword} from "../../../service/auth.service.js";
 import {message} from "../../../constant/message.js";
+import V from "max-validator";
+import {emailSchema} from "../../../validation/schema/email.js";
+import ErrorsArea from "../../ErrorsArea/ErrorsArea";
 
 const ResetPasswordPage = () => {
     const [email, setEmail] = useState("");
@@ -22,6 +25,15 @@ const ResetPasswordPage = () => {
             loading: true,
             errors: {}
         });
+        const validationResult = V.validate({email}, emailSchema);
+        if (validationResult.hasError) {
+            setFormState({
+                loading: false,
+                errors: validationResult.errors
+            });
+            return;
+        }
+
         const result = await resetPassword(email);
         setFormState({
             loading: false,
@@ -39,6 +51,7 @@ const ResetPasswordPage = () => {
                 value={email}
                 onChange={event => setEmail(event.target.value)}
                 placeholder="Ваш E-mail"/>
+            <ErrorsArea errors={formState.errors.email}/>
             <Spacer height={20}/>
             <div className="s-hflex-center">
                 <LoaderBoundary condition={formState.loading} size="small">

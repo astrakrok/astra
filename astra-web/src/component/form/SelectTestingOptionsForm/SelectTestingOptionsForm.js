@@ -7,42 +7,34 @@ import Spacer from "../../Spacer/Spacer";
 import DisplayBoundary from "../../DisplayBoundary/DisplayBoundary";
 import "./SelectTestingOptionsForm.css";
 import InfoHeader from "../../InfoHeader/InfoHeader";
-import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
-import {getExamTestings} from "../../../service/testing.service";
 import InfoBlock from "../../InfoBlock/InfoBlock";
 
 const SelectTestingOptionsForm = ({
                                       exams,
+                                      onExamSelected = () => [],
+                                      onSelected = () => null,
                                       descriptions,
                                       onSelect = () => {
                                       }
                                   }) => {
-    const [exam, setExam] = useState(null);
-    const [selectedTesting, setSelectedTesting] = useState(null);
+    const [specializations, setSpecializations] = useState(null);
+    const [selectedExam, setSelectedExam] = useState(null);
+    const [selectedSpecialization, setSelectedSpecialization] = useState(null);
     const [mode, setMode] = useState();
     const [count, setCount] = useState();
-    const [testings, setTestings] = useState([]);
-
-    const examsOptions = exams.map(exam => ({value: exam.id, label: exam.title}));
-
-    const fetchTestings = async () => {
-        setTestings(null);
-        const testings = await getExamTestings(exam.value);
-        setTestings(testings);
-    }
 
     useEffect(() => {
-        if (!exam) {
+        setSelectedSpecialization(null);
+        if (!selectedExam) {
             return;
         }
-        setSelectedTesting(null);
-        fetchTestings();
-    }, [exam]);
+        setSpecializations(onExamSelected(selectedExam.value));
+    }, [selectedExam]);
 
     const selected = event => {
         event.preventDefault();
         const options = {
-            testingId: selectedTesting.value,
+            testingId: onSelected(selectedExam.value, selectedSpecialization.value),
             mode: mode.value
         };
         if (options.mode === "training") {
@@ -52,27 +44,34 @@ const SelectTestingOptionsForm = ({
     }
 
     const isValidOptions = () => {
-        const isValidMainData = [selectedTesting, mode].filter(item => item == null).length === 0;
+        const isValidMainData = [selectedSpecialization, mode].filter(item => item == null).length === 0;
         return isValidMainData && (mode.value === "examination" || (mode.value === "training" && count != null));
     }
 
-    const getTestingsOptions = () => {
-        return testings == null ? null : testings.map(item => ({
-            label: item.specialization.title,
+    const getSpecializationsOptions = () => {
+        return specializations == null ? [] : specializations.map(item => ({
+            label: item.title,
+            value: item.id
+        }));
+    }
+
+    const getExamsOptions = () => {
+        return exams == null ? [] : exams.map(item => ({
+            label: item.title,
             value: item.id
         }));
     }
 
     const updateExam = newExam => {
-        if (!newExam && !exam) {
+        if (!newExam && !selectedExam) {
             return;
-        } else if (newExam && exam) {
-            if (newExam.value !== exam.value) {
-                setExam(newExam);
+        } else if (newExam && selectedExam) {
+            if (newExam.value !== selectedExam.value) {
+                setSelectedExam(newExam);
             }
             return;
         }
-        setExam(newExam);
+        setSelectedExam(newExam);
     }
 
     return (
@@ -104,15 +103,14 @@ const SelectTestingOptionsForm = ({
                         </div>
                         <SingleSelect
                             placeholder="Виберіть рік"
-                            options={examsOptions}
+                            options={getExamsOptions()}
                             onChange={updateExam}/>
                         <Spacer height={20}/>
-                        <LoaderBoundary condition={testings == null} className="s-hflex-center" size="small">
-                            <SingleSelect
-                                placeholder="Виберіть спеціалізацію"
-                                options={getTestingsOptions()}
-                                onChange={setSelectedTesting}/>
-                        </LoaderBoundary>
+                        <SingleSelect
+                            placeholder="Виберіть спеціалізацію"
+                            options={getSpecializationsOptions()}
+                            onChange={setSelectedSpecialization}
+                            value={selectedSpecialization}/>
                         <Spacer height={40}/>
                         <div className="s-hflex-center">
                             <Button isFilled={true} disabled={!isValidOptions()} isSubmit="submit">

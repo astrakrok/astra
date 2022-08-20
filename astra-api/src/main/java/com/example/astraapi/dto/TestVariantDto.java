@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,8 +16,10 @@ import lombok.Setter;
 public class TestVariantDto {
   private Long id;
   private Long testId;
+  @NotNull
   @TrimmedLength(min = 1)
   private String title;
+  @NotNull
   @TrimmedLength(min = 10)
   private String explanation;
   @JsonProperty("isCorrect")

@@ -17,14 +17,12 @@ public interface UserMapper {
 
   @Mapping(target = "name", qualifiedByName = TitleQualifier.TRIM)
   @Mapping(target = "surname", qualifiedByName = TitleQualifier.TRIM)
-  @Mapping(target = "course", qualifiedByName = TitleQualifier.TRIM)
   @Mapping(target = "school", qualifiedByName = TitleQualifier.TRIM)
   @Mapping(target = "roles", ignore = true)
   UserEntity toEntity(UserDto userDto);
 
   @Mapping(target = "name", qualifiedByName = TitleQualifier.TRIM)
   @Mapping(target = "surname", qualifiedByName = TitleQualifier.TRIM)
-  @Mapping(target = "course", qualifiedByName = TitleQualifier.TRIM)
   @Mapping(target = "school", qualifiedByName = TitleQualifier.TRIM)
   UserEntity toEntity(UpdateUserDto userDto, String email);
 }

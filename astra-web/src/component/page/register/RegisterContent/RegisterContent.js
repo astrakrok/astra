@@ -1,7 +1,6 @@
 import {useState} from "react";
 import Button from "../../../Button/Button";
 import Input from "../../../Input/Input";
-import ResponsiveColumns from "../../../ResponsiveColumns/ResponsiveColumns";
 import Spacer from "../../../Spacer/Spacer";
 import PopupConsumer from "../../../../context/popup/PopupConsumer";
 import LoaderBoundary from "../../../LoaderBoundary/LoaderBoundary";
@@ -18,7 +17,8 @@ import "./RegisterContent.css";
 import {signUpSchema} from "../../../../validation/schema/signUp";
 import DisplayBoundary from "../../../DisplayBoundary/DisplayBoundary";
 import {message} from "../../../../constant/message";
-import SocialAuth from "../../../SocialAuth/SocialAuth";
+import SocialAuthButton from "../../../SocialAuth/SocialAuthButton/SocialAuthButton";
+import {oauth2Provider} from "../../../../constant/oauth2.provider";
 
 const RegisterContent = ({
                              specializations
@@ -68,11 +68,11 @@ const RegisterContent = ({
             name,
             surname,
             course,
-            school,
+            school: school === "" ? null : school,
             email,
             password,
             confirmPassword,
-            specializationId: selectedSpecialization.value
+            specializationId: selectedSpecialization ? selectedSpecialization.value : null
         };
         
         const validationResult = V.validate(signUpData, signUpSchema);
@@ -103,25 +103,16 @@ const RegisterContent = ({
         })
     }
 
-    const getFirstColumn = () => {
-        return (
-            <div className="optimal register-form">
-                <Input type="email" className="browser-default" placeholder="E-mail" value={email}
-                       onChange={event => setEmail(event.target.value)}/>
-                <ErrorsArea errors={formState.errors.email}/>
-                <Spacer height={20}/>
-                <Input placeholder="Ім'я" value={name} onChange={event => setName(event.target.value)}/>
-                <ErrorsArea errors={formState.errors.name}/>
-                <Spacer height={20}/>
-                <Input placeholder="Прізвище" value={surname} onChange={event => setSurname(event.target.value)}/>
-                <ErrorsArea errors={formState.errors.surname}/>
-                <Spacer height={20}/>
-                <Input placeholder="Курс" value={course} onChange={event => setCourse(event.target.value)}/>
-                <Spacer height={20}/>
-                <Input placeholder="Навчальний заклад" value={school}
-                       onChange={event => setSchool(event.target.value)}/>
-                <Spacer height={20}/>
-                <div className="specialization-select s-vflex">
+    return (
+        <div className="RegisterContent optimal register-form">
+            <div className="s-vflex m-hflex-center">
+                <div className="s-vflex equal-flex">
+                    <Input type="email" className="full-width" placeholder="E-mail" value={email}
+                           onChange={event => setEmail(event.target.value)}/>
+                    <ErrorsArea errors={formState.errors.email}/>
+                </div>
+                <Spacer width={20}/>
+                <div className="specialization-select s-vflex equal-flex">
                     <label>Спеціалізація</label>
                     <SingleSelect
                         className="select"
@@ -130,30 +121,68 @@ const RegisterContent = ({
                         onChange={setSelectedSpecialization}
                     />
                 </div>
-                <Spacer height={20}/>
-                <Input type="password" className="browser-default" placeholder="Пароль" value={password}
-                       onChange={event => setPassword(event.target.value)}/>
-                <ErrorsArea errors={formState.errors.password}/>
-                <Spacer height={20}/>
-                <Input type="password" className="browser-default" placeholder="Повторити пароль"
-                       value={confirmPassword} onChange={event => setConfirmPassword(event.target.value)}/>
-                <ErrorsArea errors={formState.errors.confirmPassword}/>
-                <div className="button center">
+            </div>
+            <Spacer height={20}/>
+            <div className="s-vflex m-hflex-center">
+                <div className="s-vflex equal-flex">
+                    <Input placeholder="Прізвище" className="full-width" value={surname}
+                           onChange={event => setSurname(event.target.value)}/>
+                    <ErrorsArea errors={formState.errors.surname}/>
+                </div>
+                <Spacer width={20}/>
+                <div className="s-vflex equal-flex">
+                    <Input placeholder="Ім'я" className="full-width" value={name}
+                           onChange={event => setName(event.target.value)}/>
+                    <ErrorsArea errors={formState.errors.name}/>
+                </div>
+            </div>
+            <Spacer height={20}/>
+            <div className="s-vflex m-hflex-center">
+                <div className="s-vflex equal-flex">
+                    <Input type="number" min="1" max="6" className="full-width" placeholder="Курс"
+                           value={course} onChange={event => setCourse(event.target.value)}/>
+                    <ErrorsArea errors={formState.errors.course}/>
+                </div>
+                <Spacer width={20}/>
+                <div className="s-vflex equal-flex">
+                    <Input placeholder="Навчальний заклад" className="full-width" value={school}
+                           onChange={event => setSchool(event.target.value)}/>
+                    <ErrorsArea errors={formState.errors.school}/>
+                </div>
+            </div>
+            <Spacer height={20}/>
+            <div className="s-vflex m-hflex-center">
+                <div className="s-vflex equal-flex">
+                    <Input type="password" placeholder="Пароль" className="full-width"
+                           value={password} onChange={event => setPassword(event.target.value)}/>
+                    <ErrorsArea errors={formState.errors.password}/>
+                </div>
+                <Spacer width={20}/>
+                <div className="s-vflex equal-flex">
+                    <Input type="password" placeholder="Повторити пароль" className="full-width"
+                           value={confirmPassword} onChange={event => setConfirmPassword(event.target.value)}/>
+                </div>
+            </div>
+
+            <Spacer height={20}/>
+
+            <ErrorsArea errors={formState.errors.confirmPassword}/>
+            <div className="button s-hflex-center">
+                <div className="s-vflex">
                     <LoaderBoundary condition={formState.loading === loadingStatus.loading} size="small">
                         {
                             formState.loading === loadingStatus.inProgress ? (
                                 <PopupConsumer>
                                     {
                                         ({setPopupState}) => (
-                                            <div className="s-vflex">
-                                                <div className="s-hflex-center">
-                                                    <Button onClick={() => handleSignUp(setPopupState)}>
-                                                        Зареєструватися
-                                                    </Button>
-                                                </div>
+                                            <div className="s-vflex full-width">
+                                                <Button onClick={() => handleSignUp(setPopupState)}
+                                                        className="full-width">
+                                                    Зареєструватися
+                                                </Button>
                                                 <DisplayBoundary condition={formState.errors.global}>
-                                                    <Spacer height={20} />
-                                                    <ErrorsArea errors={formState.errors.global} />
+                                                    <Spacer height={20}/>
+                                                    <ErrorsArea errors={formState.errors.global}/>
                                                 </DisplayBoundary>
                                             </div>
                                         )
@@ -161,21 +190,24 @@ const RegisterContent = ({
                                 </PopupConsumer>
                             ) : (
                                 <div className="s-hflex-center">
-                                    <IconTitle className="completed-icon" icon="check" size="medium" />
+                                    <IconTitle className="completed-icon" icon="check" size="medium"/>
                                 </div>
                             )
                         }
                     </LoaderBoundary>
+                    <Spacer height={10}/>
+                    <div className="lined">
+                        <Spacer width={10}/>
+                        або
+                        <Spacer width={10}/>
+                    </div>
+                    <Spacer height={10}/>
+                    <SocialAuthButton providerName={oauth2Provider.google}>
+                        Продовжити з Google
+                    </SocialAuthButton>
                 </div>
             </div>
-        );
-    };
-
-    return (
-        <ResponsiveColumns
-            firstColumn={getFirstColumn()}
-            secondColumn={<SocialAuth/>}
-            isSeparated={true} />
+        </div>
     );
 }
 
