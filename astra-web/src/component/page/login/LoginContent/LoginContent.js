@@ -28,8 +28,6 @@ const LoginContent = ({
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({});
 
-    null.map();
-
     const handleLogin = async setPopupState => {
         setErrors({});
         const data = {email, password};
