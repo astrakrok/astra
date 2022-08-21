@@ -13,18 +13,45 @@ import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 import Spacer from "../../Spacer/Spacer";
 import Editor from "../../Editor/Editor";
 import SvgContentChooser from "../../SvgContentChooser/SvgContentChooser";
+import ErrorsArea from "../../ErrorsArea/ErrorsArea";
+import {validateTest} from "../../../validation/custom/test.validator";
 
 const TestForm = ({
-    initialTest = defaultEmptyTest,
-    onSend = () => {}
-}) => {
+                      initialTest = defaultEmptyTest,
+                      onSend = () => {
+                      }
+                  }) => {
     const [test, setTest] = useState(initialTest);
-    const [loading, setLoading] = useState(false);
+    const [formState, setFormState] = useState({
+        loading: false,
+        errors: {}
+    });
+
+    const getVariantPropertyError = (index, property) => {
+        if (!formState.errors.variants || !formState.errors.variants[index]) {
+            return null;
+        }
+        return formState.errors.variants[index][property];
+    }
 
     const save = async () => {
-        setLoading(true);
+        setFormState({
+            loading: true,
+            errors: {}
+        });
+        const validationResult = validateTest(test);
+        if (validationResult.hasError) {
+            setFormState({
+                loading: false,
+                errors: validationResult.errors
+            });
+            return;
+        }
         await onSend(test);
-        setLoading(false);
+        setFormState({
+            loading: false,
+            errors: {}
+        });
     }
 
     const updateVariant = (values, index) => {
@@ -84,6 +111,7 @@ const TestForm = ({
                     <div className="content">
                         <Input value={variant.title} placeholder="Варіант"
                                onChange={event => updateVariant({title: event.target.value}, index)}/>
+                        <ErrorsArea errors={getVariantPropertyError(index, "title")}/>
                         <Spacer height={10}/>
                         <SvgContentChooser
                             value={variant.titleSvg}
@@ -95,6 +123,7 @@ const TestForm = ({
                             onChange={content => updateVariant({
                                 explanation: content
                             }, index)}/>
+                        <ErrorsArea errors={getVariantPropertyError(index, "explanation")}/>
                         <Spacer height={10}/>
                         <SvgContentChooser
                             value={variant.explanationSvg}
@@ -186,6 +215,7 @@ const TestForm = ({
             <InfoHeader>Основна інформація</InfoHeader>
             <Textarea noMargin={true} placeholder="Питання" value={test.question}
                       onChange={event => setTest({...test, question: event.target.value})}/>
+            <ErrorsArea errors={formState.errors.question}/>
             <Spacer height={10}/>
             <SvgContentChooser
                 value={test.questionSvg}
@@ -195,6 +225,7 @@ const TestForm = ({
                 placeholder="Коментар"
                 value={test.comment}
                 onChange={updateTestComment}/>
+            <ErrorsArea errors={formState.errors.comment}/>
             <Spacer height={10}/>
             <SvgContentChooser
                 value={test.commentSvg}
@@ -212,6 +243,8 @@ const TestForm = ({
                         </div>
                     </li>
                 </ul>
+                <ErrorsArea errors={formState.errors.variantsCorrectness}/>
+                <Spacer height={20}/>
             </div>
             <InfoHeader>Предмети</InfoHeader>
             <div className="subjects s-hflex">
@@ -231,8 +264,10 @@ const TestForm = ({
                     }
                 </PopupConsumer>
             </div>
+            <ErrorsArea errors={formState.errors.subjects}/>
+            <Spacer height={20}/>
             <div className="s-hflex-end">
-                <LoaderBoundary condition={loading} size="small">
+                <LoaderBoundary condition={formState.loading} size="small">
                     <Button onClick={save}>Зберегти</Button>
                 </LoaderBoundary>
             </div>
