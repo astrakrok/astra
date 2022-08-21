@@ -32,7 +32,7 @@ table.Table.secondary tbody tr:last-of-type {
     border-bottom: 2px solid var(--secondary-color);
 }
 
-table.Table.secondary tbody tr:hover {
+table.Table.secondary tbody tr:hover > *:not(.highlight-default) {
     font-weight: bold;
     color: var(--secondary-color);
     background-color: rgba(0, 0, 0, 0.1);

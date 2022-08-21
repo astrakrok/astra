@@ -21,6 +21,7 @@ import ConfigurationPage from "../page/admin/configuration/ConfigurationPage";
 import ResetPasswordPage from "../page/reset-password/ResetPasswordPage";
 import {oauth2Provider} from "../../constant/oauth2.provider";
 import OAuth2CallbackPage from "../page/oauth2-callback/OAuth2CallbackPage";
+import AllAdminsPage from "../page/admin/all/AllAdminsPage/AllAdminsPage";
 
 export const LayoutRoutes = () => {
     return (
@@ -37,12 +38,11 @@ export const LayoutRoutes = () => {
                     <Route path={page.resetPassword} element={<ResetPasswordPage/>}/>
                     <Route path={page.oauth2Callback(oauth2Provider.google)}
                            element={<OAuth2CallbackPage providerName={oauth2Provider.google}/>}/>
-                    <Route path={page.oauth2Callback(oauth2Provider.facebook)}
-                           element={<OAuth2CallbackPage providerName={oauth2Provider.facebook}/>}/>
                     <Route path={page.logout} element={<LogoutPage/>}/>
                     <Route path={page.register} element={<RegisterPage/>}/>
                     <Route path={page.settings} element={<SettingsPage/>}/>
                     <Route path={page.configuration} element={<ConfigurationPage/>}/>
+                    <Route path={page.admin.all} element={<AllAdminsPage/>}/>
                     <Route path={page.admin.specializations.all} element={<AllSpecializationsPage/>}/>
                     <Route path={page.admin.subjects.all} element={<AllSubjectsPage/>}/>
                     <Route path={page.admin.tests.all} element={<AllTestsPage/>}/>
