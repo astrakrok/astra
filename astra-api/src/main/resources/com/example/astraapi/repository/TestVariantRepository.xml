@@ -3,9 +3,16 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.astraapi.repository.TestVariantRepository">
     <insert id="save">
-        insert into public.tests_variants(test_id, title, explanation, is_correct) values
+        insert into public.tests_variants(test_id, title, title_svg, explanation, explanation_svg, is_correct) values
         <foreach collection="entities" item="entity" separator=",">
-            (#{testId}, #{entity.title}, #{entity.explanation}, #{entity.correct})
+            (
+            #{testId},
+            #{entity.title},
+            #{entity.titleSvg},
+            #{entity.explanation},
+            #{entity.explanationSvg},
+            #{entity.correct}
+            )
         </foreach>
     </insert>
 
@@ -25,9 +32,11 @@
 
     <update id="update">
         update public.tests_variants
-        set title       = #{entity.title},
-            explanation = #{entity.explanation},
-            is_correct  = #{entity.correct}
+        set title           = #{entity.title},
+            title_svg       = #{entity.titleSvg},
+            explanation     = #{entity.explanation},
+            explanation_svg = #{entity.explanationSvg},
+            is_correct      = #{entity.correct}
         where id = #{entity.id}
           and test_id = #{testId}
     </update>

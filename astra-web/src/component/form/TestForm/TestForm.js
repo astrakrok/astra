@@ -12,6 +12,7 @@ import "./TestForm.css";
 import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 import Spacer from "../../Spacer/Spacer";
 import Editor from "../../Editor/Editor";
+import SvgContentChooser from "../../SvgContentChooser/SvgContentChooser";
 
 const TestForm = ({
     initialTest = defaultEmptyTest,
@@ -31,6 +32,18 @@ const TestForm = ({
             previous.variants[index] = {
                 ...previous.variants[index],
                 ...values
+            };
+            return {
+                ...previous
+            };
+        });
+    }
+
+    const updateVariantSvg = (index, property, content) => {
+        setTest(previous => {
+            previous.variants[index] = {
+                ...previous.variants[index],
+                [property]: content
             };
             return {
                 ...previous
@@ -71,14 +84,21 @@ const TestForm = ({
                     <div className="content">
                         <Input value={variant.title} placeholder="Варіант"
                                onChange={event => updateVariant({title: event.target.value}, index)}/>
+                        <Spacer height={10}/>
+                        <SvgContentChooser
+                            value={variant.titleSvg}
+                            setValue={content => updateVariantSvg(index, "titleSvg", content)}/>
                         <Spacer height={20}/>
                         <Editor
                             placeholder="Пояснення"
                             value={variant.explanation}
                             onChange={content => updateVariant({
                                 explanation: content
-                            }, index)}
-                        />
+                            }, index)}/>
+                        <Spacer height={10}/>
+                        <SvgContentChooser
+                            value={variant.explanationSvg}
+                            setValue={content => updateVariantSvg(index, "explanationSvg", content)}/>
                     </div>
                     <div className="s-hflex">
                         <div className="clickable equal-flex make-correct s-hflex-center"
@@ -116,11 +136,20 @@ const TestForm = ({
                 {
                     id: null,
                     title: "",
+                    titleSvg: null,
                     explanation: "",
+                    explanationSvg: null,
                     isCorrect: false
                 }
             ]
         })
+    }
+
+    const updateTestProperty = (property, value) => {
+        setTest(previvous => ({
+            ...previvous,
+            [property]: value
+        }));
     }
 
     const handleSubjectSaving = (subject, setPopupState) => {
@@ -155,12 +184,21 @@ const TestForm = ({
     return (
         <div className="TestForm s-vflex">
             <InfoHeader>Основна інформація</InfoHeader>
-            <Textarea placeholder="Питання" value={test.question}
+            <Textarea noMargin={true} placeholder="Питання" value={test.question}
                       onChange={event => setTest({...test, question: event.target.value})}/>
+            <Spacer height={10}/>
+            <SvgContentChooser
+                value={test.questionSvg}
+                setValue={content => updateTestProperty("questionSvg", content)}/>
+            <Spacer height={20}/>
             <Editor
                 placeholder="Коментар"
                 value={test.comment}
                 onChange={updateTestComment}/>
+            <Spacer height={10}/>
+            <SvgContentChooser
+                value={test.commentSvg}
+                setValue={content => updateTestProperty("commentSvg", content)}/>
             <Spacer height={20}/>
             <InfoHeader>Відповіді</InfoHeader>
             <div className="answers s-vflex">

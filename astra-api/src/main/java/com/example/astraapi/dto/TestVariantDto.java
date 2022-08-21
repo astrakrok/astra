@@ -19,9 +19,11 @@ public class TestVariantDto {
   @NotNull
   @TrimmedLength(min = 1)
   private String title;
+  private String titleSvg;
   @NotNull
   @TrimmedLength(min = 10)
   private String explanation;
+  private String explanationSvg;
   @JsonProperty("isCorrect")
   private boolean correct;
 }

@@ -4,14 +4,16 @@
 <mapper namespace="com.example.astraapi.repository.TestRepository">
     <insert id="save" parameterType="com.example.astraapi.entity.TestEntity" useGeneratedKeys="true"
             keyProperty="entity.id">
-        insert into public.tests(question, comment)
-        values (#{entity.question}, #{entity.comment})
+        insert into public.tests(question, comment, question_svg, comment_svg)
+        values (#{entity.question}, #{entity.comment}, #{entity.questionSvg}, #{entity.commentSvg})
     </insert>
 
     <update id="update">
         update public.tests
-        set question = #{entity.question},
-            comment  = #{entity.comment}
+        set question     = #{entity.question},
+            comment      = #{entity.comment},
+            question_svg = #{entity.questionSvg},
+            comment_svg  = #{entity.commentSvg}
         where id = #{entity.id}
     </update>
 
@@ -38,15 +40,19 @@
     </select>
 
     <select id="getDetailedTestById" resultMap="testFullDetail">
-        select t.id           as id,
-               t.question     as question,
-               t.comment      as comment,
-               tv.id          as variantId,
-               tv.title       as variantTitle,
-               tv.explanation as variantExplanation,
-               tv.is_correct  as variantIsCorrect,
-               s.id           as subjectId,
-               s.title        as subjectTitle
+        select t.id               as id,
+               t.question         as question,
+               t.question_svg     as questionSvg,
+               t.comment          as comment,
+               t.comment_svg      as commentSvg,
+               tv.id              as variantId,
+               tv.title           as variantTitle,
+               tv.title_svg       as variantTitleSvg,
+               tv.explanation     as variantExplanation,
+               tv.explanation_svg as variantExplanationSvg,
+               tv.is_correct      as variantIsCorrect,
+               s.id               as subjectId,
+               s.title            as subjectTitle
         from public.tests t
                  left join public.tests_variants tv on t.id = tv.test_id
                  left join public.tests_subjects ts on t.id = ts.test_id
@@ -60,9 +66,11 @@
         from (
                  select *
                  from (
-                          select distinct on (t.id) t.id       as id,
-                                                    t.question as question,
-                                                    t.comment  as comment
+                          select distinct on (t.id) t.id           as id,
+                                                    t.question     as question,
+                                                    t.question_svg as questionSvg,
+                                                    t.comment      as comment,
+                                                    t.comment_svg  as commentSvg
                           from public.testings
                                    left join public.testings_tests tt on testings.id = tt.testing_id
                                    left join public.tests t on t.id = tt.test_id
@@ -73,11 +81,13 @@
                  limit #{count}
              ) as subtable
                  join lateral (
-            select tv.id          as variantId,
-                   tv.title       as variantTitle,
-                   tv.test_id     as variantTestId,
-                   tv.explanation as variantExplanation,
-                   tv.is_correct  as variantIsCorrect
+            select tv.id              as variantId,
+                   tv.title           as variantTitle,
+                   tv.title_svg       as variantTitleSvg,
+                   tv.test_id         as variantTestId,
+                   tv.explanation     as variantExplanation,
+                   tv.explanation_svg as variantExplanationSvg,
+                   tv.is_correct      as variantIsCorrect
             from public.tests_variants tv
             where tv.test_id = subtable.id
             order by random()
@@ -89,9 +99,11 @@
         select
         t.id as id,
         t.question as question,
+        t.question_svg as questionSvg,
         tv.id as variantId,
         tv.test_id as variantTestId,
-        tv.title as variantTitle
+        tv.title as variantTitle,
+        tv.title_svg as variantTitleSvg
         from public.tests t
         left join public.tests_variants tv on t.id = tv.test_id
         where t.id in (
@@ -147,12 +159,16 @@
     <resultMap id="testFullDetail" type="com.example.astraapi.entity.TestFullDetailEntity">
         <id column="id" property="id"/>
         <result column="question" property="question"/>
+        <result column="questionSvg" property="questionSvg"/>
         <result column="comment" property="comment"/>
+        <result column="commentSvg" property="commentSvg"/>
 
         <collection property="variants" javaType="List" ofType="com.example.astraapi.entity.TestVariantEntity">
             <id column="variantId" property="id"/>
             <result column="variantTitle" property="title"/>
+            <result column="variantTitleSvg" property="titleSvg"/>
             <result column="variantExplanation" property="explanation"/>
+            <result column="variantExplanationSvg" property="explanationSvg"/>
             <result column="variantIsCorrect" property="correct"/>
         </collection>
 
@@ -170,13 +186,17 @@
     <resultMap id="testingTest" type="com.example.astraapi.entity.TestFullDetailEntity">
         <id column="id" property="id"/>
         <result column="question" property="question"/>
+        <result column="questionSvg" property="questionSvg"/>
         <result column="comment" property="comment"/>
+        <result column="commentSvg" property="commentSvg"/>
 
         <collection property="variants" javaType="List" ofType="com.example.astraapi.entity.TestVariantEntity">
             <id column="variantId" property="id"/>
             <result column="variantTestId" property="testId"/>
             <result column="variantTitle" property="title"/>
+            <result column="variantTitleSvg" property="titleSvg"/>
             <result column="variantExplanation" property="explanation"/>
+            <result column="variantExplanationSvg" property="explanationSvg"/>
             <result column="variantIsCorrect" property="correct"/>
         </collection>
     </resultMap>

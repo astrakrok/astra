@@ -15,7 +15,9 @@ import java.util.List;
 public class AnsweredTestDto {
   private Long id;
   private String question;
+  private String questionSvg;
   private String comment;
+  private String commentSvg;
   private Long userAnswer;
   private List<TestVariantDto> variants = new ArrayList<>();
 }

@@ -14,7 +14,9 @@ import java.util.List;
 public class TestFullDetailEntity {
   private Long id;
   private String question;
+  private String questionSvg;
   private String comment;
+  private String commentSvg;
   private List<TestVariantEntity> variants;
   private List<ExamEntity> exams;
   private List<SubjectEntity> subjects;

@@ -14,7 +14,9 @@ public class TrainingVariantDto {
   private Long id;
   private Long testId;
   private String title;
+  private String titleSvg;
   private String explanation;
+  private String explanationSvg;
   @JsonProperty("isCorrect")
   private boolean correct;
 }

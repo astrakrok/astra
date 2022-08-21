@@ -36,18 +36,22 @@
     </update>
 
     <select id="getDetailedAnswersByExaminationId" resultMap="detailedAnswer">
-        select ea.id             as id,
-               ea.examination_id as examinationId,
-               ea.variant_id     as variantId,
-               ea.test_id        as testId,
-               t.id              as testId,
-               t.question        as testQuestion,
-               t.comment         as testComment,
-               tv.id             as tvId,
-               tv.test_id        as tvTestId,
-               tv.title          as tvTitle,
-               tv.explanation    as tvExplanation,
-               tv.is_correct     as tvIsCorrect
+        select ea.id              as id,
+               ea.examination_id  as examinationId,
+               ea.variant_id      as variantId,
+               ea.test_id         as testId,
+               t.id               as testId,
+               t.question         as testQuestion,
+               t.question_svg     as testQuestionSvg,
+               t.comment          as testComment,
+               t.comment_svg      as testCommentSvg,
+               tv.id              as tvId,
+               tv.test_id         as tvTestId,
+               tv.title           as tvTitle,
+               tv.title_svg       as tvTitleSvg,
+               tv.explanation     as tvExplanation,
+               tv.explanation_svg as tvExplanationSvg,
+               tv.is_correct      as tvIsCorrect
         from public.examinations_answers ea
                  left join public.tests t on t.id = ea.test_id
                  left join public.tests_variants tv on tv.test_id = t.id
@@ -82,14 +86,18 @@
         <association property="test" javaType="com.example.astraapi.entity.TestFullDetailEntity">
             <id column="testId" property="id"/>
             <result column="testQuestion" property="question"/>
+            <result column="testQuestionSvg" property="questionSvg"/>
             <result column="testComment" property="comment"/>
+            <result column="testCommentSvg" property="commentSvg"/>
 
             <collection property="variants" javaType="java.util.List"
                         ofType="com.example.astraapi.entity.TestVariantEntity">
                 <id column="tvId" property="id"/>
                 <result column="tvTestId" property="testId"/>
                 <result column="tvTitle" property="title"/>
+                <result column="tvTitleSvg" property="titleSvg"/>
                 <result column="tvExplanation" property="explanation"/>
+                <result column="tvExplanationSvg" property="explanationSvg"/>
                 <result column="tvIsCorrect" property="correct"/>
             </collection>
         </association>

@@ -14,6 +14,7 @@ import java.util.List;
 public class ExaminationTestDto {
   private Long id;
   private String question;
+  private String questionSvg;
   private Long userAnswer;
   private List<ExaminationVariantDto> variants;
 }

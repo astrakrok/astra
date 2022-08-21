@@ -13,4 +13,5 @@ public class ExaminationVariantDto {
   private Long id;
   private Long testId;
   private String title;
+  private String titleSvg;
 }

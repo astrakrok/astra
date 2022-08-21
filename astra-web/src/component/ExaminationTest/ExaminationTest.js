@@ -6,6 +6,8 @@ import "./ExaminationTest.css";
 import ErrorForm from "../form/ErrorForm/ErrorForm";
 import PopupConsumer from "../../context/popup/PopupConsumer";
 import Tooltipped from "../Tooltipped/Tooltipped";
+import parse from "html-react-parser";
+import Spacer from "../Spacer/Spacer";
 
 const ExaminationTest = ({
                              test,
@@ -23,7 +25,11 @@ const ExaminationTest = ({
                 name={`variant${test.id}`}
                 checked={variant.id === test.userAnswer}
             >
-                {variant.title}
+                <div className="s-vflex">
+                    <span className="line-break">{variant.title}</span>
+                    <Spacer height={20}/>
+                    {parse(variant.titleSvg || "")}
+                </div>
             </RadioButton>
         </div>
     );
@@ -81,9 +87,15 @@ const ExaminationTest = ({
                 </div>
             </DisplayBoundary>
             <div className="question s-hflex">
-                <span className="text">
-                    {order == null ? "" : order + "."} {test.question}
-                </span>
+                <div className="s-vflex">
+                    <span className="text">
+                        {order == null ? "" : order + "."} {test.question}
+                    </span>
+                    <Spacer height={10}/>
+                    <div className="question-svg">
+                        {parse(test.questionSvg || "")}
+                    </div>
+                </div>
                 <span className="equal-flex"/>
                 <div>
                     <PopupConsumer>
