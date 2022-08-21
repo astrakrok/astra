@@ -34,10 +34,6 @@
     background-color: rgba(0, 0, 0, 0.2);
 }
 
-.TestForm .subjects {
-    margin-bottom: 20px;
-}
-
 .TestForm .subjects .delete-subject,
 .TestForm .exams .delete-exam {
     padding-left: 5px;
@@ -64,4 +60,8 @@
 .TestForm .subjects .add-subject i,
 .TestForm .exams .add-exam i {
     font-weight: bold;
+}
+
+.TestForm .collection {
+    margin-bottom: 0;
 }
