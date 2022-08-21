@@ -14,7 +14,9 @@ import java.util.List;
 public class TestFullDetailDto {
   private Long id;
   private String question;
+  private String questionSvg;
   private String comment;
+  private String commentSvg;
   private List<TestVariantDto> variants;
   private List<ResponseExamDto> exams;
   private List<ResponseSubjectDto> subjects;

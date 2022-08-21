@@ -4,5 +4,6 @@ export const message = {
     changeUserInfoSucceed: "Ваші дані були успішно змінені",
     propertyUpdateSucceed: "Оновлення відбулось успішно",
     resetPasswordEmail: "Слідуйте інструкціям у листі",
-    askForAdminDeletion: "Ви дійсно хочете видалити цього адміна? Його вже не можна буде повернути"
+    askForAdminDeletion: "Ви дійсно хочете видалити цього адміна? Його вже не можна буде повернути",
+    invalidFile: "Некорректний файл"
 }

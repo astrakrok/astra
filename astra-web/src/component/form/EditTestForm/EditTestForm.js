@@ -9,7 +9,9 @@ const EditTestForm = ({test}) => {
         const data = await updateTest({
             id: test.id,
             question: test.question,
+            questionSvg: test.questionSvg,
             comment: test.comment,
+            commentSvg: test.commentSvg,
             variants: test.variants,
             subjectIds: test.subjects.map(item => item.id)
         });

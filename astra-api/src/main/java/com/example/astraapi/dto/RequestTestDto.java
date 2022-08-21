@@ -24,6 +24,8 @@ public class RequestTestDto {
   @NotNull
   @TrimmedLength(min = 10)
   private String comment;
+  private String questionSvg;
+  private String commentSvg;
   @Size(min = 1)
   private List<TestVariantDto> variants = new ArrayList<>();
   @Size(min = 1)

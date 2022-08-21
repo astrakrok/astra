@@ -16,5 +16,7 @@ public class TestEntity {
   private Long id;
   private String question;
   private String comment;
+  private String questionSvg;
+  private String commentSvg;
   private List<TestVariantEntity> variants = new ArrayList<>();
 }

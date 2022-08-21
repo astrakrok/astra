@@ -13,6 +13,8 @@ public class TestVariantEntity {
   private Long id;
   private Long testId;
   private String title;
+  private String titleSvg;
   private String explanation;
+  private String explanationSvg;
   private boolean correct;
 }

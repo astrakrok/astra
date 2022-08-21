@@ -7,6 +7,7 @@ import PopupConsumer from "../../context/popup/PopupConsumer";
 import parse from "html-react-parser";
 import "./TrainingTest.css";
 import ErrorForm from "../form/ErrorForm/ErrorForm";
+import Spacer from "../Spacer/Spacer";
 
 const TrainingTest = ({
                           onAnswer = () => {
@@ -60,12 +61,27 @@ const TrainingTest = ({
                     disabled={!selectable()}
                     checked={selected === variant.id}
                 >
-                    <span className="line-break">{variant.title}</span>
+                    <div className="s-vflex">
+                        <span className="line-break">{variant.title}</span>
+                        <Spacer height={20}/>
+                        {parse(variant.titleSvg || "")}
+                    </div>
                 </RadioButton>
                 {
                     !selectable() ? (
+
                         <div className="explanation line-break">
-                            {parse(variant.explanation)}
+                            <div className="s-vflex">
+                                {parse(variant.explanation)}
+                                {
+                                    variant.explanationSvg ? (
+                                        <>
+                                            <Spacer height={20}/>
+                                            {parse(variant.explanationSvg || "")}
+                                        </>
+                                    ) : null
+                                }
+                            </div>
                         </div>
                     ) : null
                 }
@@ -76,9 +92,15 @@ const TrainingTest = ({
     return (
         <div className="TrainingTest" id={`test${testState.id}`}>
             <div className="question line-break s-hflex">
-                <span className="text">
-                    {order == null ? "" : order + "."} {testState.question}
-                </span>
+                <div className="s-vflex">
+                    <span className="text">
+                        {order == null ? "" : order + "."} {testState.question}
+                    </span>
+                    <Spacer height={10}/>
+                    <div className="question-svg">
+                        {parse(testState.questionSvg || "")}
+                    </div>
+                </div>
                 <span className="equal-flex"/>
                 <div>
                     <PopupConsumer>
@@ -99,6 +121,7 @@ const TrainingTest = ({
                 !selectable() ? (
                     <div className="comment line-break">
                         {parse(testState.comment)}
+                        {parse(testState.commentSvg || "")}
                     </div>
                 ) : null
             }

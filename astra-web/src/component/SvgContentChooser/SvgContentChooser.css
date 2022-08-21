@@ -1,0 +1,10 @@
+.SvgContentChooser .clear i {
+    font-size: 2rem;
+    color: var(--red-color);
+    opacity: 0.4;
+    transition: all 0.3s;
+}
+
+.SvgContentChooser .clear i:hover {
+    opacity: 1;
+}
