@@ -1,0 +1,15 @@
+.AdminsList .min-width {
+    width: 1%;
+    white-space: nowrap;
+}
+
+.AdminsList .delete i {
+    color: black;
+    opacity: 0.3;
+    transition: all 0.3s;
+}
+
+.AdminsList .delete i:hover {
+    color: var(--red-color);
+    opacity: 1;
+}

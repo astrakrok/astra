@@ -3,6 +3,7 @@ const adminSubjects = "/admin/subjects";
 const adminTests = "/admin/tests";
 const adminTestings = "/admin/testings";
 const adminExams = "/admin/exams";
+const allAdmins = "/admin/all";
 
 export const page = {
     home: "/",
@@ -20,6 +21,7 @@ export const page = {
     },
 
     admin: {
+        all: allAdmins,
         exams: {
             all: adminExams
         },

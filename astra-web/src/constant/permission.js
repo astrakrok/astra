@@ -44,6 +44,7 @@ export const permission = {
         userRole.user
     ],
     [page.admin]: admin,
+    [page.admin.all]: [userRole.superAdmin],
     [page.admin.specializations.all]: admin,
     [page.admin.specializations.create]: admin,
     [page.admin.subjects.all]: admin,

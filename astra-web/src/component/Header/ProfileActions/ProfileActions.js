@@ -43,6 +43,17 @@ const ProfileActions = () => {
                 {
                     ({userData}) => {
                         return isSuperAdmin(userData) ? (
+                            <Link to={page.admin.all}>
+                                <IconTitle icon="group" title="Керування адмінами"/>
+                            </Link>
+                        ) : null
+                    }
+                }
+            </AuthConsumer>,
+            <AuthConsumer>
+                {
+                    ({userData}) => {
+                        return isSuperAdmin(userData) ? (
                             <Link to={page.configuration}>
                                 <IconTitle icon="perm_data_setting" title="Конфігурація"/>
                             </Link>
