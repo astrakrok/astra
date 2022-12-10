@@ -13,5 +13,5 @@ import java.util.Set;
 @Configuration
 @ConfigurationProperties(prefix = "file")
 public class FileProperties {
-  Set<String> allowedExtensions = new HashSet<>();
+  private Set<String> allowedExtensions = new HashSet<>();
 }
