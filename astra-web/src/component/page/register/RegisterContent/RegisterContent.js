@@ -8,7 +8,6 @@ import IconTitle from "../../../IconTitle/IconTitle";
 import MessagePopupBody from "../../../popup-component/MessagePopupBody/MessagePopupBody";
 import LinkFooter from "../../../popup-component/LinkFooter/LinkFooter";
 import ErrorsArea from "../../../ErrorsArea/ErrorsArea";
-import SingleSelect from "../../../SingleSelect/SingleSelect";
 import {loadingStatus} from "../../../../constant/loading.status";
 import {page} from "../../../../constant/page";
 import {signUp} from "../../../../service/auth.service";
@@ -20,9 +19,7 @@ import {message} from "../../../../constant/message";
 import SocialAuthButton from "../../../SocialAuth/SocialAuthButton/SocialAuthButton";
 import {oauth2Provider} from "../../../../constant/oauth2.provider";
 
-const RegisterContent = ({
-                             specializations
-                         }) => {
+const RegisterContent = () => {
     const [formState, setFormState] = useState({loading: loadingStatus.inProgress, errors: {}});
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
@@ -31,9 +28,6 @@ const RegisterContent = ({
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [selectedSpecialization, setSelectedSpecialization] = useState(null);
-
-    const specializationsOptions = () => specializations.map(item => ({label: item.title, value: item.id}));
 
     const checkConfirmPassword = (password, confirmPassword) => {
         if (password === confirmPassword) {
@@ -71,8 +65,7 @@ const RegisterContent = ({
             school: school === "" ? null : school,
             email,
             password,
-            confirmPassword,
-            specializationId: selectedSpecialization ? selectedSpecialization.value : null
+            confirmPassword
         };
         
         const validationResult = V.validate(signUpData, signUpSchema);
@@ -110,16 +103,6 @@ const RegisterContent = ({
                     <Input type="email" className="full-width" placeholder="E-mail" value={email}
                            onChange={event => setEmail(event.target.value)}/>
                     <ErrorsArea errors={formState.errors.email}/>
-                </div>
-                <Spacer width={20}/>
-                <div className="specialization-select s-vflex equal-flex">
-                    <label>Спеціалізація</label>
-                    <SingleSelect
-                        className="select"
-                        placeholder="Оберіть спеціалізацію"
-                        options={specializationsOptions()}
-                        onChange={setSelectedSpecialization}
-                    />
                 </div>
             </div>
             <Spacer height={20}/>

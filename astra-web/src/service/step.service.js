@@ -12,6 +12,6 @@ export const getSpecializations = async stepId => {
 }
 
 export const create = async step => {
-    const response = await client.post(route.admin.steps.all, step);
+    const response = await client.post(route.admin.steps, step);
     return response.data;
 }
