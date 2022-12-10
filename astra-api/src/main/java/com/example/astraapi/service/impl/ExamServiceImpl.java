@@ -3,7 +3,7 @@ package com.example.astraapi.service.impl;
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.exam.RequestExamDto;
 import com.example.astraapi.dto.exam.ResponseExamDto;
-import com.example.astraapi.dto.specialization.SpecializationDto;
+import com.example.astraapi.dto.specialization.StepSpecializationDto;
 import com.example.astraapi.entity.ExamEntity;
 import com.example.astraapi.mapper.ExamMapper;
 import com.example.astraapi.repository.ExamRepository;
@@ -37,6 +37,13 @@ public class ExamServiceImpl implements ExamService {
   }
 
   @Override
+  public List<ResponseExamDto> getAll(Long specializationId) {
+    return examRepository.getAllBySpecializationId(specializationId).stream()
+        .map(examMapper::toDto)
+        .collect(Collectors.toList());
+  }
+
+  @Override
   public void delete(Long id) {
     examRepository.deleteById(id);
   }
@@ -48,7 +55,7 @@ public class ExamServiceImpl implements ExamService {
   }
 
   @Override
-  public List<SpecializationDto> getAvailableSpecializations(Long id) {
+  public List<StepSpecializationDto> getAvailableSpecializations(Long id) {
     return specializationService.getNotSelectedForExam(id);
   }
 }

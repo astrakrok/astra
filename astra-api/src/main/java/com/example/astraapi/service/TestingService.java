@@ -1,12 +1,13 @@
 package com.example.astraapi.service;
 
 import com.example.astraapi.dto.IdDto;
-import com.example.astraapi.dto.testing.RequestTestingDto;
-import com.example.astraapi.dto.testing.TestingDescriptionDto;
-import com.example.astraapi.dto.testing.TestingDto;
-import com.example.astraapi.dto.testing.TestingInfoDto;
 import com.example.astraapi.dto.test.TestingShortTestDto;
 import com.example.astraapi.dto.test.TestingTestQuestionDto;
+import com.example.astraapi.dto.testing.RequestTestingDto;
+import com.example.astraapi.dto.testing.TestingDescriptionDto;
+import com.example.astraapi.dto.testing.TestingDetailDto;
+import com.example.astraapi.dto.testing.TestingDto;
+import com.example.astraapi.dto.testing.TestingInfoDto;
 import com.example.astraapi.dto.testing.TestingWithSpecializationDto;
 
 import java.util.List;
@@ -25,5 +26,7 @@ public interface TestingService {
 
   TestingDescriptionDto getDescription();
 
-  List<TestingDto> getAvailableTestings();
+  List<TestingDetailDto> getAvailableTestings();
+
+  TestingDto getOne(Long examId, Long specializationId);
 }

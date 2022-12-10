@@ -5,6 +5,7 @@ const baseUrl = env.baseApiUrl;
 const getTestingsRoutes = () => {
     const prefix = `${baseUrl}/api/v1/testings`;
     return {
+        all: prefix,
         description: prefix + "/description",
         available: prefix + "/available",
         exams: {
@@ -78,7 +79,15 @@ export const route = {
         stepId: stepId => `${baseUrl}/api/v1/steps/${stepId}/specializations`
     },
     specializations: `${baseUrl}/api/v1/specializations/details`,
-    steps: `${baseUrl}/api/v1/steps`,
+    specializationExams: {
+        specializationId: specializationId => `${baseUrl}/api/v1/specializations/${specializationId}/exams`
+    },
+    steps: {
+        all: `${baseUrl}/api/v1/steps`,
+        id: id => ({
+            specializations: `${baseUrl}/api/v1/steps/${id}/specializations`
+        })
+    },
     subjects: `${baseUrl}/api/v1/subjects`,
     exams: `${baseUrl}/api/v1/exams`,
     tests: `${baseUrl}/api/v1/tests`,

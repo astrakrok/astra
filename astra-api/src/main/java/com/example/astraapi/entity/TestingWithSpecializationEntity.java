@@ -1,5 +1,6 @@
 package com.example.astraapi.entity;
 
+import com.example.astraapi.entity.projection.StepSpecializationProjection;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,5 +13,5 @@ import lombok.Setter;
 public class TestingWithSpecializationEntity {
   private Long id;
   private Long examId;
-  private SpecializationEntity specialization;
+  private StepSpecializationProjection specialization;
 }

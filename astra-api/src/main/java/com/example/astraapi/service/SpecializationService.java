@@ -16,5 +16,5 @@ public interface SpecializationService {
 
   List<SpecializationDto> getAll(Long stepId);
 
-  List<SpecializationDto> getNotSelectedForExam(Long examId);
+  List<StepSpecializationDto> getNotSelectedForExam(Long examId);
 }

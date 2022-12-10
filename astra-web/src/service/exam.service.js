@@ -6,6 +6,11 @@ export const getAll = async () => {
     return response.data;
 }
 
+export const getAllBySpecializationId = async specializationId => {
+    const response = await client.get(route.specializationExams.specializationId(specializationId));
+    return response.data;
+}
+
 export const create = async exam => {
     const response = await client.post(route.admin.exams.all, exam)
         .catch(() => ({

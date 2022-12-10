@@ -40,7 +40,7 @@ const ExamSpecializationsForm = ({exam}) => {
                 className="center auth-link s-vflex-center"
                 to={page.admin.testings.id(item.id).edit}
             >
-                {item.specialization.title}
+                {item.specialization.step.title} | {item.specialization.title}
             </Ref>
         </div>
     );

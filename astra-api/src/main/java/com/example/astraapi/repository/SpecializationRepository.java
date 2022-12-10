@@ -15,5 +15,5 @@ public interface SpecializationRepository {
 
   List<SpecializationEntity> getAllByStepId(@Param("stepId") Long stepId);
 
-  List<SpecializationEntity> getNotSelectedByExamId(@Param("examId") Long examId);
+  List<StepSpecializationProjection> getNotSelectedByExamId(@Param("examId") Long examId);
 }
