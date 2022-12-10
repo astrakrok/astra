@@ -1,11 +1,11 @@
 package com.example.astraapi.service.impl;
 
-import com.example.astraapi.dto.AnsweredTestDto;
-import com.example.astraapi.dto.ExaminationAnswerDto;
-import com.example.astraapi.dto.ExaminationResultDto;
-import com.example.astraapi.dto.ExaminationSearchDto;
-import com.example.astraapi.dto.ExaminationTestDto;
-import com.example.astraapi.dto.TestVariantDto;
+import com.example.astraapi.dto.test.AnsweredTestDto;
+import com.example.astraapi.dto.examination.ExaminationAnswerDto;
+import com.example.astraapi.dto.examination.ExaminationResultDto;
+import com.example.astraapi.dto.examination.ExaminationSearchDto;
+import com.example.astraapi.dto.test.ExaminationTestDto;
+import com.example.astraapi.dto.test.variant.TestVariantDto;
 import com.example.astraapi.entity.ExaminationAnswerEntity;
 import com.example.astraapi.entity.PropertyEntity;
 import com.example.astraapi.mapper.ExaminationAnswerMapper;

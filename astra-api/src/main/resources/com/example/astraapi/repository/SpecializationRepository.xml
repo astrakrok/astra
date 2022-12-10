@@ -4,22 +4,41 @@
 <mapper namespace="com.example.astraapi.repository.SpecializationRepository">
     <insert id="save" parameterType="com.example.astraapi.entity.SpecializationEntity" useGeneratedKeys="true"
             keyProperty="entity.id">
-        insert into public.specializations (title)
-        values (#{entity.title})
+        insert into public.specializations (step_id, title)
+        values (#{entity.stepId}, #{entity.title})
     </insert>
 
-    <select id="getAll" resultType="com.example.astraapi.entity.SpecializationEntity">
+    <select id="getAllWithSteps" resultMap="detailedSpecialization">
+        select sp.id    as specializationId,
+               sp.title as specializationTitle,
+               st.id    as stepId,
+               st.title as stepTitle
+        from public.specializations sp
+                 left join public.steps st on sp.step_id = st.id
+        order by st.title, sp.title
+    </select>
+
+    <select id="getAllByStepId" resultType="com.example.astraapi.entity.SpecializationEntity">
         select *
-        from public.specializations
+        from public.specializations s
+        where s.step_id = #{stepId}
     </select>
 
     <select id="getNotSelectedByExamId" resultType="com.example.astraapi.entity.SpecializationEntity">
         select *
         from public.specializations
-        where id not in (
-            select specialization_id
-            from public.testings
-            where exam_id = #{examId}
-        )
+        where id not in (select specialization_id
+                         from public.testings
+                         where exam_id = #{examId})
     </select>
+
+    <resultMap id="detailedSpecialization" type="com.example.astraapi.entity.projection.StepSpecializationProjection">
+        <id column="specializationId" property="id"/>
+        <result column="specializationTitle" property="title"/>
+
+        <association property="step" javaType="com.example.astraapi.entity.StepEntity">
+            <id column="stepId" property="id"/>
+            <result column="stepTitle" property="title"/>
+        </association>
+    </resultMap>
 </mapper>

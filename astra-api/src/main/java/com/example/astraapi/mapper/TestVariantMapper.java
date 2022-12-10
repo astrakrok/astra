@@ -1,8 +1,8 @@
 package com.example.astraapi.mapper;
 
-import com.example.astraapi.dto.ExaminationVariantDto;
-import com.example.astraapi.dto.TestVariantDto;
-import com.example.astraapi.dto.TrainingVariantDto;
+import com.example.astraapi.dto.examination.ExaminationVariantDto;
+import com.example.astraapi.dto.test.variant.TestVariantDto;
+import com.example.astraapi.dto.test.variant.TrainingVariantDto;
 import com.example.astraapi.entity.TestVariantEntity;
 import com.example.astraapi.mapper.qualifier.TitleQualifier;
 import org.mapstruct.Mapper;

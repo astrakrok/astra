@@ -1,10 +1,10 @@
 package com.example.astraapi.controller;
 
-import com.example.astraapi.dto.ExaminationAnswerDto;
-import com.example.astraapi.dto.ExaminationResultDto;
-import com.example.astraapi.dto.ExaminationSearchDto;
-import com.example.astraapi.dto.ExaminationStateDto;
-import com.example.astraapi.dto.ExaminationStatisticDto;
+import com.example.astraapi.dto.examination.ExaminationAnswerDto;
+import com.example.astraapi.dto.examination.ExaminationResultDto;
+import com.example.astraapi.dto.examination.ExaminationSearchDto;
+import com.example.astraapi.dto.examination.ExaminationStateDto;
+import com.example.astraapi.dto.examination.ExaminationStatisticDto;
 import com.example.astraapi.meta.Endpoint;
 import com.example.astraapi.service.ExaminationService;
 import lombok.RequiredArgsConstructor;

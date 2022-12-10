@@ -1,6 +1,11 @@
 package com.example.astraapi.mapper;
 
-import com.example.astraapi.dto.*;
+import com.example.astraapi.dto.test.ExaminationTestDto;
+import com.example.astraapi.dto.test.RequestTestDto;
+import com.example.astraapi.dto.test.TestFullDetailDto;
+import com.example.astraapi.dto.test.TestShortDetailDto;
+import com.example.astraapi.dto.test.TestingShortTestDto;
+import com.example.astraapi.dto.test.TrainingTestDto;
 import com.example.astraapi.entity.TestEntity;
 import com.example.astraapi.entity.TestFullDetailEntity;
 import com.example.astraapi.entity.TestShortDetailEntity;

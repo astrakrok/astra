@@ -1,6 +1,6 @@
 package com.example.astraapi.mapper;
 
-import com.example.astraapi.dto.ExaminationDto;
+import com.example.astraapi.dto.examination.ExaminationDto;
 import com.example.astraapi.entity.ExaminationEntity;
 import org.mapstruct.Mapper;
 

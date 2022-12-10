@@ -1,9 +1,9 @@
 package com.example.astraapi.service;
 
-import com.example.astraapi.dto.ExaminationAnswerDto;
-import com.example.astraapi.dto.ExaminationResultDto;
-import com.example.astraapi.dto.ExaminationSearchDto;
-import com.example.astraapi.dto.ExaminationTestDto;
+import com.example.astraapi.dto.examination.ExaminationAnswerDto;
+import com.example.astraapi.dto.examination.ExaminationResultDto;
+import com.example.astraapi.dto.examination.ExaminationSearchDto;
+import com.example.astraapi.dto.test.ExaminationTestDto;
 
 import java.util.List;
 

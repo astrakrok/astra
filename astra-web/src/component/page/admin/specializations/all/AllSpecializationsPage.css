@@ -10,3 +10,8 @@
 .AllSpecializationsPage .modal-content {
     padding: 20px;
 }
+
+.AllSpecializationsPage .plus-block .content {
+    font-weight: normal !important;
+    font-size: 150px !important;
+}

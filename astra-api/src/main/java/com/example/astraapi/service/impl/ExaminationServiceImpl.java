@@ -1,13 +1,13 @@
 package com.example.astraapi.service.impl;
 
 import com.example.astraapi.config.ExaminationProperties;
-import com.example.astraapi.dto.ExaminationAnswerDto;
-import com.example.astraapi.dto.ExaminationDto;
-import com.example.astraapi.dto.ExaminationResultDto;
-import com.example.astraapi.dto.ExaminationSearchDto;
-import com.example.astraapi.dto.ExaminationStateDto;
-import com.example.astraapi.dto.ExaminationStatisticDto;
-import com.example.astraapi.dto.ExaminationTestDto;
+import com.example.astraapi.dto.examination.ExaminationAnswerDto;
+import com.example.astraapi.dto.examination.ExaminationDto;
+import com.example.astraapi.dto.examination.ExaminationResultDto;
+import com.example.astraapi.dto.examination.ExaminationSearchDto;
+import com.example.astraapi.dto.examination.ExaminationStateDto;
+import com.example.astraapi.dto.examination.ExaminationStatisticDto;
+import com.example.astraapi.dto.test.ExaminationTestDto;
 import com.example.astraapi.entity.ExaminationEntity;
 import com.example.astraapi.mapper.ExaminationMapper;
 import com.example.astraapi.repository.ExaminationRepository;

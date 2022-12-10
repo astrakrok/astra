@@ -1,7 +1,7 @@
 package com.example.astraapi.controller;
 
 import com.example.astraapi.dto.TrainingSearchDto;
-import com.example.astraapi.dto.TrainingTestDto;
+import com.example.astraapi.dto.test.TrainingTestDto;
 import com.example.astraapi.meta.Endpoint;
 import com.example.astraapi.service.TestService;
 import lombok.RequiredArgsConstructor;

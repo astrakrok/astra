@@ -1,11 +1,12 @@
 import {useState} from "react";
-import {create} from "../../../service/specialization.service";
+import {createByStepId} from "../../../service/specialization.service";
 import Button from "../../Button/Button";
 import Input from "../../Input/Input";
 import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 import Spacer from "../../Spacer/Spacer";
 
 const CreateSpecializationForm = ({
+    stepId,
     onSuccess = () => {},
     onFailure = () => {}
 }) => {
@@ -14,7 +15,7 @@ const CreateSpecializationForm = ({
 
     const createSpecialization = async () => {
         setLoading(true);
-        const data = await create({
+        const data = await createByStepId(stepId, {
             title
         });
 

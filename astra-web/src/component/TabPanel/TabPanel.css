@@ -1,0 +1,38 @@
+.TabPanel {
+    width: 100%;
+}
+
+.TabPanel.primary .spacer {
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.TabPanel.primary .panel-tabs .panel-tab {
+    border: 2px solid var(--primary-color);
+}
+
+.TabPanel.secondary .spacer {
+    border-bottom: 2px solid var(--secondary-color);
+}
+
+.TabPanel.secondary .panel-tabs .panel-tab {
+    border: 2px solid var(--secondary-color);
+}
+
+.TabPanel .spacer {
+    width: 10px;   
+}
+
+.TabPanel .panel-tabs .panel-tab {
+    padding: 5px 20px;
+    font-size: 20px;
+    color: black;
+    cursor: pointer;
+}
+
+.TabPanel .panel-tabs .panel-tab:hover {
+    background-color: rgba(0, 0, 0, 0.11);
+}
+
+.TabPanel .panel-tabs .panel-tab.selected {
+    border-bottom: 2px solid transparent;
+}

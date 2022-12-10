@@ -11,5 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SpecializationEntity {
   private Long id;
+  private Long stepId;
   private String title;
 }

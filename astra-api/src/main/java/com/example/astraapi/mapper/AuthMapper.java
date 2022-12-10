@@ -1,6 +1,6 @@
 package com.example.astraapi.mapper;
 
-import com.example.astraapi.dto.SignUpDto;
+import com.example.astraapi.dto.auth.SignUpDto;
 import com.example.astraapi.dto.UserDto;
 import com.example.astraapi.mapper.qualifier.TitleQualifier;
 import com.example.astraapi.model.OAuth2UserInfo;

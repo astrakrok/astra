@@ -8,16 +8,21 @@
         values (#{entity.title});
     </insert>
 
-    <select id="getAll" resultType="com.example.astraapi.entity.SubjectDetailEntity" resultMap="subjects">
+    <select id="getAllSubjectsDetails" resultType="com.example.astraapi.entity.SubjectDetailEntity" resultMap="subjects">
         select sub.id     as subjectId,
                sub.title  as subjectTitle,
                spec.id    as specializationId,
-               spec.title as specializationTitle
+               spec.title as specializationTitle,
+               step.id    as stepId,
+               step.title as stepTitle
         from public.subjects sub
-                 join public.subjects_specializations ss
-                      on sub.id = ss.subject_id
-                 join public.specializations spec
-                      on spec.id = ss.specialization_id
+                 left join public.subjects_specializations ss
+                           on sub.id = ss.subject_id
+                 left join public.specializations spec
+                           on spec.id = ss.specialization_id
+                 left join public.steps step
+                           on spec.step_id = step.id
+        order by sub.title, step.title
     </select>
 
     <update id="update">
@@ -26,12 +31,17 @@
         where id = #{id}
     </update>
 
-    <resultMap type="com.example.astraapi.entity.SubjectDetailEntity" id="subjects">
+    <resultMap id="subjects" type="com.example.astraapi.entity.projection.SubjectDetailEntity">
         <id column="subjectId" property="id"/>
         <result column="subjectTitle" property="title"/>
-        <collection property="specializations" ofType="com.example.astraapi.entity.SpecializationEntity">
+        <collection property="specializations" ofType="com.example.astraapi.entity.projection.StepSpecializationProjection">
             <id column="specializationId" property="id"/>
             <result column="specializationTitle" property="title"/>
+
+            <association property="step" javaType="com.example.astraapi.entity.StepEntity">
+                <id column="stepId" property="id" />
+                <result column="stepTitle" property="title" />
+            </association>
         </collection>
     </resultMap>
 </mapper>

@@ -1,26 +1,43 @@
 import SpecializationItem from "../../../../SpecializationItem/SpecializationItem";
-import Button from "../../../../Button/Button";
 import Spacer from "../../../../Spacer/Spacer";
-import InfoText from "../../../../InfoText/InfoText";
 import "./AllSpecializationsPage.css";
 import withTitle from "../../../../hoc/withTitle/withTitle";
 import CreateSpecializationForm from "../../../../form/CreateSpecializationForm/CreateSpecializationForm";
 import LoaderBoundary from "../../../../LoaderBoundary/LoaderBoundary";
 import {useEffect, useState} from "react";
-import {getAll} from "../../../../../service/specialization.service";
+import {getAllByStepId as getSpecializations} from "../../../../../service/specialization.service";
+import {getAll as getSteps} from "../../../../../service/step.service";
 import PopupConsumer from "../../../../../context/popup/PopupConsumer";
+import TabPanel from "../../../../TabPanel/TabPanel";
+import CreateStepForm from "../../../../form/CreateStepForm/CreateStepForm";
+import ItemBlock from "../../../../ItemBlock/ItemBlock";
 
 const AllSpecializationsPage = () => {
+    const [steps, setSteps] = useState(null);
+    const [selectedStep, setSelectedStep] = useState(null);
     const [specializations, setSpecializations] = useState(null);
 
     const fetchSpecializations = async () => {
-        const data = await getAll();
+        if (selectedStep == null) {
+            return;
+        }
+        const data = await getSpecializations(steps[selectedStep].id);
         setSpecializations(data);
     }
 
+    const fetchSteps = async () => {
+        const data = await getSteps();
+        setSteps(data);
+        setSelectedStep(0);
+    }
+
+    useEffect(() => {
+        fetchSteps();
+    }, []);
+
     useEffect(() => {
         fetchSpecializations();
-    }, []);
+    }, [selectedStep]);
 
     const getSpecializationItem = (specialization, index) => {
         return (
@@ -30,7 +47,7 @@ const AllSpecializationsPage = () => {
         );
     };
 
-    const getModalBody = (setPopupState) => {
+    const getSpecializationModalBody = (setPopupState) => {
         const onSuccessSpecializationCreation = () => {
             setSpecializations(null);
             setPopupState();
@@ -38,44 +55,83 @@ const AllSpecializationsPage = () => {
         };
 
         return (
-            <CreateSpecializationForm onSuccess={onSuccessSpecializationCreation} />
+            <CreateSpecializationForm stepId={steps[selectedStep].id} onSuccess={onSuccessSpecializationCreation} />
         );
     }
 
-    const openPopup = setPopupState => {
+    const getStepModalBody = setPopupState => {
+        const onSuccessStepCreation = () => {
+            setSteps(null);
+            setPopupState();
+            fetchSteps();
+        };
+
+        return (
+            <CreateStepForm onSuccess={onSuccessStepCreation} />
+        );
+    }
+
+    const openSpecializationPopup = setPopupState => {
         setPopupState({
-            bodyGetter: getModalBody
+            bodyGetter: getSpecializationModalBody
         });
+    }
+
+    const openStepPopup = setPopupState => {
+        setPopupState({
+            bodyGetter: getStepModalBody
+        });
+    }
+
+    const getTabs = () => {
+        return steps == null ? [] : [...steps.map((step, index) => ({
+            ...step,
+            onClick: () => {
+                setSelectedStep(index);
+            }
+        })), {
+            title: (
+                <PopupConsumer>
+                    {
+                        ({setPopupState}) => (
+                            <div onClick={() => openStepPopup(setPopupState)}>+</div>
+                        )
+                    }
+                </PopupConsumer>
+            ),
+            passive: true
+        }];
     }
 
     return (
         <div className="AllSpecializationsPage container">
             <div className="row">
-                <div className="full-width center button">
-                    <PopupConsumer>
-                        {
-                            ({setPopupState}) =>  (
-                                <Button isFilled={true} onClick={() => openPopup(setPopupState)}>
-                                    Створити
-                                </Button>
-                            )
-                        }
-                    </PopupConsumer>
-                </div>
-                <Spacer height={40} />
+                <LoaderBoundary className="full-width center" condition={steps == null} size="medium">
+                    <TabPanel tabs={getTabs()} selected={setSelectedStep} />
+                </LoaderBoundary>
+                <Spacer height={20} />
                 <div className="center">
-                    <LoaderBoundary condition={specializations == null}>
+                    <LoaderBoundary condition={specializations == null && steps != null}>
                         <>
                             {
-                                (specializations && specializations.length > 0) ? (
-                                    specializations.map(getSpecializationItem)
-                                ) : (
-                                    <div className="center">
-                                        <InfoText>
-                                            Спеціалізації відсутні
-                                        </InfoText>
-                                    </div>
-                                )
+                                (specializations) ? (
+                                    <>
+                                        {
+                                            specializations.map(getSpecializationItem)
+                                        }
+                                        <div className="col s12 m6 l4 item">
+                                            <PopupConsumer>
+                                                {
+                                                    ({setPopupState}) => (
+                                                        <ItemBlock className="plus-block clickable" onClick={() => openSpecializationPopup(setPopupState)}>
+                                                            +
+                                                        </ItemBlock>
+                                                    )
+                                                }
+                                            </PopupConsumer>
+                                        </div>
+                                    </>
+                                ) : null
                             }
                         </>
                     </LoaderBoundary>

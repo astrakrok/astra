@@ -1,7 +1,7 @@
 package com.example.astraapi.service.impl;
 
 import com.example.astraapi.dto.IdDto;
-import com.example.astraapi.dto.RequestTestingTestDto;
+import com.example.astraapi.dto.test.RequestTestingTestDto;
 import com.example.astraapi.entity.TestingTestEntity;
 import com.example.astraapi.mapper.TestingTestMapper;
 import com.example.astraapi.repository.TestingTestRepository;
