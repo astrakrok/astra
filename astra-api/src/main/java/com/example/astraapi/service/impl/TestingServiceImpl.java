@@ -1,12 +1,13 @@
 package com.example.astraapi.service.impl;
 
 import com.example.astraapi.dto.IdDto;
-import com.example.astraapi.dto.testing.RequestTestingDto;
-import com.example.astraapi.dto.testing.TestingDescriptionDto;
-import com.example.astraapi.dto.testing.TestingDto;
-import com.example.astraapi.dto.testing.TestingInfoDto;
 import com.example.astraapi.dto.test.TestingShortTestDto;
 import com.example.astraapi.dto.test.TestingTestQuestionDto;
+import com.example.astraapi.dto.testing.RequestTestingDto;
+import com.example.astraapi.dto.testing.TestingDescriptionDto;
+import com.example.astraapi.dto.testing.TestingDetailDto;
+import com.example.astraapi.dto.testing.TestingDto;
+import com.example.astraapi.dto.testing.TestingInfoDto;
 import com.example.astraapi.dto.testing.TestingWithSpecializationDto;
 import com.example.astraapi.entity.TestingEntity;
 import com.example.astraapi.mapper.TestingMapper;
@@ -76,9 +77,15 @@ public class TestingServiceImpl implements TestingService {
   }
 
   @Override
-  public List<TestingDto> getAvailableTestings() {
+  public List<TestingDetailDto> getAvailableTestings() {
     return testingRepository.getAvailable().stream()
-        .map(testingMapper::toDto)
+        .map(testingMapper::toDetailDto)
         .collect(Collectors.toList());
+  }
+
+  @Override
+  public TestingDto getOne(Long examId, Long specializationId) {
+    TestingEntity testing = testingRepository.getByExamIdAndSpecializationId(examId, specializationId);
+    return testingMapper.toDto(testing);
   }
 }

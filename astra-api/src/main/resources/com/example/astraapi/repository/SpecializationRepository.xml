@@ -24,12 +24,16 @@
         where s.step_id = #{stepId}
     </select>
 
-    <select id="getNotSelectedByExamId" resultType="com.example.astraapi.entity.SpecializationEntity">
-        select *
-        from public.specializations
-        where id not in (select specialization_id
-                         from public.testings
-                         where exam_id = #{examId})
+    <select id="getNotSelectedByExamId" resultMap="detailedSpecialization">
+        select s.id       as specializationId,
+               s.title    as specializationTitle,
+               step.id    as stepId,
+               step.title as stepTitle
+        from public.specializations s
+                 left join public.steps step on s.step_id = step.id
+        where s.id not in (select t.specialization_id
+                         from public.testings t
+                         where t.exam_id = #{examId})
     </select>
 
     <resultMap id="detailedSpecialization" type="com.example.astraapi.entity.projection.StepSpecializationProjection">

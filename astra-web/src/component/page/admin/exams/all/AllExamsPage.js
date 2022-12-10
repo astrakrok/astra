@@ -31,6 +31,7 @@ const AllExamsPage = () => {
 
     const openSpecializationsListPopup = (setPopupState, exam) => {
         setPopupState({
+            size: "medium",
             bodyGetter: () => <ExamSpecializationsForm exam={exam}/>
         });
     }

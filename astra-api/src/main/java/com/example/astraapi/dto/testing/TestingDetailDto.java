@@ -1,5 +1,7 @@
 package com.example.astraapi.dto.testing;
 
+import com.example.astraapi.dto.exam.ResponseExamDto;
+import com.example.astraapi.dto.specialization.SpecializationDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,8 +11,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TestingDto {
+public class TestingDetailDto {
   private Long id;
-  private Long examId;
-  private Long specializationId;
+  private ResponseExamDto exam;
+  private SpecializationDto specialization;
 }

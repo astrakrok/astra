@@ -2,7 +2,7 @@ package com.example.astraapi.controller.admin;
 
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.exam.RequestExamDto;
-import com.example.astraapi.dto.specialization.SpecializationDto;
+import com.example.astraapi.dto.specialization.StepSpecializationDto;
 import com.example.astraapi.meta.Endpoint;
 import com.example.astraapi.service.ExamService;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +43,7 @@ public class AdminExamController {
   }
 
   @GetMapping("/{id}/specializations/available")
-  public List<SpecializationDto> getAvailableSpecializations(@PathVariable("id") Long id) {
+  public List<StepSpecializationDto> getAvailableSpecializations(@PathVariable("id") Long id) {
     return examService.getAvailableSpecializations(id);
   }
 }

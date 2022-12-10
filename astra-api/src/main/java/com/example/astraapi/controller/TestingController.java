@@ -1,6 +1,7 @@
 package com.example.astraapi.controller;
 
 import com.example.astraapi.dto.testing.TestingDescriptionDto;
+import com.example.astraapi.dto.testing.TestingDetailDto;
 import com.example.astraapi.dto.testing.TestingDto;
 import com.example.astraapi.dto.testing.TestingWithSpecializationDto;
 import com.example.astraapi.meta.Endpoint;
@@ -9,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -30,7 +32,15 @@ public class TestingController {
   }
 
   @GetMapping("/available")
-  public List<TestingDto> getAvailableTestings() {
+  public List<TestingDetailDto> getAvailableTestings() {
     return testingService.getAvailableTestings();
+  }
+
+  @GetMapping
+  public TestingDto getOne(
+      @RequestParam("examId") Long examId,
+      @RequestParam("specializationId") Long specializationId
+  ) {
+    return testingService.getOne(examId, specializationId);
   }
 }

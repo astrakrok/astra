@@ -10,31 +10,59 @@ import InfoHeader from "../../InfoHeader/InfoHeader";
 import InfoBlock from "../../InfoBlock/InfoBlock";
 
 const SelectTestingOptionsForm = ({
-                                      exams,
-                                      onExamSelected = () => [],
-                                      onSelected = () => null,
-                                      descriptions,
-                                      onSelect = () => {
-                                      }
-                                  }) => {
-    const [specializations, setSpecializations] = useState(null);
-    const [selectedExam, setSelectedExam] = useState(null);
+    stepsList,
+    onStepSelected = () => {},
+    specializationsList,
+    onSpecializationSelected = () => {},
+    examsList,
+    onSelected = () => null,
+    descriptions,
+    onSelect = () => {}
+}) => {
+    const [steps, setSteps] = useState(stepsList);
+    const [selectedStep, setSelectedStep] = useState(null);
+    const [specializations, setSpecializations] = useState(specializationsList);
     const [selectedSpecialization, setSelectedSpecialization] = useState(null);
+    const [exams, setExams] = useState(examsList);
+    const [selectedExam, setSelectedExam] = useState(null);
     const [mode, setMode] = useState();
     const [count, setCount] = useState();
 
     useEffect(() => {
-        setSelectedSpecialization(null);
-        if (!selectedExam) {
-            return;
+        if (selectedStep) {
+            onStepSelected(selectedStep.value);
         }
-        setSpecializations(onExamSelected(selectedExam.value));
-    }, [selectedExam]);
+    }, [selectedStep]);
 
-    const selected = event => {
+    useEffect(() => {
+        if (selectedSpecialization) {
+            onSpecializationSelected(selectedSpecialization.value);
+        }
+    }, [selectedSpecialization]);
+
+    useEffect(() => {
+        setSteps(stepsList);
+        setSelectedStep(null);
+        setSelectedSpecialization(null);
+        setSelectedExam(null);
+    }, [stepsList]);
+
+    useEffect(() => {
+        setSelectedSpecialization(null);
+        setSelectedExam(null);
+        setSpecializations(specializationsList);
+    }, [specializationsList]);
+
+    useEffect(() => {
+        setExams(examsList);
+        setSelectedExam(null);
+    }, [examsList]);
+
+    const selected = async event => {
         event.preventDefault();
+        const testing = await onSelected(selectedExam.value, selectedSpecialization.value);
         const options = {
-            testingId: onSelected(selectedExam.value, selectedSpecialization.value),
+            testingId: testing ? testing.id : null,
             mode: mode.value
         };
         if (options.mode === "training") {
@@ -43,22 +71,48 @@ const SelectTestingOptionsForm = ({
         onSelect(options);
     }
 
-    const isValidOptions = () => {
-        const isValidMainData = [selectedSpecialization, mode].filter(item => item == null).length === 0;
-        return isValidMainData && (mode.value === "examination" || (mode.value === "training" && count != null));
-    }
-
-    const getSpecializationsOptions = () => {
-        return specializations == null ? [] : specializations.map(item => ({
-            label: item.title,
-            value: item.id
+    const getStepsOptions = () => {
+        return steps == null ? [] : steps.map(step => ({
+            value: step.id,
+            label: step.title
         }));
     }
 
+    const updateStep = newStep => {
+        if (!newStep && !selectedStep) {
+            return;
+        } else if (newStep && selectedStep) {
+            if (newStep.value !== selectedStep.value) {
+                setSelectedStep(newStep);
+            }
+            return;
+        }
+        setSelectedStep(newStep);
+    }
+
+    const getSpecializationsOptions = () => {
+        return specializations == null ? [] : specializations.map(specialization => ({
+            value: specialization.id,
+            label: specialization.title
+        }));
+    }
+
+    const updateSpecialization = newSpecialization => {
+        if (!newSpecialization && !selectedSpecialization) {
+            return;
+        } else if (newSpecialization && selectedSpecialization) {
+            if (newSpecialization.value !== selectedSpecialization.value) {
+                setSelectedSpecialization(newSpecialization);
+            }
+            return;
+        }
+        setSelectedSpecialization(newSpecialization);
+    }
+
     const getExamsOptions = () => {
-        return exams == null ? [] : exams.map(item => ({
-            label: item.title,
-            value: item.id
+        return exams == null ? [] : exams.map(exam => ({
+            value: exam.id,
+            label: exam.title
         }));
     }
 
@@ -72,6 +126,14 @@ const SelectTestingOptionsForm = ({
             return;
         }
         setSelectedExam(newExam);
+    }
+
+    const isValidOptions = () => {
+        const isValidMainData = [
+            selectedExam,
+            mode
+        ].filter(item => item == null).length === 0;
+        return isValidMainData && (mode.value === "examination" || (mode.value === "training" && count != null));
     }
 
     return (
@@ -102,15 +164,30 @@ const SelectTestingOptionsForm = ({
                             </InfoHeader>
                         </div>
                         <SingleSelect
-                            placeholder="Виберіть рік"
-                            options={getExamsOptions()}
-                            onChange={updateExam}/>
-                        <Spacer height={20}/>
-                        <SingleSelect
-                            placeholder="Виберіть спеціалізацію"
-                            options={getSpecializationsOptions()}
-                            onChange={setSelectedSpecialization}
-                            value={selectedSpecialization}/>
+                            value={selectedStep}
+                            placeholder="Виберіть КРОК"
+                            options={getStepsOptions()}
+                            onChange={updateStep}/>
+                        <DisplayBoundary condition={selectedStep != null}>
+                            <>
+                                <Spacer height={20}/>
+                                <SingleSelect
+                                    value={selectedSpecialization}
+                                    placeholder="Виберіть Спеціалізацю"
+                                    options={getSpecializationsOptions()}
+                                    onChange={updateSpecialization}/>
+                            </>
+                        </DisplayBoundary>
+                        <DisplayBoundary condition={selectedSpecialization != null}>
+                            <>
+                                <Spacer height={20}/>
+                                <SingleSelect
+                                    value={selectedExam}
+                                    placeholder="Виберіть рік"
+                                    options={getExamsOptions()}
+                                    onChange={updateExam}/>
+                            </>
+                        </DisplayBoundary>
                         <Spacer height={40}/>
                         <div className="s-hflex-center">
                             <Button isFilled={true} disabled={!isValidOptions()} isSubmit="submit">

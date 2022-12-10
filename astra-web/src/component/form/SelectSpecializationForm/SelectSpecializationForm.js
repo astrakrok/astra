@@ -10,7 +10,7 @@ const SelectSpecializationForm = ({
                                       }
                                   }) => {
     const [selected, setSelected] = useState({});
-    const options = specializations.map(item => ({label: item.title, value: item.id}));
+    const options = specializations.map(item => ({label: `${item.step.title} | ${item.title}`, value: item.id}));
 
     const confirmed = () => {
         onSelect(selected.value);

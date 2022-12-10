@@ -49,7 +49,7 @@ public class SpecializationServiceImpl implements SpecializationService {
   }
 
   @Override
-  public List<SpecializationDto> getNotSelectedForExam(Long examId) {
+  public List<StepSpecializationDto> getNotSelectedForExam(Long examId) {
     return repository.getNotSelectedByExamId(examId).stream()
         .map(mapper::toDto)
         .collect(Collectors.toList());

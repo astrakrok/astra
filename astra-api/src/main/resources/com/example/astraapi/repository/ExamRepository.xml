@@ -7,9 +7,16 @@
         insert into public.exams (title)
         values (#{entity.title})
     </insert>
+
     <select id="getAll" resultType="com.example.astraapi.entity.ExamEntity">
         select *
         from public.exams
+    </select>
+
+    <select id="getAllBySpecializationId" resultType="com.example.astraapi.entity.ExamEntity">
+        select *
+        from public.exams e
+        where e.id in (select t.exam_id from public.testings t where t.specialization_id = #{specializationId})
     </select>
 
     <delete id="deleteById">
@@ -23,4 +30,14 @@
         set title = #{entity.title}
         where id = #{id}
     </update>
+
+    <select id="getAllByStepId" resultType="com.example.astraapi.entity.ExamEntity">
+        select *
+        from public.exams e
+        where e.id in (select t.exam_id
+                       from public.testings t
+                       where t.specialization_id in (select s.id
+                                                     from public.specializations s
+                                                     where s.step_id = #{stepId}))
+    </select>
 </mapper>

@@ -12,9 +12,13 @@ public interface ExamRepository {
 
   List<ExamEntity> getAll();
 
+  List<ExamEntity> getAllBySpecializationId(@Param("specializationId") Long specializationId);
+
   void deleteById(@Param("id") Long id);
 
   void updateById(
       @Param("id") Long id,
       @Param("entity") ExamEntity examEntity);
+
+  List<ExamEntity> getAllByStepId(@Param("stepId") Long stepId);
 }

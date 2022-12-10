@@ -21,4 +21,8 @@ public interface TestingRepository {
   List<TestingTestQuestionEntity> getTestingTestsByTestingId(@Param("testingId") Long testingId);
 
   List<TestingEntity> getAvailable();
+
+  TestingEntity getByExamIdAndSpecializationId(
+      @Param("examId") Long examId,
+      @Param("specializationId") Long specializationId);
 }

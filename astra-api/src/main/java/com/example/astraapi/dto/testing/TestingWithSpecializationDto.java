@@ -1,6 +1,6 @@
 package com.example.astraapi.dto.testing;
 
-import com.example.astraapi.dto.specialization.SpecializationDto;
+import com.example.astraapi.dto.specialization.StepSpecializationDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,5 +13,5 @@ import lombok.Setter;
 public class TestingWithSpecializationDto {
   private Long id;
   private Long examId;
-  private SpecializationDto specialization;
+  private StepSpecializationDto specialization;
 }
