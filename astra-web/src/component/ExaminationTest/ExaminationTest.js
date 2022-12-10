@@ -10,13 +10,11 @@ import parse from "html-react-parser";
 import Spacer from "../Spacer/Spacer";
 
 const ExaminationTest = ({
-                             test,
-                             order = null,
-                             onRetry = () => {
-                             },
-                             onSelect = () => {
-                             }
-                         }) => {
+    test,
+    order = null,
+    onRetry = () => {},
+    onSelect = () => {}
+}) => {
     const renderVariant = variant => (
         <div className="variant" key={variant.id}>
             <RadioButton

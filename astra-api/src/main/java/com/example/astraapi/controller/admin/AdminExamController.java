@@ -1,8 +1,8 @@
 package com.example.astraapi.controller.admin;
 
 import com.example.astraapi.dto.IdDto;
-import com.example.astraapi.dto.RequestExamDto;
-import com.example.astraapi.dto.SpecializationDto;
+import com.example.astraapi.dto.exam.RequestExamDto;
+import com.example.astraapi.dto.specialization.SpecializationDto;
 import com.example.astraapi.meta.Endpoint;
 import com.example.astraapi.service.ExamService;
 import lombok.RequiredArgsConstructor;

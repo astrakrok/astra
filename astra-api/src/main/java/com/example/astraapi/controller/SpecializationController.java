@@ -1,6 +1,6 @@
 package com.example.astraapi.controller;
 
-import com.example.astraapi.dto.SpecializationDto;
+import com.example.astraapi.dto.specialization.StepSpecializationDto;
 import com.example.astraapi.meta.Endpoint;
 import com.example.astraapi.service.SpecializationService;
 import lombok.RequiredArgsConstructor;
@@ -16,8 +16,8 @@ import java.util.List;
 public class SpecializationController {
   private final SpecializationService service;
 
-  @GetMapping
-  public List<SpecializationDto> getAll() {
+  @GetMapping("/details")
+  public List<StepSpecializationDto> getAll() {
     return service.getAll();
   }
 }

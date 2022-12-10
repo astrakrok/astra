@@ -74,6 +74,9 @@ public class SecurityConfig {
                 HttpMethod.GET,
                 "/api/v1/exams",
                 "/api/v1/specializations",
+                "/api/v1/specializations/**",
+                "/api/v1/steps",
+                "/api/v1/steps/*/specializations",
                 "/api/v1/subjects",
                 "/api/v1/testings/exams/*")
             .hasAnyAuthority(authorized)

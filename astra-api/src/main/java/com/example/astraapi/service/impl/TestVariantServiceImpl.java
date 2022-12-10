@@ -1,6 +1,6 @@
 package com.example.astraapi.service.impl;
 
-import com.example.astraapi.dto.TestVariantDto;
+import com.example.astraapi.dto.test.variant.TestVariantDto;
 import com.example.astraapi.entity.TestVariantEntity;
 import com.example.astraapi.mapper.TestVariantMapper;
 import com.example.astraapi.model.Change;

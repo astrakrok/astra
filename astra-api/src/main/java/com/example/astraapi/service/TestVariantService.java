@@ -1,6 +1,6 @@
 package com.example.astraapi.service;
 
-import com.example.astraapi.dto.TestVariantDto;
+import com.example.astraapi.dto.test.variant.TestVariantDto;
 
 import java.util.Collection;
 

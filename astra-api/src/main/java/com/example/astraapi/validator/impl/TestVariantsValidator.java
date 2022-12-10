@@ -1,6 +1,6 @@
 package com.example.astraapi.validator.impl;
 
-import com.example.astraapi.dto.TestVariantDto;
+import com.example.astraapi.dto.test.variant.TestVariantDto;
 import com.example.astraapi.exception.InvalidCorrectCountException;
 import com.example.astraapi.validator.Validator;
 import org.springframework.stereotype.Component;

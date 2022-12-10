@@ -1,9 +1,9 @@
 package com.example.astraapi.service.impl;
 
 import com.example.astraapi.dto.IdDto;
-import com.example.astraapi.dto.RequestExamDto;
-import com.example.astraapi.dto.ResponseExamDto;
-import com.example.astraapi.dto.SpecializationDto;
+import com.example.astraapi.dto.exam.RequestExamDto;
+import com.example.astraapi.dto.exam.ResponseExamDto;
+import com.example.astraapi.dto.specialization.SpecializationDto;
 import com.example.astraapi.entity.ExamEntity;
 import com.example.astraapi.mapper.ExamMapper;
 import com.example.astraapi.repository.ExamRepository;

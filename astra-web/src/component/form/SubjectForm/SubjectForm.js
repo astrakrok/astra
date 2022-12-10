@@ -35,7 +35,7 @@ const SubjectForm = ({
     const getSpecializationOptions = () => {
         return (specializations) ? specializations.map(item => ({
             value: item.id,
-            label: item.title
+            label: item.step.title + " | " + item.title
         })) : [];
     }
 

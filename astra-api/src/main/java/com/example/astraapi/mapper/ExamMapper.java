@@ -1,7 +1,7 @@
 package com.example.astraapi.mapper;
 
-import com.example.astraapi.dto.RequestExamDto;
-import com.example.astraapi.dto.ResponseExamDto;
+import com.example.astraapi.dto.exam.RequestExamDto;
+import com.example.astraapi.dto.exam.ResponseExamDto;
 import com.example.astraapi.entity.ExamEntity;
 import com.example.astraapi.mapper.qualifier.TitleQualifier;
 import org.mapstruct.Mapper;

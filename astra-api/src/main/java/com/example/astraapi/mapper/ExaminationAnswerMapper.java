@@ -1,7 +1,7 @@
 package com.example.astraapi.mapper;
 
-import com.example.astraapi.dto.AnsweredTestDto;
-import com.example.astraapi.dto.ExaminationAnswerDto;
+import com.example.astraapi.dto.test.AnsweredTestDto;
+import com.example.astraapi.dto.examination.ExaminationAnswerDto;
 import com.example.astraapi.entity.ExaminationAnswerEntity;
 import com.example.astraapi.entity.TestFullDetailEntity;
 import org.mapstruct.Mapper;

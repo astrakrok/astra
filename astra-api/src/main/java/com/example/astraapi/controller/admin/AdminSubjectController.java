@@ -1,8 +1,8 @@
 package com.example.astraapi.controller.admin;
 
 import com.example.astraapi.dto.IdDto;
-import com.example.astraapi.dto.RequestSubjectDto;
-import com.example.astraapi.dto.ResponseSubjectDto;
+import com.example.astraapi.dto.subject.RequestSubjectDto;
+import com.example.astraapi.dto.subject.ResponseSubjectDto;
 import com.example.astraapi.meta.Endpoint;
 import com.example.astraapi.service.SubjectService;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +28,9 @@ public class AdminSubjectController {
     return service.save(requestSubjectDto);
   }
 
-  @GetMapping
+  @GetMapping("/details")
   public List<ResponseSubjectDto> getAll() {
-    return service.getAll();
+    return service.getAllSubjectsDetails();
   }
 
   @PutMapping("/{id}")

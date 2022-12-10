@@ -1,13 +1,13 @@
 package com.example.astraapi.controller;
 
-import com.example.astraapi.dto.ChangePasswordDto;
+import com.example.astraapi.dto.auth.ChangePasswordDto;
 import com.example.astraapi.dto.EmailDto;
 import com.example.astraapi.dto.IdDto;
-import com.example.astraapi.dto.LoginDto;
-import com.example.astraapi.dto.OAuth2CodeDto;
-import com.example.astraapi.dto.RefreshTokenDto;
-import com.example.astraapi.dto.SignUpDto;
-import com.example.astraapi.dto.TokenDto;
+import com.example.astraapi.dto.auth.LoginDto;
+import com.example.astraapi.dto.auth.OAuth2CodeDto;
+import com.example.astraapi.dto.auth.RefreshTokenDto;
+import com.example.astraapi.dto.auth.SignUpDto;
+import com.example.astraapi.dto.auth.TokenDto;
 import com.example.astraapi.dto.UrlDto;
 import com.example.astraapi.meta.Endpoint;
 import com.example.astraapi.meta.OAuth2Connection;

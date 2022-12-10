@@ -52,9 +52,18 @@ const getAdminRoutes = () => {
                 }
             }
         },
+        stepSpecializations: {
+            stepId: stepId => ({
+                all: prefix + `/steps/${stepId}/specializations`
+            })
+        },
         properties: prefix + "/properties",
-        subjects: prefix + "/subjects",
+        subjects: {
+            all: prefix + "/subjects",
+            details: prefix + "/subjects/details",
+        },
         specializations: prefix + "/specializations",
+        steps: prefix + "/steps",
         tests: prefix + "/tests"
     };
 }
@@ -65,7 +74,11 @@ export const route = {
     signUp: `${baseUrl}/api/v1/auth/signup`,
     auth: `${baseUrl}/api/v1/auth`,
     oauth2: `${baseUrl}/api/v1/auth/oauth2`,
-    specializations: `${baseUrl}/api/v1/specializations`,
+    stepSpecializations: {
+        stepId: stepId => `${baseUrl}/api/v1/steps/${stepId}/specializations`
+    },
+    specializations: `${baseUrl}/api/v1/specializations/details`,
+    steps: `${baseUrl}/api/v1/steps`,
     subjects: `${baseUrl}/api/v1/subjects`,
     exams: `${baseUrl}/api/v1/exams`,
     tests: `${baseUrl}/api/v1/tests`,

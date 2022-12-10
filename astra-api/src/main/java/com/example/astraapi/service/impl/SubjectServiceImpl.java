@@ -1,8 +1,8 @@
 package com.example.astraapi.service.impl;
 
 import com.example.astraapi.dto.IdDto;
-import com.example.astraapi.dto.RequestSubjectDto;
-import com.example.astraapi.dto.ResponseSubjectDto;
+import com.example.astraapi.dto.subject.RequestSubjectDto;
+import com.example.astraapi.dto.subject.ResponseSubjectDto;
 import com.example.astraapi.entity.SubjectEntity;
 import com.example.astraapi.mapper.SubjectMapper;
 import com.example.astraapi.repository.SubjectRepository;
@@ -33,8 +33,8 @@ public class SubjectServiceImpl implements SubjectService {
   }
 
   @Override
-  public List<ResponseSubjectDto> getAll() {
-    return repository.getAll().stream()
+  public List<ResponseSubjectDto> getAllSubjectsDetails() {
+    return repository.getAllSubjectsDetails().stream()
         .map(mapper::toDto)
         .collect(Collectors.toList());
   }

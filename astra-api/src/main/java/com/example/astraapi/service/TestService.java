@@ -1,6 +1,14 @@
 package com.example.astraapi.service;
 
 import com.example.astraapi.dto.*;
+import com.example.astraapi.dto.examination.ExaminationSearchDto;
+import com.example.astraapi.dto.test.ExaminationTestDto;
+import com.example.astraapi.dto.test.RequestTestDto;
+import com.example.astraapi.dto.test.TestFullDetailDto;
+import com.example.astraapi.dto.test.TestShortDetailDto;
+import com.example.astraapi.dto.test.TestingShortTestDto;
+import com.example.astraapi.dto.TrainingSearchDto;
+import com.example.astraapi.dto.test.TrainingTestDto;
 import com.example.astraapi.model.Page;
 import com.example.astraapi.model.Pageable;
 

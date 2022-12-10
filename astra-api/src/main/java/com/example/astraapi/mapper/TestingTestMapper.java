@@ -1,6 +1,6 @@
 package com.example.astraapi.mapper;
 
-import com.example.astraapi.dto.RequestTestingTestDto;
+import com.example.astraapi.dto.test.RequestTestingTestDto;
 import com.example.astraapi.entity.TestingTestEntity;
 import org.mapstruct.Mapper;
 

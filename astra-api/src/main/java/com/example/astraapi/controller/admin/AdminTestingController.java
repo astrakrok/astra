@@ -1,11 +1,11 @@
 package com.example.astraapi.controller.admin;
 
 import com.example.astraapi.dto.IdDto;
-import com.example.astraapi.dto.RequestTestingDto;
-import com.example.astraapi.dto.TestingInfoDto;
-import com.example.astraapi.dto.TestingShortTestDto;
-import com.example.astraapi.dto.TestingTestQuestionDto;
-import com.example.astraapi.dto.TestingWithSpecializationDto;
+import com.example.astraapi.dto.testing.RequestTestingDto;
+import com.example.astraapi.dto.testing.TestingInfoDto;
+import com.example.astraapi.dto.test.TestingShortTestDto;
+import com.example.astraapi.dto.test.TestingTestQuestionDto;
+import com.example.astraapi.dto.testing.TestingWithSpecializationDto;
 import com.example.astraapi.meta.Endpoint;
 import com.example.astraapi.service.TestingService;
 import lombok.RequiredArgsConstructor;

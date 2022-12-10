@@ -1,6 +1,6 @@
 package com.example.astraapi.controller;
 
-import com.example.astraapi.dto.ResponseExamDto;
+import com.example.astraapi.dto.exam.ResponseExamDto;
 import com.example.astraapi.meta.Endpoint;
 import com.example.astraapi.service.ExamService;
 import lombok.RequiredArgsConstructor;
