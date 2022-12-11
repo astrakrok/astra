@@ -13,7 +13,7 @@ import java.time.ZoneOffset;
 public class TimeZoneServiceImpl implements TimeZoneService {
   @Override
   public LocalDateTime toUtc(LocalDateTime dateTime) {
-    return dateTime
+    return dateTime == null ? null : dateTime
         .atZone(ZoneId.systemDefault())
         .withZoneSameInstant(ZoneOffset.UTC)
         .toLocalDateTime();

@@ -12,6 +12,9 @@ public class TransactionServiceImpl implements TransactionService {
   @Override
   @Transactional(propagation = Propagation.REQUIRES_NEW)
   public void execute(Runnable runnable) {
+    if (runnable == null) {
+      return;
+    }
     runnable.run();
   }
 }

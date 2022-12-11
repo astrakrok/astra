@@ -12,6 +12,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriBuilder;
 
 import java.net.URI;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 @RequiredArgsConstructor
@@ -41,10 +43,14 @@ public class TelegramClientImpl implements TelegramClient {
 
   private URI getRegularMessageUri(UriBuilder uriBuilder, MessageDto messageDto) {
     String uri = "/bot" + telegramProperties.getApiToken() + "/sendMessage";
+    String text = buildMessage(messageDto);
+    if (text.isEmpty()) {
+      throw new IllegalArgumentException("Invalid message");
+    }
     return uriBuilder
         .path(uri)
         .queryParam("parse_mode", "markdown")
-        .queryParam("text", buildMessage(messageDto))
+        .queryParam("text", text)
         .queryParam("chat_id", telegramProperties.getChatId())
         .build();
   }
@@ -66,6 +72,10 @@ public class TelegramClientImpl implements TelegramClient {
   }
 
   private String buildMessage(MessageDto messageDto) {
-    return "*" + messageDto.getTitle() + "*\n" + messageDto.getText();
+    String title = messageDto.getTitle() == null ? "" : "*" + messageDto.getTitle() + "*";
+    String text = messageDto.getText() == null ? "" : messageDto.getText();
+    return Stream.of(title, text)
+        .filter(value -> !value.isEmpty())
+        .collect(Collectors.joining("\n"));
   }
 }

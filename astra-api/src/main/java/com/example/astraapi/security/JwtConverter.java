@@ -6,6 +6,7 @@ import com.example.astraapi.model.UserPrincipal;
 import com.example.astraapi.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
@@ -21,7 +22,8 @@ public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken>
   @Override
   public AbstractAuthenticationToken convert(Jwt source) {
     String email = source.getClaim("https://astrakrok.com/email");
-    UserDto user = userService.findUserWithRolesByEmail(email).orElse(null);
+    UserDto user = userService.findUserWithRolesByEmail(email)
+        .orElseThrow(() -> new AccessDeniedException("User not found"));
     List<RoleAuthority> grantedAuthorities = getGrantedAuthorities(user);
     return new UserPrincipal(user, grantedAuthorities);
   }

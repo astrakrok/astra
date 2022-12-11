@@ -23,6 +23,7 @@ import com.example.astraapi.dto.auth.SignUpDto;
 import com.example.astraapi.dto.auth.TokenDto;
 import com.example.astraapi.exception.AlreadyExistsException;
 import com.example.astraapi.exception.AuthProviderException;
+import com.example.astraapi.exception.ResourceNotFoundException;
 import com.example.astraapi.mapper.AuthMapper;
 import com.example.astraapi.mapper.TokenMapper;
 import com.example.astraapi.meta.OAuth2Connection;
@@ -234,6 +235,38 @@ public class AuthServiceTest {
   }
 
   @Test
+  void shouldThrowExceptionIfUserDoesNotHaveIdentities() {
+    User[] newUser = new User[1];
+    Mockito.when(securityProperties.getConnection()).thenReturn("Username-Password-Authentication");
+
+    UserDto userDto = new UserDto();
+    userDto.setEmail("test@gmail.com");
+    Mockito.when(authContext.getUser()).thenReturn(userDto);
+
+    TokenRequest tokenRequest = Mockito.mock(TokenRequest.class);
+    Mockito.when(tokenRequest.setAudience(ArgumentMatchers.any())).thenReturn(tokenRequest);
+    Mockito.when(tokenRequest.setScope(ArgumentMatchers.any())).thenReturn(tokenRequest);
+
+    Mockito.when(auth.login(ArgumentMatchers.any(), ArgumentMatchers.any(char[].class))).thenReturn(tokenRequest);
+
+    Request<List<User>> usersListRequest = (Request<List<User>>) Mockito.mock(Request.class);
+
+    UsersEntity usersEntity = Mockito.mock(UsersEntity.class);
+    Mockito.when(usersEntity.listByEmail(ArgumentMatchers.same("test@gmail.com"), ArgumentMatchers.any())).thenReturn(usersListRequest);
+
+    ManagementAPI managementApi = Mockito.mock(ManagementAPI.class);
+    Mockito.when(managementApi.users()).thenReturn(usersEntity);
+
+    Mockito.when(executor.execute(tokenRequest)).thenReturn(null);
+    Mockito.when(executor.execute(usersListRequest)).thenReturn(List.of(createAuth0UserWithoutIdentities("test@gmail.com")));
+
+    Mockito.when(managementService.newInstance()).thenReturn(managementApi);
+
+    ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> authService.changePassword(new ChangePasswordDto("oldPassword", "newPassword")));
+    assertEquals("User with email test@gmail.com was not found", exception.getMessage());
+  }
+
+  @Test
   void shouldResetPassword() {
     Request<Void> voidRequest = Mockito.mock(Request.class);
     Mockito.when(auth.resetPassword(ArgumentMatchers.any(), ArgumentMatchers.any())).thenReturn(voidRequest);
@@ -323,6 +356,13 @@ public class AuthServiceTest {
     assertEquals(1, newUser[0].getRoles().size());
     assertEquals("test@gmail.com", newUser[0].getEmail());
     assertTrue(newUser[0].getRoles().contains(Role.USER.name()));
+  }
+
+  private User createAuth0UserWithoutIdentities(String email) {
+    User user = new User();
+    user.setEmail(email);
+    ReflectionTestUtils.setField(user, "identities", new ArrayList<>());
+    return user;
   }
 
   private User createAuth0User(String email) {

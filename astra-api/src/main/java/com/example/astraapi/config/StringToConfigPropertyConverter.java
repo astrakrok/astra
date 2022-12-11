@@ -11,7 +11,7 @@ public class StringToConfigPropertyConverter implements Converter<String, Config
   @Override
   public ConfigProperty convert(String source) {
     return Arrays.stream(ConfigProperty.values())
-        .filter(property -> property.getName().equals(source))
+        .filter(property -> property.getName().equalsIgnoreCase(source.strip()))
         .findFirst()
         .orElseThrow(() -> new IllegalArgumentException("No such property"));
   }

@@ -9,6 +9,6 @@ public class TitleQualifier {
 
   @Named(TRIM)
   public String getTrimmedValue(String value) {
-    return value == null ? null : value.trim();
+    return value == null ? null : value.strip();
   }
 }
