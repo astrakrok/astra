@@ -39,6 +39,9 @@ public class GoogleOAuth2Provider implements OAuth2Provider {
   @Override
   public OAuth2UserInfo getUserInfo(String idToken) {
     String[] chunks = idToken.split("\\.");
+    if (chunks.length != 3) {
+      throw new IllegalArgumentException("Invalid id token");
+    }
     String payload = decodeIdTokenChunk(chunks[1]);
     return parseTokenPayload(payload);
   }
