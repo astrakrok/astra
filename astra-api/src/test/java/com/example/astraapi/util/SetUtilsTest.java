@@ -2,9 +2,11 @@ package com.example.astraapi.util;
 
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Constructor;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SetUtilsTest {
@@ -53,5 +55,14 @@ public class SetUtilsTest {
     assertEquals(2, difference.size());
     assertTrue(difference.contains("value A"));
     assertTrue(difference.contains("value B"));
+  }
+
+  @Test
+  void shouldThrowExceptionWhenTryingToInstantiateClass() throws NoSuchMethodException {
+    Constructor<SetUtils> constructor = SetUtils.class.getDeclaredConstructor();
+    constructor.setAccessible(true);
+
+    Exception exception = assertThrows(Exception.class, constructor::newInstance);
+    assertTrue(exception.getCause() instanceof UnsupportedOperationException);
   }
 }

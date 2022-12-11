@@ -52,16 +52,6 @@
         order by e.id
     </select>
 
-    <select id="getAllByFinishedAtBeforeOrderById" resultType="com.example.astraapi.entity.ExaminationEntity">
-        select *
-        from public.examinations e
-        where
-        <![CDATA[
-          e.finished_at < #{finishedAt}
-        ]]>
-        order by e.id
-    </select>
-
     <delete id="deleteById">
         delete
         from public.examinations e

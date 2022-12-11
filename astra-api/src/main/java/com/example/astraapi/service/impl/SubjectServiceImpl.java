@@ -18,32 +18,32 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class SubjectServiceImpl implements SubjectService {
-  private final SubjectRepository repository;
-  private final SubjectMapper mapper;
-  private final SubjectSpecializationService service;
+  private final SubjectRepository subjectRepository;
+  private final SubjectMapper subjectMapper;
+  private final SubjectSpecializationService subjectSpecializationService;
 
   @Override
   @Transactional
   public IdDto save(RequestSubjectDto requestSubjectDto) {
-    SubjectEntity subjectEntity = mapper.toEntity(requestSubjectDto);
-    repository.save(subjectEntity);
+    SubjectEntity subjectEntity = subjectMapper.toEntity(requestSubjectDto);
+    subjectRepository.save(subjectEntity);
     Long subjectId = subjectEntity.getId();
-    service.save(requestSubjectDto.getSpecializationIds(), subjectId);
+    subjectSpecializationService.save(requestSubjectDto.getSpecializationIds(), subjectId);
     return new IdDto(subjectId);
   }
 
   @Override
   public List<ResponseSubjectDto> getAllSubjectsDetails() {
-    return repository.getAllSubjectsDetails().stream()
-        .map(mapper::toDto)
+    return subjectRepository.getAllSubjectsDetails().stream()
+        .map(subjectMapper::toDto)
         .collect(Collectors.toList());
   }
 
   @Override
   @Transactional
   public void update(Long id, RequestSubjectDto requestSubjectDto) {
-    service.updateSpecializationsForSubject(id, requestSubjectDto.getSpecializationIds());
-    SubjectEntity subjectEntity = mapper.toEntity(requestSubjectDto);
-    repository.update(id, subjectEntity);
+    subjectSpecializationService.updateSpecializationsForSubject(id, requestSubjectDto.getSpecializationIds());
+    SubjectEntity subjectEntity = subjectMapper.toEntity(requestSubjectDto);
+    subjectRepository.update(id, subjectEntity);
   }
 }
