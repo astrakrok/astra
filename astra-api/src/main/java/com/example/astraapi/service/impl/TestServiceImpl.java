@@ -1,15 +1,15 @@
 package com.example.astraapi.service.impl;
 
+import com.example.astraapi.dto.IdDto;
+import com.example.astraapi.dto.TrainingSearchDto;
 import com.example.astraapi.dto.examination.ExaminationSearchDto;
 import com.example.astraapi.dto.test.ExaminationTestDto;
-import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.test.RequestTestDto;
 import com.example.astraapi.dto.test.TestFullDetailDto;
 import com.example.astraapi.dto.test.TestShortDetailDto;
-import com.example.astraapi.dto.test.variant.TestVariantDto;
 import com.example.astraapi.dto.test.TestingShortTestDto;
-import com.example.astraapi.dto.TrainingSearchDto;
 import com.example.astraapi.dto.test.TrainingTestDto;
+import com.example.astraapi.dto.test.variant.TestVariantDto;
 import com.example.astraapi.entity.TestEntity;
 import com.example.astraapi.mapper.TestMapper;
 import com.example.astraapi.model.Page;
@@ -87,9 +87,7 @@ public class TestServiceImpl implements TestService {
 
   @Override
   public List<ExaminationTestDto> getExaminationTests(long count, ExaminationSearchDto searchDto) {
-    return testRepository.getTestsByTestingId(
-            searchDto.getTestingId(),
-            count).stream()
+    return testRepository.getTestsByTestingId(searchDto.getTestingId(), count).stream()
         .map(testMapper::toExaminationDto)
         .collect(Collectors.toList());
   }

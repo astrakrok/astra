@@ -1,9 +1,9 @@
 package com.example.astraapi.service.impl;
 
-import com.example.astraapi.dto.test.AnsweredTestDto;
 import com.example.astraapi.dto.examination.ExaminationAnswerDto;
 import com.example.astraapi.dto.examination.ExaminationResultDto;
 import com.example.astraapi.dto.examination.ExaminationSearchDto;
+import com.example.astraapi.dto.test.AnsweredTestDto;
 import com.example.astraapi.dto.test.ExaminationTestDto;
 import com.example.astraapi.dto.test.variant.TestVariantDto;
 import com.example.astraapi.entity.ExaminationAnswerEntity;
@@ -54,10 +54,13 @@ public class ExaminationAnswerServiceImpl implements ExaminationAnswerService {
 
   @Override
   public List<ExaminationTestDto> getExaminationTests(List<ExaminationAnswerDto> answers) {
-    Map<Long, Long> testIdToUSerAnswer = getTestIdToUserAnswerMap(answers);
     List<Long> testsIds = getTestsIds(answers);
+    if (testsIds.size() < answers.size()) {
+      throw new IllegalArgumentException("Some tests have more than 1 user answer!");
+    }
+    Map<Long, Long> testIdToUserAnswer = getTestIdToUserAnswerMap(answers);
     List<ExaminationTestDto> examinationTests = testService.getExaminationTests(testsIds);
-    examinationTests.forEach(test -> setUserAnswer(test, testIdToUSerAnswer));
+    examinationTests.forEach(test -> setUserAnswer(test, testIdToUserAnswer));
     return examinationTests;
   }
 
@@ -69,10 +72,10 @@ public class ExaminationAnswerServiceImpl implements ExaminationAnswerService {
 
   @Override
   public ExaminationResultDto getResult(Long examinationId) {
-    List<ExaminationAnswerEntity> answerEntities = examinationAnswerRepository.getDetailedAnswersByExaminationId(examinationId);
-    List<AnsweredTestDto> answeredTests = getAnsweredTests(answerEntities);
     PropertyEntity property = propertyService.getProperty(ConfigProperty.EXAMINATION_THRESHOLD_PERCENTAGE.getName())
         .orElseThrow(() -> new IllegalArgumentException("No such property"));
+    List<ExaminationAnswerEntity> answerEntities = examinationAnswerRepository.getDetailedAnswersByExaminationId(examinationId);
+    List<AnsweredTestDto> answeredTests = getAnsweredTests(answerEntities);
     Long correctCount = getCorrectCount(answeredTests);
     Long total = (long) answeredTests.size();
     Long correctness = getCorrectness(correctCount, total);
@@ -99,6 +102,7 @@ public class ExaminationAnswerServiceImpl implements ExaminationAnswerService {
   private List<Long> getTestsIds(List<ExaminationAnswerDto> answers) {
     return answers.stream()
         .map(ExaminationAnswerDto::getTestId)
+        .distinct()
         .collect(Collectors.toList());
   }
 
