@@ -1,36 +1,21 @@
-name: Deploy
+name: Java CI
 
-on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
+on: [push]
 
 jobs:
-  deploy_backend:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Git checkout
-        uses: actions/checkout@v3
-      - name: Deploy backend
-        uses: gonuit/heroku-docker-deploy@v1.3.3
+      - uses: actions/checkout@v3
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
         with:
-          email: ${{ secrets.HEROKU_EMAIL }}
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_BACKEND_APP_NAME }}
-          docker_options: "--no-cache"
-          process_type: web
-          dockerfile_directory: ./astra-api/
-  deploy_frontend:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Git checkout
-        uses: actions/checkout@v3
-      - name: Deploy frontend
-        uses: gonuit/heroku-docker-deploy@v1.3.3
+          java-version: '11'
+          distribution: 'adopt'
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
-          email: ${{ secrets.HEROKU_EMAIL }}
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_FRONTEND_APP_NAME }}
-          docker_options: ${{ secrets.FRONTEND_DOCKER_OPTIONS }}
-          process_type: web
-          dockerfile_directory: ./astra-web/
+          arguments: build
