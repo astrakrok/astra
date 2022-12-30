@@ -92,6 +92,7 @@ export const route = {
     exams: `${baseUrl}/api/v1/exams`,
     tests: `${baseUrl}/api/v1/tests`,
     examinations: `${baseUrl}/api/v1/examinations`,
+    statistic: `${baseUrl}/api/v1/statistic`,
     users: `${baseUrl}/api/v1/users`,
     notifications: `${baseUrl}/api/v1/notifications`,
     testings: getTestingsRoutes(),

@@ -3,6 +3,7 @@ package com.example.astraapi.repository;
 import com.example.astraapi.entity.ExaminationStatisticEntity;
 import com.example.astraapi.entity.ExaminationStatisticInfoEntity;
 import com.example.astraapi.entity.projection.ExaminationStatisticProjection;
+import com.example.astraapi.entity.projection.StepStatisticProjection;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -22,4 +23,6 @@ public interface ExaminationStatisticRepository {
   void updatePercentage(@Param("entity") ExaminationStatisticEntity entity);
 
   List<ExaminationStatisticInfoEntity> getAllWithTestingByUserId(@Param("userId") Long userId);
+
+  List<StepStatisticProjection> getStepsStatisticByUserId(@Param("userId") Long userId);
 }

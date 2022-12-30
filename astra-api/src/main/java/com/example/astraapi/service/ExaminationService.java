@@ -4,9 +4,6 @@ import com.example.astraapi.dto.examination.ExaminationAnswerDto;
 import com.example.astraapi.dto.examination.ExaminationResultDto;
 import com.example.astraapi.dto.examination.ExaminationSearchDto;
 import com.example.astraapi.dto.examination.ExaminationStateDto;
-import com.example.astraapi.dto.examination.ExaminationStatisticDto;
-
-import java.util.List;
 
 public interface ExaminationService {
   ExaminationStateDto start(ExaminationSearchDto searchDto);
@@ -14,6 +11,4 @@ public interface ExaminationService {
   void updateAnswer(Long id, ExaminationAnswerDto examinationAnswerDto);
 
   ExaminationResultDto finish(Long id);
-
-  List<ExaminationStatisticDto> getStatistics();
 }

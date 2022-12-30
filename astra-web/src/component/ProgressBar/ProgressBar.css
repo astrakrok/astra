@@ -1,0 +1,21 @@
+.ProgressBar {
+    box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    background-color: var(--light-primary-color);
+}
+
+.ProgressBar .content {
+    position: absolute;
+    padding: 0 15px;
+    font-size: 1.5rem;
+    color: white;
+    text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.3);
+    font-weight: bold;
+}
+
+.ProgressBar .filler {
+    background-color: var(--primary-color);
+    min-height: 50px;
+}

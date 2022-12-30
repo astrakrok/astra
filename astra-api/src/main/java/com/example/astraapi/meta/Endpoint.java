@@ -15,6 +15,7 @@ public class Endpoint {
   public static final String EXAMINATIONS = "/api/v1/examinations";
   public static final String AUTH = "/api/v1/auth";
   public static final String NOTIFICATIONS = "/api/v1/notifications";
+  public static final String STATISTIC = "/api/v1/statistic";
 
   public static final String ADMIN_STEPS = "/api/v1/admin/steps";
   public static final String ADMIN_STEP_SPECIALIZATIONS = "/api/v1/admin/steps/{stepId}/specializations";

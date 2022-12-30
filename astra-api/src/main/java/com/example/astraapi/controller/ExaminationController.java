@@ -4,11 +4,9 @@ import com.example.astraapi.dto.examination.ExaminationAnswerDto;
 import com.example.astraapi.dto.examination.ExaminationResultDto;
 import com.example.astraapi.dto.examination.ExaminationSearchDto;
 import com.example.astraapi.dto.examination.ExaminationStateDto;
-import com.example.astraapi.dto.examination.ExaminationStatisticDto;
 import com.example.astraapi.meta.Endpoint;
 import com.example.astraapi.service.ExaminationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping(Endpoint.EXAMINATIONS)
@@ -41,10 +38,5 @@ public class ExaminationController {
   @PutMapping("/{id}/result")
   public ExaminationResultDto finishTest(@PathVariable("id") Long id) {
     return examinationService.finish(id);
-  }
-
-  @GetMapping("/statistic")
-  public List<ExaminationStatisticDto> getStatistics() {
-    return examinationService.getStatistics();
   }
 }

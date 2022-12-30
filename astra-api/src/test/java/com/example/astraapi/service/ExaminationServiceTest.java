@@ -3,15 +3,11 @@ package com.example.astraapi.service;
 import com.example.astraapi.TestUtils;
 import com.example.astraapi.config.ExaminationProperties;
 import com.example.astraapi.dto.UserDto;
-import com.example.astraapi.dto.exam.ResponseExamDto;
 import com.example.astraapi.dto.examination.ExaminationAnswerDto;
 import com.example.astraapi.dto.examination.ExaminationSearchDto;
 import com.example.astraapi.dto.examination.ExaminationStateDto;
-import com.example.astraapi.dto.examination.ExaminationStatisticDto;
 import com.example.astraapi.dto.examination.ExaminationVariantDto;
-import com.example.astraapi.dto.specialization.SpecializationDto;
 import com.example.astraapi.dto.test.ExaminationTestDto;
-import com.example.astraapi.dto.testing.TestingInfoDto;
 import com.example.astraapi.entity.ExaminationAnswerEntity;
 import com.example.astraapi.entity.ExaminationEntity;
 import com.example.astraapi.mapper.ExaminationAnswerMapper;
@@ -38,16 +34,12 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
 public class ExaminationServiceTest {
   @InjectMocks
   private ExaminationServiceImpl examinationService;
-  @Mock
-  private ExaminationStatisticService examinationStatisticService;
   @Mock
   private ExaminationProperties examinationProperties;
   @Mock
@@ -202,20 +194,6 @@ public class ExaminationServiceTest {
     assertEquals(dateTime, finishedAt[0]);
   }
 
-  @Test
-  void shouldReturnExaminationStatistics() {
-    Mockito.when(authContext.getUser()).thenReturn(new UserDto(1L, null, null, null, null, null, null, Set.of()));
-
-    Mockito.when(examinationStatisticService.getStatistics(ArgumentMatchers.eq(1L))).thenReturn(mockStatistics());
-
-    List<ExaminationStatisticDto> statistics = examinationService.getStatistics();
-
-    assertEquals(3, statistics.size());
-    assertFalse(statistics.get(0).isSuccess());
-    assertTrue(statistics.get(1).isSuccess());
-    assertTrue(statistics.get(2).isSuccess());
-  }
-
   private List<ExaminationTestDto> mockTests(int count) {
     return IntStream.range(0, count)
         .mapToObj(this::mockTest)
@@ -257,44 +235,6 @@ public class ExaminationServiceTest {
                 (long) TestUtils.nextInt(index * 100, index * 100 + 4),
                 null))
             .collect(Collectors.toList())
-    );
-  }
-
-  private List<ExaminationStatisticDto> mockStatistics() {
-    return List.of(
-        new ExaminationStatisticDto(
-            1L,
-            40L,
-            80L,
-            false,
-            new TestingInfoDto(
-                2L,
-                new ResponseExamDto(2L, "2021"),
-                new SpecializationDto(2L, 1L, "Specialization 2")
-            )
-        ),
-        new ExaminationStatisticDto(
-            2L,
-            60L,
-            60L,
-            false,
-            new TestingInfoDto(
-                1L,
-                new ResponseExamDto(3L, "2023"),
-                new SpecializationDto(3L, 1L, "Specialization 3")
-            )
-        ),
-        new ExaminationStatisticDto(
-            3L,
-            50L,
-            80L,
-            false,
-            new TestingInfoDto(
-                3L,
-                new ResponseExamDto(1L, "2020"),
-                new SpecializationDto(1L, 1L, "Specialization 1")
-            )
-        )
     );
   }
 }
