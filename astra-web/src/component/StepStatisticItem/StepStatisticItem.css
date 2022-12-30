@@ -1,0 +1,15 @@
+.StepStatisticItem {
+    font-size: 30px;
+}
+
+.StepStatisticItem .step i {
+    color: var(--primary-color);
+}
+
+.StepStatisticItem .step .title {
+    padding: 0 10px;
+}
+
+.StepStatisticItem .subject {
+    padding: 10px 0;
+}

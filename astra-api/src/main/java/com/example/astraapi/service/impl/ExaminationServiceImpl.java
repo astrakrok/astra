@@ -5,7 +5,6 @@ import com.example.astraapi.dto.examination.ExaminationAnswerDto;
 import com.example.astraapi.dto.examination.ExaminationResultDto;
 import com.example.astraapi.dto.examination.ExaminationSearchDto;
 import com.example.astraapi.dto.examination.ExaminationStateDto;
-import com.example.astraapi.dto.examination.ExaminationStatisticDto;
 import com.example.astraapi.dto.test.ExaminationTestDto;
 import com.example.astraapi.entity.ExaminationEntity;
 import com.example.astraapi.mapper.ExaminationMapper;
@@ -13,7 +12,6 @@ import com.example.astraapi.repository.ExaminationRepository;
 import com.example.astraapi.service.AuthContext;
 import com.example.astraapi.service.ExaminationAnswerService;
 import com.example.astraapi.service.ExaminationService;
-import com.example.astraapi.service.ExaminationStatisticService;
 import com.example.astraapi.service.TimeZoneService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,7 +23,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ExaminationServiceImpl implements ExaminationService {
-  private final ExaminationStatisticService examinationStatisticService;
   private final ExaminationProperties examinationProperties;
   private final ExaminationRepository examinationRepository;
   private final ExaminationMapper examinationMapper;
@@ -69,13 +66,6 @@ public class ExaminationServiceImpl implements ExaminationService {
     LocalDateTime finishedAt = timeZoneService.toUtc(LocalDateTime.now());
     examinationRepository.updateFinishedAtById(id, finishedAt);
     return examinationAnswerService.getResult(id);
-  }
-
-  @Override
-  @Transactional
-  public List<ExaminationStatisticDto> getStatistics() {
-    Long userId = authContext.getUser().getId();
-    return examinationStatisticService.getStatistics(userId);
   }
 
   private ExaminationEntity createExamination(ExaminationSearchDto searchDto) {

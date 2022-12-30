@@ -77,6 +77,39 @@
         where ts.lastTotalCount is not null;
     </select>
 
+    <select id="getStepsStatisticByUserId" resultMap="stepStatistic">
+        select s.id         as stepId,
+               s.title      as stepTitle,
+               spec.id      as specializationId,
+               spec.title   as specializationTitle,
+               sub.id       as subjectId,
+               sub.title    as subjectTitle,
+               stat.correct as correctCount,
+               stat.total   as totalCount
+        from public.subjects sub
+                 left join public.specializations spec on spec.id = sub.specialization_id
+                 left join public.steps s on s.id = spec.step_id
+                 join lateral (
+            select coalesce(sum(case when is_correct THEN 1 ELSE 0 END), 0) as correct,
+                   coalesce(sum(1), 0)                                      as total
+            from (select distinct on (ea.test_id) ea.test_id    as test_id,
+                                                  tv.is_correct as is_correct,
+                                                  rank() over (
+                                                      partition by ea.test_id
+                                                      order by e.finished_at
+                                                      )            rank_number
+                  from public.examinations_answers ea
+                           left join public.examinations e on e.id = ea.examination_id
+                           left join tests_subjects ts on ea.test_id = ts.test_id
+                           left join tests_variants tv on ea.variant_id = tv.id and tv.test_id = ea.test_id
+                  where ts.subject_id = sub.id
+                    and e.user_id = #{userId}
+                  order by ea.test_id, rank_number desc) as nested
+            ) as stat on true
+        where stat.total > 0
+        order by s.title, spec.title, sub.title;
+    </select>
+
     <resultMap id="statisticInfo" type="com.example.astraapi.entity.ExaminationStatisticInfoEntity">
         <id column="testingId"/>
         <result column="lastCorrectCount" property="lastCorrectCount"/>
@@ -99,5 +132,24 @@
             <id column="specializationId" property="id"/>
             <result column="specializationTitle" property="title"/>
         </association>
+    </resultMap>
+
+    <resultMap id="stepStatistic" type="com.example.astraapi.entity.projection.StepStatisticProjection">
+        <id column="stepId" property="id"/>
+        <result column="stepTitle" property="title"/>
+
+        <collection property="specializations" javaType="List"
+                    ofType="com.example.astraapi.entity.projection.SpecializationStatisticProjection">
+            <id column="specializationId" property="id"/>
+            <result column="specializationTitle" property="title"/>
+
+            <collection property="subjects" javaType="List"
+                        ofType="com.example.astraapi.entity.projection.SubjectStatisticProjection">
+                <id column="subjectId" property="id"/>
+                <result column="subjectTitle" property="title"/>
+                <result column="correctCount" property="correctCount"/>
+                <result column="totalCount" property="totalCount"/>
+            </collection>
+        </collection>
     </resultMap>
 </mapper>

@@ -1,9 +1,11 @@
 package com.example.astraapi.service.impl;
 
 import com.example.astraapi.dto.examination.ExaminationStatisticDto;
+import com.example.astraapi.dto.statistic.StepStatisticDto;
 import com.example.astraapi.mapper.ExaminationStatisticMapper;
 import com.example.astraapi.repository.ExaminationStatisticRepository;
-import com.example.astraapi.service.ExaminationStatisticService;
+import com.example.astraapi.service.AuthContext;
+import com.example.astraapi.service.StatisticService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +14,23 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ExaminationStatisticServiceImpl implements ExaminationStatisticService {
+public class StatisticServiceImpl implements StatisticService {
   private final ExaminationStatisticMapper examinationStatisticMapper;
   private final ExaminationStatisticRepository examinationStatisticRepository;
+  private final AuthContext authContext;
 
   @Override
-  public List<ExaminationStatisticDto> getStatistics(Long userId) {
-    // TODO don't use examinations_statistics table, use data from examinations and examinations_answers instead
+  public List<ExaminationStatisticDto> getStatistics() {
+    Long userId = authContext.getUser().getId();
     return examinationStatisticRepository.getAllWithTestingByUserId(userId).stream()
+        .map(examinationStatisticMapper::toDto)
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public List<StepStatisticDto> getStepsStatistic() {
+    Long userId = authContext.getUser().getId();
+    return examinationStatisticRepository.getStepsStatisticByUserId(userId).stream()
         .map(examinationStatisticMapper::toDto)
         .collect(Collectors.toList());
   }
