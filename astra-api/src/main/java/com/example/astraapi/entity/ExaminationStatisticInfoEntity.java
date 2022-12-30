@@ -10,8 +10,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExaminationStatisticInfoEntity {
-  private Long id;
-  private Long lastPercentage;
-  private Long bestPercentage;
+  private Long lastCorrectCount;
+  private Long lastTotalCount;
+  private Long bestCorrectCount;
+  private Long bestTotalCount;
   private TestingInfoEntity testing;
 }

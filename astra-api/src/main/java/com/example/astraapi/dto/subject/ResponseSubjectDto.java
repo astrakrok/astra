@@ -6,8 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,5 +13,5 @@ import java.util.List;
 public class ResponseSubjectDto {
   private Long id;
   private String title;
-  private List<StepSpecializationDto> specializations;
+  private StepSpecializationDto specialization;
 }

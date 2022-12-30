@@ -75,9 +75,7 @@ public class ExaminationServiceImpl implements ExaminationService {
   @Transactional
   public List<ExaminationStatisticDto> getStatistics() {
     Long userId = authContext.getUser().getId();
-    List<ExaminationStatisticDto> statistics = examinationStatisticService.getStatistics(userId);
-    updateStatisticsSuccess(statistics);
-    return statistics;
+    return examinationStatisticService.getStatistics(userId);
   }
 
   private ExaminationEntity createExamination(ExaminationSearchDto searchDto) {
@@ -104,11 +102,5 @@ public class ExaminationServiceImpl implements ExaminationService {
     if (!examinationRepository.exists(id, userId, now)) {
       throw new IllegalArgumentException("You cannot modify answers for expired or non-existing examination");
     }
-  }
-
-  private void updateStatisticsSuccess(List<ExaminationStatisticDto> statistics) {
-    statistics.stream()
-        .filter(statistic -> statistic.getLast() >= examinationProperties.getThresholdPercentage())
-        .forEach(statistic -> statistic.setSuccess(true));
   }
 }

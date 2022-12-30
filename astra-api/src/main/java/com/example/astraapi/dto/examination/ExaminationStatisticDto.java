@@ -12,9 +12,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExaminationStatisticDto {
-  private Long id;
-  private Long last;
-  private Long best;
+  private Long lastCorrectCount;
+  private Long lastTotalCount;
+  private Long bestCorrectCount;
+  private Long bestTotalCount;
   @JsonProperty("isSuccess")
   private boolean success;
   private TestingInfoDto testing;

@@ -11,7 +11,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring", uses = TitleQualifier.class)
 public interface SubjectMapper {
   @Mapping(target = "title", qualifiedByName = TitleQualifier.TRIM)
-  @Mapping(target = "specializationIds", ignore = true)
   SubjectEntity toEntity(RequestSubjectDto requestSubjectDto);
 
   ResponseSubjectDto toDto(SubjectDetailEntity subjectEntity);

@@ -12,10 +12,9 @@
                        select t.specialization_id
                        from public.testings t
                                 join lateral (
-                           select ss.specialization_id as specializationId
+                           select sub.specialization_id as specializationId
                            from public.tests_subjects ts
-                                    left join public.subjects_specializations ss on ss.subject_id = ts.subject_id
-                                    left join public.specializations s on s.id = ss.specialization_id
+                                    left join public.subjects sub on sub.id = ts.subject_id
                            where ts.test_id = #{testId}
                            ) as joined on true
                        where t.id = #{testingId}

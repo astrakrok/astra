@@ -9,6 +9,10 @@
     cursor: pointer;
 }
 
+.ScrollTopButton i {
+    font-size: 40px;
+}
+
 .ScrollTopButton:hover {
     opacity: 1;
 }
