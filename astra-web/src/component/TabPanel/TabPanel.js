@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import "./TabPanel.css";
 
 const TabPanel = ({
     tabs,
     type = "primary",
-    selectedTab = 0
+    selectedTab = 0,
+    stretch = false
 }) => {
     const [selected, setSelected] = useState(selectedTab);
 
@@ -23,7 +24,7 @@ const TabPanel = ({
 
     const renderTab = (tab, index) => (
         <div
-            className={`s-vflex-center center panel-tab ${index === selected ? "selected" : ""} ${tab.className ? tab.className : ""}`}
+            className={`s-vflex-center ${stretch ? "equal-flex" : ""} center panel-tab ${index === selected ? "selected" : ""} ${tab.className ? tab.className : ""}`}
             onClick={() => handleTabClick(tab, index)}
         >
             {tab.title}
@@ -34,16 +35,18 @@ const TabPanel = ({
         <div className={`TabPanel s-vflex ${type}`}>
             <div className="panel-tabs s-hflex">
                 <div className="spacer" />
-                {
-                    tabs.map((tab, index) => {
-                        return (
-                            <React.Fragment key={index}>
-                                {renderTab(tab, index)}
-                                <div className="spacer" />
-                            </React.Fragment>
-                        );
-                    })
-                }
+                <div className="full-width s-hflex">
+                    {
+                        tabs.map((tab, index) => {
+                            return (
+                                <React.Fragment key={index}>
+                                    {renderTab(tab, index)}
+                                    <div className="spacer" />
+                                </React.Fragment>
+                            );
+                        })
+                    }
+                </div>
             </div>
         </div>
     );

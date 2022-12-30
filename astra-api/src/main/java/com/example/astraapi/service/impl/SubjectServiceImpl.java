@@ -7,7 +7,6 @@ import com.example.astraapi.entity.SubjectEntity;
 import com.example.astraapi.mapper.SubjectMapper;
 import com.example.astraapi.repository.SubjectRepository;
 import com.example.astraapi.service.SubjectService;
-import com.example.astraapi.service.SubjectSpecializationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +19,6 @@ import java.util.stream.Collectors;
 public class SubjectServiceImpl implements SubjectService {
   private final SubjectRepository subjectRepository;
   private final SubjectMapper subjectMapper;
-  private final SubjectSpecializationService subjectSpecializationService;
 
   @Override
   @Transactional
@@ -28,7 +26,6 @@ public class SubjectServiceImpl implements SubjectService {
     SubjectEntity subjectEntity = subjectMapper.toEntity(requestSubjectDto);
     subjectRepository.save(subjectEntity);
     Long subjectId = subjectEntity.getId();
-    subjectSpecializationService.save(requestSubjectDto.getSpecializationIds(), subjectId);
     return new IdDto(subjectId);
   }
 
@@ -42,7 +39,6 @@ public class SubjectServiceImpl implements SubjectService {
   @Override
   @Transactional
   public void update(Long id, RequestSubjectDto requestSubjectDto) {
-    subjectSpecializationService.updateSpecializationsForSubject(id, requestSubjectDto.getSpecializationIds());
     SubjectEntity subjectEntity = subjectMapper.toEntity(requestSubjectDto);
     subjectRepository.update(id, subjectEntity);
   }

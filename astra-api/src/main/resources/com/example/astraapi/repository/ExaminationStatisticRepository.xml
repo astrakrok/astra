@@ -35,25 +35,54 @@
     </update>
 
     <select id="getAllWithTestingByUserId" resultMap="statisticInfo">
-        select es.id              as id,
-               es.last_percentage as lastPercentage,
-               es.best_percentage as bestPercentage,
-               t.id               as testingId,
-               e.id               as examId,
-               e.title            as examTitle,
-               s.id               as specializationId,
-               s.title            as specializationTitle
-        from public.examinations_statistics es
-                 left join public.testings t on t.id = es.testing_id
-                 left join public.exams e on e.id = t.exam_id
+        select t.id                as testingId,
+               exam.id             as examId,
+               exam.title          as examTitle,
+               s.id                as specializationId,
+               s.title             as specializationTitle,
+               ts.lastCorrectCount as lastCorrectCount,
+               ts.lastTotalCount   as lastTotalCount,
+               ts.bestCorrectCount as bestCorrectCount,
+               ts.bestTotalCount   as bestTotalCount
+        from public.testings t
+                 left join public.exams exam on exam.id = t.exam_id
                  left join public.specializations s on s.id = t.specialization_id
-        where es.user_id = #{userId}
+                 left join lateral (
+            with stats as (select sum(case when sub.is_correct then 1 else 0 end) as correctCount,
+                                  count(ea.id)                                    as totalCount,
+                                  e.finished_at                                   as finishedAt
+                           from public.examinations_answers ea
+                                    left join lateral (
+                               select tv.is_correct from tests_variants tv where tv.id = ea.variant_id
+                               ) as sub on true
+                                    left join examinations e on e.id = ea.examination_id
+                           where e.user_id = #{userId}
+          <![CDATA[
+                             and e.finished_at < now()
+          ]]>
+        and e.testing_id = t.id
+                           group by e.id, e.finished_at
+                           order by e.finished_at desc)
+            select correctness.last[1] as lastCorrectCount,
+                   correctness.last[2] as lastTotalCount,
+                   correctness.best[1] as bestCorrectCount,
+                   correctness.best[2] as bestTotalCount
+            from (select (select array [stats.correctCount, stats.totalCount] as rw from stats limit 1) as last,
+                         (select array [s.correctCount, s.totalCount] best
+                          from stats s
+                          where round(correctCount * 1.0 / totalCount, 2) =
+                                (select max(round(ns.correctCount * 1.0 / ns.totalCount, 2))
+                                 from stats ns))                                                        as best) correctness
+            ) as ts on true
+        where ts.lastTotalCount is not null;
     </select>
 
     <resultMap id="statisticInfo" type="com.example.astraapi.entity.ExaminationStatisticInfoEntity">
-        <id column="id" property="id"/>
-        <result column="lastPercentage" property="lastPercentage"/>
-        <result column="bestPercentage" property="bestPercentage"/>
+        <id column="testingId"/>
+        <result column="lastCorrectCount" property="lastCorrectCount"/>
+        <result column="lastTotalCount" property="lastTotalCount"/>
+        <result column="bestCorrectCount" property="bestCorrectCount"/>
+        <result column="bestTotalCount" property="bestTotalCount"/>
 
         <association property="testing" resultMap="testingInfo"/>
     </resultMap>

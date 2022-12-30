@@ -17,9 +17,7 @@ const SubjectListItem = ({
                     </div>
                     <Spacer height={5}/>
                     <div className="s-hflex s-flex-wrapped">
-                        {
-                            subject.specializations.map(item => <Badge key={item.id}>{item.step.title} | {item.title}</Badge>)
-                        }
+                        <Badge>{subject.specialization.step.title} | {subject.specialization.title}</Badge>
                     </div>
                 </div>
                 <Divider orientation="none"/>

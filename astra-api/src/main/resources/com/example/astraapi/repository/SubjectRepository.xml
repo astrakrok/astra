@@ -4,8 +4,8 @@
 <mapper namespace="com.example.astraapi.repository.SubjectRepository">
     <insert id="save" parameterType="com.example.astraapi.entity.SubjectEntity" useGeneratedKeys="true"
             keyProperty="entity.id">
-        insert into public.subjects (title)
-        values (#{entity.title});
+        insert into public.subjects (title, specialization_id)
+        values (#{entity.title}, #{entity.specializationId});
     </insert>
 
     <select id="getAllSubjectsDetails" resultType="com.example.astraapi.entity.SubjectDetailEntity" resultMap="subjects">
@@ -16,10 +16,8 @@
                step.id    as stepId,
                step.title as stepTitle
         from public.subjects sub
-                 left join public.subjects_specializations ss
-                           on sub.id = ss.subject_id
                  left join public.specializations spec
-                           on spec.id = ss.specialization_id
+                           on spec.id = sub.specialization_id
                  left join public.steps step
                            on spec.step_id = step.id
         order by sub.title, step.title
@@ -27,14 +25,16 @@
 
     <update id="update">
         update public.subjects
-        set title = #{entity.title}
+        set title             = #{entity.title},
+            specialization_id = #{entity.specializationId}
         where id = #{id}
     </update>
 
     <resultMap id="subjects" type="com.example.astraapi.entity.projection.SubjectDetailEntity">
         <id column="subjectId" property="id"/>
         <result column="subjectTitle" property="title"/>
-        <collection property="specializations" ofType="com.example.astraapi.entity.projection.StepSpecializationProjection">
+
+        <association property="specialization" javaType="com.example.astraapi.entity.projection.StepSpecializationProjection">
             <id column="specializationId" property="id"/>
             <result column="specializationTitle" property="title"/>
 
@@ -42,6 +42,6 @@
                 <id column="stepId" property="id" />
                 <result column="stepTitle" property="title" />
             </association>
-        </collection>
+        </association>
     </resultMap>
 </mapper>

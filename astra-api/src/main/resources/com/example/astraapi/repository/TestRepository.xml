@@ -22,20 +22,18 @@
                nested.question as question,
                nested.comment  as comment,
                nested.rows     as rows,
-               s.id            as specializationId,
-               s.title         as specializationTitle
-        from (
-                 select t.id                as id,
-                        t.question          as question,
-                        t.comment           as comment,
-                        count(t.id) over () as rows
-                 from public.tests t
-                 order by id
-                 offset #{pageable.offset} limit #{pageable.pageSize}
-             ) as nested
+               spec.id            as specializationId,
+               spec.title         as specializationTitle
+        from (select t.id                as id,
+                     t.question          as question,
+                     t.comment           as comment,
+                     count(t.id) over () as rows
+              from public.tests t
+              order by id
+              offset #{pageable.offset} limit #{pageable.pageSize}) as nested
                  left join public.tests_subjects ts on nested.id = ts.test_id
-                 left join public.subjects_specializations ss on ts.subject_id = ss.subject_id
-                 left join public.specializations s on ss.specialization_id = s.id
+                 left join public.subjects sub on sub.id = ts.subject_id
+                 left join public.specializations spec on spec.id = sub.specialization_id
         order by nested.id
     </select>
 
@@ -120,19 +118,16 @@
                         tv.id      as variantId,
                         tv.title   as variantTitle
         from public.tests t
-                 left join tests_subjects ts on t.id = ts.test_id
-                 left join subjects_specializations ss on ts.subject_id = ss.subject_id
-                 left join tests_variants tv on t.id = tv.test_id
-        where specialization_id = (
-            select specialization_id
-            from public.testings
-            where testings.id = #{testingId}
-        )
-          and t.id not in (
-            select tt.test_id
-            from public.testings_tests tt
-            where tt.testing_id = #{testingId}
-        )
+                 left join public.tests_subjects ts on t.id = ts.test_id
+                 left join public.subjects sub on ts.subject_id = sub.id
+                 left join public.specializations spec on spec.id = sub.specialization_id
+                 left join public.tests_variants tv on t.id = tv.test_id
+        where spec.id = (select specialization_id
+                                   from public.testings
+                                   where testings.id = #{testingId})
+          and t.id not in (select tt.test_id
+                           from public.testings_tests tt
+                           where tt.testing_id = #{testingId})
         order by id, variantId
     </select>
 

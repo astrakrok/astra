@@ -20,7 +20,7 @@ const SubjectForm = ({
 }) => {
     const [title, setTitle] = useState(subject.title);
     const [specializations, setSpecializations] = useState(null);
-    const [selectedSpecializations, setSelectedSpecializations] = useState(subject.specializations.map(toSelectValue));
+    const [selectedSpecialization, setSelectedSpecialization] = useState(toSelectValue(subject.specialization));
     const [formState, setFormState] = useState({loading: false, errors: {}});
 
     useEffect(() => {
@@ -43,7 +43,7 @@ const SubjectForm = ({
         const subjectState = {
             id: subject.id,
             title: title,
-            specializationIds: selectedSpecializations.map(item => item.value)
+            specializationId: selectedSpecialization.value
         };
         setFormState({
             loading: true,
@@ -83,11 +83,11 @@ const SubjectForm = ({
                 <LoaderBoundary condition={specializations == null} size="small">
                     <Select
                         options={getSpecializationOptions()}
-                        isMulti={true}
-                        onChange={setSelectedSpecializations}
-                        className="specializations"
-                        placeholder="Спеціалізації"
-                        value={selectedSpecializations}
+                        isMulti={false}
+                        onChange={setSelectedSpecialization}
+                        className="specialization"
+                        placeholder="Спеціалізація"
+                        value={selectedSpecialization}
                         noOptionsMessage={() => "Не залишилось спеціалізацій"} />
                     <ErrorsArea errors={formState.errors.specializationIds} />
                 </LoaderBoundary>

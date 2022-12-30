@@ -46,3 +46,14 @@
 .ExamStatisticItem .progress-bar .content .percentage .corona {
     padding: 10px 0;
 }
+
+.ExamStatisticItem .arrow {
+    padding-left: 15px;
+}
+
+
+.ExamStatisticItem .arrow i {
+    font-size: 40px;
+    font-weight: bold;
+    color: var(--green-color);
+}

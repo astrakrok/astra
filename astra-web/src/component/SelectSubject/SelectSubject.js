@@ -10,14 +10,10 @@ const SelectSubject = ({
 }) => {
     const [selectedSubject, setSelectedSubject] = useState(null);
 
-    const getSpecializationsString = specializations => {
-        return specializations.map(item => `${item.step.title} | ${item.title}`).join(";");
-    }
-
     const getSubjectsOptions = () => {
         return subjectsDetails.map(item => ({
             value: item.id,
-            label: item.title + "(" + getSpecializationsString(item.specializations) + ")"
+            label: item.title + "(" + item.specialization.step.title + " | " + item.specialization.title + ")"
         }));
     }
 

@@ -7,6 +7,7 @@ import {getAllStatistic} from "../../../service/users.exams.statistic.service";
 import ExamStatisticItem from "../../ExamStatisticItem/ExamStatisticItem";
 import withTitle from "../../hoc/withTitle/withTitle";
 import "./ProfilePage.css";
+import TabPanel from "../../TabPanel/TabPanel";
 
 const ProfilePage = () => {
     const [statistic, setStatistic] = useState(null);
@@ -26,6 +27,17 @@ const ProfilePage = () => {
         <ExamStatisticItem key={statistic.id} statistic={statistic} />
     )
 
+    const getTabs = () => {
+        return [
+            {
+                title: "По іспитам"
+            },
+            {
+                title: "По предметам"
+            }
+        ];
+    }
+
     return (
         <div className="ProfilePage container">
             <div className="row">
@@ -38,6 +50,9 @@ const ProfilePage = () => {
                     </div>
                     <div className="statistic">
                         <TextHeader text="Статистика"/>
+                        <div className="full-width">
+                            <TabPanel tabs={getTabs()} stretch={true} />
+                        </div>
                         <LoaderBoundary condition={statistic == null} className="s-hflex-center">
                             {
                                 (statistic && statistic.length > 0) ? (
