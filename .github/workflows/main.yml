@@ -1,36 +1,13 @@
 name: Deploy
 
-on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
+on: [push]
 
 jobs:
-  deploy_backend:
+  test_backend:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout
         uses: actions/checkout@v3
-      - name: Deploy backend
-        uses: gonuit/heroku-docker-deploy@v1.3.3
-        with:
-          email: ${{ secrets.HEROKU_EMAIL }}
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_BACKEND_APP_NAME }}
-          docker_options: "--no-cache"
-          process_type: web
-          dockerfile_directory: ./astra-api/
-  deploy_frontend:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Git checkout
-        uses: actions/checkout@v3
-      - name: Deploy frontend
-        uses: gonuit/heroku-docker-deploy@v1.3.3
-        with:
-          email: ${{ secrets.HEROKU_EMAIL }}
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_FRONTEND_APP_NAME }}
-          docker_options: ${{ secrets.FRONTEND_DOCKER_OPTIONS }}
-          process_type: web
-          dockerfile_directory: ./astra-web/
+      - name: Test backend
+        working-directory: ./astra-api
+        run: ./gradlew test
