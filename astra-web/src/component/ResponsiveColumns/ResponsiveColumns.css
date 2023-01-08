@@ -10,10 +10,6 @@
     height: 2px;
 }
 
-.ResponsiveColumns .second {
-    padding: 40px 10px;
-}
-
 .ResponsiveColumns .first .optimal {
     width: 100%;
     max-width: 480px;

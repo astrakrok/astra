@@ -26,3 +26,8 @@
     color: var(--secondary-color);
     font-weight: bold;
 }
+
+.Alert .text.clickable {
+    font-weight: bold;
+    color: var(--secondary-color);
+}

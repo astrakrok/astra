@@ -4,6 +4,7 @@ const adminTests = "/admin/tests";
 const adminTestings = "/admin/testings";
 const adminExams = "/admin/exams";
 const allAdmins = "/admin/all";
+const transfer = "/admin/transfer";
 
 export const page = {
     home: "/",
@@ -22,6 +23,7 @@ export const page = {
 
     admin: {
         all: allAdmins,
+        transfer: transfer,
         exams: {
             all: adminExams
         },

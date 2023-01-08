@@ -1,0 +1,17 @@
+.ImportTestsForm .tests-file-form input[type="file"] {
+    display: none;
+}
+
+.ImportTestsForm .tests-file-form label {
+    border: 1px dashed rgba(0, 0, 0, 0.3);
+    font-size: 20px;
+    color: rgba(0, 0, 0, 0.7);
+    text-align: center;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.15);
+    opacity: 0.5;
+}
+
+.ImportTestsForm .tests-file-form label.active {
+    opacity: 1;
+}

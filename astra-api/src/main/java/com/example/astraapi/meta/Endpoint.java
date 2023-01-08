@@ -26,4 +26,5 @@ public class Endpoint {
   public static final String ADMIN_TESTINGS = "/api/v1/admin/testings";
   public static final String ADMIN_TESTINGS_TESTS = "/api/v1/admin/testings-tests";
   public static final String ADMIN_PROPERTIES = "/api/v1/admin/properties";
+  public static final String ADMIN_IMPORT = "/api/v1/admin/import";
 }

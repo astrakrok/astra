@@ -1,5 +1,6 @@
 package com.example.astraapi.entity;
 
+import com.example.astraapi.meta.TestStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,10 +14,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TestEntity {
-  private Long id;
-  private String question;
-  private String comment;
-  private String questionSvg;
-  private String commentSvg;
-  private List<TestVariantEntity> variants = new ArrayList<>();
+    private Long id;
+    private String question;
+    private String comment;
+    private String questionSvg;
+    private String commentSvg;
+    private TestStatus status;
+    private List<TestVariantEntity> variants = new ArrayList<>();
 }

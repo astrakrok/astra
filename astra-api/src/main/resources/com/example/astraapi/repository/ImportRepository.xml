@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.astraapi.repository.ImportRepository">
+    <insert id="save" parameterType="com.example.astraapi.entity.ImportEntity" useGeneratedKeys="true"
+            keyProperty="entity.id">
+        insert into public.imports (source, source_title, details, title)
+        values (#{entity.source},
+                #{entity.sourceTitle},
+                #{entity.details,jdbcType=OTHER,typeHandler=com.example.astraapi.config.JsonTypeHandler}::jsonb,
+                #{entity.title})
+    </insert>
+
+    <select id="getStats" resultMap="importPage">
+        select i.id                 as id,
+               i.title              as title,
+               i.source             as source,
+               i.source_title       as sourceTitle,
+               i.details            as details,
+               i.created_at         as createdAt,
+               stats.activeCount    as activeCount,
+               stats.draftCount     as draftCount,
+               #{pageable.pageSize} as pageSize,
+               count(i.id) over ()  as rows
+        from public.imports i
+                 left join lateral (
+            select (select count(*)
+                    from public.tests t
+                    where exists(select 1 from public.import_tests it where it.test_id = t.id and it.import_id = i.id)
+                      and status = 'ACTIVE') as activeCount,
+                   (select count(*)
+                    from public.tests t
+                    where exists(select 1 from public.import_tests it where it.test_id = t.id and it.import_id = i.id)
+                      and status = 'DRAFT')  as draftCount
+            ) stats on true
+        where #{searchText}::text is null
+           or i.source_title ilike concat('%', #{searchText}::text, '%')
+           or i.title ilike concat('%', #{searchText}::text, '%')
+        order by i.created_at desc
+        offset #{pageable.offset} limit #{pageable.pageSize}
+    </select>
+
+    <resultMap id="importPage" type="com.example.astraapi.model.Page">
+        <result property="rows" column="rows"/>
+        <result property="pageSize" column="pageSize"/>
+        <collection property="items"
+                    javaType="List"
+                    ofType="com.example.astraapi.entity.projection.TestShortDetailProjection"
+                    resultMap="importStats">
+        </collection>
+    </resultMap>
+
+    <resultMap id="importStats" type="com.example.astraapi.entity.projection.ImportStatsProjection">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="source" property="source"/>
+        <result column="sourceTitle" property="sourceTitle"/>
+        <result column="details" property="details" jdbcType="OTHER"
+                typeHandler="com.example.astraapi.config.JsonTypeHandler"/>
+        <result column="createdAt" property="createdAt"/>
+        <result column="draftCount" property="draftCount"/>
+        <result column="activeCount" property="activeCount"/>
+    </resultMap>
+</mapper>

@@ -25,10 +25,11 @@ const TestsList = ({
     }
 
     const renderTestTableItem = (test, index) => {
+        const statusClass = test.status === 'ACTIVE' ? 'active' : 'draft';
         return (
-            <tr key={test.id} className="clickable" onClick={() => openEditTestPage(test)}>
-                <td className="center">{orderFrom + index + 1}</td>
-                <td className="line-break full-width">{test.question}</td>
+            <tr key={test.id} className={`clickable ${statusClass}`} onClick={() => openEditTestPage(test)}>
+                <td className="center order">{orderFrom + index + 1}</td>
+                <td className="line-break full-width question">{test.question}</td>
                 <td>
                     <div className="s-vflex-center">
                         {
@@ -41,13 +42,13 @@ const TestsList = ({
     }
 
     return (
-        <Table type="secondary">
+        <Table className="TestsList" type="secondary">
             <thead>
-            <tr>
-                <th>#</th>
-                <th>Питання</th>
-                <th>Спеціалізації</th>
-            </tr>
+                <tr>
+                    <th>#</th>
+                    <th>Питання</th>
+                    <th>Спеціалізації</th>
+                </tr>
             </thead>
             <tbody>
             {

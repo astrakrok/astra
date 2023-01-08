@@ -1,0 +1,4 @@
+.TestsList tr.draft td.question,
+.TestsList tr.draft td.order {
+    color: var(--primary-color) !important;
+}

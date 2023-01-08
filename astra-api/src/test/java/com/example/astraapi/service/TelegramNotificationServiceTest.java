@@ -3,7 +3,7 @@ package com.example.astraapi.service;
 import com.example.astraapi.client.TelegramClient;
 import com.example.astraapi.dto.MessageDto;
 import com.example.astraapi.service.impl.TelegramNotificationService;
-import com.example.astraapi.validator.impl.MessageValidator;
+import com.example.astraapi.validation.impl.MessageValidator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
@@ -13,9 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.multipart.MultipartFile;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class TelegramNotificationServiceTest {

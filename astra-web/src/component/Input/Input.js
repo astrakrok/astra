@@ -4,13 +4,14 @@ const Input = props => {
     const {
         inputType = "primary",
         placeholder,
+        wrapperClassName = "",
         withLabel = true,
         className = "",
         ...otherProps
     } = props;
 
     return (
-        <div className={`Input s-vflex ${inputType}`}>
+        <div className={`Input s-vflex ${inputType} ${wrapperClassName}`}>
             {
                 withLabel ? (
                     <label>{placeholder}</label>
