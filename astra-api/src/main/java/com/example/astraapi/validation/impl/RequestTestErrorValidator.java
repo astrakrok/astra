@@ -43,6 +43,7 @@ public class RequestTestErrorValidator implements ErrorValidator<RequestTestDto>
 
     private ValidationError validateLength(String property, String value, Integer min, Integer max) {
         int length = StringUtils.length(value == null ? null : value.strip());
+        // TODO remove duplication
         if ((min == null || length >= min) && (max == null || length <= max)) {
             return null;
         }

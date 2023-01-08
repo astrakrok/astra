@@ -1,6 +1,5 @@
 package com.example.astraapi.controller.admin;
 
-import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.filter.AdminTestFilterDto;
 import com.example.astraapi.dto.test.RequestTestDto;
 import com.example.astraapi.dto.test.TestFullDetailDto;
@@ -22,13 +21,23 @@ public class AdminTestController {
     private final TestService testService;
 
     @PostMapping
-    public IdDto save(@RequestBody RequestTestDto testDto) {
+    public TestFullDetailDto save(@RequestBody RequestTestDto testDto) {
         return testService.save(testDto);
     }
 
+    @PostMapping("/draft")
+    public TestFullDetailDto saveDraft(@RequestBody RequestTestDto testDto) {
+        return testService.saveDraft(testDto);
+    }
+
     @PutMapping("/{id}")
-    public void update(@PathVariable("id") Long id, @Valid @RequestBody RequestTestDto testDto) {
-        testService.update(id, testDto);
+    public Optional<TestFullDetailDto> update(@PathVariable("id") Long id, @RequestBody RequestTestDto testDto) {
+        return testService.update(id, testDto);
+    }
+
+    @PutMapping("/{id}/draft")
+    public Optional<TestFullDetailDto> updateDraft(@PathVariable("id") Long id, @RequestBody RequestTestDto testDto) {
+        return testService.updateDraft(id, testDto);
     }
 
     @PostMapping("/filter")

@@ -9,6 +9,10 @@ import java.util.List;
 public class ValidationException extends RuntimeException {
     private final List<ValidationError> errors;
 
+    public ValidationException(ValidationError error) {
+        this.errors = List.of(error);
+    }
+
     public ValidationException(List<ValidationError> errors) {
         this.errors = errors;
     }

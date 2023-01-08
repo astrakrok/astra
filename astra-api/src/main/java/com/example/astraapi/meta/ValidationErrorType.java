@@ -6,5 +6,6 @@ public enum ValidationErrorType {
     INVALID_CORRECTNESS,
     NOT_FOUND,
     CONFLICT,
+    INVALID_STATUS,
     UNKNOWN
 }

@@ -24,6 +24,10 @@ public interface TestRepository {
 
     void update(@Param("entity") TestEntity testEntity);
 
+    boolean existsByIdAndStatus(
+            @Param("id") Long id,
+            @Param("status") TestStatus status);
+
     Optional<TestFullDetailEntity> getDetailedTestById(@Param("id") Long id);
 
     List<TestFullDetailEntity> getTestsByTestingId(

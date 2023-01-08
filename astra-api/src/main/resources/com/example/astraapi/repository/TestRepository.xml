@@ -18,6 +18,12 @@
         where id = #{entity.id}
     </update>
 
+    <select id="existsByIdAndStatus" resultType="java.lang.Boolean">
+        select exists(
+                       select 1 from public.tests t where t.id = #{id} and t.status = #{status}
+                   )
+    </select>
+
     <select id="getAll" resultMap="testPage">
         select nested.id       as id,
                nested.question as question,
@@ -45,7 +51,8 @@
                 and (#{importId}::bigint is null or
                      exists(select 1
                             from public.import_tests it
-                            where it.import_id = #{importId}::bigint and it.test_id = t.id))
+                            where it.import_id = #{importId}::bigint
+                              and it.test_id = t.id))
               order by id
               offset #{pageable.offset} limit #{pageable.pageSize}) as nested
                  left join public.tests_subjects ts on nested.id = ts.test_id
@@ -60,6 +67,7 @@
                t.question_svg     as questionSvg,
                t.comment          as comment,
                t.comment_svg      as commentSvg,
+               t.status           as status,
                tv.id              as variantId,
                tv.title           as variantTitle,
                tv.title_svg       as variantTitleSvg,
@@ -68,12 +76,21 @@
                tv.is_correct      as variantIsCorrect,
                s.id               as subjectId,
                s.title            as subjectTitle,
+               testing.id         as testingId,
+               e.id               as examId,
+               e.title            as examTitle,
+               spec.id            as specializationId,
+               spec.title         as specializationTitle,
                it.details         as importDetails
         from public.tests t
                  left join public.tests_variants tv on t.id = tv.test_id
                  left join public.tests_subjects ts on t.id = ts.test_id
                  left join public.subjects s on ts.subject_id = s.id
                  left join public.import_tests it on it.test_id = t.id
+                 left join public.testings_tests tt on tt.test_id = t.id
+                 left join public.testings testing on testing.id = tt.testing_id
+                 left join public.exams e on e.id = testing.exam_id
+                 left join public.specializations spec on spec.id = testing.specialization_id
         where t.id = #{id}
         order by t.id, tv.id
     </select>
@@ -137,7 +154,8 @@
                  left join public.subjects sub on ts.subject_id = sub.id
                  left join public.specializations spec on spec.id = sub.specialization_id
                  left join public.tests_variants tv on t.id = tv.test_id
-        where spec.id = (select specialization_id
+        where t.status = 'ACTIVE'
+          and spec.id = (select specialization_id
                          from public.testings
                          where testings.id = #{testingId})
           and t.id not in (select tt.test_id
@@ -173,6 +191,7 @@
         <result column="questionSvg" property="questionSvg"/>
         <result column="comment" property="comment"/>
         <result column="commentSvg" property="commentSvg"/>
+        <result column="status" property="status"/>
         <result column="importDetails" property="importDetails" jdbcType="OTHER"
                 typeHandler="com.example.astraapi.config.JsonTypeHandler"/>
 
@@ -185,9 +204,18 @@
             <result column="variantIsCorrect" property="correct"/>
         </collection>
 
-        <collection property="exams" javaType="List" ofType="com.example.astraapi.entity.ExamEntity">
-            <id column="examId" property="id"/>
-            <result column="examTitle" property="title"/>
+        <collection property="testings" javaType="List" ofType="com.example.astraapi.entity.TestingInfoEntity">
+            <id column="testingId" property="id"/>
+
+            <association property="exam" javaType="com.example.astraapi.entity.ExamEntity">
+                <id column="examId" property="id"/>
+                <result column="examTitle" property="title"/>
+            </association>
+
+            <association property="specialization" javaType="com.example.astraapi.entity.SpecializationEntity">
+                <id column="specializationId" property="id"/>
+                <result column="specializationTitle" property="title"/>
+            </association>
         </collection>
 
         <collection property="subjects" javaType="List" ofType="com.example.astraapi.entity.SubjectEntity">

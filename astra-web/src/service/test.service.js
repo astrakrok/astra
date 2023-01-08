@@ -40,3 +40,14 @@ export const updateTest = async test => {
         }));
     return response.data;
 }
+
+export const updateTestDraft = async test => {
+    const url = route.admin.tests + "/" + test.id + "/draft";
+    const response = await client.put(url, test)
+        .catch(() => ({
+            data: {
+                error: "Something went wrong..."
+            }
+        }));
+    return response.data;
+}
