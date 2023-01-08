@@ -1,8 +1,9 @@
 package com.example.astraapi.dto.test;
 
-import com.example.astraapi.dto.exam.ResponseExamDto;
 import com.example.astraapi.dto.subject.ResponseSubjectDto;
 import com.example.astraapi.dto.test.variant.TestVariantDto;
+import com.example.astraapi.dto.testing.TestingDetailDto;
+import com.example.astraapi.meta.TestStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,13 +19,14 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TestFullDetailDto {
-  private Long id;
-  private String question;
-  private String questionSvg;
-  private String comment;
-  private String commentSvg;
-  private List<TestVariantDto> variants = new ArrayList<>();
-  private List<ResponseExamDto> exams = new ArrayList<>();
-  private List<ResponseSubjectDto> subjects = new ArrayList<>();
-  private Map<String, Object> importDetails = new HashMap<>();
+    private Long id;
+    private String question;
+    private String questionSvg;
+    private String comment;
+    private String commentSvg;
+    private TestStatus status;
+    private List<TestingDetailDto> testings = new ArrayList<>();
+    private List<TestVariantDto> variants = new ArrayList<>();
+    private List<ResponseSubjectDto> subjects = new ArrayList<>();
+    private Map<String, Object> importDetails = new HashMap<>();
 }

@@ -30,8 +30,30 @@ export const saveTest = async test => {
     }
 }
 
+export const saveTestDraft = async test => {
+    try {
+        const response = await client.post(route.admin.tests + "/draft", test);
+        return response.data;
+    } catch (error) {
+        return {
+            error: "Something went wrong..."
+        };
+    }
+}
+
 export const updateTest = async test => {
     const url = route.admin.tests + "/" + test.id;
+    const response = await client.put(url, test)
+        .catch(() => ({
+            data: {
+                error: "Something went wrong..."
+            }
+        }));
+    return response.data;
+}
+
+export const updateTestDraft = async test => {
+    const url = route.admin.tests + "/" + test.id + "/draft";
     const response = await client.put(url, test)
         .catch(() => ({
             data: {

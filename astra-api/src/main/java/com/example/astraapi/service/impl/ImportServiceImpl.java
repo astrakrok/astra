@@ -5,6 +5,7 @@ import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.filter.AdminImportTestFilterDto;
 import com.example.astraapi.dto.importing.ImportStatsDto;
 import com.example.astraapi.dto.test.RequestTestDto;
+import com.example.astraapi.dto.test.TestFullDetailDto;
 import com.example.astraapi.entity.ImportEntity;
 import com.example.astraapi.entity.ImportTestEntity;
 import com.example.astraapi.entity.projection.ImportSubjectProjection;
@@ -77,11 +78,11 @@ public class ImportServiceImpl implements ImportService {
             List<Long> subjectIds = getSubjectIds(importSubjectResult.getValidSubjects());
             RequestTestDto testDto = testMapper.toRequestTestDto(test, subjectIds);
             List<ValidationError> testErrors = testValidator.validate(testDto);
-            IdDto idDto = testErrors.isEmpty() ? testService.save(testDto) : testService.saveDraft(testDto);
+            TestFullDetailDto testFullDetailDto = testErrors.isEmpty() ? testService.save(testDto) : testService.saveDraft(testDto);
             importTestEntities.add(new ImportTestEntity(
                     null,
                     importEntity.getId(),
-                    idDto.getId(),
+                    testFullDetailDto.getId(),
                     details));
         }
         importTestRepository.saveAll(importTestEntities);

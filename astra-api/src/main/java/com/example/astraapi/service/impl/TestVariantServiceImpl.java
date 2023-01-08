@@ -26,6 +26,9 @@ public class TestVariantServiceImpl implements TestVariantService {
 
   @Override
   public void save(Long testId, Collection<TestVariantDto> testVariants) {
+    if (testVariants.isEmpty()) {
+      return;
+    }
     List<TestVariantEntity> variantEntities = testVariants.stream()
         .map(variantMapper::toEntity)
         .collect(Collectors.toList());

@@ -17,10 +17,13 @@ import ErrorsArea from "../../ErrorsArea/ErrorsArea";
 import {validateTest} from "../../../validation/custom/test.validator";
 import MessagePopupBody from "../../popup-component/MessagePopupBody/MessagePopupBody";
 import Alert from "../../Alert/Alert";
+import DisplayBoundary from "../../DisplayBoundary/DisplayBoundary";
 
 const TestForm = ({
                       initialTest = defaultEmptyTest,
                       onSend = () => {
+                      },
+                      onSendDraft = () => {
                       }
                   }) => {
     const [test, setTest] = useState(initialTest);
@@ -56,15 +59,20 @@ const TestForm = ({
                 errors: validationResult.errors
             });
             setPopupState({
-                bodyGetter: () => <MessagePopupBody message="Збереження не можливе. Тест містить помилки" />
+                bodyGetter: () => <MessagePopupBody message="Збереження не можливе. Тест містить помилки"/>
             });
             return;
         }
-        await onSend(test);
+        const savedTest = await onSend(test);
         setFormState({
             loading: false,
             errors: {}
         });
+        if (savedTest.id) {
+            setTest({
+                ...savedTest
+            });
+        }
     }
 
     const saveDraft = async () => {
@@ -72,6 +80,16 @@ const TestForm = ({
             loading: true,
             errors: {}
         });
+        const updatedTest = await onSendDraft(test);
+        setFormState({
+            loading: false,
+            errors: {}
+        });
+        if (updatedTest.id) {
+            setTest({
+                ...updatedTest
+            });
+        }
     }
 
     const updateVariant = (values, index) => {
@@ -169,9 +187,11 @@ const TestForm = ({
             <Badge key={subject.id} type="green">
                 <div className="s-hflex">
                     <span className="long-text">{subject.title}</span>
-                    <div className="delete-subject s-vflex-center" onClick={() => removeSubject(index)}>
-                        <i className="tiny material-icons">close</i>
-                    </div>
+                    <DisplayBoundary condition={test.testings.length === 0}>
+                        <div className="delete-subject s-vflex-center" onClick={() => removeSubject(index)}>
+                            <i className="tiny material-icons">close</i>
+                        </div>
+                    </DisplayBoundary>
                 </div>
             </Badge>
         );
@@ -230,12 +250,13 @@ const TestForm = ({
         }));
     }
 
-    const renderDuplicateSubjectItem = (subject, index) => (
+    const renderDuplicateSubjectItem = subject => (
         <>
-            <div>Предмет <strong>{subject.title}</strong> був знайденим у наступних спеціалізаціях: </div>
+            <div>Предмет <strong>{subject.title}</strong> був знайденим у наступних спеціалізаціях:</div>
             <ul className="browser-default errors-list">
                 {
-                    subject.items.map(item => <li key={item.specializationId}>{item.specializationTitle} ({item.stepTitle})</li>)
+                    subject.items.map(item => <li
+                        key={item.specializationId}>{item.specializationTitle} ({item.stepTitle})</li>)
                 }
             </ul>
         </>
@@ -243,9 +264,9 @@ const TestForm = ({
 
     return (
         <div className="TestForm s-vflex">
-            <InfoHeader>Основна інформація</InfoHeader>
+            <InfoHeader>{test.status === "DRAFT" ? "Чернетка | " : null}Основна інформація</InfoHeader>
             {
-                (notFoundSubjects || duplicateSubjects) ? (
+                (notFoundSubjects.length || duplicateSubjects.length) ? (
                     <>
                         <Alert type="warning">
                             При імпорті предметів для даного тесту виникли помилки.
@@ -272,7 +293,25 @@ const TestForm = ({
                                 </div>
                             </div>
                         </Alert>
-                        <Spacer height={15} />
+                        <Spacer height={15}/>
+                    </>
+                ) : null
+            }
+            {
+                test.testings.length > 0 ? (
+                    <>
+                        <Alert type="success">
+                            <strong>Увага!</strong> Тест належить до наступних іспитів:
+                            <ul className="browser-default">
+                                {
+                                    test.testings.map(item => <li
+                                        key={item.id}>{item.exam.title} ({item.specialization.title})</li>)
+                                }
+                            </ul>
+                            Це робить неможливим видалення предметів з цього тесту та збереження цього тесту як
+                            чернетки.
+                        </Alert>
+                        <Spacer height={15}/>
                     </>
                 ) : null
             }
@@ -335,9 +374,13 @@ const TestForm = ({
                         {
                             ({setPopupState}) => (
                                 <>
-                                    <Button onClick={saveDraft}>Зберегти чернетку</Button>
-                                    <Spacer width={10} />
-                                    <Button onClick={() => save(setPopupState)} isFilled={true}>Зберегти</Button>
+                                    <DisplayBoundary condition={test.status !== 'ACTIVE'}>
+                                        <Button
+                                            onClick={saveDraft}>{test.id ? "Зберегти" : "Створити"} чернетку</Button>
+                                        <Spacer width={10}/>
+                                    </DisplayBoundary>
+                                    <Button onClick={() => save(setPopupState)}
+                                            isFilled={true}>{test.id ? "Зберегти" : "Створити"}</Button>
                                 </>
                             )
                         }
