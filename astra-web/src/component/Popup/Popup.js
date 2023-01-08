@@ -19,7 +19,7 @@ const Popup = ({
             {
                 ({setPopupState}) => {
                     return (
-                        <div className="Popup popup open">
+                        <div className="Popup popup open" onClick={event => handleOutsideClick(event, setPopupState)}>
                             <div className="popup-wrapper full-height full-width s-vflex-center" onClick={event => handleOutsideClick(event, setPopupState)}>
                                 <div className={`popup-container ${size}`}>
                                     <div className="popup-header">

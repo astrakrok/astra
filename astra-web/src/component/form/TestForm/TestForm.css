@@ -65,3 +65,7 @@
 .TestForm .collection {
     margin-bottom: 0;
 }
+
+.TestForm .errors-list {
+    margin-top: 0;
+}

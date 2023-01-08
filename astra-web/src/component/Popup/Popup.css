@@ -7,10 +7,16 @@
     left: 0;
     display: none;
     z-index: 10000;
+    overflow-y: auto;
+    padding: 10px;
 }
 
 .Popup.open {
     display: block;
+}
+
+.Popup .popup-wrapper {
+    height: auto;
 }
 
 .Popup .popup-container {
@@ -28,6 +34,10 @@
 
 .Popup .popup-container.medium {
     max-width: 600px;
+}
+
+.Popup .popup-container.extra-large {
+    max-width: 90%;
 }
 
 .Popup .popup-wrapper {

@@ -1,8 +1,8 @@
 import {route} from "../constant/app.route";
 import {client} from "../shared/js/axios";
 
-export const getDetailedTests = async (pageSize, pageNumber) => {
-    const response = await client.get(route.admin.tests + `?pageSize=${pageSize}&pageNumber=${pageNumber}`);
+export const getDetailedTests = async (filter, pageable) => {
+    const response = await client.post(route.admin.tests + `/filter?pageSize=${pageable.pageSize}&pageNumber=${pageable.pageNumber}`, filter);
     return response.data;
 }
 

@@ -8,7 +8,8 @@
         values (#{entity.title}, #{entity.specializationId});
     </insert>
 
-    <select id="getAllSubjectsDetails" resultType="com.example.astraapi.entity.SubjectDetailEntity" resultMap="subjects">
+    <select id="getAllSubjectsDetails" resultType="com.example.astraapi.entity.SubjectDetailEntity"
+            resultMap="subjects">
         select sub.id     as subjectId,
                sub.title  as subjectTitle,
                spec.id    as specializationId,
@@ -30,17 +31,65 @@
         where id = #{id}
     </update>
 
+    <select id="getSubjects"
+            resultType="com.example.astraapi.entity.projection.ImportSubjectProjection">
+        select
+        data.subjectId as subjectId,
+        data.subjectTitle as subjectTitle,
+        data.specializationId as specializationId,
+        data.specializationTitle as specializationTitle,
+        data.stepId as stepId,
+        data.stepTitle as stepTitle,
+        passed.importSubjectTitle as importSubjectTitle,
+        passed.importSpecializationTitle as importSpecializationTitle,
+        passed.importStepTitle as importStepTitle
+        from (select
+        unnest(array [
+        <foreach collection="subjectTitles" item="title" separator=",">
+            #{title}
+        </foreach>
+        ]::text[]) as importSubjectTitle,
+        unnest(array [
+        <foreach collection="specializationTitles" item="title" separator=",">
+            #{title}
+        </foreach>
+        ]::text[]) as importSpecializationTitle,
+        unnest(array [
+        <foreach collection="stepTitles" item="title" separator=",">
+            #{title}
+        </foreach>
+        ]::text[]) as importStepTitle
+        ) passed
+        left join lateral (
+        select
+        sub.id as subjectId,
+        sub.title as subjectTitle,
+        spec.id as specializationId,
+        spec.title as specializationTitle,
+        s.id as stepId,
+        s.title as stepTitle
+        from
+        public.subjects sub
+        left join public.specializations spec on spec.id = sub.specialization_id
+        left join public.steps s on s.id = spec.step_id
+        where sub.title ilike importSubjectTitle
+        and (importSpecializationTitle is null or spec.title ilike importSpecializationTitle)
+        and (importStepTitle is null or s.title ilike importStepTitle)
+        ) data on true
+    </select>
+
     <resultMap id="subjects" type="com.example.astraapi.entity.projection.SubjectDetailEntity">
         <id column="subjectId" property="id"/>
         <result column="subjectTitle" property="title"/>
 
-        <association property="specialization" javaType="com.example.astraapi.entity.projection.StepSpecializationProjection">
+        <association property="specialization"
+                     javaType="com.example.astraapi.entity.projection.StepSpecializationProjection">
             <id column="specializationId" property="id"/>
             <result column="specializationTitle" property="title"/>
 
             <association property="step" javaType="com.example.astraapi.entity.StepEntity">
-                <id column="stepId" property="id" />
-                <result column="stepTitle" property="title" />
+                <id column="stepId" property="id"/>
+                <result column="stepTitle" property="title"/>
             </association>
         </association>
     </resultMap>

@@ -1,6 +1,7 @@
 package com.example.astraapi.dto.test;
 
 import com.example.astraapi.dto.specialization.SpecializationDto;
+import com.example.astraapi.meta.TestStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TestShortDetailDto {
-  private Long id;
-  private String question;
-  private String comment;
-  private List<SpecializationDto> specializations;
+    private Long id;
+    private String question;
+    private String comment;
+    private TestStatus status;
+    private List<SpecializationDto> specializations;
 }

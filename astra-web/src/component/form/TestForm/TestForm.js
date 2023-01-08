@@ -15,6 +15,8 @@ import Editor from "../../Editor/Editor";
 import SvgContentChooser from "../../SvgContentChooser/SvgContentChooser";
 import ErrorsArea from "../../ErrorsArea/ErrorsArea";
 import {validateTest} from "../../../validation/custom/test.validator";
+import MessagePopupBody from "../../popup-component/MessagePopupBody/MessagePopupBody";
+import Alert from "../../Alert/Alert";
 
 const TestForm = ({
                       initialTest = defaultEmptyTest,
@@ -27,6 +29,14 @@ const TestForm = ({
         errors: {}
     });
 
+    const notFoundSubjects = test.importDetails.errors ? test.importDetails.errors
+        .filter(error => error.type === "NOT_FOUND")
+        .map(error => error.details.subject) : [];
+
+    const duplicateSubjects = test.importDetails.errors ? test.importDetails.errors
+        .filter(error => error.type === "CONFLICT")
+        .map(error => error.details.subject) : [];
+
     const getVariantPropertyError = (index, property) => {
         if (!formState.errors.variants || !formState.errors.variants[index]) {
             return null;
@@ -34,7 +44,7 @@ const TestForm = ({
         return formState.errors.variants[index][property];
     }
 
-    const save = async () => {
+    const save = async setPopupState => {
         setFormState({
             loading: true,
             errors: {}
@@ -45,11 +55,21 @@ const TestForm = ({
                 loading: false,
                 errors: validationResult.errors
             });
+            setPopupState({
+                bodyGetter: () => <MessagePopupBody message="Збереження не можливе. Тест містить помилки" />
+            });
             return;
         }
         await onSend(test);
         setFormState({
             loading: false,
+            errors: {}
+        });
+    }
+
+    const saveDraft = async () => {
+        setFormState({
+            loading: true,
             errors: {}
         });
     }
@@ -210,9 +230,52 @@ const TestForm = ({
         }));
     }
 
+    const renderDuplicateSubjectItem = (subject, index) => (
+        <>
+            <div>Предмет <strong>{subject.title}</strong> був знайденим у наступних спеціалізаціях: </div>
+            <ul className="browser-default errors-list">
+                {
+                    subject.items.map(item => <li key={item.specializationId}>{item.specializationTitle} ({item.stepTitle})</li>)
+                }
+            </ul>
+        </>
+    );
+
     return (
         <div className="TestForm s-vflex">
             <InfoHeader>Основна інформація</InfoHeader>
+            {
+                (notFoundSubjects || duplicateSubjects) ? (
+                    <>
+                        <Alert type="warning">
+                            При імпорті предметів для даного тесту виникли помилки.
+                            {
+                                notFoundSubjects.length > 0 ? (
+                                    <>
+                                        <div>Предмети, які не були знайденими:</div>
+                                        <ul className="browser-default errors-list">
+                                            {
+                                                notFoundSubjects.map((subject, index) => <li key={index}>{subject}</li>)
+                                            }
+                                        </ul>
+                                    </>
+                                ) : null
+                            }
+                            {
+                                duplicateSubjects.length > 0 ? (
+                                    duplicateSubjects.map(renderDuplicateSubjectItem)
+                                ) : null
+                            }
+                            <div className="s-hflex-end">
+                                <div className="text clickable">
+                                    Ігнорувати
+                                </div>
+                            </div>
+                        </Alert>
+                        <Spacer height={15} />
+                    </>
+                ) : null
+            }
             <Textarea noMargin={true} placeholder="Питання" value={test.question}
                       onChange={event => setTest({...test, question: event.target.value})}/>
             <ErrorsArea errors={formState.errors.question}/>
@@ -268,7 +331,17 @@ const TestForm = ({
             <Spacer height={20}/>
             <div className="s-hflex-end">
                 <LoaderBoundary condition={formState.loading} size="small">
-                    <Button onClick={save}>Зберегти</Button>
+                    <PopupConsumer>
+                        {
+                            ({setPopupState}) => (
+                                <>
+                                    <Button onClick={saveDraft}>Зберегти чернетку</Button>
+                                    <Spacer width={10} />
+                                    <Button onClick={() => save(setPopupState)} isFilled={true}>Зберегти</Button>
+                                </>
+                            )
+                        }
+                    </PopupConsumer>
                 </LoaderBoundary>
             </div>
         </div>

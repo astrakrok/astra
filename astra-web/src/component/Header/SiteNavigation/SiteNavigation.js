@@ -19,6 +19,9 @@ const SiteNavigation = () => {
     const getAdminDropdownContent = () => {
         return (
             <DropdownList items={[
+                <Link to={page.admin.transfer}>
+                    <IconTitle icon="import_export" title="Імпорт/Експорт" />
+                </Link>,
                 <Link to={page.admin.exams.all}>
                     <IconTitle icon="timelapse" title="Іспити" />
                 </Link>,

@@ -4,8 +4,8 @@
 <mapper namespace="com.example.astraapi.repository.TestRepository">
     <insert id="save" parameterType="com.example.astraapi.entity.TestEntity" useGeneratedKeys="true"
             keyProperty="entity.id">
-        insert into public.tests(question, comment, question_svg, comment_svg)
-        values (#{entity.question}, #{entity.comment}, #{entity.questionSvg}, #{entity.commentSvg})
+        insert into public.tests(question, comment, question_svg, comment_svg, status)
+        values (#{entity.question}, #{entity.comment}, #{entity.questionSvg}, #{entity.commentSvg}, #{entity.status})
     </insert>
 
     <update id="update">
@@ -13,7 +13,8 @@
         set question     = #{entity.question},
             comment      = #{entity.comment},
             question_svg = #{entity.questionSvg},
-            comment_svg  = #{entity.commentSvg}
+            comment_svg  = #{entity.commentSvg},
+            status       = #{entity.status}
         where id = #{entity.id}
     </update>
 
@@ -21,14 +22,30 @@
         select nested.id       as id,
                nested.question as question,
                nested.comment  as comment,
+               nested.status   as status,
                nested.rows     as rows,
-               spec.id            as specializationId,
-               spec.title         as specializationTitle
+               spec.id         as specializationId,
+               spec.title      as specializationTitle
         from (select t.id                as id,
                      t.question          as question,
                      t.comment           as comment,
+                     t.status            as status,
                      count(t.id) over () as rows
               from public.tests t
+              where (cast(#{status} as varchar) is null or t.status = cast(#{status} as varchar))
+                and (cast(#{searchText} as varchar) is null or
+                     t.question ilike concat('%', #{searchText}::varchar, '%') or
+                     t.comment ilike concat('%', #{searchText}::varchar, '%') or exists(select 1
+                                                                                        from public.tests_variants tv
+                                                                                        where tv.test_id = t.id
+                                                                                          and (tv.title ilike
+                                                                                               concat('%', #{searchText}::varchar, '%') or
+                                                                                               tv.explanation ilike
+                                                                                               concat('%', #{searchText}::varchar, '%'))))
+                and (#{importId}::bigint is null or
+                     exists(select 1
+                            from public.import_tests it
+                            where it.import_id = #{importId}::bigint and it.test_id = t.id))
               order by id
               offset #{pageable.offset} limit #{pageable.pageSize}) as nested
                  left join public.tests_subjects ts on nested.id = ts.test_id
@@ -50,34 +67,32 @@
                tv.explanation_svg as variantExplanationSvg,
                tv.is_correct      as variantIsCorrect,
                s.id               as subjectId,
-               s.title            as subjectTitle
+               s.title            as subjectTitle,
+               it.details         as importDetails
         from public.tests t
                  left join public.tests_variants tv on t.id = tv.test_id
                  left join public.tests_subjects ts on t.id = ts.test_id
                  left join public.subjects s on ts.subject_id = s.id
+                 left join public.import_tests it on it.test_id = t.id
         where t.id = #{id}
         order by t.id, tv.id
     </select>
 
     <select id="getTestsByTestingId" resultMap="testingTest">
         select *
-        from (
-                 select *
-                 from (
-                          select distinct on (t.id) t.id           as id,
-                                                    t.question     as question,
-                                                    t.question_svg as questionSvg,
-                                                    t.comment      as comment,
-                                                    t.comment_svg  as commentSvg
-                          from public.testings
-                                   left join public.testings_tests tt on testings.id = tt.testing_id
-                                   left join public.tests t on t.id = tt.test_id
-                          where testings.id = #{testingId}
-                          order by t.id
-                      ) as subsubtable
-                 order by random()
-                 limit #{count}
-             ) as subtable
+        from (select *
+              from (select distinct on (t.id) t.id           as id,
+                                              t.question     as question,
+                                              t.question_svg as questionSvg,
+                                              t.comment      as comment,
+                                              t.comment_svg  as commentSvg
+                    from public.testings
+                             left join public.testings_tests tt on testings.id = tt.testing_id
+                             left join public.tests t on t.id = tt.test_id
+                    where testings.id = #{testingId}
+                    order by t.id) as subsubtable
+              order by random()
+              limit #{count}) as subtable
                  join lateral (
             select tv.id              as variantId,
                    tv.title           as variantTitle,
@@ -123,18 +138,19 @@
                  left join public.specializations spec on spec.id = sub.specialization_id
                  left join public.tests_variants tv on t.id = tv.test_id
         where spec.id = (select specialization_id
-                                   from public.testings
-                                   where testings.id = #{testingId})
+                         from public.testings
+                         where testings.id = #{testingId})
           and t.id not in (select tt.test_id
                            from public.testings_tests tt
                            where tt.testing_id = #{testingId})
         order by id, variantId
     </select>
 
-    <resultMap id="testShortDetail" type="com.example.astraapi.entity.TestShortDetailEntity">
+    <resultMap id="testShortDetail" type="com.example.astraapi.entity.projection.TestShortDetailProjection">
         <id column="id" property="id"/>
         <result column="question" property="question"/>
         <result column="comment" property="comment"/>
+        <result column="status" property="status"/>
         <collection property="specializations" javaType="List"
                     ofType="com.example.astraapi.entity.SpecializationEntity">
             <id column="specializationId" property="id"/>
@@ -146,7 +162,7 @@
         <result property="rows" column="rows"/>
         <collection property="items"
                     javaType="List"
-                    ofType="com.example.astraapi.entity.TestShortDetailEntity"
+                    ofType="com.example.astraapi.entity.projection.TestShortDetailProjection"
                     resultMap="testShortDetail">
         </collection>
     </resultMap>
@@ -157,6 +173,8 @@
         <result column="questionSvg" property="questionSvg"/>
         <result column="comment" property="comment"/>
         <result column="commentSvg" property="commentSvg"/>
+        <result column="importDetails" property="importDetails" jdbcType="OTHER"
+                typeHandler="com.example.astraapi.config.JsonTypeHandler"/>
 
         <collection property="variants" javaType="List" ofType="com.example.astraapi.entity.TestVariantEntity">
             <id column="variantId" property="id"/>

@@ -1,39 +1,39 @@
 package com.example.astraapi.mapper;
 
-import com.example.astraapi.dto.test.ExaminationTestDto;
-import com.example.astraapi.dto.test.RequestTestDto;
-import com.example.astraapi.dto.test.TestFullDetailDto;
-import com.example.astraapi.dto.test.TestShortDetailDto;
-import com.example.astraapi.dto.test.TestingShortTestDto;
-import com.example.astraapi.dto.test.TrainingTestDto;
+import com.example.astraapi.dto.test.*;
 import com.example.astraapi.entity.TestEntity;
 import com.example.astraapi.entity.TestFullDetailEntity;
-import com.example.astraapi.entity.TestShortDetailEntity;
+import com.example.astraapi.entity.projection.TestShortDetailProjection;
 import com.example.astraapi.mapper.qualifier.TitleQualifier;
-import com.example.astraapi.model.Page;
+import com.example.astraapi.meta.TestStatus;
+import com.example.astraapi.model.importing.ImportTest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", uses = {
-    TitleQualifier.class,
-    TestVariantMapper.class
+        TitleQualifier.class,
+        TestVariantMapper.class
 })
 public interface TestMapper {
-  @Mapping(target = "question", qualifiedByName = TitleQualifier.TRIM)
-  @Mapping(target = "comment", qualifiedByName = TitleQualifier.TRIM)
-  TestEntity toEntity(RequestTestDto testDto);
+    @Mapping(target = "question", qualifiedByName = TitleQualifier.TRIM)
+    @Mapping(target = "comment", qualifiedByName = TitleQualifier.TRIM)
+    TestEntity toEntity(RequestTestDto testDto, TestStatus status);
 
-  @Mapping(target = "question", qualifiedByName = TitleQualifier.TRIM)
-  @Mapping(target = "comment", qualifiedByName = TitleQualifier.TRIM)
-  TestEntity toEntity(Long id, RequestTestDto testDto);
+    @Mapping(target = "question", qualifiedByName = TitleQualifier.TRIM)
+    @Mapping(target = "comment", qualifiedByName = TitleQualifier.TRIM)
+    TestEntity toEntity(Long id, RequestTestDto testDto, TestStatus status);
 
-  Page<TestShortDetailDto> toShortDetailDto(Page<TestShortDetailEntity> testShortDetailEntity);
+    TestShortDetailDto toShortDetailDto(TestShortDetailProjection testShortDetailProjection);
 
-  TestFullDetailDto toFullDetailDto(TestFullDetailEntity testFullDetailEntity);
+    TestFullDetailDto toFullDetailDto(TestFullDetailEntity testFullDetailEntity);
 
-  TrainingTestDto toTrainingDto(TestFullDetailEntity entity);
+    TrainingTestDto toTrainingDto(TestFullDetailEntity entity);
 
-  ExaminationTestDto toExaminationDto(TestFullDetailEntity entity);
+    ExaminationTestDto toExaminationDto(TestFullDetailEntity entity);
 
-  TestingShortTestDto toShortTestDto(TestEntity entity);
+    TestingShortTestDto toShortTestDto(TestEntity entity);
+
+    RequestTestDto toRequestTestDto(ImportTest test, List<Long> subjectIds);
 }

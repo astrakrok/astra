@@ -6,10 +6,16 @@ import TestsList from "../../../../TestsList/TestsList";
 import "./AllTestsPage.css";
 import InfoText from "../../../../InfoText/InfoText";
 import Paginated from "../../../../Paginated/Paginated";
+import Spacer from "../../../../Spacer/Spacer";
+import {app} from "../../../../../constant/app";
+import TestsFilter from "../../../../filter/TestsFilter/TestsFilter";
+import {useSearchParams} from "react-router-dom";
 
 const AllTestsPage = () => {
-    const fetchPage = async (pageSize, pageNumber) => {
-        return await getDetailedTests(pageSize, pageNumber);
+    const [searchParams] = useSearchParams();
+
+    const fetchPage = async (filter, pageable) => {
+        return await getDetailedTests(filter, pageable);
     }
 
     return (
@@ -18,10 +24,14 @@ const AllTestsPage = () => {
                 <div className="s-hflex-end">
                     <Button to={page.admin.tests.create} isFilled={true}>Створити</Button>
                 </div>
+                <Spacer height={20} />
                 <div className="tests-list s-hflex-center">
-                    <Paginated pageHandler={fetchPage}>
-                        {
-                            (items, orderFrom) => (
+                    <Paginated pageSize={app.pageSize} pageHandler={fetchPage} initialFilter={{importId: searchParams.get("importId")}}>
+                        {({
+                            filter: ({initialFilter, setFilter}) => (
+                                <TestsFilter initialFilter={initialFilter} onFilterSelected={setFilter} />
+                            ),
+                            content: (items, orderFrom) => (
                                 items.length > 0 ? (
                                     <TestsList tests={items} orderFrom={orderFrom}/>
                                 ) : (
@@ -30,7 +40,7 @@ const AllTestsPage = () => {
                                     </InfoText>
                                 )
                             )
-                        }
+                        })}
                     </Paginated>
                 </div>
             </div>

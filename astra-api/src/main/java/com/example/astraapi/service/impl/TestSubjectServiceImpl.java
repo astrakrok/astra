@@ -20,6 +20,9 @@ public class TestSubjectServiceImpl implements TestSubjectService {
 
   @Override
   public void save(Long testId, Collection<Long> subjectIds) {
+    if (subjectIds.isEmpty()) {
+      return;
+    }
     testSubjectRepository.save(testId, subjectIds);
   }
 

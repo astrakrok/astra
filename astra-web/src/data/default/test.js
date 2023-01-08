@@ -4,6 +4,7 @@ export const defaultEmptyTest = {
     questionSvg: "",
     comment: "",
     commentSvg: "",
+    importDetails: {},
     variants: [],
     subjects: []
 };

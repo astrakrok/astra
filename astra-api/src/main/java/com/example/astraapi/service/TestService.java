@@ -1,14 +1,10 @@
 package com.example.astraapi.service;
 
-import com.example.astraapi.dto.*;
-import com.example.astraapi.dto.examination.ExaminationSearchDto;
-import com.example.astraapi.dto.test.ExaminationTestDto;
-import com.example.astraapi.dto.test.RequestTestDto;
-import com.example.astraapi.dto.test.TestFullDetailDto;
-import com.example.astraapi.dto.test.TestShortDetailDto;
-import com.example.astraapi.dto.test.TestingShortTestDto;
+import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.TrainingSearchDto;
-import com.example.astraapi.dto.test.TrainingTestDto;
+import com.example.astraapi.dto.examination.ExaminationSearchDto;
+import com.example.astraapi.dto.filter.AdminTestFilterDto;
+import com.example.astraapi.dto.test.*;
 import com.example.astraapi.model.Page;
 import com.example.astraapi.model.Pageable;
 
@@ -16,19 +12,23 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TestService {
-  IdDto save(RequestTestDto testDto);
+    IdDto save(RequestTestDto testDto);
 
-  Page<TestShortDetailDto> getAll(Pageable pageable);
+    IdDto saveDraft(RequestTestDto testDto);
 
-  void update(Long id, RequestTestDto testDto);
+    Page<TestShortDetailDto> getAll(AdminTestFilterDto filter, Pageable pageable);
 
-  Optional<TestFullDetailDto> getDetailedTest(Long id);
+    void update(Long id, RequestTestDto testDto);
 
-  List<TrainingTestDto> getTrainingTests(TrainingSearchDto searchDto);
+    void updateDraft(Long id, RequestTestDto testDto);
 
-  List<ExaminationTestDto> getExaminationTests(long count, ExaminationSearchDto searchDto);
+    Optional<TestFullDetailDto> getDetailedTest(Long id);
 
-  List<ExaminationTestDto> getExaminationTests(List<Long> ids);
+    List<TrainingTestDto> getTrainingTests(TrainingSearchDto searchDto);
 
-  List<TestingShortTestDto> getNotYetSelectedTestingTests(Long testingId);
+    List<ExaminationTestDto> getExaminationTests(long count, ExaminationSearchDto searchDto);
+
+    List<ExaminationTestDto> getExaminationTests(List<Long> ids);
+
+    List<TestingShortTestDto> getNotYetSelectedTestingTests(Long testingId);
 }

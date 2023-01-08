@@ -12,12 +12,12 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = TitleQualifier.class)
 public interface SubjectMapper {
-  @Mapping(target = "title", qualifiedByName = TitleQualifier.TRIM)
-  SubjectEntity toEntity(RequestSubjectDto requestSubjectDto);
+    @Mapping(target = "title", qualifiedByName = TitleQualifier.TRIM)
+    SubjectEntity toEntity(RequestSubjectDto requestSubjectDto);
 
-  ResponseSubjectDto toDto(SubjectDetailEntity subjectEntity);
+    ResponseSubjectDto toDto(SubjectDetailEntity subjectEntity);
 
-  @Mapping(target = "statistic.correctCount", source = "correctCount")
-  @Mapping(target = "statistic.totalCount", source = "totalCount")
-  SubjectStatisticDto toStatisticDto(SubjectStatisticProjection projection);
+    @Mapping(target = "statistic.correctCount", source = "correctCount")
+    @Mapping(target = "statistic.totalCount", source = "totalCount")
+    SubjectStatisticDto toStatisticDto(SubjectStatisticProjection projection);
 }

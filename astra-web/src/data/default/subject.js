@@ -1,5 +1,5 @@
 export const defaultSubject = {
     id: null,
     title: "",
-    specializations: []
+    specialization: null
 };

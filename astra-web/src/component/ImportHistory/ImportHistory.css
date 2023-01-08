@@ -1,0 +1,7 @@
+.ImportHistory .view i {
+    color: black;
+}
+
+.ImportHistory .view i:hover {
+    color: var(--secondary-color);
+}

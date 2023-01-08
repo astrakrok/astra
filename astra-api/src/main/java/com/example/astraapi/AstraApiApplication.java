@@ -9,7 +9,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @EnableConfigurationProperties(CorsProperties.class)
 public class AstraApiApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(AstraApiApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(AstraApiApplication.class, args);
+    }
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.astraapi.repository.ImportTestRepository">
+    <insert id="saveAll">
+        insert into public.import_tests (import_id, test_id, details)
+        values
+        <foreach collection="entities" item="entity" open="(" close=")" separator="),(">
+            #{entity.importId},
+            #{entity.testId},
+            #{entity.details,jdbcType=OTHER,typeHandler=com.example.astraapi.config.JsonTypeHandler}
+        </foreach>
+    </insert>
+
+</mapper>

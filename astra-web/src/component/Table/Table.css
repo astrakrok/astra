@@ -1,4 +1,4 @@
-table.Table.secondary {
+table.Table {
     border-collapse: collapse;
     margin: 25px 0;
     font-size: 0.9rem;
@@ -10,21 +10,26 @@ table.Table.secondary thead tr {
     color: #fff;
 }
 
-table.Table.secondary thead tr th {
+table.Table.primary thead tr {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+table.Table thead tr th {
     text-align: center;
 }
 
-table.Table.secondary th,
-table.Table.secondary td {
+table.Table th,
+table.Table td {
     padding: 12px 15px;
     border-radius: 0;
 }
 
-table.Table.secondary tbody tr {
+table.Table tbody tr {
     border-bottom: 1px solid #ddd;
 }
 
-table.Table.secondary tbody tr:nth-of-type(even) {
+table.Table tbody tr:nth-of-type(even) {
     background-color: #f3f3f3;
 }
 
@@ -32,8 +37,18 @@ table.Table.secondary tbody tr:last-of-type {
     border-bottom: 2px solid var(--secondary-color);
 }
 
+table.Table.primary tbody tr:last-of-type {
+    border-bottom: 2px solid var(--primary-color);;
+}
+
 table.Table.secondary tbody tr:hover > *:not(.highlight-default) {
     font-weight: bold;
     color: var(--secondary-color);
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+table.Table.primary tbody tr:hover > *:not(.highlight-default) {
+    font-weight: bold;
+    color: var(--primary-color);
     background-color: rgba(0, 0, 0, 0.1);
 }
