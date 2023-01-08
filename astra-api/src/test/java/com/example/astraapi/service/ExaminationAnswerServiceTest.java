@@ -11,6 +11,7 @@ import com.example.astraapi.entity.TestFullDetailEntity;
 import com.example.astraapi.entity.TestVariantEntity;
 import com.example.astraapi.mapper.ExaminationAnswerMapper;
 import com.example.astraapi.meta.ConfigProperty;
+import com.example.astraapi.meta.TestStatus;
 import com.example.astraapi.repository.ExaminationAnswerRepository;
 import com.example.astraapi.service.impl.ExaminationAnswerServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
@@ -163,6 +164,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(1L, 3L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(2L, 3L, "Title 1", null, "Explanation 1", null, false),
@@ -170,7 +173,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(4L, 3L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(5L, 3L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -186,6 +188,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(10L, 30L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(20L, 30L, "Title 1", null, "Explanation 1", null, false),
@@ -193,7 +197,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(40L, 30L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(50L, 30L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -209,6 +212,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(100L, 300L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(200L, 300L, "Title 1", null, "Explanation 1", null, false),
@@ -216,7 +221,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(400L, 300L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(500L, 300L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -232,6 +236,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(1000L, 3000L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(2000L, 3000L, "Title 1", null, "Explanation 1", null, false),
@@ -239,7 +245,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(4000L, 3000L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(5000L, 3000L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -255,6 +260,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(10000L, 30000L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(20000L, 30000L, "Title 1", null, "Explanation 1", null, false),
@@ -262,7 +269,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(40000L, 30000L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(50000L, 30000L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -298,6 +304,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(1L, 3L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(2L, 3L, "Title 1", null, "Explanation 1", null, false),
@@ -305,7 +313,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(4L, 3L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(5L, 3L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -321,6 +328,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(10L, 30L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(20L, 30L, "Title 1", null, "Explanation 1", null, false),
@@ -328,7 +337,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(40L, 30L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(50L, 30L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -344,6 +352,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(100L, 300L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(200L, 300L, "Title 1", null, "Explanation 1", null, false),
@@ -351,7 +361,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(400L, 300L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(500L, 300L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -367,6 +376,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(1000L, 3000L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(2000L, 3000L, "Title 1", null, "Explanation 1", null, false),
@@ -374,7 +385,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(4000L, 3000L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(5000L, 3000L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -390,6 +400,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(10000L, 30000L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(20000L, 30000L, "Title 1", null, "Explanation 1", null, false),
@@ -397,7 +409,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(40000L, 30000L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(50000L, 30000L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -433,6 +444,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(1L, 3L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(2L, 3L, "Title 1", null, "Explanation 1", null, false),
@@ -440,7 +453,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(4L, 3L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(5L, 3L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -456,6 +468,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(10L, 30L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(20L, 30L, "Title 1", null, "Explanation 1", null, false),
@@ -463,7 +477,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(40L, 30L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(50L, 30L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -479,6 +492,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(100L, 300L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(200L, 300L, "Title 1", null, "Explanation 1", null, false),
@@ -486,7 +501,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(400L, 300L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(500L, 300L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -502,6 +516,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(1000L, 3000L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(2000L, 3000L, "Title 1", null, "Explanation 1", null, false),
@@ -509,7 +525,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(4000L, 3000L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(5000L, 3000L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -525,6 +540,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(10000L, 30000L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(20000L, 30000L, "Title 1", null, "Explanation 1", null, false),
@@ -532,7 +549,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(40000L, 30000L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(50000L, 30000L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -568,6 +584,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(1L, 3L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(2L, 3L, "Title 1", null, "Explanation 1", null, false),
@@ -575,7 +593,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(4L, 3L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(5L, 3L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -591,6 +608,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(10L, 30L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(20L, 30L, "Title 1", null, "Explanation 1", null, false),
@@ -598,7 +617,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(40L, 30L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(50L, 30L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -614,6 +632,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(100L, 300L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(200L, 300L, "Title 1", null, "Explanation 1", null, false),
@@ -621,7 +641,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(400L, 300L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(500L, 300L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -637,6 +656,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(1000L, 3000L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(2000L, 3000L, "Title 1", null, "Explanation 1", null, false),
@@ -644,7 +665,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(4000L, 3000L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(5000L, 3000L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -660,6 +680,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(10000L, 30000L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(20000L, 30000L, "Title 1", null, "Explanation 1", null, false),
@@ -667,7 +689,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(40000L, 30000L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(50000L, 30000L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -703,6 +724,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(1L, 3L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(2L, 3L, "Title 1", null, "Explanation 1", null, false),
@@ -710,7 +733,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(4L, 3L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(5L, 3L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -726,6 +748,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(10L, 30L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(20L, 30L, "Title 1", null, "Explanation 1", null, false),
@@ -733,7 +757,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(40L, 30L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(50L, 30L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -749,6 +772,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(100L, 300L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(200L, 300L, "Title 1", null, "Explanation 1", null, false),
@@ -756,7 +781,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(400L, 300L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(500L, 300L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -772,6 +796,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(1000L, 3000L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(2000L, 3000L, "Title 1", null, "Explanation 1", null, false),
@@ -779,7 +805,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(4000L, 3000L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(5000L, 3000L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
@@ -795,6 +820,8 @@ public class ExaminationAnswerServiceTest {
                                 null,
                                 "Comment 1",
                                 null,
+                                TestStatus.ACTIVE,
+                                Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(10000L, 30000L, "Title 1", null, "Explanation 1", null, true),
                                         new TestVariantEntity(20000L, 30000L, "Title 1", null, "Explanation 1", null, false),
@@ -802,7 +829,6 @@ public class ExaminationAnswerServiceTest {
                                         new TestVariantEntity(40000L, 30000L, "Title 1", null, "Explanation 1", null, false),
                                         new TestVariantEntity(50000L, 30000L, "Title 1", null, "Explanation 1", null, false)
                                 ),
-                                Collections.emptyList(),
                                 Collections.emptyList(),
                                 Collections.emptyMap()
                         )
