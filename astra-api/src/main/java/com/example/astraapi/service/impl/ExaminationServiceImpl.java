@@ -23,74 +23,71 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ExaminationServiceImpl implements ExaminationService {
-  private final ExaminationProperties examinationProperties;
-  private final ExaminationRepository examinationRepository;
-  private final ExaminationMapper examinationMapper;
-  private final ExaminationAnswerService examinationAnswerService;
-  private final TimeZoneService timeZoneService;
-  private final AuthContext authContext;
+    private final ExaminationProperties examinationProperties;
+    private final ExaminationRepository examinationRepository;
+    private final ExaminationMapper examinationMapper;
+    private final ExaminationAnswerService examinationAnswerService;
+    private final TimeZoneService timeZoneService;
+    private final AuthContext authContext;
 
-  @Override
-  @Transactional
-  public ExaminationStateDto start(ExaminationSearchDto searchDto) {
-    ExaminationEntity examination = examinationRepository.findExaminationWithAnswers(
-            authContext.getUser().getId(),
-            searchDto.getTestingId(),
-            timeZoneService.toUtc(LocalDateTime.now()))
-        .orElseGet(() -> createExamination(searchDto));
-    List<ExaminationTestDto> tests = examination.getAnswers().isEmpty() ? (
-        examinationAnswerService.createTestsForExamination(
-            examination.getId(),
-            searchDto,
-            examinationProperties.getCount())
-    ) : (
-        getExaminationTests(examination)
-    );
-    return new ExaminationStateDto(
-        examination.getId(),
-        tests,
-        examination.getFinishedAt());
-  }
-
-  @Override
-  public void updateAnswer(Long id, ExaminationAnswerDto examinationAnswerDto) {
-    validateExamination(id);
-    examinationAnswerDto.setExaminationId(id);
-    examinationAnswerService.updateAnswer(examinationAnswerDto);
-  }
-
-  @Override
-  @Transactional
-  public ExaminationResultDto finish(Long id) {
-    validateExamination(id);
-    LocalDateTime finishedAt = timeZoneService.toUtc(LocalDateTime.now());
-    examinationRepository.updateFinishedAtById(id, finishedAt);
-    return examinationAnswerService.getResult(id);
-  }
-
-  private ExaminationEntity createExamination(ExaminationSearchDto searchDto) {
-    LocalDateTime finishedAt = LocalDateTime.now()
-        .plusMinutes(examinationProperties.getDurationInMinutes())
-        .plusSeconds(examinationProperties.getFinishedAtDeviationSeconds());
-    LocalDateTime finishedAtUtc = timeZoneService.toUtc(finishedAt);
-    ExaminationEntity examinationEntity = examinationMapper.toEntity(
-        authContext.getUser().getId(),
-        searchDto.getTestingId(),
-        finishedAtUtc);
-    examinationRepository.save(examinationEntity);
-    return examinationEntity;
-  }
-
-  private List<ExaminationTestDto> getExaminationTests(ExaminationEntity entity) {
-    List<ExaminationAnswerDto> answers = examinationMapper.toDto(entity).getAnswers();
-    return examinationAnswerService.getExaminationTests(answers);
-  }
-
-  private void validateExamination(Long id) {
-    Long userId = authContext.getUser().getId();
-    LocalDateTime now = timeZoneService.toUtc(LocalDateTime.now());
-    if (!examinationRepository.exists(id, userId, now)) {
-      throw new IllegalArgumentException("You cannot modify answers for expired or non-existing examination");
+    @Override
+    @Transactional
+    public ExaminationStateDto start(ExaminationSearchDto searchDto) {
+        ExaminationEntity examination = examinationRepository.findExaminationWithAnswers(
+                        authContext.getUser().getId(),
+                        searchDto.getTestingId(),
+                        timeZoneService.toUtc(LocalDateTime.now()))
+                .orElseGet(() -> createExamination(searchDto));
+        List<ExaminationTestDto> tests = examination.getAnswers().isEmpty() ? (
+                examinationAnswerService.createTestsForExamination(examination.getId(), searchDto)
+        ) : (
+                getExaminationTests(examination)
+        );
+        return new ExaminationStateDto(
+                examination.getId(),
+                tests,
+                examination.getFinishedAt());
     }
-  }
+
+    @Override
+    public void updateAnswer(Long id, ExaminationAnswerDto examinationAnswerDto) {
+        validateExamination(id);
+        examinationAnswerDto.setExaminationId(id);
+        examinationAnswerService.updateAnswer(examinationAnswerDto);
+    }
+
+    @Override
+    @Transactional
+    public ExaminationResultDto finish(Long id) {
+        validateExamination(id);
+        LocalDateTime finishedAt = timeZoneService.toUtc(LocalDateTime.now());
+        examinationRepository.updateFinishedAtById(id, finishedAt);
+        return examinationAnswerService.getResult(id);
+    }
+
+    private ExaminationEntity createExamination(ExaminationSearchDto searchDto) {
+        LocalDateTime finishedAt = LocalDateTime.now()
+                .plusMinutes(examinationProperties.getDurationInMinutes())
+                .plusSeconds(examinationProperties.getFinishedAtDeviationSeconds());
+        LocalDateTime finishedAtUtc = timeZoneService.toUtc(finishedAt);
+        ExaminationEntity examinationEntity = examinationMapper.toEntity(
+                authContext.getUser().getId(),
+                searchDto.getTestingId(),
+                finishedAtUtc);
+        examinationRepository.save(examinationEntity);
+        return examinationEntity;
+    }
+
+    private List<ExaminationTestDto> getExaminationTests(ExaminationEntity entity) {
+        List<ExaminationAnswerDto> answers = examinationMapper.toDto(entity).getAnswers();
+        return examinationAnswerService.getExaminationTests(answers);
+    }
+
+    private void validateExamination(Long id) {
+        Long userId = authContext.getUser().getId();
+        LocalDateTime now = timeZoneService.toUtc(LocalDateTime.now());
+        if (!examinationRepository.exists(id, userId, now)) {
+            throw new IllegalArgumentException("You cannot modify answers for expired or non-existing examination");
+        }
+    }
 }

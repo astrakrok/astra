@@ -18,11 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,10 +33,9 @@ public class ExaminationAnswerServiceImpl implements ExaminationAnswerService {
   @Transactional
   public List<ExaminationTestDto> createTestsForExamination(
       Long examinationId,
-      ExaminationSearchDto searchDto,
-      Integer count
+      ExaminationSearchDto searchDto
   ) {
-    List<ExaminationTestDto> examinationTests = testService.getExaminationTests(count, searchDto);
+    List<ExaminationTestDto> examinationTests = testService.getExaminationTests(0, searchDto);
     if (examinationTests.isEmpty()) {
       return Collections.emptyList();
     }

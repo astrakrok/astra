@@ -6,6 +6,7 @@ import com.example.astraapi.dto.exam.ResponseExamDto;
 import com.example.astraapi.dto.specialization.StepSpecializationDto;
 import com.example.astraapi.entity.ExamEntity;
 import com.example.astraapi.mapper.ExamMapper;
+import com.example.astraapi.meta.TestingStatus;
 import com.example.astraapi.repository.ExamRepository;
 import com.example.astraapi.service.ExamService;
 import com.example.astraapi.service.SpecializationService;
@@ -37,8 +38,8 @@ public class ExamServiceImpl implements ExamService {
   }
 
   @Override
-  public List<ResponseExamDto> getAll(Long specializationId) {
-    return examRepository.getAllBySpecializationId(specializationId).stream()
+  public List<ResponseExamDto> getActive(Long specializationId) {
+    return examRepository.getAllBySpecializationIdAndStatus(specializationId, TestingStatus.ACTIVE).stream()
         .map(examMapper::toDto)
         .collect(Collectors.toList());
   }

@@ -6,3 +6,11 @@
 .ExamSpecializationsForm .testings .error {
     font-size: 1.3rem;
 }
+
+.ExamSpecializationsForm .testings .item.draft .Ref {
+    color: var(--primary-color) !important;
+}
+
+.ExamSpecializationsForm .testings .item.draft .Ref i {
+    opacity: 0.8;
+}

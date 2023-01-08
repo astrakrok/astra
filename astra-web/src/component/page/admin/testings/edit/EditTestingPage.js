@@ -1,11 +1,12 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {getTestingInfo, getTests} from "../../../../../service/testing.service";
+import {activateTesting, getTestingInfo, getTests} from "../../../../../service/testing.service";
 import {create, deleteById} from "../../../../../service/testing.test.service";
 import Button from "../../../../Button/Button";
 import InfoHeader from "../../../../InfoHeader/InfoHeader";
 import InfoText from "../../../../InfoText/InfoText";
 import LoaderBoundary from "../../../../LoaderBoundary/LoaderBoundary";
+import DisplayBoundary from "../../../../DisplayBoundary/DisplayBoundary";
 import Spacer from "../../../../Spacer/Spacer";
 import TestsQuestionsTable from "../../../../TestsQuestionsTable/TestsQuestionsTable";
 import PopupConsumer from "../../../../../context/popup/PopupConsumer";
@@ -13,11 +14,13 @@ import "./EditTestingPage.css";
 import AddTestToTestingForm from "../../../../form/AddTestToTestingForm/AddTestToTestingForm";
 import FormError from "../../../../FormError/FormError";
 import {errorMessage} from "../../../../../error/message";
+import {defaultEmptyTesting} from "../../../../../data/default/testing";
 
 const EditTestingPage = () => {
     const {id} = useParams();
-    const [testingInfo, setTestingInfo] = useState(null);
+    const [testingInfo, setTestingInfo] = useState(defaultEmptyTesting);
     const [formState, setFormState] = useState({});
+    const [activationState, setActivationState] = useState({loading: false, errors: []});
 
     const fetchTestingInfo = async () => {
         const testingInfo = await getTestingInfo(id);
@@ -30,6 +33,17 @@ const EditTestingPage = () => {
             tests: tests,
             error: null
         });
+    }
+
+    const activate = async () => {
+        setActivationState(previous => ({...previous, loading: true}));
+        const result = await activateTesting(testingInfo.id);
+        if (result.id) {
+            setTestingInfo(result);
+            setActivationState(previous => ({...previous, loading: false}));
+        } else {
+            setActivationState(previous => ({...previous, loading: false, errors: result.errors}));
+        }
     }
 
     useEffect(() => {
@@ -46,6 +60,14 @@ const EditTestingPage = () => {
             }))
         }
     }
+
+    const renderError = (error, index) => (
+        <div key={index} className="error">
+            {
+                error.type === "EMPTY" ? "Іспит не містить тестів" : "Невідома помилка"
+            }
+        </div>
+    );
 
     const addTestToTesting = async (test, setPopupState) => {
         const data = {
@@ -86,10 +108,16 @@ const EditTestingPage = () => {
     }
 
     return (
-        <div className="container">
+        <div className="container EditTestingPage">
             <div className="row">
                 <div className="s-vflex">
                     <div className="create s-hflex-end">
+                        <DisplayBoundary condition={testingInfo.status !== "ACTIVE"}>
+                            <LoaderBoundary condition={activationState.loading} size="small">
+                                <Button onClick={activate}>Активувати</Button>
+                            </LoaderBoundary>
+                        </DisplayBoundary>
+                        <Spacer width={15} />
                         <PopupConsumer>
                             {
                                 ({setPopupState}) => (
@@ -100,12 +128,20 @@ const EditTestingPage = () => {
                             }
                         </PopupConsumer>
                     </div>
+                    <DisplayBoundary condition={activationState.errors.length > 0}>
+                        <Spacer height={10} />
+                        <div className="activation-errors s-hflex-end">
+                            {
+                                activationState.errors.map(renderError)
+                            }
+                        </div>
+                    </DisplayBoundary>
                     <Spacer height={20}/>
                     <div className="info">
                         <InfoHeader className="s-hflex full-width">
                             {
                                 testingInfo ? (
-                                    <div>{testingInfo.exam.title}({testingInfo.specialization.title})</div>
+                                    <div>{testingInfo.status === "DRAFT" ? "Чернетка | " : null}{testingInfo.exam.title} - {testingInfo.specialization.title}</div>
                                 ) : null
                             }
                             <div className="equal-flex"/>

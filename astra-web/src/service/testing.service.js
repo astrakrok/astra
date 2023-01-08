@@ -2,8 +2,19 @@ import {route} from "../constant/app.route";
 import {client} from "../shared/js/axios";
 
 export const getExamTestings = async examId => {
-    const url = route.testings.exams.id(examId).this;
+    const url = route.admin.testings.exams.id(examId).this;
     const response = await client.get(url);
+    return response.data;
+}
+
+export const activateTesting = async testingId => {
+    const url = route.admin.testings.id(testingId).activation;
+    const response = await client.post(url)
+        .catch(error => ({
+            data: {
+                errors: error.response.data
+            }
+        }));
     return response.data;
 }
 

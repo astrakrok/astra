@@ -12,7 +12,7 @@ public interface ExamService {
 
   List<ResponseExamDto> getAll();
 
-  List<ResponseExamDto> getAll(Long specializationId);
+  List<ResponseExamDto> getActive(Long specializationId);
 
   void delete(Long id);
 

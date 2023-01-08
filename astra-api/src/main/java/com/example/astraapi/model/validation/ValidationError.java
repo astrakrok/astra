@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Getter
@@ -15,4 +16,8 @@ import java.util.Map;
 public class ValidationError {
     private ValidationErrorType type;
     private Map<String, Object> details;
+
+    public ValidationError(ValidationErrorType type) {
+        this(type, new HashMap<>());
+    }
 }

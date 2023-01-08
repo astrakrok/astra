@@ -18,7 +18,7 @@ public class SpecializationExamController {
   private final ExamService examService;
 
   @GetMapping
-  public List<ResponseExamDto> getAll(@PathVariable("specializationId") Long specializationId) {
-    return examService.getAll(specializationId);
+  public List<ResponseExamDto> getActive(@PathVariable("specializationId") Long specializationId) {
+    return examService.getActive(specializationId);
   }
 }

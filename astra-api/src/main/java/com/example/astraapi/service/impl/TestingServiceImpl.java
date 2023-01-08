@@ -3,15 +3,14 @@ package com.example.astraapi.service.impl;
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.test.TestingShortTestDto;
 import com.example.astraapi.dto.test.TestingTestQuestionDto;
-import com.example.astraapi.dto.testing.RequestTestingDto;
-import com.example.astraapi.dto.testing.TestingDescriptionDto;
-import com.example.astraapi.dto.testing.TestingDetailDto;
-import com.example.astraapi.dto.testing.TestingDto;
-import com.example.astraapi.dto.testing.TestingInfoDto;
-import com.example.astraapi.dto.testing.TestingWithSpecializationDto;
+import com.example.astraapi.dto.testing.*;
 import com.example.astraapi.entity.TestingEntity;
+import com.example.astraapi.exception.ValidationException;
 import com.example.astraapi.mapper.TestingMapper;
 import com.example.astraapi.meta.ConfigProperty;
+import com.example.astraapi.meta.TestingStatus;
+import com.example.astraapi.meta.ValidationErrorType;
+import com.example.astraapi.model.validation.ValidationError;
 import com.example.astraapi.repository.TestingRepository;
 import com.example.astraapi.service.PropertyService;
 import com.example.astraapi.service.TestService;
@@ -35,7 +34,7 @@ public class TestingServiceImpl implements TestingService {
 
   @Override
   public IdDto save(RequestTestingDto testingDto) {
-    TestingEntity entity = testingMapper.toEntity(testingDto);
+    TestingEntity entity = testingMapper.toEntity(testingDto, TestingStatus.DRAFT);
     testingRepository.save(entity);
     return new IdDto(entity.getId());
   }
@@ -87,5 +86,14 @@ public class TestingServiceImpl implements TestingService {
   public TestingDto getOne(Long examId, Long specializationId) {
     TestingEntity testing = testingRepository.getByExamIdAndSpecializationId(examId, specializationId);
     return testingMapper.toDto(testing);
+  }
+
+  @Override
+  public Optional<TestingInfoDto> activate(Long id) {
+    if (testingRepository.getTestsCount(id) == 0) {
+      throw new ValidationException(new ValidationError(ValidationErrorType.EMPTY));
+    }
+    testingRepository.updateStatusById(id, TestingStatus.ACTIVE);
+    return getTestingInfo(id);
   }
 }

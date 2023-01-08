@@ -9,6 +9,8 @@ import Spacer from "../../Spacer/Spacer";
 import Button from "../../Button/Button";
 import SelectSpecializationForm from "../SelectSpecializationForm/SelectSpecializationForm";
 import FormError from "../../FormError/FormError";
+import DisplayBoundary from "../../DisplayBoundary/DisplayBoundary";
+import Tooltipped from "../../Tooltipped/Tooltipped";
 
 const ExamSpecializationsForm = ({exam}) => {
     const [testings, setTestings] = useState([]);
@@ -35,11 +37,19 @@ const ExamSpecializationsForm = ({exam}) => {
     }, []);
 
     const renderTestingItem = item => (
-        <div key={item.id} className="item">
+        <div key={item.id} className={`${item.status === "ACTIVE" ? "active" : "draft"} item`}>
             <Ref
-                className="center auth-link s-vflex-center"
+                className="center auth-link s-vflex-center s-hflex"
                 to={page.admin.testings.id(item.id).edit}
             >
+                <DisplayBoundary condition={item.status === "DRAFT"}>
+                    <div className="s-vflex-center">
+                        <Tooltipped tooltip="Чернетка" className="s-vflex-center">
+                            <i className="material-icons">edit</i>
+                        </Tooltipped>
+                    </div>
+                    <Spacer width={5} />
+                </DisplayBoundary>
                 {item.specialization.step.title} | {item.specialization.title}
             </Ref>
         </div>
