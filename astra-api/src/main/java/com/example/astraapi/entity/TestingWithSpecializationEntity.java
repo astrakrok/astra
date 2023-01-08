@@ -11,7 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TestingWithSpecializationEntity {
-  private Long id;
-  private Long examId;
-  private StepSpecializationProjection specialization;
+    private Long id;
+    private Long examId;
+    private String status;
+    private StepSpecializationProjection specialization;
 }

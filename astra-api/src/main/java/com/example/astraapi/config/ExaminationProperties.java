@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "testing.examination")
 public class ExaminationProperties {
-  private Integer count;
   private Integer durationInMinutes;
   private Integer finishedAtDeviationSeconds;
   private Integer thresholdPercentage;

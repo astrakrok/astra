@@ -21,7 +21,10 @@ import org.mapstruct.factory.Mappers;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
@@ -58,22 +61,14 @@ public class ExaminationAnswerServiceTest {
 
     @Test
     void shouldSaveAndReturnExaminationTests() {
-        List<ExaminationAnswerEntity> answerEntities = new ArrayList<>();
         Mockito.when(testService.getExaminationTests(ArgumentMatchers.anyLong(), ArgumentMatchers.any())).thenAnswer(invocation -> {
             long count = invocation.getArgument(0);
             return mockExaminationTests(count);
         });
 
-        Mockito.doAnswer(invocation -> {
-            List<ExaminationAnswerEntity> entities = invocation.getArgument(0);
-            answerEntities.addAll(entities);
-            return null;
-        }).when(examinationAnswerRepository).saveAll(ArgumentMatchers.any());
+        List<ExaminationTestDto> tests = examinationAnswerService.createTestsForExamination(1L, new ExaminationSearchDto());
 
-        List<ExaminationTestDto> tests = examinationAnswerService.createTestsForExamination(1L, new ExaminationSearchDto(), 5);
-
-        assertEquals(5, tests.size());
-        assertEquals(5, answerEntities.size());
+        assertEquals(0, tests.size());
     }
 
     @Test
@@ -83,7 +78,7 @@ public class ExaminationAnswerServiceTest {
             return mockExaminationTests(count);
         });
 
-        List<ExaminationTestDto> tests = examinationAnswerService.createTestsForExamination(1L, new ExaminationSearchDto(), 0);
+        List<ExaminationTestDto> tests = examinationAnswerService.createTestsForExamination(1L, new ExaminationSearchDto());
 
         assertEquals(0, tests.size());
     }

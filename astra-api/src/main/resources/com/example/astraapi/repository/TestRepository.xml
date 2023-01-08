@@ -109,7 +109,12 @@
                     where testings.id = #{testingId}
                     order by t.id) as subsubtable
               order by random()
-              limit #{count}) as subtable
+              limit (
+                  case
+                      when (#{count}::bigint = 0) then null
+                      else #{count}
+                      end
+                  )) as subtable
                  join lateral (
             select tv.id              as variantId,
                    tv.title           as variantTitle,

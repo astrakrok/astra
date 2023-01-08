@@ -8,14 +8,11 @@ import com.example.astraapi.dto.test.ExaminationTestDto;
 import java.util.List;
 
 public interface ExaminationAnswerService {
-  List<ExaminationTestDto> createTestsForExamination(
-      Long examinationId,
-      ExaminationSearchDto searchDto,
-      Integer count);
+    List<ExaminationTestDto> createTestsForExamination(Long examinationId, ExaminationSearchDto searchDto);
 
-  List<ExaminationTestDto> getExaminationTests(List<ExaminationAnswerDto> answers);
+    List<ExaminationTestDto> getExaminationTests(List<ExaminationAnswerDto> answers);
 
-  void updateAnswer(ExaminationAnswerDto examinationAnswerDto);
+    void updateAnswer(ExaminationAnswerDto examinationAnswerDto);
 
-  ExaminationResultDto getResult(Long examinationId);
+    ExaminationResultDto getResult(Long examinationId);
 }

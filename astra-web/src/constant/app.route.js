@@ -33,9 +33,18 @@ const getAdminRoutes = () => {
         },
         testings: {
             all: prefix + "/testings",
+            exams: {
+                id: id => {
+                    const url = prefix + `/testings/exams/${id}`;
+                    return {
+                        this: url
+                    };
+                }
+            },
             id: id => {
                 const url = prefix + `/testings/${id}`;
                 return {
+                    activation: url + "/activation",
                     info: url + "/info",
                     tests: {
                         selected: url + "/tests",

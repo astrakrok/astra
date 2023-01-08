@@ -1,0 +1,4 @@
+.EditTestingPage .activation-errors .error {
+    color: var(--red-color);
+    font-size: 18px;
+}

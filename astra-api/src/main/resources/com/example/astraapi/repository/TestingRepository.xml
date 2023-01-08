@@ -3,13 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.astraapi.repository.TestingRepository">
     <insert id="save" useGeneratedKeys="true" keyColumn="id" keyProperty="entity.id">
-        insert into public.testings(exam_id, specialization_id)
-        values (#{entity.examId}, #{entity.specializationId})
+        insert into public.testings(exam_id, specialization_id, status)
+        values (#{entity.examId}, #{entity.specializationId}, #{entity.status})
     </insert>
 
     <select id="getByExamIdWithSpecialization" resultMap="testingWithSpecialization">
         select t.id       as id,
                t.exam_id  as examId,
+               t.status   as status,
                s.id       as specializationId,
                s.title    as specializationTitle,
                step.id    as stepId,
@@ -18,14 +19,16 @@
                  left join public.specializations s on s.id = t.specialization_id
                  left join public.steps step on step.id = s.step_id
         where t.exam_id = #{examId}
+        order by t.id
     </select>
 
     <select id="findTestingInfoById" resultMap="testingInfo">
-        select t.id    as id,
-               e.id    as examId,
-               e.title as examTitle,
-               s.id    as specializationId,
-               s.title as specializationTitle
+        select t.id     as id,
+               t.status as status,
+               e.id     as examId,
+               e.title  as examTitle,
+               s.id     as specializationId,
+               s.title  as specializationTitle
         from public.testings t
                  left join public.exams e on e.id = t.exam_id
                  left join public.specializations s on s.id = t.specialization_id
@@ -51,8 +54,9 @@
                count(tt.test_id) as testsCount
         from public.testings t
                  left join public.exams e on e.id = t.exam_id
-                 left join specializations s on s.id = t.specialization_id
-                 left join testings_tests tt on t.id = tt.testing_id
+                 left join public.specializations s on s.id = t.specialization_id
+                 left join public.testings_tests tt on t.id = tt.testing_id
+        where t.status = 'ACTIVE'
         group by t.id, e.id, s.id
         having count(tt.test_id) > 0
         order by e.id, s.id
@@ -65,9 +69,22 @@
           and t.specialization_id = #{specializationId}
     </select>
 
+    <select id="getTestsCount" resultType="java.lang.Long">
+        select count(id)
+        from public.testings_tests tt
+        where tt.testing_id = #{id}
+    </select>
+
+    <update id="updateStatusById">
+        update public.testings
+        set status = #{status}
+        where id = #{id}
+    </update>
+
     <resultMap id="testingWithSpecialization" type="com.example.astraapi.entity.TestingWithSpecializationEntity">
         <id column="id" property="id"/>
         <result column="examId" property="examId"/>
+        <result column="status" property="status"/>
 
         <association property="specialization"
                      javaType="com.example.astraapi.entity.projection.StepSpecializationProjection">
@@ -83,6 +100,7 @@
 
     <resultMap id="testingInfo" type="com.example.astraapi.entity.TestingInfoEntity">
         <id column="id" property="id"/>
+        <result column="status" property="status"/>
 
         <association property="exam" javaType="com.example.astraapi.entity.ExamEntity">
             <id column="examId" property="id"/>

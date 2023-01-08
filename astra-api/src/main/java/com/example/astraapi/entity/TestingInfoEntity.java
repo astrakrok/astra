@@ -1,5 +1,6 @@
 package com.example.astraapi.entity;
 
+import com.example.astraapi.meta.TestingStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class TestingInfoEntity {
   private Long id;
+  private TestingStatus status;
   private ExamEntity exam;
   private SpecializationEntity specialization;
 }

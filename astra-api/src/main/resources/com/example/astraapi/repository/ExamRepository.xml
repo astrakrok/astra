@@ -11,12 +11,15 @@
     <select id="getAll" resultType="com.example.astraapi.entity.ExamEntity">
         select *
         from public.exams
+        order by id desc
     </select>
 
-    <select id="getAllBySpecializationId" resultType="com.example.astraapi.entity.ExamEntity">
+    <select id="getAllBySpecializationIdAndStatus" resultType="com.example.astraapi.entity.ExamEntity">
         select *
         from public.exams e
-        where e.id in (select t.exam_id from public.testings t where t.specialization_id = #{specializationId})
+        where e.id in (select t.exam_id
+                       from public.testings t
+                       where t.specialization_id = #{specializationId} and t.status = #{status})
     </select>
 
     <delete id="deleteById">
