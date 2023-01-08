@@ -15,10 +15,10 @@ import java.util.List;
 @RequestMapping(Endpoint.STEP_SPECIALIZATIONS)
 @RequiredArgsConstructor
 public class StepSpecializationController {
-  private final SpecializationService specializationService;
+    private final SpecializationService specializationService;
 
-  @GetMapping
-  public List<SpecializationDto> getByStepId(@PathVariable("stepId") Long stepId) {
-    return specializationService.getAll(stepId);
-  }
+    @GetMapping
+    public List<SpecializationDto> getByStepId(@PathVariable("stepId") Long stepId) {
+        return specializationService.getAll(stepId);
+    }
 }

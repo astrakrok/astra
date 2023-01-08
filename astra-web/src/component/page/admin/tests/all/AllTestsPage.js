@@ -31,7 +31,7 @@ const AllTestsPage = () => {
                             filter: ({initialFilter, setFilter}) => (
                                 <TestsFilter initialFilter={initialFilter} onFilterSelected={setFilter} />
                             ),
-                            content: (items, orderFrom) => (
+                            content: ({items, orderFrom}) => (
                                 items.length > 0 ? (
                                     <TestsList tests={items} orderFrom={orderFrom}/>
                                 ) : (

@@ -7,6 +7,7 @@ import Pagination from "../Pagination/Pagination";
 import "./Paginated.css";
 import {mergeSearchParams} from "../../handler/params.handler";
 import useDidChange from "../../hook/useDidChange";
+import Spacer from "../Spacer/Spacer";
 
 const Paginated = ({
     children = {
@@ -31,7 +32,10 @@ const Paginated = ({
             ...previous,
             items: null
         }));
-        const page = await pageHandler(filter, {pageSize: pageSize, pageNumber: pageNumber - 1});
+        const page = await pageHandler(filter, {
+            pageSize: pageSize,
+            pageNumber: (pageNumber ? pageNumber : searchParams.get("page")*1) - 1
+        });
         setPage(page);
     }
 
@@ -61,10 +65,15 @@ const Paginated = ({
                     }
                 })
             }
+            <Spacer height={20} />
             <div className="s-vflex">
                 <LoaderBoundary condition={page.items == null} className="s-hflex-center loader">
                     {
-                        page.items ? children.content(page.items, (pageNumber - 1) * pageSize) : null
+                        page.items ? children.content({
+                            items: page.items,
+                            refreshPage: fetchPage,
+                            orderFrom: (pageNumber - 1) * pageSize
+                        }) : null
                     }
                 </LoaderBoundary>
                 <DisplayBoundary condition={page.pagesCount > 1}>

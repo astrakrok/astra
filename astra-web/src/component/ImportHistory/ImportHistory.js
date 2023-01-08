@@ -49,7 +49,7 @@ const ImportHistory = () => {
             <Paginated pageSize={10} pageHandler={fetchPage}>
                 {({
                     filter: ({setFilter}) => <ImportHistoryFilter onFilterSelected={setFilter} />,
-                    content: (items, orderFrom) => (
+                    content: ({items, orderFrom}) => (
                         <Table className="import-history-table">
                             <thead>
                                 <tr>
