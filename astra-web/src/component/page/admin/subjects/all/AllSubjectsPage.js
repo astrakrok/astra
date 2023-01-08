@@ -1,51 +1,41 @@
-import {useEffect, useState} from "react";
-import {getSubjectsDetails} from "../../../../../service/subject.service";
-import LoaderBoundary from "../../../../LoaderBoundary/LoaderBoundary";
-import InfoText from "../../../../InfoText/InfoText";
+import {getSubjectsDetailsPage} from "../../../../../service/subject.service";
 import PopupConsumer from "../../../../../context/popup/PopupConsumer";
 import SubjectListItem from "../../../../SubjectListItem/SubjectListItem";
-import Button from "../../../../Button/Button";
 import Spacer from "../../../../Spacer/Spacer";
 import SubjectForm from "../../../../form/SubjectForm/SubjectForm";
 import "./AllSubjectsPage.css";
 import withTitle from "../../../../hoc/withTitle/withTitle";
 import {defaultSubject} from "../../../../../data/default/subject";
+import Paginated from "../../../../Paginated/Paginated";
+import SubjectFilter from "../../../../filter/SubjectFilter/SubjectFilter";
 
 const AllSubjectsPage = () => {
-    const [subjects, setSubjects] = useState(null);
-
-    const fetchSubjects = async () => {
-        setSubjects(null);
-        const subjects = await getSubjectsDetails();
-        setSubjects(subjects);
+    const fetchSubjectsPage = async (filter, pageable) => {
+        return await getSubjectsDetailsPage(filter, pageable);
     }
 
-    useEffect(() => {
-        fetchSubjects();
-    }, []);
-
-    const onSubjectSaved = setPopupState => {
+    const onSubjectSaved = (setPopupState, refreshPage) => {
         setPopupState();
-        fetchSubjects();
+        refreshPage();
     }
 
-    const subjectForm = (setPopupState, subject) => {
+    const subjectForm = (setPopupState, subject, refreshPage) => {
         return (
-            <SubjectForm onSuccess={() => onSubjectSaved(setPopupState)} subject={subject} />
+            <SubjectForm onSuccess={() => onSubjectSaved(setPopupState, refreshPage)} subject={subject} />
         );
     }
 
-    const openPopup = (setPopupState, subject = defaultSubject) => {
+    const openPopup = (setPopupState, subject = defaultSubject, refreshPage = () => {}) => {
         setPopupState({
-            bodyGetter: () => subjectForm(setPopupState, subject)
+            bodyGetter: () => subjectForm(setPopupState, subject, refreshPage)
         });
     }
 
-    const renderSubjectItem = item => (
+    const renderSubjectItem = (item, refreshPage) => (
         <PopupConsumer key={item.id}>
             {
                 ({setPopupState}) => (
-                    <SubjectListItem subject={item} onUpdateClick={() => openPopup(setPopupState, item)} />
+                    <SubjectListItem subject={item} onUpdateClick={() => openPopup(setPopupState, item, refreshPage)} />
                 )
             }
         </PopupConsumer>
@@ -54,7 +44,7 @@ const AllSubjectsPage = () => {
     return (
         <div className="AllSubjectsPage container">
             <div className="row">
-                <div className="s-hflex-end">
+                {/* <div className="s-hflex-end">
                     <PopupConsumer>
                         {
                             ({setPopupState}) => (
@@ -64,21 +54,16 @@ const AllSubjectsPage = () => {
                             )
                         }
                     </PopupConsumer>
-                </div>
+                </div> */}
                 <Spacer height={15}/>
-                <div className="center">
-                    <LoaderBoundary condition={subjects == null}>
-                        {
-                            (subjects && subjects.length > 0) ? (
-                                subjects.map(renderSubjectItem)
-                            ) : (
-                                <InfoText>
-                                    Предмети відсутні
-                                </InfoText>
-                            )
+                <Paginated pageSize={10} pageHandler={fetchSubjectsPage}>
+                    {({
+                        filter: ({setFilter}) => <SubjectFilter onFilterSelected={setFilter} />,
+                        content: ({items, refreshPage}) => {
+                            return items.map(item => renderSubjectItem(item, refreshPage))
                         }
-                    </LoaderBoundary>
-                </div>
+                    })}
+                </Paginated>
             </div>
         </div>
     );

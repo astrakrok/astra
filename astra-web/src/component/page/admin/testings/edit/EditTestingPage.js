@@ -15,6 +15,7 @@ import AddTestToTestingForm from "../../../../form/AddTestToTestingForm/AddTestT
 import FormError from "../../../../FormError/FormError";
 import {errorMessage} from "../../../../../error/message";
 import {defaultEmptyTesting} from "../../../../../data/default/testing";
+import ActionDialog from "../../../../popup-component/ActionDialog/ActionDialog";
 
 const EditTestingPage = () => {
     const {id} = useParams();
@@ -35,7 +36,7 @@ const EditTestingPage = () => {
         });
     }
 
-    const activate = async () => {
+    const makeActivation = async () => {
         setActivationState(previous => ({...previous, loading: true}));
         const result = await activateTesting(testingInfo.id);
         if (result.id) {
@@ -44,6 +45,13 @@ const EditTestingPage = () => {
         } else {
             setActivationState(previous => ({...previous, loading: false, errors: result.errors}));
         }
+    }
+
+    const activate = async setPopupState => {
+        const message = "Ви дійсно бажаєте активувати іспит? Дану операцію неможливо буде відмінити";
+        setPopupState({
+            bodyGetter: () => <ActionDialog message={message} setPopupState={setPopupState} onConfirm={makeActivation} />
+        })
     }
 
     useEffect(() => {
@@ -114,7 +122,13 @@ const EditTestingPage = () => {
                     <div className="create s-hflex-end">
                         <DisplayBoundary condition={testingInfo.status !== "ACTIVE"}>
                             <LoaderBoundary condition={activationState.loading} size="small">
-                                <Button onClick={activate}>Активувати</Button>
+                                <PopupConsumer>
+                                    {
+                                        ({setPopupState}) => (
+                                            <Button onClick={() => activate(setPopupState)}>Активувати</Button>
+                                        )
+                                    }
+                                </PopupConsumer>
                             </LoaderBoundary>
                         </DisplayBoundary>
                         <Spacer width={15} />

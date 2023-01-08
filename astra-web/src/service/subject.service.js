@@ -2,8 +2,8 @@ import {route} from "../constant/app.route";
 import {errorMessage} from "../error/message";
 import {client} from "../shared/js/axios";
 
-export const getSubjectsDetails = async () => {
-    const response = await client.get(route.admin.subjects.details);
+export const getSubjectsDetailsPage = async (filter, pageable) => {
+    const response = await client.post(route.admin.subjects.details + `?pageSize=${pageable.pageSize}&pageNumber=${pageable.pageNumber}`, filter);
     return response.data;
 }
 

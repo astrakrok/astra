@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {getSubjectsDetails} from "../../../service/subject.service";
+import {getSubjectsDetailsPage} from "../../../service/subject.service";
 import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 
 const withSubjectsDetails = (
@@ -11,7 +11,10 @@ const withSubjectsDetails = (
 
         useEffect(() => {
             const fetchSubjectsDetails = async () => {
-                const result = await getSubjectsDetails();
+                const result = await getSubjectsDetailsPage({}, {
+                    pageNumber: 0,
+                    pageSize: 200
+                });
                 setSubjectsDetails(result);
             }
 

@@ -8,20 +8,25 @@
         values (#{entity.title}, #{entity.specializationId});
     </insert>
 
-    <select id="getAllSubjectsDetails" resultType="com.example.astraapi.entity.SubjectDetailEntity"
-            resultMap="subjects">
-        select sub.id     as subjectId,
-               sub.title  as subjectTitle,
-               spec.id    as specializationId,
-               spec.title as specializationTitle,
-               step.id    as stepId,
-               step.title as stepTitle
+    <select id="search" resultMap="subjectsPage">
+        select sub.id                as subjectId,
+               sub.title             as subjectTitle,
+               spec.id               as specializationId,
+               spec.title            as specializationTitle,
+               step.id               as stepId,
+               step.title            as stepTitle,
+               #{pageable.pageSize}  as pageSize,
+               count(sub.id) over () as rows
         from public.subjects sub
                  left join public.specializations spec
                            on spec.id = sub.specialization_id
                  left join public.steps step
                            on spec.step_id = step.id
-        order by sub.title, step.title
+        where (#{searchText}::varchar is null or sub.title ilike concat('%', #{searchText}::varchar, '%'))
+          and (#{stepId}::bigint is null or step.id = #{stepId}::bigint)
+          and (#{specializationId}::bigint is null or spec.id = #{specializationId}::bigint)
+        order by step.id, spec.id, sub.title
+        offset #{pageable.offset} limit #{pageable.pageSize}
     </select>
 
     <update id="update">
@@ -78,7 +83,16 @@
         ) data on true
     </select>
 
-    <resultMap id="subjects" type="com.example.astraapi.entity.projection.SubjectDetailEntity">
+    <resultMap id="subjectsPage" type="com.example.astraapi.model.Page">
+        <result property="rows" column="rows"/>
+        <result property="pageSize" column="pageSize"/>
+        <collection property="items"
+                    javaType="java.util.List"
+                    ofType="com.example.astraapi.entity.projection.SubjectDetailEntity"
+                    resultMap="subjectDetail"/>
+    </resultMap>
+
+    <resultMap id="subjectDetail" type="com.example.astraapi.entity.projection.SubjectDetailEntity">
         <id column="subjectId" property="id"/>
         <result column="subjectTitle" property="title"/>
 
