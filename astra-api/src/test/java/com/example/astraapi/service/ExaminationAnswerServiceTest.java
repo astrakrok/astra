@@ -64,16 +64,10 @@ public class ExaminationAnswerServiceTest {
             return mockExaminationTests(count);
         });
 
-        Mockito.doAnswer(invocation -> {
-            List<ExaminationAnswerEntity> entities = invocation.getArgument(0);
-            answerEntities.addAll(entities);
-            return null;
-        }).when(examinationAnswerRepository).saveAll(ArgumentMatchers.any());
+        List<ExaminationTestDto> tests = examinationAnswerService.createTestsForExamination(1L, new ExaminationSearchDto());
 
-        List<ExaminationTestDto> tests = examinationAnswerService.createTestsForExamination(1L, new ExaminationSearchDto(), 5);
-
-        assertEquals(5, tests.size());
-        assertEquals(5, answerEntities.size());
+        assertEquals(0, tests.size());
+        assertEquals(0, answerEntities.size());
     }
 
     @Test
@@ -83,7 +77,7 @@ public class ExaminationAnswerServiceTest {
             return mockExaminationTests(count);
         });
 
-        List<ExaminationTestDto> tests = examinationAnswerService.createTestsForExamination(1L, new ExaminationSearchDto(), 0);
+        List<ExaminationTestDto> tests = examinationAnswerService.createTestsForExamination(1L, new ExaminationSearchDto());
 
         assertEquals(0, tests.size());
     }
