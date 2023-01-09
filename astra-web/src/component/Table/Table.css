@@ -41,13 +41,13 @@ table.Table.primary tbody tr:last-of-type {
     border-bottom: 2px solid var(--primary-color);;
 }
 
-table.Table.secondary tbody tr:hover > *:not(.highlight-default) {
+table.Table.secondary:not(.disabled) tbody tr:hover > *:not(.highlight-default) {
     font-weight: bold;
     color: var(--secondary-color);
     background-color: rgba(0, 0, 0, 0.1);
 }
 
-table.Table.primary tbody tr:hover > *:not(.highlight-default) {
+table.Table.primary:not(.disabled) tbody tr:hover > *:not(.highlight-default) {
     font-weight: bold;
     color: var(--primary-color);
     background-color: rgba(0, 0, 0, 0.1);

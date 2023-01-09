@@ -1,4 +1,4 @@
-package com.example.astraapi.dto;
+package com.example.astraapi.dto.importing;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

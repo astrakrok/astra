@@ -17,6 +17,7 @@ import com.example.astraapi.repository.TestRepository;
 import com.example.astraapi.service.TestService;
 import com.example.astraapi.service.TestSubjectService;
 import com.example.astraapi.service.TestVariantService;
+import com.example.astraapi.util.PageUtils;
 import com.example.astraapi.validation.ErrorValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -75,17 +76,13 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public Page<TestShortDetailDto> getAll(AdminTestFilterDto filter, Pageable pageable) {
-        Page<TestShortDetailDto> page = testRepository.getAll(
+        return PageUtils.mapPage(
+                testRepository.getAll(
                         filter.getSearchText(),
                         filter.getStatus(),
                         filter.getImportId(),
-                        pageable)
-                .map(testMapper::toShortDetailDto);
-        if (page == null) {
-            return new Page<>();
-        }
-        page.setPageSize(pageable.getPageSize());
-        return page;
+                        pageable),
+                testMapper::toShortDetailDto);
     }
 
     @Override

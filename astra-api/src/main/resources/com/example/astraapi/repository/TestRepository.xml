@@ -25,13 +25,14 @@
     </select>
 
     <select id="getAll" resultMap="testPage">
-        select nested.id       as id,
-               nested.question as question,
-               nested.comment  as comment,
-               nested.status   as status,
-               nested.rows     as rows,
-               spec.id         as specializationId,
-               spec.title      as specializationTitle
+        select nested.id            as id,
+               nested.question      as question,
+               nested.comment       as comment,
+               nested.status        as status,
+               #{pageable.pageSize} as pageSize,
+               nested.rows          as rows,
+               spec.id              as specializationId,
+               spec.title           as specializationTitle
         from (select t.id                as id,
                      t.question          as question,
                      t.comment           as comment,
@@ -183,6 +184,7 @@
 
     <resultMap id="testPage" type="com.example.astraapi.model.Page">
         <result property="rows" column="rows"/>
+        <result property="pageSize" column="pageSize"/>
         <collection property="items"
                     javaType="List"
                     ofType="com.example.astraapi.entity.projection.TestShortDetailProjection"

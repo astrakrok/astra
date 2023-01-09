@@ -43,31 +43,29 @@ public class RequestTestErrorValidator implements ErrorValidator<RequestTestDto>
 
     private ValidationError validateLength(String property, String value, Integer min, Integer max) {
         int length = StringUtils.length(value == null ? null : value.strip());
-        // TODO remove duplication
-        if ((min == null || length >= min) && (max == null || length <= max)) {
-            return null;
-        }
-        HashMap<String, Object> details = new HashMap<>();
-        details.put("property", property);
-        details.put("min", min);
-        details.put("max", max);
-        return new ValidationError(
+        Map<String, Object> details = validateBounds(property, length, min, max);
+        return details.isEmpty() ? null : new ValidationError(
                 ValidationErrorType.INVALID_LENGTH,
                 details);
     }
 
     private ValidationError validateSize(String property, Collection<?> items, Integer min, Integer max) {
         int size = items.size();
-        if ((min == null || size >= min) && (max == null || size <= max)) {
-            return null;
+        Map<String, Object> details = validateBounds(property, size, min, max);
+        return details.isEmpty() ? null : new ValidationError(
+                ValidationErrorType.INVALID_SIZE,
+                details);
+    }
+
+    private Map<String, Object> validateBounds(String property, int value, Integer min, Integer max) {
+        if ((min == null || value >= min) && (max == null || value <= max)) {
+            return new HashMap<>();
         }
         HashMap<String, Object> details = new HashMap<>();
         details.put("property", property);
         details.put("min", min);
         details.put("max", max);
-        return new ValidationError(
-                ValidationErrorType.INVALID_SIZE,
-                details);
+        return details;
     }
 
     private ValidationError validateCorrectness(List<TestVariantDto> variants) {

@@ -1,9 +1,10 @@
 package com.example.astraapi.service.impl;
 
-import com.example.astraapi.dto.FileImportDto;
 import com.example.astraapi.dto.IdDto;
 import com.example.astraapi.dto.filter.AdminImportTestFilterDto;
+import com.example.astraapi.dto.importing.FileImportDto;
 import com.example.astraapi.dto.importing.ImportStatsDto;
+import com.example.astraapi.dto.importing.WebImportDto;
 import com.example.astraapi.dto.test.RequestTestDto;
 import com.example.astraapi.dto.test.TestFullDetailDto;
 import com.example.astraapi.entity.ImportEntity;
@@ -22,8 +23,8 @@ import com.example.astraapi.model.validation.ValidationError;
 import com.example.astraapi.repository.ImportRepository;
 import com.example.astraapi.repository.ImportTestRepository;
 import com.example.astraapi.repository.SubjectRepository;
-import com.example.astraapi.service.FileImporterFactory;
 import com.example.astraapi.service.ImportService;
+import com.example.astraapi.service.ImporterFactory;
 import com.example.astraapi.service.TestService;
 import com.example.astraapi.util.PageUtils;
 import com.example.astraapi.validation.ErrorValidator;
@@ -39,7 +40,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ImportServiceImpl implements ImportService {
-    private final FileImporterFactory fileImporterFactory;
+    private final ImporterFactory importerFactory;
     private final TestMapper testMapper;
     private final SubjectRepository subjectRepository;
     private final ImportRepository importRepository;
@@ -51,42 +52,16 @@ public class ImportServiceImpl implements ImportService {
     @Override
     @Transactional
     public IdDto importFromFile(FileImportDto fileImportDto) {
-        ImportResult importResult = fileImporterFactory.get(fileImportDto.getFile().getName()).importTests(fileImportDto.getFile());
-        List<ImportTest> tests = importResult.getTests();
-        List<ImportTestEntity> importTestEntities = new ArrayList<>();
-        ImportEntity importEntity = new ImportEntity(
-                null,
-                fileImportDto.getTitle(),
-                importResult.getSource(),
-                importResult.getSourceTitle(),
-                Map.of(),
-                null);
-        importRepository.save(importEntity);
-        for (ImportTest test : tests) {
-            Map<String, Object> details = new HashMap<>();
-            Map<String, List<ImportSubjectProjection>> subjects = subjectRepository.getSubjects(
-                            getItems(test.getSubjects(), ImportSubject::getSubjectTitle),
-                            getItems(test.getSubjects(), ImportSubject::getSpecializationTitle),
-                            getItems(test.getSubjects(), ImportSubject::getStepTitle))
-                    .stream()
-                    .collect(Collectors.groupingBy(ImportSubjectProjection::getImportSubjectTitle));
-            ImportSubjectResult importSubjectResult = getImportSubjectResult(subjects);
-            List<ValidationError> errors = getErrorsByResult(importSubjectResult);
-            if (!errors.isEmpty()) {
-                details.put("errors", errors);
-            }
-            List<Long> subjectIds = getSubjectIds(importSubjectResult.getValidSubjects());
-            RequestTestDto testDto = testMapper.toRequestTestDto(test, subjectIds);
-            List<ValidationError> testErrors = testValidator.validate(testDto);
-            TestFullDetailDto testFullDetailDto = testErrors.isEmpty() ? testService.save(testDto) : testService.saveDraft(testDto);
-            importTestEntities.add(new ImportTestEntity(
-                    null,
-                    importEntity.getId(),
-                    testFullDetailDto.getId(),
-                    details));
-        }
-        importTestRepository.saveAll(importTestEntities);
-        return new IdDto(importEntity.getId());
+        ImportResult importResult = importerFactory.getFileImporter(fileImportDto.getFile().getName()).importTests(fileImportDto.getFile());
+        Long id = saveImport(fileImportDto.getTitle(), importResult);
+        return new IdDto(id);
+    }
+
+    @Override
+    public IdDto importFromWeb(WebImportDto webImportDto) {
+        ImportResult importResult = importerFactory.getWebImporter(webImportDto.getUrl()).importTests(webImportDto.getUrl());
+        Long id = saveImport(webImportDto.getTitle(), importResult);
+        return new IdDto(id);
     }
 
     @Override
@@ -135,5 +110,43 @@ public class ImportServiceImpl implements ImportService {
                                 "items", subject.getValue()))))
                 .forEach(errors::add);
         return errors;
+    }
+
+    private Long saveImport(String title, ImportResult importResult) {
+        List<ImportTest> tests = importResult.getTests();
+        List<ImportTestEntity> importTestEntities = new ArrayList<>();
+        ImportEntity importEntity = new ImportEntity(
+                null,
+                title,
+                importResult.getSource(),
+                importResult.getSourceTitle(),
+                importResult.getDetails(),
+                null);
+        importRepository.save(importEntity);
+        for (ImportTest test : tests) {
+            Map<String, Object> details = new HashMap<>();
+            Map<String, List<ImportSubjectProjection>> subjects = subjectRepository.getSubjects(
+                            getItems(test.getSubjects(), ImportSubject::getSubjectTitle),
+                            getItems(test.getSubjects(), ImportSubject::getSpecializationTitle),
+                            getItems(test.getSubjects(), ImportSubject::getStepTitle))
+                    .stream()
+                    .collect(Collectors.groupingBy(ImportSubjectProjection::getImportSubjectTitle));
+            ImportSubjectResult importSubjectResult = getImportSubjectResult(subjects);
+            List<ValidationError> errors = getErrorsByResult(importSubjectResult);
+            if (!errors.isEmpty()) {
+                details.put("errors", errors);
+            }
+            List<Long> subjectIds = getSubjectIds(importSubjectResult.getValidSubjects());
+            RequestTestDto testDto = testMapper.toRequestTestDto(test, subjectIds);
+            List<ValidationError> testErrors = testValidator.validate(testDto);
+            TestFullDetailDto testFullDetailDto = testErrors.isEmpty() ? testService.save(testDto) : testService.saveDraft(testDto);
+            importTestEntities.add(new ImportTestEntity(
+                    null,
+                    importEntity.getId(),
+                    testFullDetailDto.getId(),
+                    details));
+        }
+        importTestRepository.saveAll(importTestEntities);
+        return importEntity.getId();
     }
 }

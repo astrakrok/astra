@@ -6,6 +6,8 @@ import ImportHistory from "../../../ImportHistory/ImportHistory";
 import InfoHeader from "../../../InfoHeader/InfoHeader";
 import Spacer from "../../../Spacer/Spacer";
 import withTitle from "../../../hoc/withTitle/withTitle";
+import {Link} from "react-router-dom";
+import {page} from "../../../../constant/page";
 
 const TransferPage = () => {
     return (
@@ -14,6 +16,10 @@ const TransferPage = () => {
                 firstColumn={<ImportTestsForm />}
                 secondColumn={<ExportTestsForm />}
                 isSeparated={true}/>
+            <Spacer height={20} />
+            <div className="transfer-details center">
+                Детальніше про імпорт/експорт можна почитати <Link target="_blank" to={page.admin.documentation.transfer} className="weight-strong">тут</Link>.
+            </div>
             <Spacer height={50} />
             <InfoHeader>Історія імпорту</InfoHeader>
             <ImportHistory />

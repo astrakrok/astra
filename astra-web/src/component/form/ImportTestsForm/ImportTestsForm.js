@@ -6,7 +6,7 @@ import "./ImportTestsForm.css";
 import Spacer from "../../Spacer/Spacer";
 import Button from "../../Button/Button";
 import FileChooser from "../../FileChooser/FileChooser";
-import {importFromFile} from "../../../service/import.service";
+import {importFromFile, importFromWeb} from "../../../service/import.service";
 import Input from "../../Input/Input";
 import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 import PopupConsumer from "../../../context/popup/PopupConsumer";
@@ -17,13 +17,22 @@ const ImportTestsForm = () => {
     const [title, setTitle] = useState("");
     const [mode, setMode] = useState("file");
     const [file, setFile] = useState(null);
+    const [url, setUrl] = useState("");
+
+    const mapErrorsToMessage = errors => {
+        const error = errors[0];
+        if (error.type === "UNKNOWN_SOURCE") {
+            return "Ресурс не відомий";
+        }
+        return "Сталась невідома помилка. Спробуйте пізніше.";
+    }
 
     const handleImportClick = async setPopupState => {
         setLoading(true);
-        const result = await importFromFile(title, file);
+        const result = mode === "file" ? (await importFromFile(title, file)) : (await importFromWeb(title, url));
         setLoading(false);
         setPopupState({
-            bodyGetter: () => <MessagePopupBody message={result.id ? `Тести було успішно імпортовано. Оновіть таблицю з історією для перегляду результатів` : `На жаль, не вдалося імпортувати тести`} />
+            bodyGetter: () => <MessagePopupBody message={result.id ? `Тести було успішно імпортовано. Оновіть таблицю з історією для перегляду результатів` : mapErrorsToMessage(result.errors)} />
         });
     }
 
@@ -69,12 +78,21 @@ const ImportTestsForm = () => {
             >
                 З веб-ресурсу
             </RadioButton>
+            <DisplayBoundary condition={mode === "web"}>
+                <Spacer height={15} />
+                <Input
+                    value={url}
+                    withLabel={false}
+                    onChange={event => setUrl(event.target.value)}
+                    placeholder="Посилання" />
+                <Spacer height={15} />
+            </DisplayBoundary>
             <div className="s-hflex-end">
                 <LoaderBoundary condition={loading} size="small">
                     <PopupConsumer>
                         {
                             ({setPopupState}) => (
-                                <Button isFilled={true} onClick={event => handleImportClick(setPopupState)}>
+                                <Button isFilled={true} onClick={() => handleImportClick(setPopupState)}>
                                     Імпортувати
                                 </Button>
                             )
