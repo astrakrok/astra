@@ -23,6 +23,7 @@ import {oauth2Provider} from "../../constant/oauth2.provider";
 import OAuth2CallbackPage from "../page/oauth2-callback/OAuth2CallbackPage";
 import AllAdminsPage from "../page/admin/all/AllAdminsPage/AllAdminsPage";
 import TransferPage from "../page/admin/transfer/TransferPage";
+import TransferDocumentationPage from "../page/admin/documentation/transfer/TransferDocumentationPage";
 
 export const LayoutRoutes = () => {
     return (
@@ -52,6 +53,7 @@ export const LayoutRoutes = () => {
                     <Route path={page.admin.exams.all} element={<AllExamsPage/>}/>
                     <Route path={page.admin.testings.id().edit} element={<EditTestingPage/>}/>
                     <Route path={page.admin.transfer} element={<TransferPage />} />
+                    <Route path={page.admin.documentation.transfer} element={<TransferDocumentationPage />} />
                 </Routes>
             </main>
 

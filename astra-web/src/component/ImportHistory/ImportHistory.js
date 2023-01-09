@@ -19,6 +19,8 @@ const ImportHistory = () => {
                 return "XLS/XLSX файл";
             case "CSV_FILE":
                 return "CSV файл";
+            case "TESTING_UKR_WEB":
+                return "тестування.укр";
             default:
                 return "Ресурс невідомий";
         }

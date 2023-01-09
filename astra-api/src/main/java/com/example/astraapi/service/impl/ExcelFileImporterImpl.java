@@ -39,7 +39,11 @@ public class ExcelFileImporterImpl implements FileImporter {
             Map<String, String> ranges = getRanges(sheet);
             Map<ImportFileHeader, Integer> headers = getHeaders(sheet.getRow(0));
             List<ImportTest> tests = parseTests(sheet, ranges, headers);
-            return new ImportResult(ImportSource.EXCEL_FILE, file.getOriginalFilename(), tests);
+            return ImportResult.builder()
+                    .source(ImportSource.EXCEL_FILE)
+                    .sourceTitle(file.getOriginalFilename())
+                    .tests(tests)
+                    .build();
         } catch (IOException exception) {
             throw new ImportException(ValidationErrorType.UNKNOWN, exception);
         }

@@ -8,5 +8,6 @@ public enum ValidationErrorType {
     CONFLICT,
     INVALID_STATUS,
     EMPTY,
+    UNKNOWN_SOURCE,
     UNKNOWN
 }
