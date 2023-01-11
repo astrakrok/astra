@@ -62,3 +62,14 @@ export const updateTestDraft = async test => {
         }));
     return response.data;
 }
+
+export const deleteTest = async testId => {
+    const url = route.admin.tests + "/" + testId;
+    const response = await client.delete(url)
+        .catch(error => ({
+            data: {
+                errors: error.response.data
+            }
+        }));
+    return response.data;
+}

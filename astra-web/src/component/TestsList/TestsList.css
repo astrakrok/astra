@@ -2,3 +2,8 @@
 .TestsList tr.draft td.order {
     color: var(--primary-color) !important;
 }
+
+.TestsList .delete {
+    font-weight: bold;
+    color: var(--red-color);
+}

@@ -1,45 +1,47 @@
-import {useNavigate} from "react-router-dom";
-import {page} from "../../constant/page";
-import Badge from "../Badge/Badge";
+import PopupConsumer from "../../context/popup/PopupConsumer";
+import {deleteTest} from "../../service/test.service";
 import Table from "../Table/Table";
+import TestRow from "./TestRow/TestRow";
+import MessagePopupBody from "../popup-component/MessagePopupBody/MessagePopupBody";
 import "./TestsList.css";
 
 const TestsList = ({
-                       tests,
-                       orderFrom = 1
-                   }) => {
-    const navigate = useNavigate();
-
-    const renderTestSpecialization = specialization => {
-        return (
-            <div key={specialization.id} className="s-hflex-center">
-                <Badge className="full-width center">
-                    {specialization.title}
-                </Badge>
-            </div>
-        );
+    tests,
+    orderFrom = 1,
+    onDelete = () => {}
+}) => {
+    const mapErrorsToMessage = errors => {
+        for (const error of errors) {
+            switch (error.type) {
+                case "INVALID_STATUS":
+                    return "Тест не може бути видалений, оскільки він не є чернеткою";
+                default:
+                    return "На жаль, тест не вдалося видалити з технічних причин. Спробуйте пізніше";
+            }
+        }
     }
 
-    const openEditTestPage = test => {
-        return navigate(page.admin.tests.id(test.id).edit);
+    const tryDelete = async (testId, setPopupState) => {
+        const result = await deleteTest(testId);
+        if (result.errors) {
+            const message = mapErrorsToMessage(result.errors);
+            setPopupState({
+                bodyGetter: () => <MessagePopupBody message={message} />
+            });
+        } else {
+            await onDelete();
+        }
     }
 
-    const renderTestTableItem = (test, index) => {
-        const statusClass = test.status === 'ACTIVE' ? 'active' : 'draft';
-        return (
-            <tr key={test.id} className={`clickable ${statusClass}`} onClick={() => openEditTestPage(test)}>
-                <td className="center order">{orderFrom + index + 1}</td>
-                <td className="line-break full-width question">{test.question}</td>
-                <td>
-                    <div className="s-vflex-center">
-                        {
-                            test.specializations.map(renderTestSpecialization)
-                        }
-                    </div>
-                </td>
-            </tr>
-        );
-    }
+    const renderRowWithPopup = (test, index) => (
+        <PopupConsumer key={test.id}>
+            {
+                ({setPopupState}) => (
+                    <TestRow index={orderFrom + index} test={test} onDelete={testId => tryDelete(testId, setPopupState)} setPopupState={setPopupState} />
+                )
+            }
+        </PopupConsumer>
+    );
 
     return (
         <Table className="TestsList" type="secondary">
@@ -48,11 +50,12 @@ const TestsList = ({
                     <th>#</th>
                     <th>Питання</th>
                     <th>Спеціалізації</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
             {
-                tests.map(renderTestTableItem)
+                tests.map(renderRowWithPopup)
             }
             </tbody>
         </Table>

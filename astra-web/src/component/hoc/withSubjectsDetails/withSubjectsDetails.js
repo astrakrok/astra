@@ -4,7 +4,9 @@ import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 
 const withSubjectsDetails = (
     Component,
-    loaderSize = "big"
+    loaderSize = "big",
+    pageSize = 200,
+    pageNumber = 0
 ) => {
     return props => {
         const [subjectsDetails, setSubjectsDetails] = useState(null);
@@ -12,8 +14,8 @@ const withSubjectsDetails = (
         useEffect(() => {
             const fetchSubjectsDetails = async () => {
                 const result = await getSubjectsDetailsPage({}, {
-                    pageNumber: 0,
-                    pageSize: 200
+                    pageNumber: pageNumber,
+                    pageSize: pageSize
                 });
                 setSubjectsDetails(result);
             }
@@ -23,7 +25,7 @@ const withSubjectsDetails = (
 
         return (
             <LoaderBoundary size={loaderSize} condition={subjectsDetails == null}>
-                <Component {...props} subjectsDetails={subjectsDetails} />
+                <Component {...props} subjectsDetails={subjectsDetails && subjectsDetails.items} />
             </LoaderBoundary>
         );
     };

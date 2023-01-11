@@ -170,6 +170,23 @@
         order by id, variantId
     </select>
 
+    <delete id="deleteById">
+        with testId as (
+            delete from public.tests where id = #{id} returning id),
+             examinationAnswerId as (
+                 delete from public.examinations_answers ea where ea.test_id in (select id from testId) returning ea.id),
+             importTestId as (
+                 delete from public.import_tests it where it.test_id in (select id from testId) returning it.id),
+             testVariantId as (
+                 delete from public.tests_variants tv where tv.test_id in (select id from testId) returning tv.id),
+             testSubjectId as (
+                 delete from public.tests_subjects ts where ts.test_id in (select id from testId) returning ts.subject_id),
+             testingTestId as (
+                 delete from public.testings_tests tt where tt.test_id in (select id from testId) returning tt.id)
+        select count(*)
+        from testId
+    </delete>
+
     <resultMap id="testShortDetail" type="com.example.astraapi.entity.projection.TestShortDetailProjection">
         <id column="id" property="id"/>
         <result column="question" property="question"/>
