@@ -2,6 +2,7 @@ import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {page} from "../../../constant/page";
 import Badge from "../../Badge/Badge";
+import DisplayBoundary from "../../DisplayBoundary/DisplayBoundary";
 import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 import ActionDialog from "../../popup-component/ActionDialog/ActionDialog";
 import Spacer from "../../Spacer/Spacer";
@@ -58,11 +59,13 @@ export const TestRow = ({
                 </div>
             </td>
             <td>
-                <div className="s-hflex">
+                <div className="s-hflex-end">
                     <LoaderBoundary condition={loading} size="small">
-                        <Tooltipped tooltip="Видалити" position="top">
-                            <i className="material-icons clickable delete" onClick={tryDelete}>close</i>
-                        </Tooltipped>
+                        <DisplayBoundary condition={test.status === "DRAFT"}>
+                            <Tooltipped tooltip="Видалити" position="top">
+                                <i className="material-icons clickable delete" onClick={tryDelete}>close</i>
+                            </Tooltipped>
+                        </DisplayBoundary>
                         <Spacer width={10} />
                         <Tooltipped tooltip="Переглянути" position="top" onClick={() => openEditTestPage(test)}>
                             <i className="material-icons clickable">visibility</i>
