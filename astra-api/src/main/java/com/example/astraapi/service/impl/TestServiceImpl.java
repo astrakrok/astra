@@ -121,6 +121,15 @@ public class TestServiceImpl implements TestService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void deleteTest(Long id) {
+        if (testRepository.existsByIdAndStatus(id, TestStatus.DRAFT)) {
+            testRepository.deleteById(id);
+        } else {
+            throw new ValidationException(new ValidationError(ValidationErrorType.INVALID_STATUS));
+        }
+    }
+
     private Long saveWithStatus(RequestTestDto testDto, TestStatus status) {
         List<TestVariantDto> testVariants = testDto.getVariants();
         TestEntity entity = testMapper.toEntity(testDto, status);

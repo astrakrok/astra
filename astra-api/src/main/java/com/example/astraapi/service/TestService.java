@@ -30,4 +30,6 @@ public interface TestService {
     List<ExaminationTestDto> getExaminationTests(List<Long> ids);
 
     List<TestingShortTestDto> getNotYetSelectedTestingTests(Long testingId);
+
+    void deleteTest(Long id);
 }

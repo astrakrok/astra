@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class LinkServiceImpl implements LinkService {
     @Override
     public LinkSource getSource(String link) {
-        if (StringUtils.startsWith(link, "https://тестування.укр/")) {
+        if (StringUtils.startsWithAny(link, "https://тестування.укр/", "https://xn--80adi8aaufcj8j.xn--j1amh/")) {
             return LinkSource.TESTING_UKR;
         }
         return LinkSource.UNKNOWN;

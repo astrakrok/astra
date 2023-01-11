@@ -15,8 +15,8 @@ const ActionDialog = ({
 
     const confirmAction = async () => {
         setStatus(loadingStatus.loading);
-        await onConfirm();
         setPopupState();
+        await onConfirm();
     }
 
     return (

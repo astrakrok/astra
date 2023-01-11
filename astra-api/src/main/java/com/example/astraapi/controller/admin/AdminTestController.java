@@ -52,4 +52,9 @@ public class AdminTestController {
     public Optional<TestFullDetailDto> getDetailedTest(@PathVariable("id") Long id) {
         return testService.getDetailedTest(id);
     }
+
+    @DeleteMapping("/{id}")
+    public void deleteTest(@PathVariable("id") Long id) {
+        testService.deleteTest(id);
+    }
 }

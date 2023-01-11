@@ -38,4 +38,6 @@ public interface TestRepository {
             @Param("ids") List<Long> ids);
 
     List<TestEntity> getNotRelatedTestingTests(@Param("testingId") Long testingId);
+
+    void deleteById(Long id);
 }

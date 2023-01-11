@@ -31,9 +31,9 @@ const AllTestsPage = () => {
                             filter: ({initialFilter, setFilter}) => (
                                 <TestsFilter initialFilter={initialFilter} onFilterSelected={setFilter} />
                             ),
-                            content: ({items, orderFrom}) => (
+                            content: ({refreshPage, items, orderFrom}) => (
                                 items.length > 0 ? (
-                                    <TestsList tests={items} orderFrom={orderFrom}/>
+                                    <TestsList onDelete={refreshPage} tests={items} orderFrom={orderFrom}/>
                                 ) : (
                                     <InfoText>
                                         Тести відсутні
