@@ -4,11 +4,13 @@ const ResponsiveColumns = ({
     firstColumn = <></>,
     secondColumn = <></>,
     isSeparated = false,
-    className = ""
+    className = "",
+    firstClassName = "",
+    secondClassName = ""
 }) => {
     return (
         <div className={`ResponsiveColumns s-vflex m-hflex ${className}`}>
-            <div className="first equal-flex s-hflex-center m-no-width">
+            <div className={`first equal-flex s-hflex-center m-no-width ${firstClassName}`}>
                 {firstColumn}
             </div>
             
@@ -21,7 +23,7 @@ const ResponsiveColumns = ({
                 ) : null
             }
             
-            <div className="second equal-flex s-hflex-center m-no-width">
+            <div className={`second equal-flex s-hflex-center m-no-width ${secondClassName}`}>
                 {secondColumn}
             </div>
         </div>

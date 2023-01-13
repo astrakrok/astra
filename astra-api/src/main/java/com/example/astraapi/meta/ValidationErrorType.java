@@ -9,5 +9,6 @@ public enum ValidationErrorType {
     INVALID_STATUS,
     EMPTY,
     UNKNOWN_SOURCE,
+    UNSUPPORTED_DOCUMENT_TYPE,
     UNKNOWN
 }

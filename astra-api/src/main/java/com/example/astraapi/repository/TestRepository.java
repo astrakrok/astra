@@ -3,6 +3,7 @@ package com.example.astraapi.repository;
 import com.example.astraapi.entity.TestEntity;
 import com.example.astraapi.entity.TestFullDetailEntity;
 import com.example.astraapi.entity.projection.TestShortDetailProjection;
+import com.example.astraapi.entity.projection.exporting.ExportTestProjection;
 import com.example.astraapi.meta.TestStatus;
 import com.example.astraapi.model.Page;
 import com.example.astraapi.model.Pageable;
@@ -40,4 +41,8 @@ public interface TestRepository {
     List<TestEntity> getNotRelatedTestingTests(@Param("testingId") Long testingId);
 
     void deleteById(Long id);
+
+    Page<ExportTestProjection> getExportTests(
+            @Param("specializationId") Long specializationId,
+            @Param("pageable") Pageable pageable);
 }

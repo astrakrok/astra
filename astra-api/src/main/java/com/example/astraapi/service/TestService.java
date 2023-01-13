@@ -2,10 +2,12 @@ package com.example.astraapi.service;
 
 import com.example.astraapi.dto.TrainingSearchDto;
 import com.example.astraapi.dto.examination.ExaminationSearchDto;
+import com.example.astraapi.dto.exporting.ExportDto;
 import com.example.astraapi.dto.filter.AdminTestFilterDto;
 import com.example.astraapi.dto.test.*;
 import com.example.astraapi.model.Page;
 import com.example.astraapi.model.Pageable;
+import com.example.astraapi.model.exporting.ExportTest;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,4 +34,6 @@ public interface TestService {
     List<TestingShortTestDto> getNotYetSelectedTestingTests(Long testingId);
 
     void deleteTest(Long id);
+
+    Page<ExportTest> getTestsForExport(ExportDto exportDto, Pageable pageable);
 }

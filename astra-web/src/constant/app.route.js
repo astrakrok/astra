@@ -79,7 +79,8 @@ const getAdminRoutes = () => {
             file: prefix + "/import/file",
             web: prefix + "/import/web",
             statsFilter: prefix + "/import/stats/filter"
-        }
+        },
+        export: prefix + "/export"
     };
 }
 
