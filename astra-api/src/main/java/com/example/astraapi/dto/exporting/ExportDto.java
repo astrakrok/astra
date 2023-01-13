@@ -1,7 +1,6 @@
 package com.example.astraapi.dto.exporting;
 
-import com.example.astraapi.meta.DocumentType;
-import com.example.astraapi.meta.ExcelType;
+import com.example.astraapi.meta.FileType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +15,5 @@ import javax.validation.constraints.NotNull;
 public class ExportDto {
     private Long specializationId;
     @NotNull
-    private DocumentType documentType;
-    private ExcelType excelType;
+    private FileType fileType;
 }

@@ -7,6 +7,7 @@ import Spacer from "../../../../Spacer/Spacer";
 import testingUkrTestbase from "./images/testingUkrTestbase.jpg";
 import testingUkrTestbaseLink from "./images/testingUkrTestbaseLink.jpg";
 import webImport from "./images/webImport.jpg";
+import exportForm from "./images/exportForm.jpg";
 
 const TransferDocumentationPage = () => {
     return (
@@ -133,6 +134,18 @@ const TransferDocumentationPage = () => {
                 </div>
                 <Spacer height={20} />
             </div>
+            <InfoHeader>Експорт</InfoHeader>
+            <div className="chapter">
+                <div className="content">
+                    Astra надає можливість експорту тестів у Excel або ж у CSV файл. Для цього необхідно заповнити наступну форму:
+                    <div className="full-width s-hflex-center">
+                        <img src={exportForm} />
+                    </div>
+                    Для того, щоб розпочати експорт, достатньо тільки вибрати тип файлу та натиснути на кнопку "Експортувати". Після цього Astra розпочне експорт всієї бази тестів до файлу.
+                    Також, Ви можете обрати спеціалізацію для того, щоб Astra експортувала тести тільки для обраної спеціалізації.
+                </div>
+            </div>
+            <Spacer height={20} />
         </div>
     );
 }

@@ -10,7 +10,7 @@ import com.example.astraapi.dto.test.TestFullDetailDto;
 import com.example.astraapi.entity.ImportEntity;
 import com.example.astraapi.entity.ImportTestEntity;
 import com.example.astraapi.entity.projection.ImportSubjectProjection;
-import com.example.astraapi.factory.ImporterFactory;
+import com.example.astraapi.factory.TransferFactory;
 import com.example.astraapi.mapper.ImportMapper;
 import com.example.astraapi.mapper.TestMapper;
 import com.example.astraapi.meta.ValidationErrorType;
@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ImportServiceImpl implements ImportService {
-    private final ImporterFactory importerFactory;
+    private final TransferFactory transferFactory;
     private final TestMapper testMapper;
     private final SubjectRepository subjectRepository;
     private final ImportRepository importRepository;
@@ -52,14 +52,14 @@ public class ImportServiceImpl implements ImportService {
     @Override
     @Transactional
     public IdDto importFromFile(FileImportDto fileImportDto) {
-        ImportResult importResult = importerFactory.getFileImporter(fileImportDto.getFile().getName()).importTests(fileImportDto.getFile());
+        ImportResult importResult = transferFactory.getFileImporter(fileImportDto.getFile().getName()).importTests(fileImportDto.getFile());
         Long id = saveImport(fileImportDto.getTitle(), importResult);
         return new IdDto(id);
     }
 
     @Override
     public IdDto importFromWeb(WebImportDto webImportDto) {
-        ImportResult importResult = importerFactory.getWebImporter(webImportDto.getUrl()).importTests(webImportDto.getUrl());
+        ImportResult importResult = transferFactory.getWebImporter(webImportDto.getUrl()).importTests(webImportDto.getUrl());
         Long id = saveImport(webImportDto.getTitle(), importResult);
         return new IdDto(id);
     }

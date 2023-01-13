@@ -53,9 +53,9 @@
                                   e.finished_at                                   as finishedAt
                            from public.examinations_answers ea
                                     left join lateral (
-                               select tv.is_correct from tests_variants tv where tv.id = ea.variant_id
+                               select tv.is_correct from public.tests_variants tv where tv.id = ea.variant_id
                                ) as sub on true
-                                    left join examinations e on e.id = ea.examination_id
+                                    left join public.examinations e on e.id = ea.examination_id
                            where e.user_id = #{userId}
           <![CDATA[
                              and e.finished_at < now()
@@ -100,8 +100,8 @@
                                                       )            rank_number
                   from public.examinations_answers ea
                            left join public.examinations e on e.id = ea.examination_id
-                           left join tests_subjects ts on ea.test_id = ts.test_id
-                           left join tests_variants tv on ea.variant_id = tv.id and tv.test_id = ea.test_id
+                           left join public.tests_subjects ts on ea.test_id = ts.test_id
+                           left join public.tests_variants tv on ea.variant_id = tv.id and tv.test_id = ea.test_id
                   where ts.subject_id = sub.id
                     and e.user_id = #{userId}
                   order by ea.test_id, rank_number desc) as nested
