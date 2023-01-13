@@ -45,7 +45,6 @@ const ImportTestsForm = () => {
         setFormState({loading: true, errors: {}});
         const errors = checkErrors();
         if (Object.keys(errors).length > 0) {
-            console.log("errors:", errors);
             setFormState({
                 loading: false,
                 errors: errors

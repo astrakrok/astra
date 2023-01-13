@@ -187,6 +187,68 @@
         from testId
     </delete>
 
+    <select id="getExportTests" resultMap="exportTestPage">
+        select nested.id            as id,
+               nested.question      as question,
+               nested.comment       as comment,
+               tv.id                as variantId,
+               tv.title             as variantTitle,
+               tv.explanation       as variantExplanation,
+               tv.is_correct        as variantCorrect,
+               sub.id               as subjectId,
+               sub.title            as subjectTitle,
+               spec.id              as specializationId,
+               spec.title           as specializationTitle,
+               s.id                 as stepId,
+               s.title              as stepTitle,
+               #{pageable.pageSize} as pageSize,
+               nested.rows          as rows
+        from (select t.id                as id,
+                     t.question          as question,
+                     t.comment           as comment,
+                     count(t.id) over () as rows
+              from public.tests t
+              where #{specializationId}::bigint is null
+                 or exists(
+                      select 1
+                      from public.tests_subjects ts
+                      where ts.test_id = t.id
+                        and exists(
+                              select 1
+                              from public.subjects s
+                              where s.id = ts.subject_id and s.specialization_id = #{specializationId}::bigint
+                          )
+                  )
+              order by id
+              offset #{pageable.offset} limit #{pageable.pageSize}) as nested
+                 left join public.tests_variants tv on tv.test_id = nested.id
+                 left join public.tests_subjects ts on nested.id = ts.test_id
+                 left join public.subjects sub on sub.id = ts.subject_id
+                 left join public.specializations spec on spec.id = sub.specialization_id
+                 left join public.steps s on s.id = spec.step_id
+        order by nested.id
+    </select>
+
+    <resultMap id="testPage" type="com.example.astraapi.model.Page">
+        <result property="rows" column="rows"/>
+        <result property="pageSize" column="pageSize"/>
+        <collection property="items"
+                    javaType="List"
+                    ofType="com.example.astraapi.entity.projection.TestShortDetailProjection"
+                    resultMap="testShortDetail">
+        </collection>
+    </resultMap>
+
+    <resultMap id="exportTestPage" type="com.example.astraapi.model.Page">
+        <result property="rows" column="rows"/>
+        <result property="pageSize" column="pageSize"/>
+        <collection property="items"
+                    javaType="List"
+                    ofType="com.example.astraapi.entity.projection.exporting.ExportTestProjection"
+                    resultMap="exportTest">
+        </collection>
+    </resultMap>
+
     <resultMap id="testShortDetail" type="com.example.astraapi.entity.projection.TestShortDetailProjection">
         <id column="id" property="id"/>
         <result column="question" property="question"/>
@@ -199,13 +261,25 @@
         </collection>
     </resultMap>
 
-    <resultMap id="testPage" type="com.example.astraapi.model.Page">
-        <result property="rows" column="rows"/>
-        <result property="pageSize" column="pageSize"/>
-        <collection property="items"
-                    javaType="List"
-                    ofType="com.example.astraapi.entity.projection.TestShortDetailProjection"
-                    resultMap="testShortDetail">
+    <resultMap id="exportTest" type="com.example.astraapi.entity.projection.exporting.ExportTestProjection">
+        <id column="id"/>
+        <result column="question" property="question"/>
+        <result column="comment" property="comment"/>
+
+        <collection property="variants" javaType="java.util.List"
+                    ofType="com.example.astraapi.entity.projection.exporting.ExportTestVariantProjection">
+            <id column="variantId"/>
+            <result column="variantTitle" property="title"/>
+            <result column="variantExplanation" property="explanation"/>
+            <result column="variantCorrect" property="correct"/>
+        </collection>
+
+        <collection property="subjects" javaType="java.util.List"
+                    ofType="com.example.astraapi.entity.projection.exporting.ExportSubjectProjection">
+            <id column="subjectId"/>
+            <result column="subjectTitle" property="title"/>
+            <result column="specializationTitle" property="specializationTitle"/>
+            <result column="stepTitle" property="stepTitle"/>
         </collection>
     </resultMap>
 

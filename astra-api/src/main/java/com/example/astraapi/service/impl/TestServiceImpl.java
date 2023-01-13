@@ -2,6 +2,7 @@ package com.example.astraapi.service.impl;
 
 import com.example.astraapi.dto.TrainingSearchDto;
 import com.example.astraapi.dto.examination.ExaminationSearchDto;
+import com.example.astraapi.dto.exporting.ExportDto;
 import com.example.astraapi.dto.filter.AdminTestFilterDto;
 import com.example.astraapi.dto.test.*;
 import com.example.astraapi.dto.test.variant.TestVariantDto;
@@ -12,6 +13,7 @@ import com.example.astraapi.meta.TestStatus;
 import com.example.astraapi.meta.ValidationErrorType;
 import com.example.astraapi.model.Page;
 import com.example.astraapi.model.Pageable;
+import com.example.astraapi.model.exporting.ExportTest;
 import com.example.astraapi.model.validation.ValidationError;
 import com.example.astraapi.repository.TestRepository;
 import com.example.astraapi.service.TestService;
@@ -128,6 +130,13 @@ public class TestServiceImpl implements TestService {
         } else {
             throw new ValidationException(new ValidationError(ValidationErrorType.INVALID_STATUS));
         }
+    }
+
+    @Override
+    public Page<ExportTest> getTestsForExport(ExportDto exportDto, Pageable pageable) {
+        return PageUtils.mapPage(
+                testRepository.getExportTests(exportDto.getSpecializationId(), pageable),
+                testMapper::toExportTest);
     }
 
     private Long saveWithStatus(RequestTestDto testDto, TestStatus status) {

@@ -10,11 +10,11 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = TitleQualifier.class)
 public interface TestVariantMapper {
-  @Mapping(target = "title", qualifiedByName = TitleQualifier.TRIM)
-  @Mapping(target = "explanation", qualifiedByName = TitleQualifier.TRIM)
-  TestVariantEntity toEntity(TestVariantDto testVariantDto);
+    @Mapping(target = "title", qualifiedByName = TitleQualifier.TRIM)
+    @Mapping(target = "explanation", qualifiedByName = TitleQualifier.TRIM)
+    TestVariantEntity toEntity(TestVariantDto testVariantDto);
 
-  TrainingVariantDto toTrainingDto(TestVariantEntity entity);
+    TrainingVariantDto toTrainingDto(TestVariantEntity entity);
 
-  ExaminationVariantDto toExaminationDto(TestVariantEntity entity);
+    ExaminationVariantDto toExaminationDto(TestVariantEntity entity);
 }

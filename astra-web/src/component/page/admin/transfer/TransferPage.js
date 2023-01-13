@@ -15,7 +15,8 @@ const TransferPage = () => {
             <ResponsiveColumns
                 firstColumn={<ImportTestsForm />}
                 secondColumn={<ExportTestsForm />}
-                isSeparated={true}/>
+                firstClassName="left-column"
+                secondClassName="right-column"/>
             <Spacer height={20} />
             <div className="transfer-details center">
                 Детальніше про імпорт/експорт можна почитати <Link target="_blank" to={page.admin.documentation.transfer} className="weight-strong">тут</Link>.
