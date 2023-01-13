@@ -13,6 +13,7 @@ const TransferPage = () => {
     return (
         <div className="equal-flex TransferPage container">
             <ResponsiveColumns
+                isSeparated={true}
                 firstColumn={<ImportTestsForm />}
                 secondColumn={<ExportTestsForm />}
                 firstClassName="left-column"
