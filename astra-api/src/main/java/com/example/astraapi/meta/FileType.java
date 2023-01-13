@@ -1,6 +1,7 @@
 package com.example.astraapi.meta;
 
-public enum ExcelType {
+public enum FileType {
     XLSX,
-    XLS
+    XLS,
+    CSV
 }

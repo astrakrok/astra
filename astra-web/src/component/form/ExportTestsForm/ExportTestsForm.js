@@ -4,32 +4,27 @@ import "./ExportTestsForm.css";
 import {useEffect, useState} from "react";
 import {getAll} from "../../../service/step.service";
 import {getAllByStepId} from "../../../service/specialization.service";
-import DisplayBoundary from "../../DisplayBoundary/DisplayBoundary";
 import Spacer from "../../Spacer/Spacer";
 import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 import PopupConsumer from "../../../context/popup/PopupConsumer";
 import Button from "../../Button/Button";
+import V from "max-validator";
 import {exportToFile} from "../../../service/export.service";
+import {exportSchema} from "../../../validation/schema/export";
+import ErrorsArea from "../../ErrorsArea/ErrorsArea";
 
-const documentTypes = [
-    {
-        value: "EXCEL",
-        label: "Excel"
-    },
-    {
-        value: "CSV",
-        label: "CSV"
-    }
-];
-
-const excelTypes = [
+const fileTypes = [
     {
         value: "XLSX",
-        label: "xlsx"
+        label: "Excel (.xlsx)"
     },
     {
         value: "XLS",
-        label: "xls"
+        label: "Excel (.xls)"
+    },
+    {
+        value: "CSV",
+        label: "CSV (.csv)"
     }
 ];
 
@@ -38,8 +33,7 @@ const ExportTestsForm = () => {
     const [selectedStep, setSelectedStep] = useState(null);
     const [specializations, setSpecializations] = useState(null);
     const [selectedSpecialization, setSelectedSpecialization] = useState(null);
-    const [documentType, setDocumentType] = useState(null);
-    const [excelType, setExcelType] = useState(null);
+    const [fileType, setFileType] = useState(null);
     const [formState, setFormState] = useState({loading: false, errors: {}});
 
     useEffect(() => {
@@ -78,19 +72,12 @@ const ExportTestsForm = () => {
 
         const link = document.createElement('a');
         link.href = href;
-        link.setAttribute('download', 'export-result.' + type);
+        link.setAttribute('download', 'export-result.' + (type ? type.toLowerCase() : "txt"));
         document.body.appendChild(link);
         link.click();
 
         document.body.removeChild(link);
         URL.revokeObjectURL(href);
-    }
-
-    const getFileType = exportData => {
-        if (exportData.documentType === "CSV") {
-            return "CSV";
-        }
-        return exportData.excelType;
     }
 
     const handleExportClick = async () => {
@@ -100,11 +87,18 @@ const ExportTestsForm = () => {
         });
         const exportData = {
             specializationId: selectedSpecialization && selectedSpecialization.value,
-            documentType: documentType && documentType.value,
-            excelType: excelType && excelType.value
+            fileType: fileType && fileType.value
         };
+        const validationResult = V.validate(exportData, exportSchema);
+        if (validationResult.hasError) {
+            setFormState({
+                loading: false,
+                errors: validationResult.errors
+            });
+            return;
+        }
         const result = await exportToFile(exportData);
-        downloadFile(result, getFileType(exportData));
+        downloadFile(result, exportData.fileType);
         setFormState({
             loading: false,
             errors: {}
@@ -131,23 +125,15 @@ const ExportTestsForm = () => {
                     onChange={setSelectedSpecialization}
                     value={selectedSpecialization}/>
                     <Spacer height={20} />
-                <div className="s-hflex">
+                <div className="s-vflex">
                     <SingleSelect
                         className="equal-flex"
-                        placeholder="Виберіть тип документу"
+                        placeholder="Виберіть тип файлу"
                         isClearable={true}
-                        options={documentTypes}
-                        onChange={setDocumentType}
-                        value={documentType}/>
-                    <DisplayBoundary condition={documentType && documentType.value === "EXCEL"}>
-                        <Spacer width={10} />
-                        <SingleSelect
-                            placeholder="Розширення"
-                            isClearable={true}
-                            options={excelTypes}
-                            onChange={setExcelType}
-                            value={excelType}/>
-                    </DisplayBoundary>
+                        options={fileTypes}
+                        onChange={setFileType}
+                        value={fileType}/>
+                    <ErrorsArea errors={formState.errors.fileType}/>
                 </div>
                 <Spacer height={20} />
                 <div className="s-hflex-end">

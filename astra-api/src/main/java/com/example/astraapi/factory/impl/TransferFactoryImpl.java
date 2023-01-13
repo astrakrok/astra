@@ -1,10 +1,12 @@
 package com.example.astraapi.factory.impl;
 
 import com.example.astraapi.exception.ValidationException;
-import com.example.astraapi.factory.ImporterFactory;
+import com.example.astraapi.factory.TransferFactory;
+import com.example.astraapi.meta.FileType;
 import com.example.astraapi.meta.LinkSource;
 import com.example.astraapi.meta.ValidationErrorType;
 import com.example.astraapi.model.validation.ValidationError;
+import com.example.astraapi.service.FileExporter;
 import com.example.astraapi.service.FileImporter;
 import com.example.astraapi.service.LinkService;
 import com.example.astraapi.service.WebImporter;
@@ -13,19 +15,25 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ImporterFactoryImpl implements ImporterFactory {
+public class TransferFactoryImpl implements TransferFactory {
     private final LinkService linkService;
     private final FileImporter excelFileImporter;
     private final WebImporter testingUkrWebImporter;
+    private final FileExporter excelFileExporter;
+    private final FileExporter csvFileExporter;
 
-    public ImporterFactoryImpl(
+    public TransferFactoryImpl(
             LinkService linkService,
             @Qualifier("excelFileImporter") FileImporter excelFileImporter,
-            @Qualifier("testingUkrWebImporter") TestingUkrWebImporterImpl testingUkrWebImporter
+            @Qualifier("testingUkrWebImporter") TestingUkrWebImporterImpl testingUkrWebImporter,
+            @Qualifier("excelFileExporter") FileExporter excelFileExporter,
+            @Qualifier("csvFileExporter") FileExporter csvFileExporter
     ) {
         this.linkService = linkService;
         this.excelFileImporter = excelFileImporter;
         this.testingUkrWebImporter = testingUkrWebImporter;
+        this.excelFileExporter = excelFileExporter;
+        this.csvFileExporter = csvFileExporter;
     }
 
     @Override
@@ -40,5 +48,18 @@ public class ImporterFactoryImpl implements ImporterFactory {
             return testingUkrWebImporter;
         }
         throw new ValidationException(new ValidationError(ValidationErrorType.UNKNOWN_SOURCE));
+    }
+
+    @Override
+    public FileExporter getFileExporter(FileType fileType) {
+        switch (fileType) {
+            case XLS:
+            case XLSX:
+                return excelFileExporter;
+            case CSV:
+                return csvFileExporter;
+            default:
+                throw new ValidationException(new ValidationError(ValidationErrorType.UNSUPPORTED_DOCUMENT_TYPE));
+        }
     }
 }

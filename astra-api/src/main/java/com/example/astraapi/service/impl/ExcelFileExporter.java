@@ -2,7 +2,7 @@ package com.example.astraapi.service.impl;
 
 import com.example.astraapi.dto.exporting.ExportDto;
 import com.example.astraapi.entity.projection.exporting.ExportTestsPageResult;
-import com.example.astraapi.meta.ExcelType;
+import com.example.astraapi.meta.FileType;
 import com.example.astraapi.model.Page;
 import com.example.astraapi.model.Pageable;
 import com.example.astraapi.model.exporting.ExportSubject;
@@ -19,6 +19,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,7 @@ public class ExcelFileExporter implements FileExporter {
     @Override
     public byte[] exportTests(ExportDto exportDto) {
         try {
-            try (Workbook workbook = WorkbookFactory.create(exportDto.getExcelType() == ExcelType.XLSX)) {
+            try (Workbook workbook = WorkbookFactory.create(exportDto.getFileType() == FileType.XLSX)) {
                 Sheet sheet = workbook.createSheet("Exported");
 
                 createHeaderRow(sheet);
@@ -50,7 +51,7 @@ public class ExcelFileExporter implements FileExporter {
                     return outputStream.toByteArray();
                 }
             }
-        } catch (Exception exception) {
+        } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
     }
@@ -114,7 +115,7 @@ public class ExcelFileExporter implements FileExporter {
 
     private String mapSubjectsToString(List<ExportSubject> subjects) {
         return subjects.stream()
-                .map(subject -> subject.getTitle() + "," + subject.getSpecializationTitle() + "," + subject.getStepTitle())
-                .collect(Collectors.joining("|"));
+                .map(subject -> subject.getTitle() + "|" + subject.getSpecializationTitle() + "|" + subject.getStepTitle())
+                .collect(Collectors.joining(","));
     }
 }
