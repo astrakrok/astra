@@ -15,6 +15,7 @@ import lombok.Setter;
 public class TestingInfoDto {
   private Long id;
   private TestingStatus status;
+  private Long testsCount;
   private ResponseExamDto exam;
   private SpecializationDto specialization;
 }

@@ -30,10 +30,14 @@ public class Page<T> {
         this.pageSize = Math.max(0, pageSize);
     }
 
-    public <R> Page<R> map(Function<T, R> mapper) {
+    public <R, P extends Page<R>> P map(Function<T, R> mapper) {
         List<R> newItems = items.stream()
                 .map(mapper)
                 .collect(Collectors.toList());
-        return new Page<>(newItems, rows, pageSize);
+        return pageCreator(newItems);
+    }
+
+    protected <R, P extends Page<R>> P pageCreator(List<R> items) {
+        return (P) new Page<>(items, rows, pageSize);
     }
 }

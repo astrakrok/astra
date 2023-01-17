@@ -2,9 +2,11 @@ package com.example.astraapi.repository;
 
 import com.example.astraapi.entity.TestingEntity;
 import com.example.astraapi.entity.TestingInfoEntity;
-import com.example.astraapi.entity.TestingTestQuestionEntity;
 import com.example.astraapi.entity.TestingWithSpecializationEntity;
+import com.example.astraapi.entity.projection.TestingTestSimpleProjection;
 import com.example.astraapi.meta.TestingStatus;
+import com.example.astraapi.model.Pageable;
+import com.example.astraapi.model.TestingPage;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,7 +21,10 @@ public interface TestingRepository {
 
     Optional<TestingInfoEntity> findTestingInfoById(@Param("id") Long id);
 
-    List<TestingTestQuestionEntity> getTestingTestsByTestingId(@Param("testingId") Long testingId);
+    TestingPage<TestingTestSimpleProjection> getTestingTestsByTestingId(
+            @Param("testingId") Long testingId,
+            @Param("searchText") String searchText,
+            @Param("pageable") Pageable pageable);
 
     List<TestingEntity> getAvailable();
 

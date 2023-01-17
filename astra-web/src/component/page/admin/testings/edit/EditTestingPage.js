@@ -4,7 +4,6 @@ import {activateTesting, getTestingInfo, getTests} from "../../../../../service/
 import {create, deleteById} from "../../../../../service/testing.test.service";
 import Button from "../../../../Button/Button";
 import InfoHeader from "../../../../InfoHeader/InfoHeader";
-import InfoText from "../../../../InfoText/InfoText";
 import LoaderBoundary from "../../../../LoaderBoundary/LoaderBoundary";
 import DisplayBoundary from "../../../../DisplayBoundary/DisplayBoundary";
 import Spacer from "../../../../Spacer/Spacer";
@@ -16,11 +15,13 @@ import FormError from "../../../../FormError/FormError";
 import {errorMessage} from "../../../../../error/message";
 import {defaultEmptyTesting} from "../../../../../data/default/testing";
 import ActionDialog from "../../../../popup-component/ActionDialog/ActionDialog";
+import Paginated from "../../../../Paginated/Paginated";
+import TestingTestsFilter from "../../../../filter/TestingTestsFilter/TestingTestsFilter";
 
 const EditTestingPage = () => {
     const {id} = useParams();
     const [testingInfo, setTestingInfo] = useState(defaultEmptyTesting);
-    const [formState, setFormState] = useState({});
+    const [error, setError] = useState(null);
     const [activationState, setActivationState] = useState({loading: false, errors: []});
 
     const fetchTestingInfo = async () => {
@@ -28,12 +29,8 @@ const EditTestingPage = () => {
         setTestingInfo(testingInfo);
     }
 
-    const fetchTests = async () => {
-        const tests = await getTests(id);
-        setFormState({
-            tests: tests,
-            error: null
-        });
+    const getPage = async (filter, pageable) => {
+        return await getTests(id, filter, pageable);
     }
 
     const makeActivation = async () => {
@@ -56,16 +53,13 @@ const EditTestingPage = () => {
 
     useEffect(() => {
         fetchTestingInfo();
-        fetchTests();
     }, []);
 
-    const deleteTestingTest = async testingTestId => {
+    const deleteTest = async (testingTestId, refreshPage) => {
         const result = await deleteById(testingTestId);
         if (!result.error) {
-            setFormState(previous => ({
-                ...previous,
-                tests: previous.tests.filter(item => item.id !== testingTestId)
-            }))
+            fetchTestingInfo();
+            refreshPage();
         }
     }
 
@@ -77,40 +71,28 @@ const EditTestingPage = () => {
         </div>
     );
 
-    const addTestToTesting = async (test, setPopupState) => {
+    const addTestToTesting = async (test, setPopupState, setFilter) => {
         const data = {
             testingId: id,
             testId: test.id
         };
         const result = await create(data);
         if (result.id) {
-            setFormState(previous => ({
-                ...previous,
-                error: null,
-                tests: [
-                    ...previous.tests,
-                    {
-                        id: result.id,
-                        test: test
-                    }
-                ]
-            }));
+            setFilter({});
+            fetchTestingInfo();
         } else {
-            setFormState(previous => ({
-                ...previous,
-                error: errorMessage.UNABLE_TO_ADD_TESTING_TEST
-            }));
+            setError(errorMessage.UNABLE_TO_ADD_TESTING_TEST);
         }
         setPopupState();
     }
 
-    const openAddTestForm = setPopupState => {
+    const openAddTestForm = (setPopupState, setFilter) => {
         setPopupState({
             size: "medium",
             bodyGetter: () => (
                 <AddTestToTestingForm
                     testingId={id}
-                    onSelected={test => addTestToTesting(test, setPopupState)}/>
+                    onSelected={test => addTestToTesting(test, setPopupState, setFilter)}/>
             )
         });
     }
@@ -132,15 +114,6 @@ const EditTestingPage = () => {
                             </LoaderBoundary>
                         </DisplayBoundary>
                         <Spacer width={15} />
-                        <PopupConsumer>
-                            {
-                                ({setPopupState}) => (
-                                    <Button isFilled={true} onClick={() => openAddTestForm(setPopupState)}>
-                                        Додати тест
-                                    </Button>
-                                )
-                            }
-                        </PopupConsumer>
                     </div>
                     <DisplayBoundary condition={activationState.errors.length > 0}>
                         <Spacer height={10} />
@@ -150,7 +123,7 @@ const EditTestingPage = () => {
                             }
                         </div>
                     </DisplayBoundary>
-                    <Spacer height={20}/>
+                    <Spacer height={10}/>
                     <div className="info">
                         <InfoHeader className="s-hflex full-width">
                             {
@@ -159,27 +132,37 @@ const EditTestingPage = () => {
                                 ) : null
                             }
                             <div className="equal-flex"/>
-                            <div>Кількість тестів - {formState.tests ? formState.tests.length : 0}</div>
+                            <div>Кількість тестів - {testingInfo.testsCount}</div>
                         </InfoHeader>
                     </div>
-                    <div className="tests s-vflex">
+                    <DisplayBoundary condition={error != null}>
+                        <FormError message={error} className="center weight-strong" />
+                        <Spacer height={10} />
+                    </DisplayBoundary>
+                    <Paginated pageHandler={getPage}>
                         {
-                            formState.error ? (
-                                <FormError message={formState.error} className="center weight-strong"/>
-                            ) : null
-                        }
-                        <LoaderBoundary condition={formState.tests == null} className="s-hflex-center">
                             {
-                                formState.tests && formState.tests.length > 0 ? (
-                                    <TestsQuestionsTable
-                                        testingsTests={formState.tests}
-                                        onDelete={deleteTestingTest}/>
-                                ) : (
-                                    <InfoText className="s-hflex-center">Ви поки не додали тестів</InfoText>
-                                )
+                                filter: ({setFilter}) => {
+                                    return (
+                                        <div className="s-vflex">
+                                            <TestingTestsFilter onFilterSelected={setFilter} />
+                                            <Spacer height={10} />
+                                            <PopupConsumer>
+                                                {
+                                                    ({setPopupState}) => (
+                                                        <Button isFilled={true} onClick={() => openAddTestForm(setPopupState, setFilter)}>
+                                                            Додати тест
+                                                        </Button>
+                                                    )
+                                                }
+                                            </PopupConsumer>
+                                        </div>
+                                    );
+                                },
+                                content: ({items, orderFrom, refreshPage}) => <TestsQuestionsTable tests={items} orderFrom={orderFrom} onDelete={id => deleteTest(id, refreshPage)} />
                             }
-                        </LoaderBoundary>
-                    </div>
+                        }
+                    </Paginated>
                 </div>
             </div>
         </div>

@@ -23,26 +23,35 @@
     </select>
 
     <select id="findTestingInfoById" resultMap="testingInfo">
-        select t.id     as id,
-               t.status as status,
-               e.id     as examId,
-               e.title  as examTitle,
-               s.id     as specializationId,
-               s.title  as specializationTitle
+        select t.id              as id,
+               t.status          as status,
+               e.id              as examId,
+               e.title           as examTitle,
+               s.id              as specializationId,
+               s.title           as specializationTitle,
+               stats.tests_count as testsCount
         from public.testings t
                  left join public.exams e on e.id = t.exam_id
                  left join public.specializations s on s.id = t.specialization_id
+                 left join lateral (
+            select count(tt.test_id) as tests_count from public.testings_tests tt where tt.testing_id = t.id
+            ) stats on true
         where t.id = #{id}
     </select>
 
-    <select id="getTestingTestsByTestingId" resultMap="testingTestQuestion">
-        select tt.id         as id,
-               tt.testing_id as testingId,
-               t.id          as testId,
-               t.question    as testQuestion
+    <select id="getTestingTestsByTestingId" resultMap="testingPage">
+        select tt.id                as id,
+               tt.testing_id        as testingId,
+               t.id                 as testId,
+               t.question           as testQuestion,
+               count(t.id) over ()  as rows,
+               #{pageable.pageSize} as pageSize
         from public.testings_tests tt
                  left join public.tests t on t.id = tt.test_id
         where tt.testing_id = #{testingId}
+          and (#{searchText}::text is null or t.question ilike concat('%', #{searchText}::text, '%'))
+        order by tt.id desc
+        offset #{pageable.offset} limit #{pageable.pageSize}
     </select>
 
     <select id="getAvailable" resultMap="testingWithExamAndSubject">
@@ -100,6 +109,7 @@
 
     <resultMap id="testingInfo" type="com.example.astraapi.entity.TestingInfoEntity">
         <id column="id" property="id"/>
+        <result column="testsCount" property="testsCount"/>
         <result column="status" property="status"/>
 
         <association property="exam" javaType="com.example.astraapi.entity.ExamEntity">
@@ -113,14 +123,20 @@
         </association>
     </resultMap>
 
-    <resultMap id="testingTestQuestion" type="com.example.astraapi.entity.TestingTestQuestionEntity">
-        <id column="id" property="id"/>
-        <result column="testingId" property="testingId"/>
+    <resultMap id="testingPage" type="com.example.astraapi.model.TestingPage">
+        <result property="rows" column="rows"/>
+        <result property="pageSize" column="pageSize"/>
+        <result property="testingId" column="testingId"/>
+        <collection property="items"
+                    javaType="java.util.List"
+                    ofType="com.example.astraapi.entity.projection.TestingTestSimpleProjection"
+                    resultMap="testingTestQuestion"/>
+    </resultMap>
 
-        <association property="test" javaType="com.example.astraapi.entity.TestQuestionEntity">
-            <id column="testId" property="id"/>
-            <result column="testQuestion" property="question"/>
-        </association>
+    <resultMap id="testingTestQuestion" type="com.example.astraapi.entity.projection.TestingTestSimpleProjection">
+        <id column="testId" property="testId"/>
+        <result column="id" property="testingTestId"/>
+        <result column="testQuestion" property="question"/>
     </resultMap>
 
     <resultMap id="testingWithExamAndSubject" type="com.example.astraapi.entity.TestingEntity">
