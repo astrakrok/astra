@@ -6,7 +6,7 @@ import "./ImportTestsForm.css";
 import Spacer from "../../Spacer/Spacer";
 import Button from "../../Button/Button";
 import FileChooser from "../../FileChooser/FileChooser";
-import {importFromFile, importFromWeb} from "../../../service/import.service";
+import {importFromFile, importFromWeb} from "../../../service/transfer.service";
 import Input from "../../Input/Input";
 import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 import PopupConsumer from "../../../context/popup/PopupConsumer";

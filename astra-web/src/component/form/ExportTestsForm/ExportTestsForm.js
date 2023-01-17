@@ -9,7 +9,7 @@ import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 import PopupConsumer from "../../../context/popup/PopupConsumer";
 import Button from "../../Button/Button";
 import V from "max-validator";
-import {exportToFile} from "../../../service/export.service";
+import {exportToFile} from "../../../service/transfer.service";
 import {exportSchema} from "../../../validation/schema/export";
 import ErrorsArea from "../../ErrorsArea/ErrorsArea";
 

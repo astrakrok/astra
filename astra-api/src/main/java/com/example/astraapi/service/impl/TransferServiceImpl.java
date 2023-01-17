@@ -1,6 +1,7 @@
 package com.example.astraapi.service.impl;
 
 import com.example.astraapi.dto.IdDto;
+import com.example.astraapi.dto.exporting.ExportDto;
 import com.example.astraapi.dto.filter.AdminImportTestFilterDto;
 import com.example.astraapi.dto.importing.FileImportDto;
 import com.example.astraapi.dto.importing.ImportStatsDto;
@@ -24,8 +25,9 @@ import com.example.astraapi.model.validation.ValidationError;
 import com.example.astraapi.repository.ImportRepository;
 import com.example.astraapi.repository.ImportTestRepository;
 import com.example.astraapi.repository.SubjectRepository;
-import com.example.astraapi.service.ImportService;
+import com.example.astraapi.service.FileExporter;
 import com.example.astraapi.service.TestService;
+import com.example.astraapi.service.TransferService;
 import com.example.astraapi.util.PageUtils;
 import com.example.astraapi.validation.ErrorValidator;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +41,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ImportServiceImpl implements ImportService {
+public class TransferServiceImpl implements TransferService {
     private final TransferFactory transferFactory;
     private final TestMapper testMapper;
     private final SubjectRepository subjectRepository;
@@ -69,6 +71,13 @@ public class ImportServiceImpl implements ImportService {
         return PageUtils.mapPage(
                 importRepository.getStats(filter.getSearchText(), pageable),
                 importMapper::toDto);
+    }
+
+    @Override
+    @Transactional
+    public byte[] exportTests(ExportDto exportDto) {
+        FileExporter fileExporter = transferFactory.getFileExporter(exportDto.getFileType());
+        return fileExporter.exportTests(exportDto);
     }
 
     private List<Long> getSubjectIds(List<ImportSubjectProjection> subjects) {

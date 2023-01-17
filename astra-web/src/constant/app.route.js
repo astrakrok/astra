@@ -75,12 +75,12 @@ const getAdminRoutes = () => {
         specializations: prefix + "/specializations",
         steps: prefix + "/steps",
         tests: prefix + "/tests",
-        import: {
-            file: prefix + "/import/file",
-            web: prefix + "/import/web",
-            statsFilter: prefix + "/import/stats/filter"
-        },
-        export: prefix + "/export"
+        transfer: {
+            fileImport: prefix + "/transfer/import/file",
+            webImport: prefix + "/transfer/import/web",
+            importStatsFilter: prefix + "/transfer/import/stats/filter",
+            export: prefix + "/transfer/export"
+        }
     };
 }
 

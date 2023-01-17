@@ -1,5 +1,5 @@
 import "./ImportHistory.css";
-import {getStats} from "../../service/import.service";
+import {getStats} from "../../service/transfer.service";
 import ImportHistoryFilter from "../filter/ImportHistoryFilter/ImportHistoryFilter";
 import Paginated from "../Paginated/Paginated";
 import Table from "../Table/Table";
