@@ -46,9 +46,9 @@ export const getTestingInfo = async id => {
     return response.data;
 }
 
-export const getTests = async id => {
-    const url = route.admin.testings.id(id).tests.selected;
-    const response = await client.get(url);
+export const getTests = async (id, filter, pageable) => {
+    const url = route.admin.testings.id(id).tests.selected + `?pageSize=${pageable.pageSize}&pageNumber=${pageable.pageNumber}`;
+    const response = await client.post(url, filter);
     return response.data;
 }
 

@@ -1,29 +1,32 @@
 package com.example.astraapi.service;
 
 import com.example.astraapi.dto.IdDto;
+import com.example.astraapi.dto.filter.AdminTestingTestsFilterDto;
 import com.example.astraapi.dto.test.TestingShortTestDto;
 import com.example.astraapi.dto.test.TestingTestQuestionDto;
 import com.example.astraapi.dto.testing.*;
+import com.example.astraapi.model.Pageable;
+import com.example.astraapi.model.TestingPage;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface TestingService {
-  IdDto save(RequestTestingDto testingDto);
+    IdDto save(RequestTestingDto testingDto);
 
-  List<TestingWithSpecializationDto> getWithSpecializations(Long examId);
+    List<TestingWithSpecializationDto> getWithSpecializations(Long examId);
 
-  Optional<TestingInfoDto> getTestingInfo(Long id);
+    Optional<TestingInfoDto> getTestingInfo(Long id);
 
-  List<TestingTestQuestionDto> getTestsQuestions(Long id);
+    TestingPage<TestingTestQuestionDto> getTestsQuestions(Long id, AdminTestingTestsFilterDto filter, Pageable pageable);
 
-  List<TestingShortTestDto> getNotSelectedTestingTests(Long id);
+    List<TestingShortTestDto> getNotSelectedTestingTests(Long id);
 
-  TestingDescriptionDto getDescription();
+    TestingDescriptionDto getDescription();
 
-  List<TestingDetailDto> getAvailableTestings();
+    List<TestingDetailDto> getAvailableTestings();
 
-  TestingDto getOne(Long examId, Long specializationId);
+    TestingDto getOne(Long examId, Long specializationId);
 
-  Optional<TestingInfoDto> activate(Long id);
+    Optional<TestingInfoDto> activate(Long id);
 }

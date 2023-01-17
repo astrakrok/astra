@@ -1,4 +1,4 @@
-package com.example.astraapi.dto.test;
+package com.example.astraapi.entity.projection;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TestingTestQuestionDto {
-    private Long id;
+public class TestingTestSimpleProjection {
     private Long testId;
-    private String testQuestion;
+    private Long testingTestId;
+    private String question;
 }

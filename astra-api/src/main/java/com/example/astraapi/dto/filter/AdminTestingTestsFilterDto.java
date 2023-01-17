@@ -1,4 +1,4 @@
-package com.example.astraapi.dto.test;
+package com.example.astraapi.dto.filter;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TestQuestionDto {
-  private Long id;
-  private String question;
+public class AdminTestingTestsFilterDto {
+    private String searchText;
 }

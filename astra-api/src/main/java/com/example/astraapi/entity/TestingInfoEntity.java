@@ -12,6 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class TestingInfoEntity {
   private Long id;
+  private Long testsCount;
   private TestingStatus status;
   private ExamEntity exam;
   private SpecializationEntity specialization;
