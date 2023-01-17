@@ -52,7 +52,7 @@ public class ImportServiceImpl implements ImportService {
     @Override
     @Transactional
     public IdDto importFromFile(FileImportDto fileImportDto) {
-        ImportResult importResult = transferFactory.getFileImporter(fileImportDto.getFile().getName()).importTests(fileImportDto.getFile());
+        ImportResult importResult = transferFactory.getFileImporter(fileImportDto.getFile().getOriginalFilename()).importTests(fileImportDto.getFile());
         Long id = saveImport(fileImportDto.getTitle(), importResult);
         return new IdDto(id);
     }
