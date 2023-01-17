@@ -11,6 +11,7 @@ import com.example.astraapi.service.FileImporter;
 import com.example.astraapi.service.LinkService;
 import com.example.astraapi.service.WebImporter;
 import com.example.astraapi.service.impl.TestingUkrWebImporterImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 public class TransferFactoryImpl implements TransferFactory {
     private final LinkService linkService;
     private final FileImporter excelFileImporter;
+    private final FileImporter csvFileImporter;
     private final WebImporter testingUkrWebImporter;
     private final FileExporter excelFileExporter;
     private final FileExporter csvFileExporter;
@@ -25,12 +27,14 @@ public class TransferFactoryImpl implements TransferFactory {
     public TransferFactoryImpl(
             LinkService linkService,
             @Qualifier("excelFileImporter") FileImporter excelFileImporter,
+            @Qualifier("csvFileImporter") FileImporter csvFileImporter,
             @Qualifier("testingUkrWebImporter") TestingUkrWebImporterImpl testingUkrWebImporter,
             @Qualifier("excelFileExporter") FileExporter excelFileExporter,
             @Qualifier("csvFileExporter") FileExporter csvFileExporter
     ) {
         this.linkService = linkService;
         this.excelFileImporter = excelFileImporter;
+        this.csvFileImporter = csvFileImporter;
         this.testingUkrWebImporter = testingUkrWebImporter;
         this.excelFileExporter = excelFileExporter;
         this.csvFileExporter = csvFileExporter;
@@ -38,7 +42,14 @@ public class TransferFactoryImpl implements TransferFactory {
 
     @Override
     public FileImporter getFileImporter(String fileName) {
-        return excelFileImporter;
+        int lastDotPosition = fileName.lastIndexOf(".");
+        String extension = fileName.substring(lastDotPosition + 1);
+        if (StringUtils.equalsAnyIgnoreCase(extension, "xlsx", "xls")) {
+            return excelFileImporter;
+        } else if (StringUtils.equalsAnyIgnoreCase(extension, "csv")) {
+            return csvFileImporter;
+        }
+        throw new ValidationException(new ValidationError(ValidationErrorType.UNKNOWN_SOURCE));
     }
 
     @Override

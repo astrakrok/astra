@@ -5,13 +5,12 @@ import com.example.astraapi.meta.ImportFileHeader;
 import com.example.astraapi.meta.ImportSource;
 import com.example.astraapi.meta.ValidationErrorType;
 import com.example.astraapi.model.importing.ImportResult;
-import com.example.astraapi.model.importing.ImportSubject;
 import com.example.astraapi.model.importing.ImportTest;
 import com.example.astraapi.model.importing.ImportVariant;
 import com.example.astraapi.service.FileImporter;
 import com.example.astraapi.util.FileUtils;
+import com.example.astraapi.util.TransferUtils;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellReference;
@@ -24,14 +23,7 @@ import java.util.stream.Collectors;
 
 @Service("excelFileImporter")
 @RequiredArgsConstructor
-public class ExcelFileImporterImpl implements FileImporter {
-    private static final String[] QUESTIONS_HEADERS = new String[]{"питання"};
-    private static final String[] COMMENTS_HEADERS = new String[]{"коментар", "коментарі"};
-    private static final String[] SUBJECTS_HEADERS = new String[]{"предмет", "предмети"};
-    private static final String[] VARIANTS_HEADERS = new String[]{"варіант", "варіанти"};
-    private static final String[] EXPLANATIONS_HEADERS = new String[]{"пояснення"};
-    private static final String[] CORRECTNESS_HEADERS = new String[]{"правильність", "+/-"};
-
+public class ExcelFileImporter implements FileImporter {
     @Override
     public ImportResult importTests(MultipartFile file) {
         try (Workbook workbook = createWorkbook(file)) {
@@ -43,6 +35,7 @@ public class ExcelFileImporterImpl implements FileImporter {
                     .source(ImportSource.EXCEL_FILE)
                     .sourceTitle(file.getOriginalFilename())
                     .tests(tests)
+                    .details(new HashMap<>())
                     .build();
         } catch (IOException exception) {
             throw new ImportException(ValidationErrorType.UNKNOWN, exception);
@@ -88,21 +81,13 @@ public class ExcelFileImporterImpl implements FileImporter {
         return ImportTest.builder()
                 .question(question)
                 .comment(comment)
-                .subjects(parseSubjects(subjects))
+                .subjects(TransferUtils.parseSubjects(subjects))
                 .variants(variants)
                 .build();
     }
 
     private String getStringValue(Row row, Integer column) {
         return column == null ? null : row.getCell(column).getStringCellValue();
-    }
-
-    private List<ImportSubject> parseSubjects(String subjects) {
-        return subjects == null ? Collections.emptyList() : Arrays.stream(subjects.split(","))
-                .map(String::strip)
-                .filter(StringUtils::isNotBlank)
-                .map(this::toImportSubject)
-                .collect(Collectors.toList());
     }
 
     private Map<String, String> getRanges(Sheet sheet) {
@@ -121,30 +106,12 @@ public class ExcelFileImporterImpl implements FileImporter {
         Map<ImportFileHeader, Integer> headers = new HashMap<>();
         for (int i = 0; i < lastCellNum; i++) {
             String header = row.getCell(i).getStringCellValue();
-            if (StringUtils.equalsAnyIgnoreCase(header, QUESTIONS_HEADERS)) {
-                headers.put(ImportFileHeader.QUESTION, i);
-            } else if (StringUtils.equalsAnyIgnoreCase(header, COMMENTS_HEADERS)) {
-                headers.put(ImportFileHeader.COMMENT, i);
-            } else if (StringUtils.equalsAnyIgnoreCase(header, SUBJECTS_HEADERS)) {
-                headers.put(ImportFileHeader.SUBJECT, i);
-            } else if (StringUtils.equalsAnyIgnoreCase(header, VARIANTS_HEADERS)) {
-                headers.put(ImportFileHeader.TITLE, i);
-            } else if (StringUtils.equalsAnyIgnoreCase(header, EXPLANATIONS_HEADERS)) {
-                headers.put(ImportFileHeader.EXPLANATION, i);
-            } else if (StringUtils.equalsAnyIgnoreCase(header, CORRECTNESS_HEADERS)) {
-                headers.put(ImportFileHeader.CORRECTNESS, i);
+            ImportFileHeader importHeader = TransferUtils.getHeader(header);
+            if (importHeader != null) {
+                headers.put(importHeader, i);
             }
         }
         return headers;
-    }
-
-    private ImportSubject toImportSubject(String value) {
-        String[] parts = value.split("\\|");
-        return new ImportSubject(
-                StringUtils.strip(parts[0]),
-                parts.length >= 2 ? StringUtils.strip(parts[1]) : null,
-                parts.length >= 3 ? StringUtils.strip(parts[2]) : null
-        );
     }
 
     private Workbook createWorkbook(MultipartFile file) {
