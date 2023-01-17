@@ -17,6 +17,7 @@ import {defaultEmptyTesting} from "../../../../../data/default/testing";
 import ActionDialog from "../../../../popup-component/ActionDialog/ActionDialog";
 import Paginated from "../../../../Paginated/Paginated";
 import TestingTestsFilter from "../../../../filter/TestingTestsFilter/TestingTestsFilter";
+import withTitle from "../../../../hoc/withTitle/withTitle";
 
 const EditTestingPage = () => {
     const {id} = useParams();
@@ -169,4 +170,4 @@ const EditTestingPage = () => {
     );
 }
 
-export default EditTestingPage;
+export default withTitle(EditTestingPage, "Редагування іспиту");

@@ -1,5 +1,5 @@
 export const defaultEmptyTesting = {
-    status: "DRAFT",
+    status: "ACTIVE",
     testsCount: 0,
     exam: {
         title: null
