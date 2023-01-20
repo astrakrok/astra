@@ -69,3 +69,7 @@
 .TestForm .errors-list {
     margin-top: 0;
 }
+
+.TestForm .creation-timestamp {
+    opacity: 0.5;
+}

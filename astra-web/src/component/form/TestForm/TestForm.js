@@ -18,6 +18,7 @@ import {validateTest} from "../../../validation/custom/test.validator";
 import MessagePopupBody from "../../popup-component/MessagePopupBody/MessagePopupBody";
 import Alert from "../../Alert/Alert";
 import DisplayBoundary from "../../DisplayBoundary/DisplayBoundary";
+import {convertToUserTimezone} from "../../../handler/date.handler";
 
 const TestForm = ({
                       initialTest = defaultEmptyTest,
@@ -187,11 +188,9 @@ const TestForm = ({
             <Badge key={subject.id} type="green">
                 <div className="s-hflex">
                     <span className="long-text">{subject.title}</span>
-                    <DisplayBoundary condition={test.testings.length === 0}>
-                        <div className="delete-subject s-vflex-center" onClick={() => removeSubject(index)}>
-                            <i className="tiny material-icons">close</i>
-                        </div>
-                    </DisplayBoundary>
+                    <div className="delete-subject s-vflex-center" onClick={() => removeSubject(index)}>
+                        <i className="tiny material-icons">close</i>
+                    </div>
                 </div>
             </Badge>
         );
@@ -264,7 +263,13 @@ const TestForm = ({
 
     return (
         <div className="TestForm s-vflex">
-            <InfoHeader>{test.status === "DRAFT" ? "Чернетка | " : null}Основна інформація</InfoHeader>
+            <InfoHeader className="full-width s-hflex">
+                <span>{test.status === "DRAFT" ? "Чернетка | " : null}Основна інформація</span>
+                <span className="equal-flex" />
+                <DisplayBoundary condition={test.createdDate}>
+                    <span className="creation-timestamp">Створено: {convertToUserTimezone(test.createdDate)}</span>
+                </DisplayBoundary>
+            </InfoHeader>
             {
                 (notFoundSubjects.length || duplicateSubjects.length) ? (
                     <>

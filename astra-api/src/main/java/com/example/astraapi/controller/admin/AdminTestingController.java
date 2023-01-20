@@ -7,6 +7,7 @@ import com.example.astraapi.dto.test.TestingShortTestDto;
 import com.example.astraapi.dto.test.TestingTestQuestionDto;
 import com.example.astraapi.dto.testing.RequestTestingDto;
 import com.example.astraapi.dto.testing.TestingInfoDto;
+import com.example.astraapi.dto.testing.TestingStatusDto;
 import com.example.astraapi.dto.testing.TestingWithSpecializationDto;
 import com.example.astraapi.meta.Endpoint;
 import com.example.astraapi.model.Page;
@@ -58,8 +59,11 @@ public class AdminTestingController {
         return testingService.getNotSelectedTestingTests(id, filter, pageable);
     }
 
-    @PostMapping("/{id}/activation")
-    public Optional<TestingInfoDto> activateTesting(@PathVariable("id") Long id) {
-        return testingService.activate(id);
+    @PutMapping("/{id}/status")
+    public Optional<TestingInfoDto> activateTesting(
+            @PathVariable("id") Long id,
+            @RequestBody TestingStatusDto statusDto
+    ) {
+        return testingService.changeStatus(id, statusDto);
     }
 }

@@ -97,11 +97,11 @@ public class TestingServiceImpl implements TestingService {
     }
 
     @Override
-    public Optional<TestingInfoDto> activate(Long id) {
-        if (testingRepository.getTestsCount(id) == 0) {
+    public Optional<TestingInfoDto> changeStatus(Long id, TestingStatusDto statusDto) {
+        if (statusDto.getStatus() == TestingStatus.ACTIVE && testingRepository.getTestsCount(id) == 0) {
             throw new ValidationException(new ValidationError(ValidationErrorType.EMPTY));
         }
-        testingRepository.updateStatusById(id, TestingStatus.ACTIVE);
+        testingRepository.updateStatusById(id, statusDto.getStatus());
         return getTestingInfo(id);
     }
 }

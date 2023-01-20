@@ -25,7 +25,6 @@ const AddTestToTestingForm = ({
     const [loading, setLoading] = useState(false);
     
     const loadOptions = value => {
-        console.log("value:", value);
         load(testingId, value, setTests);
     }
 

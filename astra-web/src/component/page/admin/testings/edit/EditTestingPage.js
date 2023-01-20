@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {activateTesting, getTestingInfo, getTests} from "../../../../../service/testing.service";
+import {changeStatus, getTestingInfo, getTests} from "../../../../../service/testing.service";
 import {create, deleteById} from "../../../../../service/testing.test.service";
 import Button from "../../../../Button/Button";
 import InfoHeader from "../../../../InfoHeader/InfoHeader";
@@ -14,42 +14,35 @@ import AddTestToTestingForm from "../../../../form/AddTestToTestingForm/AddTestT
 import FormError from "../../../../FormError/FormError";
 import {errorMessage} from "../../../../../error/message";
 import {defaultEmptyTesting} from "../../../../../data/default/testing";
-import ActionDialog from "../../../../popup-component/ActionDialog/ActionDialog";
 import Paginated from "../../../../Paginated/Paginated";
 import TestingTestsFilter from "../../../../filter/TestingTestsFilter/TestingTestsFilter";
 import withTitle from "../../../../hoc/withTitle/withTitle";
+import SingleSelect from "../../../../SingleSelect/SingleSelect";
+import {testingStatusOptions} from "../../../../../constant/testing.status";
+import MessagePopupBody from "../../../../popup-component/MessagePopupBody/MessagePopupBody";
 
 const EditTestingPage = () => {
     const {id} = useParams();
     const [testingInfo, setTestingInfo] = useState(defaultEmptyTesting);
     const [error, setError] = useState(null);
-    const [activationState, setActivationState] = useState({loading: false, errors: []});
+    const [testingStatusState, setTestingStatusState] = useState({loading: false, status: null});
 
     const fetchTestingInfo = async () => {
         const testingInfo = await getTestingInfo(id);
         setTestingInfo(testingInfo);
+        findTestingStatus(testingInfo.status);
+    }
+
+    const findTestingStatus = status => {
+        const testingStatus = testingStatusOptions.find(item => item.value === status);
+        setTestingStatusState(previous => ({
+            ...previous,
+            status: testingStatus
+        }));
     }
 
     const getPage = async (filter, pageable) => {
         return await getTests(id, filter, pageable);
-    }
-
-    const makeActivation = async () => {
-        setActivationState(previous => ({...previous, loading: true}));
-        const result = await activateTesting(testingInfo.id);
-        if (result.id) {
-            setTestingInfo(result);
-            setActivationState(previous => ({...previous, loading: false}));
-        } else {
-            setActivationState(previous => ({...previous, loading: false, errors: result.errors}));
-        }
-    }
-
-    const activate = async setPopupState => {
-        const message = "Ви дійсно бажаєте активувати іспит? Дану операцію неможливо буде відмінити";
-        setPopupState({
-            bodyGetter: () => <ActionDialog message={message} setPopupState={setPopupState} onConfirm={makeActivation} />
-        })
     }
 
     useEffect(() => {
@@ -63,14 +56,6 @@ const EditTestingPage = () => {
             refreshPage();
         }
     }
-
-    const renderError = (error, index) => (
-        <div key={index} className="error">
-            {
-                error.type === "EMPTY" ? "Іспит не містить тестів" : "Невідома помилка"
-            }
-        </div>
-    );
 
     const addTestToTesting = async (test, setPopupState, setFilter) => {
         const data = {
@@ -98,38 +83,36 @@ const EditTestingPage = () => {
         });
     }
 
+    const applyStatusChange = async setPopupState => {
+        setTestingStatusState(previous => ({
+            ...previous,
+            loading: true
+        }));
+        const result = await changeStatus(id, testingStatusState.status.value);
+        setTestingStatusState(previous => ({
+            ...previous,
+            loading: false
+        }));
+        const message = result.errors ? "На жаль, при зміні статусу сталась несподівана помилка. Спробуйте пізніше" : "Зміна статусу пройшла успішно";
+        if (result.errors) {
+            findTestingStatus(testingInfo.status);
+        } else {
+            fetchTestingInfo();
+        }
+        setPopupState({
+            bodyGetter: () => <MessagePopupBody message={message} />
+        });
+    }
+
     return (
         <div className="container EditTestingPage">
             <div className="row">
                 <div className="s-vflex">
-                    <div className="create s-hflex-end">
-                        <DisplayBoundary condition={testingInfo.status !== "ACTIVE"}>
-                            <LoaderBoundary condition={activationState.loading} size="small">
-                                <PopupConsumer>
-                                    {
-                                        ({setPopupState}) => (
-                                            <Button onClick={() => activate(setPopupState)}>Активувати</Button>
-                                        )
-                                    }
-                                </PopupConsumer>
-                            </LoaderBoundary>
-                        </DisplayBoundary>
-                        <Spacer width={15} />
-                    </div>
-                    <DisplayBoundary condition={activationState.errors.length > 0}>
-                        <Spacer height={10} />
-                        <div className="activation-errors s-hflex-end">
-                            {
-                                activationState.errors.map(renderError)
-                            }
-                        </div>
-                    </DisplayBoundary>
-                    <Spacer height={10}/>
                     <div className="info">
                         <InfoHeader className="s-hflex full-width">
                             {
                                 testingInfo ? (
-                                    <div>{testingInfo.status === "DRAFT" ? "Чернетка | " : null}{testingInfo.exam.title} - {testingInfo.specialization.title}</div>
+                                    <div>{testingInfo.exam.title} - {testingInfo.specialization.title}</div>
                                 ) : null
                             }
                             <div className="equal-flex"/>
@@ -145,22 +128,47 @@ const EditTestingPage = () => {
                             {
                                 filter: ({setFilter}) => {
                                     return (
-                                        <div className="s-vflex">
-                                            <TestingTestsFilter onFilterSelected={setFilter} />
-                                            <Spacer height={10} />
-                                            <PopupConsumer>
-                                                {
-                                                    ({setPopupState}) => (
-                                                        <Button isFilled={true} onClick={() => openAddTestForm(setPopupState, setFilter)}>
-                                                            Додати тест
-                                                        </Button>
-                                                    )
-                                                }
-                                            </PopupConsumer>
+                                        <div className="s-hflex">
+                                            <div className="s-vflex">
+                                                <TestingTestsFilter onFilterSelected={setFilter} />
+                                                <Spacer height={10} />
+                                                <PopupConsumer>
+                                                    {
+                                                        ({setPopupState}) => (
+                                                            <Button isFilled={true} onClick={() => openAddTestForm(setPopupState, setFilter)}>
+                                                                Додати тест
+                                                            </Button>
+                                                        )
+                                                    }
+                                                </PopupConsumer>
+                                            </div>
+                                            <div className="equal-flex" />
+                                            <div className="s-vflex">
+                                                <SingleSelect
+                                                    placeholder="Статус"
+                                                    value={testingStatusState.status}
+                                                    onChange={value => setTestingStatusState(previous => ({
+                                                        ...previous,
+                                                        status: value
+                                                    }))}
+                                                    options={testingStatusOptions} />
+                                                <Spacer height={10} />
+                                                <div className="s-hflex-end">
+                                                    <LoaderBoundary condition={testingStatusState.loading} size="small">
+                                                        <PopupConsumer>
+                                                            {
+                                                                ({setPopupState}) => (
+                                                                    <Button isFilled={true} onClick={() => applyStatusChange(setPopupState)}>Зберегти</Button>
+                                                                )
+                                                            }
+                                                        </PopupConsumer>
+                                                    </LoaderBoundary>
+                                                </div>
+                                            </div>
                                         </div>
                                     );
                                 },
-                                content: ({items, orderFrom, refreshPage}) => <TestsQuestionsTable tests={items} orderFrom={orderFrom} onDelete={id => deleteTest(id, refreshPage)} />
+                                content: ({items, orderFrom, refreshPage}) => <TestsQuestionsTable status={testingInfo.status} tests={items} orderFrom={orderFrom} onDelete={id => deleteTest(id, refreshPage)} />
                             }
                         }
                     </Paginated>

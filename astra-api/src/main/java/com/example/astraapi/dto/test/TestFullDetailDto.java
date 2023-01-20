@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +26,7 @@ public class TestFullDetailDto {
     private String comment;
     private String commentSvg;
     private TestStatus status;
+    private LocalDateTime createdDate;
     private List<TestingDetailDto> testings = new ArrayList<>();
     private List<TestVariantDto> variants = new ArrayList<>();
     private List<ResponseSubjectDto> subjects = new ArrayList<>();
