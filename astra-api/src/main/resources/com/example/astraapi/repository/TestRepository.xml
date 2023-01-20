@@ -150,24 +150,35 @@
         order by random()
     </select>
 
-    <select id="getNotRelatedTestingTests" resultMap="testWithVariants">
-        select distinct t.id       as id,
-                        t.question as question,
-                        tv.id      as variantId,
-                        tv.title   as variantTitle
-        from public.tests t
-                 left join public.tests_subjects ts on t.id = ts.test_id
-                 left join public.subjects sub on ts.subject_id = sub.id
-                 left join public.specializations spec on spec.id = sub.specialization_id
-                 left join public.tests_variants tv on t.id = tv.test_id
-        where t.status = 'ACTIVE'
-          and spec.id = (select specialization_id
-                         from public.testings
-                         where testings.id = #{testingId})
-          and t.id not in (select tt.test_id
-                           from public.testings_tests tt
-                           where tt.testing_id = #{testingId})
-        order by id, variantId
+    <select id="getNotRelatedTestingTests" resultMap="notRelatedTestsPage">
+        select available_tests_page.id       as id,
+               available_tests_page.question as question,
+               tv.id                         as variantId,
+               tv.title                      as variantTitle,
+               #{pageable.pageSize}          as pageSize,
+               available_tests_page.rows     as rows
+        from (select t.id                as id,
+                     t.question          as question,
+                     count(t.id) over () as rows
+              from public.tests t
+              where t.status = 'ACTIVE'
+                and (#{searchText}::text is null or exists(select 1
+                                                           from public.tests_variants tv
+                                                           where tv.test_id = t.id
+                                                             and tv.title ilike concat('%', #{searchText}::text, '%')) or
+                     t.question ilike concat('%', #{searchText}::text, '%'))
+                and exists(select 1
+                           from public.subjects sub
+                           where sub.id in (select ts.subject_id from public.tests_subjects ts where ts.test_id = t.id)
+                             and sub.specialization_id =
+                                 (select testings.specialization_id
+                                  from public.testings
+                                  where testings.id = #{testingId}))
+                and t.id not in (select tt.test_id from public.testings_tests tt where tt.testing_id = #{testingId})
+              order by t.id
+              offset #{pageable.offset} limit #{pageable.pageSize}) AS available_tests_page
+                 left join public.tests_variants tv on tv.test_id = available_tests_page.id
+        order by available_tests_page.id, tv.id
     </select>
 
     <delete id="deleteById">
@@ -216,7 +227,8 @@
                         and exists(
                               select 1
                               from public.subjects s
-                              where s.id = ts.subject_id and s.specialization_id = #{specializationId}::bigint
+                              where s.id = ts.subject_id
+                                and s.specialization_id = #{specializationId}::bigint
                           )
                   )
               order by id
@@ -236,6 +248,16 @@
                     javaType="List"
                     ofType="com.example.astraapi.entity.projection.TestShortDetailProjection"
                     resultMap="testShortDetail">
+        </collection>
+    </resultMap>
+
+    <resultMap id="notRelatedTestsPage" type="com.example.astraapi.model.Page">
+        <result property="rows" column="rows"/>
+        <result property="pageSize" column="pageSize"/>
+        <collection property="items"
+                    javaType="List"
+                    ofType="com.example.astraapi.entity.TestEntity"
+                    resultMap="testWithVariants">
         </collection>
     </resultMap>
 

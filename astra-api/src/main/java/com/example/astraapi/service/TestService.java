@@ -3,6 +3,7 @@ package com.example.astraapi.service;
 import com.example.astraapi.dto.TrainingSearchDto;
 import com.example.astraapi.dto.examination.ExaminationSearchDto;
 import com.example.astraapi.dto.exporting.ExportDto;
+import com.example.astraapi.dto.filter.AdminAvailableTestingTestsFilterDto;
 import com.example.astraapi.dto.filter.AdminTestFilterDto;
 import com.example.astraapi.dto.test.*;
 import com.example.astraapi.model.Page;
@@ -31,7 +32,7 @@ public interface TestService {
 
     List<ExaminationTestDto> getExaminationTests(List<Long> ids);
 
-    List<TestingShortTestDto> getNotYetSelectedTestingTests(Long testingId);
+    Page<TestingShortTestDto> getNotYetSelectedTestingTests(Long testingId, AdminAvailableTestingTestsFilterDto filter, Pageable pageable);
 
     void deleteTest(Long id);
 

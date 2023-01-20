@@ -1,6 +1,7 @@
 package com.example.astraapi.service.impl;
 
 import com.example.astraapi.dto.IdDto;
+import com.example.astraapi.dto.filter.AdminAvailableTestingTestsFilterDto;
 import com.example.astraapi.dto.filter.AdminTestingTestsFilterDto;
 import com.example.astraapi.dto.test.TestingShortTestDto;
 import com.example.astraapi.dto.test.TestingTestQuestionDto;
@@ -12,6 +13,7 @@ import com.example.astraapi.mapper.TestingMapper;
 import com.example.astraapi.meta.ConfigProperty;
 import com.example.astraapi.meta.TestingStatus;
 import com.example.astraapi.meta.ValidationErrorType;
+import com.example.astraapi.model.Page;
 import com.example.astraapi.model.Pageable;
 import com.example.astraapi.model.TestingPage;
 import com.example.astraapi.model.validation.ValidationError;
@@ -66,8 +68,8 @@ public class TestingServiceImpl implements TestingService {
     }
 
     @Override
-    public List<TestingShortTestDto> getNotSelectedTestingTests(Long id) {
-        return testService.getNotYetSelectedTestingTests(id);
+    public Page<TestingShortTestDto> getNotSelectedTestingTests(Long id, AdminAvailableTestingTestsFilterDto filter, Pageable pageable) {
+        return testService.getNotYetSelectedTestingTests(id, filter, pageable);
     }
 
     @Override
