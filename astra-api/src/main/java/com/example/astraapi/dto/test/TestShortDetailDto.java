@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -18,5 +19,6 @@ public class TestShortDetailDto {
     private String question;
     private String comment;
     private TestStatus status;
+    private LocalDateTime createdDate;
     private List<SpecializationDto> specializations;
 }

@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,7 @@ public class TestFullDetailEntity {
     private String comment;
     private String commentSvg;
     private TestStatus status;
+    private LocalDateTime createdDate;
     private List<TestingInfoEntity> testings = new ArrayList<>();
     private List<TestVariantEntity> variants = new ArrayList<>();
     private List<SubjectEntity> subjects = new ArrayList<>();

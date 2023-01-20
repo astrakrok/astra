@@ -44,7 +44,7 @@ const getAdminRoutes = () => {
             id: id => {
                 const url = prefix + `/testings/${id}`;
                 return {
-                    activation: url + "/activation",
+                    status: url + "/status",
                     info: url + "/info",
                     tests: {
                         selected: url + "/tests",

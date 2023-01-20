@@ -21,6 +21,7 @@ import org.mapstruct.factory.Mappers;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -160,6 +161,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(1L, 3L, "Title 1", null, "Explanation 1", null, true),
@@ -184,6 +186,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(10L, 30L, "Title 1", null, "Explanation 1", null, true),
@@ -208,6 +211,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(100L, 300L, "Title 1", null, "Explanation 1", null, true),
@@ -232,6 +236,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(1000L, 3000L, "Title 1", null, "Explanation 1", null, true),
@@ -256,6 +261,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(10000L, 30000L, "Title 1", null, "Explanation 1", null, true),
@@ -300,6 +306,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(1L, 3L, "Title 1", null, "Explanation 1", null, true),
@@ -324,6 +331,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(10L, 30L, "Title 1", null, "Explanation 1", null, true),
@@ -348,6 +356,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(100L, 300L, "Title 1", null, "Explanation 1", null, true),
@@ -372,6 +381,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(1000L, 3000L, "Title 1", null, "Explanation 1", null, true),
@@ -396,6 +406,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(10000L, 30000L, "Title 1", null, "Explanation 1", null, true),
@@ -440,6 +451,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(1L, 3L, "Title 1", null, "Explanation 1", null, true),
@@ -464,6 +476,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(10L, 30L, "Title 1", null, "Explanation 1", null, true),
@@ -488,6 +501,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(100L, 300L, "Title 1", null, "Explanation 1", null, true),
@@ -512,6 +526,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(1000L, 3000L, "Title 1", null, "Explanation 1", null, true),
@@ -536,6 +551,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(10000L, 30000L, "Title 1", null, "Explanation 1", null, true),
@@ -580,6 +596,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(1L, 3L, "Title 1", null, "Explanation 1", null, true),
@@ -604,6 +621,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(10L, 30L, "Title 1", null, "Explanation 1", null, true),
@@ -628,6 +646,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(100L, 300L, "Title 1", null, "Explanation 1", null, true),
@@ -652,6 +671,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(1000L, 3000L, "Title 1", null, "Explanation 1", null, true),
@@ -676,6 +696,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(10000L, 30000L, "Title 1", null, "Explanation 1", null, true),
@@ -720,6 +741,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(1L, 3L, "Title 1", null, "Explanation 1", null, true),
@@ -744,6 +766,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(10L, 30L, "Title 1", null, "Explanation 1", null, true),
@@ -768,6 +791,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(100L, 300L, "Title 1", null, "Explanation 1", null, true),
@@ -792,6 +816,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(1000L, 3000L, "Title 1", null, "Explanation 1", null, true),
@@ -816,6 +841,7 @@ public class ExaminationAnswerServiceTest {
                                 "Comment 1",
                                 null,
                                 TestStatus.ACTIVE,
+                                LocalDateTime.now(),
                                 Collections.emptyList(),
                                 List.of(
                                         new TestVariantEntity(10000L, 30000L, "Title 1", null, "Explanation 1", null, true),

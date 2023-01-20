@@ -7,9 +7,9 @@ export const getExamTestings = async examId => {
     return response.data;
 }
 
-export const activateTesting = async testingId => {
-    const url = route.admin.testings.id(testingId).activation;
-    const response = await client.post(url)
+export const changeStatus = async (testingId, status) => {
+    const url = route.admin.testings.id(testingId).status;
+    const response = await client.put(url, {status})
         .catch(error => ({
             data: {
                 errors: error.response.data

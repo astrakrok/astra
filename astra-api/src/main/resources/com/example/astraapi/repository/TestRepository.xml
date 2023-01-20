@@ -29,6 +29,7 @@
                nested.question      as question,
                nested.comment       as comment,
                nested.status        as status,
+               nested.createdDate   as createdDate,
                #{pageable.pageSize} as pageSize,
                nested.rows          as rows,
                spec.id              as specializationId,
@@ -37,6 +38,7 @@
                      t.question          as question,
                      t.comment           as comment,
                      t.status            as status,
+                     t.created_date      as createdDate,
                      count(t.id) over () as rows
               from public.tests t
               where (cast(#{status} as varchar) is null or t.status = cast(#{status} as varchar))
@@ -69,6 +71,7 @@
                t.comment          as comment,
                t.comment_svg      as commentSvg,
                t.status           as status,
+               t.created_date     as createdDate,
                tv.id              as variantId,
                tv.title           as variantTitle,
                tv.title_svg       as variantTitleSvg,
@@ -276,6 +279,7 @@
         <result column="question" property="question"/>
         <result column="comment" property="comment"/>
         <result column="status" property="status"/>
+        <result column="createdDate" property="createdDate"/>
         <collection property="specializations" javaType="List"
                     ofType="com.example.astraapi.entity.SpecializationEntity">
             <id column="specializationId" property="id"/>
@@ -312,6 +316,7 @@
         <result column="comment" property="comment"/>
         <result column="commentSvg" property="commentSvg"/>
         <result column="status" property="status"/>
+        <result column="createdDate" property="createdDate"/>
         <result column="importDetails" property="importDetails" jdbcType="OTHER"
                 typeHandler="com.example.astraapi.config.JsonTypeHandler"/>
 

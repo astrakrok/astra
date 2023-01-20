@@ -1,9 +1,11 @@
+import DisplayBoundary from "../DisplayBoundary/DisplayBoundary";
 import Table from "../Table/Table";
 import TestingTestRow from "./TestingTestRow/TestingTestRow";
 import "./TestsQuestionsTable.css";
 
 const TestsQuestionsTable = ({
     tests,
+    status,
     orderFrom,
     onDelete = () => {}
 }) => {
@@ -13,12 +15,15 @@ const TestsQuestionsTable = ({
             <tr>
                 <th>#</th>
                 <th>Питання</th>
-                <th>Видалити</th>
+                <DisplayBoundary condition={status === "ACTIVE"}>
+                    <th>Видалити</th>
+                </DisplayBoundary>
             </tr>
             </thead>
             <tbody>
             {
                 tests.map((item, index) => <TestingTestRow
+                    status={status}
                     key={item.id}
                     onDelete={onDelete}
                     test={item}
