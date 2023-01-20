@@ -74,7 +74,8 @@
                                 (select max(round(ns.correctCount * 1.0 / ns.totalCount, 2))
                                  from stats ns))                                                        as best) correctness
             ) as ts on true
-        where ts.lastTotalCount is not null;
+        where ts.lastTotalCount is not null
+          and t.status = 'ACTIVE';
     </select>
 
     <select id="getStepsStatisticByUserId" resultMap="stepStatistic">
@@ -104,6 +105,9 @@
                            left join public.tests_variants tv on ea.variant_id = tv.id and tv.test_id = ea.test_id
                   where ts.subject_id = sub.id
                     and e.user_id = #{userId}
+                    and exists(select 1
+                               from public.testings
+                               where testings.id = e.testing_id and testings.status = 'ACTIVE')
                   order by ea.test_id, rank_number desc) as nested
             ) as stat on true
         where stat.total > 0
