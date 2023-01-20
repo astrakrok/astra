@@ -1,6 +1,7 @@
 package com.example.astraapi.controller.admin;
 
 import com.example.astraapi.dto.IdDto;
+import com.example.astraapi.dto.filter.AdminAvailableTestingTestsFilterDto;
 import com.example.astraapi.dto.filter.AdminTestingTestsFilterDto;
 import com.example.astraapi.dto.test.TestingShortTestDto;
 import com.example.astraapi.dto.test.TestingTestQuestionDto;
@@ -48,9 +49,13 @@ public class AdminTestingController {
         return testingService.getTestsQuestions(id, filter, pageable);
     }
 
-    @GetMapping("/{id}/tests/available")
-    public List<TestingShortTestDto> getAvailableTestingTests(@PathVariable("id") Long id) {
-        return testingService.getNotSelectedTestingTests(id);
+    @PostMapping("/{id}/tests/available")
+    public Page<TestingShortTestDto> getAvailableTestingTests(
+            @PathVariable("id") Long id,
+            @RequestBody AdminAvailableTestingTestsFilterDto filter,
+            Pageable pageable
+    ) {
+        return testingService.getNotSelectedTestingTests(id, filter, pageable);
     }
 
     @PostMapping("/{id}/activation")

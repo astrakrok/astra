@@ -38,7 +38,10 @@ public interface TestRepository {
     List<TestFullDetailEntity> getTestsByIds(
             @Param("ids") List<Long> ids);
 
-    List<TestEntity> getNotRelatedTestingTests(@Param("testingId") Long testingId);
+    Page<TestEntity> getNotRelatedTestingTests(
+            @Param("testingId") Long testingId,
+            @Param("searchText") String searchText,
+            @Param("pageable") Pageable pageable);
 
     void deleteById(Long id);
 
