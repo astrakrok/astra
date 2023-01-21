@@ -14,6 +14,9 @@ const TabPanel = ({
     }, [selectedTab]);
 
     const handleTabClick = (tab, index) => {
+        if (tab.disabled) {
+            return;
+        }
         if (!tab.passive) {
             setSelected(index);
         }
@@ -24,7 +27,7 @@ const TabPanel = ({
 
     const renderTab = (tab, index) => (
         <div
-            className={`s-vflex-center ${stretch ? "equal-flex" : ""} center panel-tab ${index === selected ? "selected" : ""} ${tab.className ? tab.className : ""}`}
+            className={`s-vflex-center ${stretch ? "equal-flex" : ""} center panel-tab ${index === selected ? "selected" : ""} ${tab.className ? tab.className : ""} ${tab.disabled ? "disabled" : ""}`}
             onClick={() => handleTabClick(tab, index)}
         >
             {tab.title}

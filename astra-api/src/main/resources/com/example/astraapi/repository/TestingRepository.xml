@@ -90,6 +90,38 @@
         where id = #{id}
     </update>
 
+    <select id="getRedundantTestings" resultMap="testingInfo">
+        select t.id as id,
+        t.status as status,
+        e.id as examId,
+        e.title as examTitle,
+        spec.id as specializationId,
+        spec.title as specializationTitle,
+        s.id as stepId,
+        s.title as stepTitle
+        from public.testings t
+        left join public.exams e on e.id = t.exam_id
+        left join public.specializations spec on spec.id = t.specialization_id
+        left join public.steps s on s.id = spec.step_id
+        where exists (select 1 from public.testings_tests tt where tt.test_id = #{testId} and tt.testing_id = t.id) and
+        t.specialization_id not in (
+        select sub.specialization_id from public.subjects sub where
+        <choose>
+            <when test="subjectsIds.isEmpty()">
+                false
+            </when>
+            <otherwise>
+                sub.id in (
+                <foreach collection="subjectsIds" item="subjectId" separator=",">
+                    #{subjectId}
+                </foreach>
+                )
+            </otherwise>
+        </choose>
+        )
+        order by e.title, s.title, spec.title
+    </select>
+
     <resultMap id="testingWithSpecialization" type="com.example.astraapi.entity.TestingWithSpecializationEntity">
         <id column="id" property="id"/>
         <result column="examId" property="examId"/>
@@ -107,7 +139,7 @@
         </association>
     </resultMap>
 
-    <resultMap id="testingInfo" type="com.example.astraapi.entity.TestingInfoEntity">
+    <resultMap id="testingInfo" type="com.example.astraapi.entity.projection.TestingInfoProjection">
         <id column="id" property="id"/>
         <result column="testsCount" property="testsCount"/>
         <result column="status" property="status"/>
@@ -117,9 +149,15 @@
             <result column="examTitle" property="title"/>
         </association>
 
-        <association property="specialization" javaType="com.example.astraapi.entity.SpecializationEntity">
+        <association property="specialization"
+                     javaType="com.example.astraapi.entity.projection.StepSpecializationProjection">
             <id column="specializationId" property="id"/>
             <result column="specializationTitle" property="title"/>
+
+            <association property="step" javaType="com.example.astraapi.entity.StepEntity">
+                <id column="stepId" property="id"/>
+                <result column="stepTitle" property="title"/>
+            </association>
         </association>
     </resultMap>
 

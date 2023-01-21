@@ -2,7 +2,7 @@ package com.example.astraapi.repository;
 
 import com.example.astraapi.entity.SubjectEntity;
 import com.example.astraapi.entity.projection.ImportSubjectProjection;
-import com.example.astraapi.entity.projection.SubjectDetailEntity;
+import com.example.astraapi.entity.projection.SubjectDetailProjection;
 import com.example.astraapi.model.Page;
 import com.example.astraapi.model.Pageable;
 import org.apache.ibatis.annotations.Mapper;
@@ -14,7 +14,7 @@ import java.util.List;
 public interface SubjectRepository {
     void save(@Param("entity") SubjectEntity subjectEntity);
 
-    Page<SubjectDetailEntity> search(
+    Page<SubjectDetailProjection> search(
             @Param("stepId") Long stepId,
             @Param("specializationId") Long specializationId,
             @Param("searchText") String searchText,

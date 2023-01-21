@@ -88,11 +88,11 @@
         <result property="pageSize" column="pageSize"/>
         <collection property="items"
                     javaType="java.util.List"
-                    ofType="com.example.astraapi.entity.projection.SubjectDetailEntity"
+                    ofType="com.example.astraapi.entity.projection.SubjectDetailProjection"
                     resultMap="subjectDetail"/>
     </resultMap>
 
-    <resultMap id="subjectDetail" type="com.example.astraapi.entity.projection.SubjectDetailEntity">
+    <resultMap id="subjectDetail" type="com.example.astraapi.entity.projection.SubjectDetailProjection">
         <id column="subjectId" property="id"/>
         <result column="subjectTitle" property="title"/>
 

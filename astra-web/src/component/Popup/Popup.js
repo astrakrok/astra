@@ -3,11 +3,15 @@ import "./Popup.css";
 
 const Popup = ({
     size = "tiny",
+    closeOnOutsideClick = true,
     headerGetter = () => <></>,
     bodyGetter = () => <></>,
     footerGetter = () => <></>
 }) => {
     const handleOutsideClick = (event, setPopupState) => {
+        if (!closeOnOutsideClick) {
+            return;
+        }
         if (event.target !== event.currentTarget) {
             return;
         }

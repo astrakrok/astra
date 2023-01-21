@@ -4,11 +4,14 @@ import "./CreateTestPage.css";
 
 const CreateTestPage = () => {
     return (
-        <div className="CreateTestPage container">
-            <div className="row">
-                <CreateTestForm />
+        <>
+            <div className="CreateTestPage container">
+                <div className="row">
+                    <CreateTestForm />
+                </div>
             </div>
-        </div>
+            <div className="equal-flex" />
+        </>
     );
 }
 

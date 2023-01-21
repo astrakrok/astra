@@ -29,7 +29,12 @@
     cursor: pointer;
 }
 
-.TabPanel .panel-tabs .panel-tab:hover {
+.TabPanel .panel-tabs .panel-tab:hover:not(.disabled) {
+    background-color: rgba(0, 0, 0, 0.11);
+}
+
+.TabPanel .panel-tabs .panel-tab.disabled {
+    cursor: not-allowed;
     background-color: rgba(0, 0, 0, 0.11);
 }
 

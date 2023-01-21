@@ -70,6 +70,6 @@
     margin-top: 0;
 }
 
-.TestForm .creation-timestamp {
-    opacity: 0.5;
+.TestForm .info {
+    opacity: 0.7;
 }

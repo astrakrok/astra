@@ -1,6 +1,5 @@
 package com.example.astraapi.repository;
 
-import com.example.astraapi.entity.ExaminationStatisticEntity;
 import com.example.astraapi.entity.ExaminationStatisticInfoEntity;
 import com.example.astraapi.entity.projection.ExaminationStatisticProjection;
 import com.example.astraapi.entity.projection.StepStatisticProjection;
@@ -12,17 +11,9 @@ import java.util.Optional;
 
 @Mapper
 public interface ExaminationStatisticRepository {
-  Optional<ExaminationStatisticProjection> calculateStatistic(@Param("examinationId") Long examinationId);
+    Optional<ExaminationStatisticProjection> calculateStatistic(@Param("examinationId") Long examinationId);
 
-  Optional<ExaminationStatisticEntity> findByUserIdAndTestingId(
-      @Param("userId") Long userId,
-      @Param("testingId") Long testingId);
+    List<ExaminationStatisticInfoEntity> getAllWithTestingByUserId(@Param("userId") Long userId);
 
-  void save(@Param("entity") ExaminationStatisticEntity entity);
-
-  void updatePercentage(@Param("entity") ExaminationStatisticEntity entity);
-
-  List<ExaminationStatisticInfoEntity> getAllWithTestingByUserId(@Param("userId") Long userId);
-
-  List<StepStatisticProjection> getStepsStatisticByUserId(@Param("userId") Long userId);
+    List<StepStatisticProjection> getStepsStatisticByUserId(@Param("userId") Long userId);
 }

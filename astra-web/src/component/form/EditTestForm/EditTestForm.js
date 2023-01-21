@@ -18,7 +18,7 @@ const EditTestForm = ({test}) => {
     const update = async (test, setPopupState) => {
         const data = await updateTest(toSendableTest(test));
 
-        const message = data.error ? "Під час редагування тесту виникла помилка :(" : "Тест успішно відредагований";
+        const message = data.id ? "Тест успішно відредагований" : "Під час редагування тесту виникла помилка :(";
 
         setPopupState({
             bodyGetter: () => <MessagePopupBody message={message}/>
@@ -28,7 +28,7 @@ const EditTestForm = ({test}) => {
 
     const updateDraft = async (test, setPopupState) => {
         const data = await updateTestDraft(toSendableTest(test));
-        const message = data.error ? "Під час редагування тесту виникла помилка :(" : "Тест успішно відредагований";
+        const message = data.id ? "Тест успішно відредагований" : "Під час редагування тесту виникла помилка :(";
         setPopupState({
             bodyGetter: () => <MessagePopupBody message={message}/>
         });

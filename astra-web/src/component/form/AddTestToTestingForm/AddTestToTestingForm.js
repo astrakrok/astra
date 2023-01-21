@@ -54,6 +54,7 @@ const AddTestToTestingForm = ({
         <div className="AddTestToTestingForm">
             <div className="s-vflex">
                 <SingleSelect
+                    noOptionsMessage={() => "Тестів не знайдено"}
                     placeholder="Введіть щонайменше 4 символи для пошуку"
                     onInputChange={loadOptions}
                     onChange={updateSelected}

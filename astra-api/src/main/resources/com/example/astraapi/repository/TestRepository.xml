@@ -80,11 +80,18 @@
                tv.is_correct      as variantIsCorrect,
                s.id               as subjectId,
                s.title            as subjectTitle,
+               sub_spec.id        as subjectSpecializationId,
+               sub_spec.title     as subjectSpecializationTitle,
+               sub_step.id        as subjectStepId,
+               sub_step.title     as subjectStepTitle,
                testing.id         as testingId,
+               testing.status     as testingStatus,
                e.id               as examId,
                e.title            as examTitle,
-               spec.id            as specializationId,
-               spec.title         as specializationTitle,
+               exam_spec.id       as examSpecializationId,
+               exam_spec.title    as examSpecializationTitle,
+               exam_step.id       as examStepId,
+               exam_step.title    as examStepTitle,
                it.details         as importDetails
         from public.tests t
                  left join public.tests_variants tv on t.id = tv.test_id
@@ -94,7 +101,10 @@
                  left join public.testings_tests tt on tt.test_id = t.id
                  left join public.testings testing on testing.id = tt.testing_id
                  left join public.exams e on e.id = testing.exam_id
-                 left join public.specializations spec on spec.id = testing.specialization_id
+                 left join public.specializations exam_spec on exam_spec.id = testing.specialization_id
+                 left join public.steps exam_step on exam_step.id = exam_spec.step_id
+                 left join public.specializations sub_spec on sub_spec.id = s.specialization_id
+                 left join public.steps sub_step on sub_step.id = sub_spec.step_id
         where t.id = #{id}
         order by t.id, tv.id
     </select>
@@ -329,23 +339,42 @@
             <result column="variantIsCorrect" property="correct"/>
         </collection>
 
-        <collection property="testings" javaType="List" ofType="com.example.astraapi.entity.TestingInfoEntity">
+        <collection property="testings" javaType="List" ofType="com.example.astraapi.entity.projection.TestingInfoProjection">
             <id column="testingId" property="id"/>
+            <result column="testingStatus" property="status" />
 
             <association property="exam" javaType="com.example.astraapi.entity.ExamEntity">
                 <id column="examId" property="id"/>
                 <result column="examTitle" property="title"/>
             </association>
 
-            <association property="specialization" javaType="com.example.astraapi.entity.SpecializationEntity">
-                <id column="specializationId" property="id"/>
-                <result column="specializationTitle" property="title"/>
+            <association property="specialization"
+                         javaType="com.example.astraapi.entity.projection.StepSpecializationProjection">
+                <id column="examSpecializationId" property="id"/>
+                <result column="examSpecializationTitle" property="title"/>
+
+                <association property="step" javaType="com.example.astraapi.entity.StepEntity">
+                    <id column="examStepId" property="id"/>
+                    <result column="examStepTitle" property="title"/>
+                </association>
             </association>
         </collection>
 
-        <collection property="subjects" javaType="List" ofType="com.example.astraapi.entity.SubjectEntity">
+        <collection property="subjects" javaType="List"
+                    ofType="com.example.astraapi.entity.projection.SubjectDetailProjection">
             <id column="subjectId" property="id"/>
             <result column="subjectTitle" property="title"/>
+
+            <association property="specialization"
+                         javaType="com.example.astraapi.entity.projection.StepSpecializationProjection">
+                <id column="subjectSpecializationId" property="id"/>
+                <result column="subjectSpecializationTitle" property="title"/>
+
+                <association property="step" javaType="com.example.astraapi.entity.StepEntity">
+                    <id column="subjectStepId" property="id"/>
+                    <result column="subjectStepTitle" property="title"/>
+                </association>
+            </association>
         </collection>
     </resultMap>
 
