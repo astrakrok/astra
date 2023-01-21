@@ -25,7 +25,7 @@ export const saveTest = async test => {
         return response.data;
     } catch (error) {
         return {
-            error: "Something went wrong..."
+            data: error.response.data
         };
     }
 }
@@ -36,7 +36,7 @@ export const saveTestDraft = async test => {
         return response.data;
     } catch (error) {
         return {
-            error: "Something went wrong..."
+            data: error.response.data
         };
     }
 }
@@ -44,10 +44,8 @@ export const saveTestDraft = async test => {
 export const updateTest = async test => {
     const url = route.admin.tests + "/" + test.id;
     const response = await client.put(url, test)
-        .catch(() => ({
-            data: {
-                error: "Something went wrong..."
-            }
+        .catch(error => ({
+            data: error.response.data
         }));
     return response.data;
 }
@@ -55,10 +53,8 @@ export const updateTest = async test => {
 export const updateTestDraft = async test => {
     const url = route.admin.tests + "/" + test.id + "/draft";
     const response = await client.put(url, test)
-        .catch(() => ({
-            data: {
-                error: "Something went wrong..."
-            }
+        .catch(error => ({
+            data: error.response.data
         }));
     return response.data;
 }

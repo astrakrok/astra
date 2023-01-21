@@ -1,5 +1,7 @@
 package com.example.astraapi.entity;
 
+import com.example.astraapi.entity.projection.SubjectDetailProjection;
+import com.example.astraapi.entity.projection.TestingInfoProjection;
 import com.example.astraapi.meta.TestStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,8 +26,8 @@ public class TestFullDetailEntity {
     private String commentSvg;
     private TestStatus status;
     private LocalDateTime createdDate;
-    private List<TestingInfoEntity> testings = new ArrayList<>();
+    private List<TestingInfoProjection> testings = new ArrayList<>();
     private List<TestVariantEntity> variants = new ArrayList<>();
-    private List<SubjectEntity> subjects = new ArrayList<>();
+    private List<SubjectDetailProjection> subjects = new ArrayList<>();
     private Map<String, Object> importDetails = new HashMap<>();
 }

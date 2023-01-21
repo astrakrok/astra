@@ -19,6 +19,15 @@ import MessagePopupBody from "../../popup-component/MessagePopupBody/MessagePopu
 import Alert from "../../Alert/Alert";
 import DisplayBoundary from "../../DisplayBoundary/DisplayBoundary";
 import {convertToUserTimezone} from "../../../handler/date.handler";
+import {compareFullSubjects} from "../../../handler/sort.handler";
+import TabPanel from "../../TabPanel/TabPanel";
+import TestingsList from "./TestingsList/TestingsList";
+import {mapToTestErrors} from "../../../mapper/error.test.mapper";
+
+const TAB_MODES = {
+    INFO: "info",
+    EXAMS: "exams"
+}
 
 const TestForm = ({
                       initialTest = defaultEmptyTest,
@@ -28,6 +37,7 @@ const TestForm = ({
                       }
                   }) => {
     const [test, setTest] = useState(initialTest);
+    const [mode, setMode] = useState(TAB_MODES.INFO);
     const [formState, setFormState] = useState({
         loading: false,
         errors: {}
@@ -65,15 +75,15 @@ const TestForm = ({
             return;
         }
         const savedTest = await onSend(test);
-        setFormState({
-            loading: false,
-            errors: {}
-        });
         if (savedTest.id) {
             setTest({
                 ...savedTest
             });
         }
+        setFormState({
+            loading: false,
+            errors: savedTest.id ? {} : mapToTestErrors(savedTest)
+        });
     }
 
     const saveDraft = async () => {
@@ -97,7 +107,7 @@ const TestForm = ({
         setTest(previous => {
             previous.variants[index] = {
                 ...previous.variants[index],
-                ...values
+                ...values,
             };
             return {
                 ...previous
@@ -185,10 +195,10 @@ const TestForm = ({
 
     const renderSubject = (subject, index) => {
         return (
-            <Badge key={subject.id} type="green">
-                <div className="s-hflex">
-                    <span className="long-text">{subject.title}</span>
-                    <div className="delete-subject s-vflex-center" onClick={() => removeSubject(index)}>
+            <Badge key={subject.id} type="green" limited={false}>
+                <div className="s-hflex full-width">
+                    <span className="long-text">{subject.specialization.step.title} | {subject.specialization.title} | {subject.title}</span>
+                    <div className="delete-subject s-vflex-center clickable" onClick={() => removeSubject(index)}>
                         <i className="tiny material-icons">close</i>
                     </div>
                 </div>
@@ -261,15 +271,50 @@ const TestForm = ({
         </>
     );
 
+    const tryOpenExamsTab = setPopupState => {
+        if (test.changed) {
+            setPopupState({
+                bodyGetter: () => <MessagePopupBody message="Збережіть зміни для того, щоб почати редагування іспитів" />
+            });
+            return;
+        }
+        setMode(TAB_MODES.EXAMS);
+    }
+
+    const getTabs = setPopupState => {
+        const examsActive = test.id && test.status !== 'DRAFT';
+        return [
+            {
+                title: "Основна інформація",
+                onClick: () => setMode(TAB_MODES.INFO)
+            },
+            {
+                title: "Іспити" + (examsActive ? "" : " (Зміни не збережено)"),
+                onClick: () => tryOpenExamsTab(setPopupState),
+                disabled: !examsActive,
+            }
+        ];
+    };
+
     return (
-        <div className="TestForm s-vflex">
-            <InfoHeader className="full-width s-hflex">
-                <span>{test.status === "DRAFT" ? "Чернетка | " : null}Основна інформація</span>
-                <span className="equal-flex" />
+        <div className="TestForm s-vflex full-height">
+            <div className="full-width">
+                <PopupConsumer>
+                    {
+                        ({setPopupState}) => (
+                            <TabPanel type="primary" tabs={getTabs(setPopupState)} stretch={true} />
+                        )
+                    }
+                </PopupConsumer>
+            </div>
+            <Spacer height={20} />
+            <div className="full-width s-hflex-end info">
                 <DisplayBoundary condition={test.createdDate}>
-                    <span className="creation-timestamp">Створено: {convertToUserTimezone(test.createdDate)}</span>
+                    <span>Тест було створено: {convertToUserTimezone(test.createdDate, "HH:mm DD/MM/YYYY")}</span>
+                    <Spacer width={5} />
                 </DisplayBoundary>
-            </InfoHeader>
+                <span>{test.status === "DRAFT" ? " (Чернетка)" : null}</span>
+            </div>
             {
                 (notFoundSubjects.length || duplicateSubjects.length) ? (
                     <>
@@ -302,96 +347,103 @@ const TestForm = ({
                     </>
                 ) : null
             }
-            {
-                test.testings.length > 0 ? (
-                    <>
-                        <Alert type="success">
-                            <strong>Увага!</strong> Тест належить до наступних іспитів:
-                            <ul className="browser-default">
-                                {
-                                    test.testings.map(item => <li
-                                        key={item.id}>{item.exam.title} ({item.specialization.title})</li>)
-                                }
-                            </ul>
-                            Це робить неможливим видалення предметів з цього тесту та збереження цього тесту як
-                            чернетки.
-                        </Alert>
-                        <Spacer height={15}/>
-                    </>
-                ) : null
-            }
-            <Textarea noMargin={true} placeholder="Питання" value={test.question}
-                      onChange={event => setTest({...test, question: event.target.value})}/>
-            <ErrorsArea errors={formState.errors.question}/>
-            <Spacer height={10}/>
-            <SvgContentChooser
-                value={test.questionSvg}
-                setValue={content => updateTestProperty("questionSvg", content)}/>
-            <Spacer height={20}/>
-            <Editor
-                placeholder="Коментар"
-                value={test.comment}
-                onChange={updateTestComment}/>
-            <ErrorsArea errors={formState.errors.comment}/>
-            <Spacer height={10}/>
-            <SvgContentChooser
-                value={test.commentSvg}
-                setValue={content => updateTestProperty("commentSvg", content)}/>
-            <Spacer height={20}/>
-            <InfoHeader>Відповіді</InfoHeader>
-            <div className="answers s-vflex">
-                <ul className="collection">
-                    {
-                        test.variants.map(renderVariant)
-                    }
-                    <li className="collection-item clickable add" onClick={addEmptyVariant}>
-                        <div className="s-hflex-center">
-                            <i className="medium material-icons">add</i>
-                        </div>
-                    </li>
-                </ul>
-                <ErrorsArea errors={formState.errors.variantsCorrectness}/>
+            <DisplayBoundary condition={mode === TAB_MODES.INFO}>
+                <DisplayBoundary condition={test.subjectsChanged}>
+                    <Spacer height={20} />
+                    <Alert type="warning">
+                        <span className="weight-strong">УВАГА!</span> Ви зробили зміни у списку предметів для даного тесту. Збережіть тест для того, щоб мати можливість редагувати список іспитів.
+                    </Alert>
+                    <Spacer height={20} />
+                </DisplayBoundary>
+                <Textarea noMargin={true} placeholder="Питання" value={test.question}
+                        onChange={event => setTest({...test, question: event.target.value})}/>
+                <ErrorsArea errors={formState.errors.question}/>
+                <Spacer height={10}/>
+                <SvgContentChooser
+                    value={test.questionSvg}
+                    setValue={content => updateTestProperty("questionSvg", content)}/>
                 <Spacer height={20}/>
-            </div>
-            <InfoHeader>Предмети</InfoHeader>
-            <div className="subjects s-hflex">
-                {
-                    test.subjects.map(renderSubject)
-                }
-                <PopupConsumer>
+                <Editor
+                    placeholder="Коментар"
+                    value={test.comment}
+                    onChange={updateTestComment}/>
+                <ErrorsArea errors={formState.errors.comment}/>
+                <Spacer height={10}/>
+                <SvgContentChooser
+                    value={test.commentSvg}
+                    setValue={content => updateTestProperty("commentSvg", content)}/>
+                <Spacer height={20}/>
+                <InfoHeader>Відповіді</InfoHeader>
+                <div className="answers s-vflex">
+                    <ul className="collection">
+                        {
+                            test.variants.map(renderVariant)
+                        }
+                        <li className="collection-item clickable add" onClick={addEmptyVariant}>
+                            <div className="s-hflex-center">
+                                <i className="medium material-icons">add</i>
+                            </div>
+                        </li>
+                    </ul>
+                    <ErrorsArea errors={formState.errors.variantsCorrectness}/>
+                    <Spacer height={20}/>
+                </div>
+                <InfoHeader>Предмети</InfoHeader>
+                <div className="s-hflex wrap-flex">
                     {
-                        ({setPopupState}) => (
-                            <Badge type="gray" wrapperClassName="add-subject-badge clickable"
-                                   onClick={() => openSelectSubjectPopup(setPopupState)}>
-                                <div className="s-vflex-center add-subject full-height">
-                                    <i className="tiny material-icons">add</i>
-                                </div>
-                            </Badge>
-                        )
+                        test.subjects.sort(compareFullSubjects).map(renderSubject)
                     }
-                </PopupConsumer>
-            </div>
-            <ErrorsArea errors={formState.errors.subjects}/>
-            <Spacer height={20}/>
-            <div className="s-hflex-end">
-                <LoaderBoundary condition={formState.loading} size="small">
                     <PopupConsumer>
                         {
                             ({setPopupState}) => (
-                                <>
-                                    <DisplayBoundary condition={test.status !== 'ACTIVE'}>
-                                        <Button
-                                            onClick={saveDraft}>{test.id ? "Зберегти" : "Створити"} чернетку</Button>
-                                        <Spacer width={10}/>
-                                    </DisplayBoundary>
-                                    <Button onClick={() => save(setPopupState)}
-                                            isFilled={true}>{test.id ? "Зберегти" : "Створити"}</Button>
-                                </>
+                                <Badge type="gray" wrapperClassName="add-subject-badge clickable"
+                                    onClick={() => openSelectSubjectPopup(setPopupState)}>
+                                    <div className="s-vflex-center add-subject full-height">
+                                        <i className="tiny material-icons">add</i>
+                                    </div>
+                                </Badge>
                             )
                         }
                     </PopupConsumer>
-                </LoaderBoundary>
-            </div>
+                </div>
+                <ErrorsArea errors={formState.errors.subjects}/>
+                <DisplayBoundary condition={formState.errors.redundantTestings}>
+                    <Spacer height={20}/>
+                    <Alert type="warning">
+                        Редагування призвело до змін у списку спеціалізацій даного тесту. Для успішного завернення редагування потрібно видалити тест з наступних іспитів:
+                        <ul>
+                            {
+                                formState.errors.redundantTestings ? (
+                                    formState.errors.redundantTestings.map((item, index) => <li key={index}>{item.exam.title}: {item.specialization.step.title} | {item.specialization.title}</li>)
+                                ) : null
+                            }
+                        </ul>
+                    </Alert>
+                </DisplayBoundary>
+                <Spacer height={20}/>
+                <div className="s-hflex-end">
+                    <LoaderBoundary condition={formState.loading} size="small">
+                        <PopupConsumer>
+                            {
+                                ({setPopupState}) => (
+                                    <>
+                                        <DisplayBoundary condition={test.status !== 'ACTIVE'}>
+                                            <Button
+                                                onClick={saveDraft}>{test.id ? "Зберегти" : "Створити"} чернетку</Button>
+                                            <Spacer width={10}/>
+                                        </DisplayBoundary>
+                                        <Button onClick={() => save(setPopupState)}
+                                                isFilled={true}>{test.id ? "Зберегти" : "Створити"}</Button>
+                                    </>
+                                )
+                            }
+                        </PopupConsumer>
+                    </LoaderBoundary>
+                </div>
+            </DisplayBoundary>
+            <DisplayBoundary condition={mode === TAB_MODES.EXAMS}>
+                <TestingsList testId={test.id} initialTestings={test.testings} />
+            </DisplayBoundary>
         </div>
     );
 }

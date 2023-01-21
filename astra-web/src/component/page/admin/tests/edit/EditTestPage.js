@@ -5,6 +5,7 @@ import EditTestForm from "../../../../form/EditTestForm/EditTestForm";
 import LoaderBoundary from "../../../../LoaderBoundary/LoaderBoundary";
 import withTitle from "../../../../hoc/withTitle/withTitle";
 import "./EditTestPage.css";
+import withScrollTopButton from "../../../../hoc/withScrollTopButton/withScrollTopButton";
 
 const EditTestPage = () => {
     const {id} = useParams();
@@ -21,18 +22,21 @@ const EditTestPage = () => {
     }, []);
 
     return (
-        <div className="EditTestPage container">
-            <div className="row">
-                <LoaderBoundary condition={test == null} className="s-hflex-center">
-                    {
-                        test ? (
-                            <EditTestForm test={test} />
-                        ) : null
-                    }
-                </LoaderBoundary>
+        <>
+            <div className="EditTestPage container">
+                <div className="row">
+                    <LoaderBoundary condition={test == null} className="s-hflex-center">
+                        {
+                            test ? (
+                                <EditTestForm test={test} />
+                            ) : null
+                        }
+                    </LoaderBoundary>
+                </div>
             </div>
-        </div>
+            <div className="equal-flex" />
+        </>
     );
 }
 
-export default withTitle(EditTestPage, "Редагувати тест");
+export default withScrollTopButton(withTitle(EditTestPage, "Редагувати тест"));

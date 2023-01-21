@@ -60,6 +60,7 @@ public class TestServiceImpl implements TestService {
     @Override
     @Transactional
     public Optional<TestFullDetailDto> update(Long id, RequestTestDto testDto) {
+        testDto.setId(id);
         List<ValidationError> errors = testValidator.validate(testDto);
         if (!errors.isEmpty()) {
             throw new ValidationException(errors);

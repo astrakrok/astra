@@ -5,10 +5,13 @@
     border-radius: 15px;
     font-size: 0.9rem;
     font-weight: bold;
-    max-width: 200px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.Badge .wrapper.limited {
+    max-width: 200px;
 }
 
 .Badge .wrapper.primary {

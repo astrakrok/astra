@@ -20,33 +20,33 @@ import java.util.HashMap;
 @Service
 @RequiredArgsConstructor
 public class TestingTestServiceImpl implements TestingTestService {
-  private final TestingTestRepository testingTestRepository;
-  private final TestingTestMapper testingTestMapper;
-  private final TestRepository testRepository;
+    private final TestingTestRepository testingTestRepository;
+    private final TestingTestMapper testingTestMapper;
+    private final TestRepository testRepository;
 
-  @Override
-  @Transactional
-  public IdDto save(RequestTestingTestDto testingTestDto) {
-    validateTestSpecialization(testingTestDto);
-    if (!testRepository.existsByIdAndStatus(testingTestDto.getTestId(), TestStatus.ACTIVE)) {
-      throw new ValidationException(new ValidationError(ValidationErrorType.INVALID_STATUS, new HashMap<>()));
+    @Override
+    @Transactional
+    public IdDto save(RequestTestingTestDto testingTestDto) {
+        validateTestSpecialization(testingTestDto);
+        if (!testRepository.existsByIdAndStatus(testingTestDto.getTestId(), TestStatus.ACTIVE)) {
+            throw new ValidationException(new ValidationError(ValidationErrorType.INVALID_STATUS, new HashMap<>()));
+        }
+        TestingTestEntity entity = testingTestMapper.toEntity(testingTestDto);
+        testingTestRepository.save(entity);
+        return new IdDto(entity.getId());
     }
-    TestingTestEntity entity = testingTestMapper.toEntity(testingTestDto);
-    testingTestRepository.save(entity);
-    return new IdDto(entity.getId());
-  }
 
-  @Override
-  public void delete(Long id) {
-    testingTestRepository.deleteById(id);
-  }
-
-  private void validateTestSpecialization(RequestTestingTestDto testingTestDto) {
-    boolean hasValidSpecialization = testingTestRepository.hasValidSpecialization(
-        testingTestDto.getTestingId(),
-        testingTestDto.getTestId());
-    if (!hasValidSpecialization) {
-      throw new IllegalArgumentException("You cannot add this test to this testing");
+    @Override
+    public void delete(Long id) {
+        testingTestRepository.deleteById(id);
     }
-  }
+
+    private void validateTestSpecialization(RequestTestingTestDto testingTestDto) {
+        boolean hasValidSpecialization = testingTestRepository.hasValidSpecialization(
+                testingTestDto.getTestingId(),
+                testingTestDto.getTestId());
+        if (!hasValidSpecialization) {
+            throw new IllegalArgumentException("You cannot add this test to this testing");
+        }
+    }
 }

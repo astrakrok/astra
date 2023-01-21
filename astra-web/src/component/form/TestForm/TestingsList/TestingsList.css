@@ -1,0 +1,29 @@
+.TestingsList table td {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.TestingsList table td.draft {
+    color: var(--primary-color);
+}
+
+.TestingsList table td.active {
+    color: var(--green-color);
+}
+
+.TestingsList table td i.delete {
+    color: var(--red-color);
+    font-weight: bold;
+}
+
+.TestingsList table td a.view {
+    color: var(--secondary-color);
+}
+
+.TestingsList table td.step-title {
+    white-space: nowrap;
+}
+
+.TestingsList .refresh i {
+    font-size: 40px;
+    opacity: 0.8;
+}

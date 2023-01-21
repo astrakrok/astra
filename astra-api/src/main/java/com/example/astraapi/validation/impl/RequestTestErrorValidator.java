@@ -2,8 +2,10 @@ package com.example.astraapi.validation.impl;
 
 import com.example.astraapi.dto.test.RequestTestDto;
 import com.example.astraapi.dto.test.variant.TestVariantDto;
+import com.example.astraapi.entity.projection.TestingInfoProjection;
 import com.example.astraapi.meta.ValidationErrorType;
 import com.example.astraapi.model.validation.ValidationError;
+import com.example.astraapi.repository.TestingRepository;
 import com.example.astraapi.validation.ErrorValidator;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +20,8 @@ import java.util.stream.Stream;
 @Service
 @RequiredArgsConstructor
 public class RequestTestErrorValidator implements ErrorValidator<RequestTestDto> {
+    private final TestingRepository testingRepository;
+
     @Override
     public List<ValidationError> validate(RequestTestDto model) {
         return Stream.concat(
@@ -26,10 +30,19 @@ public class RequestTestErrorValidator implements ErrorValidator<RequestTestDto>
                                 validateLength("comment", model.getComment(), 10, null),
                                 validateSize("variants", model.getVariants(), 1, null),
                                 validateSize("subjectIds", model.getSubjectIds(), 1, null),
-                                validateCorrectness(model.getVariants())),
+                                validateCorrectness(model.getVariants()),
+                                validateTestings(model)),
                         getVariantsErrorsStream(model.getVariants()))
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
+    }
+
+    private ValidationError validateTestings(RequestTestDto model) {
+        List<TestingInfoProjection> redundantTestings = testingRepository.getRedundantTestings(model.getId(), model.getSubjectIds());
+        return redundantTestings.isEmpty() ? null : new ValidationError(
+                ValidationErrorType.REDUNDANT_TESTINGS,
+                Map.of("items", redundantTestings)
+        );
     }
 
     private Stream<ValidationError> getVariantsErrorsStream(List<TestVariantDto> variants) {

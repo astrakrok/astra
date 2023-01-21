@@ -60,7 +60,7 @@ public class AdminTestingController {
     }
 
     @PutMapping("/{id}/status")
-    public Optional<TestingInfoDto> activateTesting(
+    public Optional<TestingInfoDto> changeStatus(
             @PathVariable("id") Long id,
             @RequestBody TestingStatusDto statusDto
     ) {

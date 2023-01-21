@@ -16,6 +16,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RequestTestDto {
+    private Long id;
     private String question;
     private String comment;
     private String questionSvg;

@@ -18,10 +18,8 @@ const SelectSubject = ({
     }
 
     const save = () => {
-        onSave({
-            id: selectedSubject.value,
-            title: selectedSubject.label
-        });
+        const subject = subjectsDetails.find(item => item.id*1 === selectedSubject.value*1);
+        onSave(subject);
     }
 
     return (
