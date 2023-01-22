@@ -122,6 +122,12 @@
         order by e.title, s.title, spec.title
     </select>
 
+    <select id="existsByIdAndStatus" resultType="boolean">
+        select exists(
+                       select 1 from public.testings t where t.id = #{id} and t.status = #{status}
+                   )
+    </select>
+
     <resultMap id="testingWithSpecialization" type="com.example.astraapi.entity.TestingWithSpecializationEntity">
         <id column="id" property="id"/>
         <result column="examId" property="examId"/>

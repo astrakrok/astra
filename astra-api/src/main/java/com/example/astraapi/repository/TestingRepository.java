@@ -42,4 +42,8 @@ public interface TestingRepository {
     List<TestingInfoProjection> getRedundantTestings(
             @Param("testId") Long testId,
             @Param("subjectsIds") Set<Long> subjectsIds);
+
+    boolean existsByIdAndStatus(
+            @Param("id") Long id,
+            @Param("status") TestingStatus status);
 }

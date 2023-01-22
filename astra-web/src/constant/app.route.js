@@ -55,10 +55,17 @@ const getAdminRoutes = () => {
         },
         testingsTests: {
             all: prefix + "/testings-tests",
+            details: prefix + "/testings-tests/details",
             id: id => {
                 const url = prefix + `/testings-tests/${id}`;
                 return {
                     this: url
+                }
+            },
+            testId: testId => {
+                const url = prefix + `/testings-tests/${testId}`;
+                return {
+                    testings: url + "/testings"
                 }
             }
         },
@@ -72,7 +79,10 @@ const getAdminRoutes = () => {
             all: prefix + "/subjects",
             details: prefix + "/subjects/details",
         },
-        specializations: prefix + "/specializations",
+        specializations: {
+            all: prefix + "/specializations",
+            filter: prefix + "/specializations/filter"
+        },
         steps: prefix + "/steps",
         tests: prefix + "/tests",
         transfer: {

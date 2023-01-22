@@ -12,10 +12,13 @@ import javax.validation.constraints.Positive;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RequestTestingTestDto {
+public class RequestTestingDetailTestDto {
     @NotNull
     @Positive
-    private Long testingId;
+    private Long examId;
+    @NotNull
+    @Positive
+    private Long specializationId;
     @NotNull
     @Positive
     private Long testId;

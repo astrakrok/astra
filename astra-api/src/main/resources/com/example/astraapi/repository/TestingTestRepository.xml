@@ -22,9 +22,70 @@
                    )
     </select>
 
+    <select id="hasTestingStatus" resultType="boolean">
+        select exists(
+                       select 1
+                       from public.testings t
+                       where t.status = #{status}
+                         and t.id = (select tt.testing_id from public.testings_tests tt where tt.id = #{id})
+                   )
+    </select>
+
+    <select id="existsByTestingIdAndTestId" resultType="boolean">
+        select exists(
+                       select 1
+                       from public.testings_tests tt
+                       where tt.testing_id = #{testingId} and tt.test_id = #{testId}
+                   )
+    </select>
+
     <delete id="deleteById">
         delete
         from public.testings_tests tt
         where tt.id = #{id}
     </delete>
+
+    <delete id="deleteByTestingIdAndTestId">
+        delete
+        from public.testings_tests tt
+        where tt.testing_id = #{testingId}
+          and tt.test_id = #{testId}
+    </delete>
+
+    <select id="getTestings" resultMap="testingInfo">
+        select t.id        as id,
+               t.status    as status,
+               e.id        as examId,
+               e.title     as examTitle,
+               s.id        as specializationId,
+               s.title     as specializationTitle,
+               steps.id    as stepId,
+               steps.title as stepTitle
+        from public.testings t
+                 left join public.exams e on e.id = t.exam_id
+                 left join public.specializations s on s.id = t.specialization_id
+                 left join public.steps on steps.id = s.step_id
+        where exists(select 1 from public.testings_tests tt where tt.testing_id = t.id and tt.test_id = #{testId})
+    </select>
+
+    <resultMap id="testingInfo" type="com.example.astraapi.entity.projection.TestingInfoProjection">
+        <id column="id" property="id"/>
+        <result column="status" property="status"/>
+
+        <association property="exam" javaType="com.example.astraapi.entity.ExamEntity">
+            <id column="examId" property="id"/>
+            <result column="examTitle" property="title"/>
+        </association>
+
+        <association property="specialization"
+                     javaType="com.example.astraapi.entity.projection.StepSpecializationProjection">
+            <id column="specializationId" property="id"/>
+            <result column="specializationTitle" property="title"/>
+
+            <association property="step" javaType="com.example.astraapi.entity.StepEntity">
+                <id column="stepId" property="id"/>
+                <result column="stepTitle" property="title"/>
+            </association>
+        </association>
+    </resultMap>
 </mapper>

@@ -1,5 +1,6 @@
 package com.example.astraapi.mapper;
 
+import com.example.astraapi.dto.test.RequestTestingDetailTestDto;
 import com.example.astraapi.dto.test.TestingTestQuestionDto;
 import com.example.astraapi.dto.testing.*;
 import com.example.astraapi.entity.TestingEntity;
@@ -14,6 +15,8 @@ import org.mapstruct.Mapping;
 public interface TestingMapper {
     TestingEntity toEntity(RequestTestingDto dto, TestingStatus status);
 
+    TestingEntity toEntity(RequestTestingDetailTestDto dto, TestingStatus status);
+
     TestingWithSpecializationDto toDto(TestingWithSpecializationEntity entity);
 
     TestingInfoDto toInfoDto(TestingInfoProjection entity);
@@ -24,6 +27,8 @@ public interface TestingMapper {
     TestingTestQuestionDto toTestQuestionDto(TestingTestSimpleProjection projection);
 
     TestingDetailDto toDetailDto(TestingEntity entity);
+
+    TestingDetailDto toDetailDto(TestingInfoProjection projection);
 
     TestingDto toDto(TestingEntity entity);
 }
