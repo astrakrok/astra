@@ -7,7 +7,6 @@ import Badge from "../../Badge/Badge";
 import PopupConsumer from "../../../context/popup/PopupConsumer";
 import SelectSubject from "../../SelectSubject/SelectSubject";
 import {defaultEmptyTest} from "../../../data/default/test";
-import withSubjectsDetails from "../../hoc/withSubjectsDetails/withSubjectsDetails";
 import "./TestForm.css";
 import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 import Spacer from "../../Spacer/Spacer";
@@ -241,12 +240,10 @@ const TestForm = ({
     }
 
     const openSelectSubjectPopup = setPopupState => {
-        const SelectSubjectForm = withSubjectsDetails(SelectSubject, "small");
-
         setPopupState({
             bodyGetter: () => (
                 <div className="s-hflex-center">
-                    <SelectSubjectForm onSave={subject => handleSubjectSaving(subject, setPopupState)}/>
+                    <SelectSubject onSave={subject => handleSubjectSaving(subject, setPopupState)}/>
                 </div>
             )
         });
