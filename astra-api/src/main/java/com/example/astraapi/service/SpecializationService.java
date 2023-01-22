@@ -1,6 +1,7 @@
 package com.example.astraapi.service;
 
 import com.example.astraapi.dto.IdDto;
+import com.example.astraapi.dto.filter.AdminSpecializationFilterDto;
 import com.example.astraapi.dto.specialization.RequestSpecializationDto;
 import com.example.astraapi.dto.specialization.SpecializationDto;
 import com.example.astraapi.dto.specialization.StepSpecializationDto;
@@ -17,4 +18,6 @@ public interface SpecializationService {
   List<SpecializationDto> getAll(Long stepId);
 
   List<StepSpecializationDto> getNotSelectedForExam(Long examId);
+
+  List<SpecializationDto> search(AdminSpecializationFilterDto filter);
 }

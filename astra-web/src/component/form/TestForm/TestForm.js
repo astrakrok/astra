@@ -315,6 +315,7 @@ const TestForm = ({
                 </DisplayBoundary>
                 <span>{test.status === "DRAFT" ? " (Чернетка)" : null}</span>
             </div>
+            <Spacer height={10} />
             {
                 (notFoundSubjects.length || duplicateSubjects.length) ? (
                     <>

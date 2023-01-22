@@ -9,11 +9,15 @@ import java.util.List;
 
 @Mapper
 public interface SpecializationRepository {
-  void save(@Param("entity") SpecializationEntity specializationEntity);
+    void save(@Param("entity") SpecializationEntity specializationEntity);
 
-  List<StepSpecializationProjection> getAllWithSteps();
+    List<StepSpecializationProjection> getAllWithSteps();
 
-  List<SpecializationEntity> getAllByStepId(@Param("stepId") Long stepId);
+    List<SpecializationEntity> getAllByStepId(@Param("stepId") Long stepId);
 
-  List<StepSpecializationProjection> getNotSelectedByExamId(@Param("examId") Long examId);
+    List<StepSpecializationProjection> getNotSelectedByExamId(@Param("examId") Long examId);
+
+    List<SpecializationEntity> search(
+            @Param("stepId") Long stepId,
+            @Param("testId") Long testId);
 }

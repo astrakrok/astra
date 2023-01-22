@@ -32,8 +32,21 @@
         from public.specializations s
                  left join public.steps step on s.step_id = step.id
         where s.id not in (select t.specialization_id
-                         from public.testings t
-                         where t.exam_id = #{examId})
+                           from public.testings t
+                           where t.exam_id = #{examId})
+    </select>
+
+    <select id="search" resultType="com.example.astraapi.entity.SpecializationEntity">
+        select s.id      as id,
+               s.title   as title,
+               s.step_id as stepId
+        from public.specializations s
+        where (#{testId}::bigint is null or s.id in (select sub.specialization_id
+                                                     from public.subjects sub
+                                                     where sub.id in (select ts.subject_id
+                                                                      from public.tests_subjects ts
+                                                                      where ts.test_id = #{testId}::bigint)))
+          and (#{stepId}::bigint is null or s.step_id = #{stepId}::bigint)
     </select>
 
     <resultMap id="detailedSpecialization" type="com.example.astraapi.entity.projection.StepSpecializationProjection">

@@ -12,11 +12,16 @@ export const getAllByStepId = async stepId => {
 }
 
 export const create = async specialization => {
-    const response = await client.post(route.admin.specializations, specialization);
+    const response = await client.post(route.admin.specializations.all, specialization);
     return response.data;
 }
 
 export const createByStepId = async (stepId, specialization) => {
     const response = await client.post(route.admin.stepSpecializations.stepId(stepId).all, specialization);
+    return response.data;
+}
+
+export const filter = async filter => {
+    const response = await client.post(route.admin.specializations.filter, filter);
     return response.data;
 }
