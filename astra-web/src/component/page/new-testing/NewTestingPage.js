@@ -13,7 +13,7 @@ const NewTestingPage = () => {
     const Form = withAvailableTestingsAndDescriptions(SelectTestingOptionsForm);
 
     const applyFilters = options => {
-        const search = `?mode=${options.mode}&testingId=${options.testingId}` +
+        const search = `?mode=${options.mode}` + (options.testingId ? `&testingId=${options.testingId}` : `&specializationId=${options.specializationId}`) +
             (options.count ? `&count=${options.count}` : "");
         navigate({
             pathname: page.testing,

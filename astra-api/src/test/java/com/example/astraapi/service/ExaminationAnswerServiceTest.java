@@ -7,8 +7,8 @@ import com.example.astraapi.dto.examination.ExaminationVariantDto;
 import com.example.astraapi.dto.test.ExaminationTestDto;
 import com.example.astraapi.entity.ExaminationAnswerEntity;
 import com.example.astraapi.entity.PropertyEntity;
-import com.example.astraapi.entity.TestFullDetailEntity;
 import com.example.astraapi.entity.TestVariantEntity;
+import com.example.astraapi.entity.projection.TestFullDetailProjection;
 import com.example.astraapi.mapper.ExaminationAnswerMapper;
 import com.example.astraapi.meta.ConfigProperty;
 import com.example.astraapi.meta.TestStatus;
@@ -54,7 +54,7 @@ public class ExaminationAnswerServiceTest {
         });
 
         Mockito.lenient().when(examinationAnswerMapper.toAnsweredTestDto(ArgumentMatchers.any(), ArgumentMatchers.any())).thenAnswer(invocation -> {
-            TestFullDetailEntity testEntity = invocation.getArgument(0);
+            TestFullDetailProjection testEntity = invocation.getArgument(0);
             Long userAnswer = invocation.getArgument(1);
             return mapper.toAnsweredTestDto(testEntity, userAnswer);
         });
@@ -154,7 +154,7 @@ public class ExaminationAnswerServiceTest {
                         2L,
                         3L,
                         1L,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 3L,
                                 "Question 1",
                                 null,
@@ -179,7 +179,7 @@ public class ExaminationAnswerServiceTest {
                         20L,
                         30L,
                         10L,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 30L,
                                 "Question 1",
                                 null,
@@ -204,7 +204,7 @@ public class ExaminationAnswerServiceTest {
                         200L,
                         300L,
                         100L,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 300L,
                                 "Question 1",
                                 null,
@@ -229,7 +229,7 @@ public class ExaminationAnswerServiceTest {
                         2000L,
                         3000L,
                         1000L,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 3000L,
                                 "Question 1",
                                 null,
@@ -254,7 +254,7 @@ public class ExaminationAnswerServiceTest {
                         20000L,
                         30000L,
                         10000L,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 30000L,
                                 "Question 1",
                                 null,
@@ -299,7 +299,7 @@ public class ExaminationAnswerServiceTest {
                         2L,
                         3L,
                         2L,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 3L,
                                 "Question 1",
                                 null,
@@ -324,7 +324,7 @@ public class ExaminationAnswerServiceTest {
                         20L,
                         30L,
                         10L,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 30L,
                                 "Question 1",
                                 null,
@@ -349,7 +349,7 @@ public class ExaminationAnswerServiceTest {
                         200L,
                         300L,
                         null,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 300L,
                                 "Question 1",
                                 null,
@@ -374,7 +374,7 @@ public class ExaminationAnswerServiceTest {
                         2000L,
                         3000L,
                         1000L,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 3000L,
                                 "Question 1",
                                 null,
@@ -399,7 +399,7 @@ public class ExaminationAnswerServiceTest {
                         20000L,
                         30000L,
                         10000L,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 30000L,
                                 "Question 1",
                                 null,
@@ -444,7 +444,7 @@ public class ExaminationAnswerServiceTest {
                         2L,
                         3L,
                         null,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 3L,
                                 "Question 1",
                                 null,
@@ -469,7 +469,7 @@ public class ExaminationAnswerServiceTest {
                         20L,
                         30L,
                         10L,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 30L,
                                 "Question 1",
                                 null,
@@ -494,7 +494,7 @@ public class ExaminationAnswerServiceTest {
                         200L,
                         300L,
                         100L,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 300L,
                                 "Question 1",
                                 null,
@@ -519,7 +519,7 @@ public class ExaminationAnswerServiceTest {
                         2000L,
                         3000L,
                         1000L,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 3000L,
                                 "Question 1",
                                 null,
@@ -544,7 +544,7 @@ public class ExaminationAnswerServiceTest {
                         20000L,
                         30000L,
                         10000L,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 30000L,
                                 "Question 1",
                                 null,
@@ -589,7 +589,7 @@ public class ExaminationAnswerServiceTest {
                         2L,
                         3L,
                         2L,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 3L,
                                 "Question 1",
                                 null,
@@ -614,7 +614,7 @@ public class ExaminationAnswerServiceTest {
                         20L,
                         30L,
                         20L,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 30L,
                                 "Question 1",
                                 null,
@@ -639,7 +639,7 @@ public class ExaminationAnswerServiceTest {
                         200L,
                         300L,
                         200L,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 300L,
                                 "Question 1",
                                 null,
@@ -664,7 +664,7 @@ public class ExaminationAnswerServiceTest {
                         2000L,
                         3000L,
                         2000L,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 3000L,
                                 "Question 1",
                                 null,
@@ -689,7 +689,7 @@ public class ExaminationAnswerServiceTest {
                         20000L,
                         30000L,
                         20000L,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 30000L,
                                 "Question 1",
                                 null,
@@ -734,7 +734,7 @@ public class ExaminationAnswerServiceTest {
                         2L,
                         3L,
                         null,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 3L,
                                 "Question 1",
                                 null,
@@ -759,7 +759,7 @@ public class ExaminationAnswerServiceTest {
                         20L,
                         30L,
                         null,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 30L,
                                 "Question 1",
                                 null,
@@ -784,7 +784,7 @@ public class ExaminationAnswerServiceTest {
                         200L,
                         300L,
                         null,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 300L,
                                 "Question 1",
                                 null,
@@ -809,7 +809,7 @@ public class ExaminationAnswerServiceTest {
                         2000L,
                         3000L,
                         null,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 3000L,
                                 "Question 1",
                                 null,
@@ -834,7 +834,7 @@ public class ExaminationAnswerServiceTest {
                         20000L,
                         30000L,
                         null,
-                        new TestFullDetailEntity(
+                        new TestFullDetailProjection(
                                 30000L,
                                 "Question 1",
                                 null,

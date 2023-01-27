@@ -12,4 +12,5 @@ import lombok.Setter;
 public class TestingDescriptionDto {
   private String trainingDescription;
   private String examinationDescription;
+  private String adaptiveDescription;
 }

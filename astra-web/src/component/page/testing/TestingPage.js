@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {useSearchParams} from "react-router-dom";
-import {getTraining} from "../../../service/test.service";
+import {getAdaptive, getTraining} from "../../../service/test.service";
 import {start} from "../../../service/examination.service";
 import "./TestingPage.css";
 import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
@@ -22,6 +22,10 @@ const TestingPage = () => {
         if (count) {
             options.count = count;
         }
+        const specializationId = searchParams.get("specializationId");
+        if (specializationId) {
+            options.specializationId = specializationId;
+        }
         return options;
     }
 
@@ -37,6 +41,9 @@ const TestingPage = () => {
                     tests={result.tests}
                     finishedAt={result.finishedAt}
                     onRefresh={() => getTesting(options)}/>)
+        } else if (options.mode === "adaptive") {
+            const result = await getAdaptive(options);
+            setTesting(<TrainingTesting tests={result} />);
         } else {
             setTesting(
                 <InfoText>

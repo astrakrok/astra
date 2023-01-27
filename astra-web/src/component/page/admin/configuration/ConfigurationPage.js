@@ -18,7 +18,8 @@ const ConfigurationPage = () => {
             const result = await getValues([
                 property.examinationThresholdPercentage,
                 property.trainingDescription,
-                property.examinationDescription
+                property.examinationDescription,
+                property.adaptiveDescription
             ]);
             setProperties(result);
             setLoading(false);
@@ -42,6 +43,11 @@ const ConfigurationPage = () => {
                         initialValue={properties.examinationDescription}
                         propertyName={property.examinationDescription}
                         propertyHeader="Опис екзамену"/>
+                    <Spacer height={20}/>
+                    <ConfigPropertyEditorForm
+                        initialValue={properties.adaptiveDescription}
+                        propertyName={property.adaptiveDescription}
+                        propertyHeader="Опис адаптивного режиму"/>
                 </LoaderBoundary>
             </div>
         </div>

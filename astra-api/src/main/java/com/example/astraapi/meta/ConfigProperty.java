@@ -8,7 +8,8 @@ import lombok.RequiredArgsConstructor;
 public enum ConfigProperty {
   EXAMINATION_THRESHOLD_PERCENTAGE("examinationThresholdPercentage"),
   TRAINING_DESCRIPTION("trainingDescription"),
-  EXAMINATION_DESCRIPTION("examinationDescription");
+  EXAMINATION_DESCRIPTION("examinationDescription"),
+  ADAPTIVE_DESCRIPTION("adaptiveDescription");
 
   private final String name;
 }

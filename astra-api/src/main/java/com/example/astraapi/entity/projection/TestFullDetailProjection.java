@@ -1,7 +1,6 @@
-package com.example.astraapi.entity;
+package com.example.astraapi.entity.projection;
 
-import com.example.astraapi.entity.projection.SubjectDetailProjection;
-import com.example.astraapi.entity.projection.TestingInfoProjection;
+import com.example.astraapi.entity.TestVariantEntity;
 import com.example.astraapi.meta.TestStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +17,7 @@ import java.util.Map;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TestFullDetailEntity {
+public class TestFullDetailProjection {
     private Long id;
     private String question;
     private String questionSvg;

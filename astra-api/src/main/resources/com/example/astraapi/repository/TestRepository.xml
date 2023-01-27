@@ -254,6 +254,140 @@
         order by nested.id
     </select>
 
+    <select id="getFullDetailedTests" resultMap="testFullDetail">
+        select t.id               as id,
+               t.question         as question,
+               t.question_svg     as questionSvg,
+               t.comment          as comment,
+               t.comment_svg      as commentSvg,
+               tv.id              as variantId,
+               tv.title           as variantTitle,
+               tv.title_svg       as variantTitleSvg,
+               tv.explanation     as variantExplanation,
+               tv.explanation_svg as variantExplanationSvg,
+               tv.is_correct      as variantIsCorrect,
+               testings.id        as testingId,
+               e.id               as examId,
+               e.title            as examTitle,
+               spec.id            as examSpecializationId,
+               spec.title         as examSpecializationTitle,
+               step.id            as examStepId,
+               step.title         as examStepTitle,
+               sub.id             as subjectId,
+               sub.title          as subjectTitle
+        from (select t.id,
+                     t.question,
+                     t.question_svg,
+                     t.comment,
+                     t.comment_svg
+              from public.tests t
+              where exists(
+                            select 1
+                            from public.testings_tests tt
+                            where exists(
+                                          select 1
+                                          from public.testings
+                                          where testings.id = tt.testing_id
+                                            and testings.specialization_id = #{specializationId}
+                                            and testings.status = 'ACTIVE'
+                                      )
+                        )
+              order by t.id
+              limit 100) as t
+                 left join public.tests_subjects ts on ts.test_id = t.id
+                 left join public.tests_variants tv on tv.test_id = t.id
+                 left join public.subjects sub on sub.id = ts.subject_id
+                 left join public.testings_tests tt on tt.test_id = t.id
+                 left join public.testings on testings.id = tt.testing_id
+                 left join public.specializations spec on spec.id = testings.specialization_id
+                 left join public.exams e on e.id = testings.exam_id
+                 left join public.steps step on step.id = spec.step_id
+        where testings.status = 'ACTIVE'
+    </select>
+
+    <select id="getFullDetailedTestsByIds" resultMap="testFullDetail">
+        select t.id as id,
+        t.question as question,
+        t.question_svg as questionSvg,
+        t.comment as comment,
+        t.comment_svg as commentSvg,
+        tv.id as variantId,
+        tv.title as variantTitle,
+        tv.title_svg as variantTitleSvg,
+        tv.explanation as variantExplanation,
+        tv.explanation_svg as variantExplanationSvg,
+        tv.is_correct as variantIsCorrect,
+        testings.id as testingId,
+        e.id as examId,
+        e.title as examTitle,
+        spec.id as examSpecializtionId,
+        spec.title as examSpecializationTitle,
+        step.id as examStepId,
+        step.title as examStepTitle,
+        sub.id as subjectId,
+        sub.title as subjectTitle
+        from public.tests t
+        left join public.tests_subjects ts on ts.test_id = t.id
+        left join public.tests_variants tv on tv.test_id = t.id
+        left join public.subjects sub on sub.id = ts.subject_id
+        left join public.testings_tests tt on tt.test_id = t.id
+        left join public.testings on testings.id = tt.testing_id
+        left join public.specializations spec on spec.id = testings.specialization_id
+        left join public.exams e on e.id = testings.exam_id
+        left join public.steps step on step.id = spec.step_id
+        where t.id in (
+        <foreach collection="ids" item="id" separator=",">
+            #{id}
+        </foreach>
+        )
+        order by random()
+    </select>
+
+    <select id="getActiveTestsIdsBySubjectAndExceptIds" resultMap="testIdAndSubjectsIds">
+        select items.id,
+        ts.subject_id as subjectId
+        from (select t.id as id
+        from public.tests t
+        where
+        <choose>
+            <when test="exceptIds.isEmpty()">
+                true
+            </when>
+            <otherwise>
+                t.id not in (
+                <foreach collection="exceptIds" item="id" separator=",">
+                    #{id}
+                </foreach>
+                )
+            </otherwise>
+        </choose>
+        and
+        exists (
+        select 1 from public.tests_subjects ts where ts.test_id = t.id and
+        <choose>
+            <when test="subjectsIds.isEmpty()">
+                false
+            </when>
+            <otherwise>
+                ts.subject_id in (
+                <foreach collection="subjectsIds" item="subjectId" separator=",">
+                    #{subjectId}
+                </foreach>
+                )
+            </otherwise>
+        </choose>
+        )
+        and
+        exists (
+        select 1 from public.testings_tests tt where tt.test_id = t.id and exists (
+        select 1 from public.testings where testings.id = tt.testing_id and testings.status = 'ACTIVE'
+        )
+        )
+        order by random()
+        limit #{limit}) as items
+        left join public.tests_subjects ts on ts.test_id = items.id
+    </select>
+
     <resultMap id="testPage" type="com.example.astraapi.model.Page">
         <result property="rows" column="rows"/>
         <result property="pageSize" column="pageSize"/>
@@ -319,7 +453,7 @@
         </collection>
     </resultMap>
 
-    <resultMap id="testFullDetail" type="com.example.astraapi.entity.TestFullDetailEntity">
+    <resultMap id="testFullDetail" type="com.example.astraapi.entity.projection.TestFullDetailProjection">
         <id column="id" property="id"/>
         <result column="question" property="question"/>
         <result column="questionSvg" property="questionSvg"/>
@@ -339,9 +473,10 @@
             <result column="variantIsCorrect" property="correct"/>
         </collection>
 
-        <collection property="testings" javaType="List" ofType="com.example.astraapi.entity.projection.TestingInfoProjection">
+        <collection property="testings" javaType="List"
+                    ofType="com.example.astraapi.entity.projection.TestingInfoProjection">
             <id column="testingId" property="id"/>
-            <result column="testingStatus" property="status" />
+            <result column="testingStatus" property="status"/>
 
             <association property="exam" javaType="com.example.astraapi.entity.ExamEntity">
                 <id column="examId" property="id"/>
@@ -378,7 +513,7 @@
         </collection>
     </resultMap>
 
-    <resultMap id="testingTest" type="com.example.astraapi.entity.TestFullDetailEntity">
+    <resultMap id="testingTest" type="com.example.astraapi.entity.projection.TestFullDetailProjection">
         <id column="id" property="id"/>
         <result column="question" property="question"/>
         <result column="questionSvg" property="questionSvg"/>
@@ -405,5 +540,11 @@
             <id column="variantId" property="id"/>
             <result column="variantTitle" property="title"/>
         </collection>
+    </resultMap>
+
+    <resultMap id="testIdAndSubjectsIds" type="com.example.astraapi.entity.projection.TestIdAndSubjectsIdsProjection">
+        <id column="id" property="id"/>
+
+        <collection property="subjectsIds" javaType="java.util.List" ofType="java.lang.Long" column="subjectId"/>
     </resultMap>
 </mapper>

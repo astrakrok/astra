@@ -90,6 +90,7 @@
                   order by ea.test_id, rank_number desc) as nested
             ) as stat on true
         where stat.total > 0
+          and (#{specializationId}::bigint is null or spec.id = #{specializationId}::bigint)
         order by s.title, spec.title, sub.title;
     </select>
 
@@ -111,7 +112,8 @@
             <result column="examTitle" property="title"/>
         </association>
 
-        <association property="specialization" javaType="com.example.astraapi.entity.projection.StepSpecializationProjection">
+        <association property="specialization"
+                     javaType="com.example.astraapi.entity.projection.StepSpecializationProjection">
             <id column="specializationId" property="id"/>
             <result column="specializationTitle" property="title"/>
         </association>

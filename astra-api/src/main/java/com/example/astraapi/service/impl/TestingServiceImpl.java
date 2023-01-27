@@ -76,10 +76,12 @@ public class TestingServiceImpl implements TestingService {
     public TestingDescriptionDto getDescription() {
         Map<String, String> properties = propertyService.getProperties(Set.of(
                 ConfigProperty.TRAINING_DESCRIPTION.getName(),
-                ConfigProperty.EXAMINATION_DESCRIPTION.getName()));
+                ConfigProperty.EXAMINATION_DESCRIPTION.getName(),
+                ConfigProperty.ADAPTIVE_DESCRIPTION.getName()));
         return new TestingDescriptionDto(
                 properties.get(ConfigProperty.TRAINING_DESCRIPTION.getName()),
-                properties.get(ConfigProperty.EXAMINATION_DESCRIPTION.getName())
+                properties.get(ConfigProperty.EXAMINATION_DESCRIPTION.getName()),
+                properties.get(ConfigProperty.ADAPTIVE_DESCRIPTION.getName())
         );
     }
 

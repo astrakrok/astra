@@ -8,6 +8,7 @@ import DisplayBoundary from "../../DisplayBoundary/DisplayBoundary";
 import "./SelectTestingOptionsForm.css";
 import InfoHeader from "../../InfoHeader/InfoHeader";
 import InfoBlock from "../../InfoBlock/InfoBlock";
+import parse from "html-react-parser";
 
 const SelectTestingOptionsForm = ({
     stepsList,
@@ -60,9 +61,11 @@ const SelectTestingOptionsForm = ({
 
     const selected = async event => {
         event.preventDefault();
-        const testing = await onSelected(selectedExam.value, selectedSpecialization.value);
+        const testing = (mode && mode.value === "adaptive") ? {} : await onSelected(selectedExam.value, selectedSpecialization.value);
         const options = {
             testingId: testing ? testing.id : null,
+            examId: selectedExam && selectedExam.value,
+            specializationId: selectedSpecialization && selectedSpecialization.value,
             mode: mode.value
         };
         if (options.mode === "training") {
@@ -129,11 +132,23 @@ const SelectTestingOptionsForm = ({
     }
 
     const isValidOptions = () => {
-        const isValidMainData = [
-            selectedExam,
-            mode
-        ].filter(item => item == null).length === 0;
-        return isValidMainData && (mode.value === "examination" || (mode.value === "training" && count != null));
+        if (!mode) {
+            return false;
+        }
+        if (mode.value === "examination") {
+            if (!selectedExam) {
+                return false;
+            }
+        } else if (mode.value === "training") {
+            if (!selectedExam || count == null) {
+                return false;
+            }
+        } else if (mode.value === "adaptive") {
+            if (!selectedSpecialization) {
+                return false;
+            }
+        }
+        return true;
     }
 
     return (
@@ -178,7 +193,7 @@ const SelectTestingOptionsForm = ({
                                     onChange={updateSpecialization}/>
                             </>
                         </DisplayBoundary>
-                        <DisplayBoundary condition={selectedSpecialization != null}>
+                        <DisplayBoundary condition={selectedSpecialization != null && mode.value !== 'adaptive'}>
                             <>
                                 <Spacer height={20}/>
                                 <SingleSelect
@@ -202,9 +217,15 @@ const SelectTestingOptionsForm = ({
                 {
                     mode == null ? null : (
                         <InfoBlock>
-                            {
-                                mode.value === "training" ? descriptions.trainingDescription : descriptions.examinationDescription
-                            }
+                            <DisplayBoundary condition={mode.value === "training"}>
+                                {parse(descriptions.trainingDescription)}
+                            </DisplayBoundary>
+                            <DisplayBoundary condition={mode.value === "examination"}>
+                                {parse(descriptions.examinationDescription)}
+                            </DisplayBoundary>
+                            <DisplayBoundary condition={mode.value === "adaptive"}>
+                                {parse(descriptions.adaptiveDescription)}
+                            </DisplayBoundary>
                         </InfoBlock>
                     )
                 }

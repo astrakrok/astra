@@ -37,4 +37,6 @@ public interface TestService {
     void deleteTest(Long id);
 
     Page<ExportTest> getTestsForExport(ExportDto exportDto, Pageable pageable);
+
+    List<AdaptiveTestDto> getAdaptiveTests(long specializationId);
 }

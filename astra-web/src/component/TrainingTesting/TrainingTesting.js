@@ -114,7 +114,10 @@ const TrainingTesting = ({tests}) => {
                         <InfoHeader>Ваш результат</InfoHeader>
                         {
                             testingState ? (
-                                <TestingResultNavigation tests={testingState}/>
+                                <>
+                                    <TestingResultNavigation tests={testingState}/>
+                                    <Spacer height={20} />
+                                </>
                             ) : null
                         }
                         <TestingCorrectness tests={testingState}/>
@@ -129,31 +132,30 @@ const TrainingTesting = ({tests}) => {
                             ) : (
                                 <>
                                     <TestingNavigation items={getNavigationItems()} onSelect={navigateToTest} />
-                                    <TrainingTest testState={testingState[currentTest]} onAnswer={value => refreshUserAnswers(value, currentTest)} />
+                                    {
+                                        (displayPreviousButton() || displayNextButton()) ? (
+                                            <div className="navigation-options s-hflex">
+                                                {
+                                                    displayPreviousButton() ? (
+                                                        <Button isFilled={true} onClick={showPreviousTest}>
+                                                            Попереднє
+                                                        </Button>
+                                                    ) : null
+                                                }
+                                                <div className="equal-flex" />
+                                                {
+                                                    displayNextButton() ? (
+                                                        <Button isFilled={true} onClick={showNextTest}>
+                                                            {currentTest + 1 === testingState.length ? "Завершити" : "Наступне"}
+                                                        </Button>
+                                                    ) : null
+                                                }
+                                            </div>
+                                        ) : null
+                                    }
+                                    <TrainingTest testState={testingState[currentTest]} onAnswer={value => refreshUserAnswers(value, currentTest)} order={currentTest + 1} />
                                 </>
                             )
-                        }
-                        <div className="equal-flex" />
-                        {
-                            (displayPreviousButton() || displayNextButton()) ? (
-                                <div className="navigation-options s-hflex">
-                                    {
-                                        displayPreviousButton() ? (
-                                            <Button isFilled={true} onClick={showPreviousTest}>
-                                                Попереднє
-                                            </Button>
-                                        ) : null
-                                    }
-                                    <div className="equal-flex" />
-                                    {
-                                        displayNextButton() ? (
-                                            <Button isFilled={true} onClick={showNextTest}>
-                                                {currentTest + 1 === testingState.length ? "Завершити" : "Наступне"}
-                                            </Button>
-                                        ) : null
-                                    }
-                                </div>
-                            ) : null
                         }
                     </>
                 )

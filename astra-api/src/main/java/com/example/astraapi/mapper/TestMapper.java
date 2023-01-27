@@ -2,7 +2,7 @@ package com.example.astraapi.mapper;
 
 import com.example.astraapi.dto.test.*;
 import com.example.astraapi.entity.TestEntity;
-import com.example.astraapi.entity.TestFullDetailEntity;
+import com.example.astraapi.entity.projection.TestFullDetailProjection;
 import com.example.astraapi.entity.projection.TestShortDetailProjection;
 import com.example.astraapi.entity.projection.exporting.ExportTestProjection;
 import com.example.astraapi.mapper.qualifier.TitleQualifier;
@@ -29,15 +29,17 @@ public interface TestMapper {
 
     TestShortDetailDto toShortDetailDto(TestShortDetailProjection testShortDetailProjection);
 
-    TestFullDetailDto toFullDetailDto(TestFullDetailEntity testFullDetailEntity);
+    TestFullDetailDto toFullDetailDto(TestFullDetailProjection testFullDetailProjection);
 
-    TrainingTestDto toTrainingDto(TestFullDetailEntity entity);
+    TrainingTestDto toTrainingDto(TestFullDetailProjection entity);
 
-    ExaminationTestDto toExaminationDto(TestFullDetailEntity entity);
+    ExaminationTestDto toExaminationDto(TestFullDetailProjection entity);
 
     TestingShortTestDto toShortTestDto(TestEntity entity);
 
     RequestTestDto toRequestTestDto(ImportTest test, List<Long> subjectIds);
 
     ExportTest toExportTest(ExportTestProjection projection);
+
+    AdaptiveTestDto toAdaptiveTestDto(TestFullDetailProjection projection);
 }
