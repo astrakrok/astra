@@ -1,4 +1,3 @@
-import DisplayBoundary from "../DisplayBoundary/DisplayBoundary";
 import Table from "../Table/Table";
 import TestingTestRow from "./TestingTestRow/TestingTestRow";
 import "./TestsQuestionsTable.css";
@@ -15,9 +14,7 @@ const TestsQuestionsTable = ({
             <tr>
                 <th>#</th>
                 <th>Питання</th>
-                <DisplayBoundary condition={status === "ACTIVE"}>
-                    <th>Видалити</th>
-                </DisplayBoundary>
+                <th></th>
             </tr>
             </thead>
             <tbody>
