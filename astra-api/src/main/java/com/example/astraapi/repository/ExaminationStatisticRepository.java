@@ -15,5 +15,7 @@ public interface ExaminationStatisticRepository {
 
     List<ExaminationStatisticInfoEntity> getAllWithTestingByUserId(@Param("userId") Long userId);
 
-    List<StepStatisticProjection> getStepsStatisticByUserId(@Param("userId") Long userId);
+    List<StepStatisticProjection> getStepsStatisticByUserId(
+            @Param("userId") Long userId,
+            @Param("specializationId") Long specializationId);
 }

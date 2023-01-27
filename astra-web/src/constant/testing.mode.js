@@ -6,5 +6,9 @@ export const testingModes = [
     {
         value: "examination",
         label: "Екзамен"
+    },
+    {
+        value: "adaptive",
+        label: "Адаптивний"
     }
 ];

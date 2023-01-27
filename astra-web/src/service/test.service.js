@@ -19,6 +19,14 @@ export const getTraining = async options => {
     return response.data;
 }
 
+export const getAdaptive = async options => {
+    const url = route.tests + "/adaptive";
+    const response = await client.get(url, {
+        params: options
+    });
+    return response.data;
+}
+
 export const saveTest = async test => {
     try {
         const response = await client.post(route.admin.tests, test);

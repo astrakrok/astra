@@ -33,7 +33,8 @@ public class BeanConfig {
         return Map.of(
                 ConfigProperty.EXAMINATION_THRESHOLD_PERCENTAGE, new ExaminationThresholdConfigPropertyValidator(),
                 ConfigProperty.TRAINING_DESCRIPTION, testingConfigPropertyValidator,
-                ConfigProperty.EXAMINATION_DESCRIPTION, testingConfigPropertyValidator
+                ConfigProperty.EXAMINATION_DESCRIPTION, testingConfigPropertyValidator,
+                ConfigProperty.ADAPTIVE_DESCRIPTION, testingConfigPropertyValidator
         );
     }
 

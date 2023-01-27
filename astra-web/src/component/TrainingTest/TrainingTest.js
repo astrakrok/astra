@@ -8,6 +8,8 @@ import parse from "html-react-parser";
 import "./TrainingTest.css";
 import ErrorForm from "../form/ErrorForm/ErrorForm";
 import Spacer from "../Spacer/Spacer";
+import Divider from "../Divider/Divider";
+import Badge from "../Badge/Badge";
 
 const TrainingTest = ({
                           onAnswer = () => {
@@ -91,6 +93,33 @@ const TrainingTest = ({
 
     return (
         <div className="TrainingTest" id={`test${testState.id}`}>
+            <DisplayBoundary condition={testState.subjects || testState.testings}>
+                <DisplayBoundary condition={testState.subjects}>
+                    <div className="s-hflex">
+                        <span className="weight-strong s-vflex-center">Предмети:</span>
+                        <Spacer width={5} />
+                        {
+                            testState.subjects && testState.subjects.map(item => (
+                                <Badge key={item.id} type="light-primary">{item.title}</Badge>
+                            ))
+                        }
+                    </div>
+                </DisplayBoundary>
+                <Spacer height={10} />
+                <DisplayBoundary condition={testState.testings}>
+                    <div className="s-hflex">
+                        <span className="weight-strong s-vflex-center">Зустрічався у іспитах:</span>
+                        <Spacer width={5} />
+                        {
+                            testState.testings && testState.testings.map(item => (
+                                <Badge key={item.id} type="light-secondary">{item.specialization.step.title} | {item.specialization.title} | {item.exam.title}</Badge>
+                            ))
+                        }
+                    </div>
+                </DisplayBoundary>
+                <Spacer height={10} />
+                <Divider />
+            </DisplayBoundary>
             <div className="question line-break s-hflex">
                 <div className="s-vflex">
                     <span className="text">

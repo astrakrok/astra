@@ -216,8 +216,35 @@ const ExaminationTesting = ({
                                             }
                                         </PopupConsumer>
                                     </div>
+                                    <Spacer height={20} />
                                     <div className="question">
                                         <TestingNavigation items={getNavigationItems()} onSelect={showTest}/>
+                                        <DisplayBoundary condition={canMoveNext() || canMovePrevious() || canFinish()}>
+                                            <div className="navigation-options s-hflex">
+                                                <DisplayBoundary condition={canMovePrevious()}>
+                                                    <Button isFilled={true} onClick={previousTest}>
+                                                        Попереднє
+                                                    </Button>
+                                                </DisplayBoundary>
+                                                <div className="equal-flex" />
+                                                <DisplayBoundary condition={canMoveNext()}>
+                                                    <Button isFilled={true} onClick={nextTest}>
+                                                        Наступне
+                                                    </Button>
+                                                </DisplayBoundary>
+                                                <DisplayBoundary condition={canFinish()}>
+                                                    <PopupConsumer>
+                                                        {
+                                                            ({setPopupState}) => (
+                                                                <Button isFilled={true} onClick={() => askToFinish(setPopupState)}>
+                                                                    Завершити
+                                                                </Button>
+                                                            )
+                                                        }
+                                                    </PopupConsumer>
+                                                </DisplayBoundary>
+                                            </div>
+                                        </DisplayBoundary>
                                         <ExaminationTest order={testingState.currentTest + 1}
                                                          test={testingState.tests[testingState.currentTest]}
                                                          onSelect={selectVariant}
@@ -230,32 +257,6 @@ const ExaminationTesting = ({
                                 </InfoText>
                             )
                         }
-                        <DisplayBoundary condition={canMoveNext() || canMovePrevious() || canFinish()}>
-                            <div className="navigation-options s-hflex">
-                                <DisplayBoundary condition={canMovePrevious()}>
-                                    <Button isFilled={true} onClick={previousTest}>
-                                        Попереднє
-                                    </Button>
-                                </DisplayBoundary>
-                                <div className="equal-flex" />
-                                <DisplayBoundary condition={canMoveNext()}>
-                                    <Button isFilled={true} onClick={nextTest}>
-                                        Наступне
-                                    </Button>
-                                </DisplayBoundary>
-                                <DisplayBoundary condition={canFinish()}>
-                                    <PopupConsumer>
-                                        {
-                                            ({setPopupState}) => (
-                                                <Button isFilled={true} onClick={() => askToFinish(setPopupState)}>
-                                                    Завершити
-                                                </Button>
-                                            )
-                                        }
-                                    </PopupConsumer>
-                                </DisplayBoundary>
-                            </div>
-                        </DisplayBoundary>
                     </>
                 )
             }

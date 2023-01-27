@@ -9,6 +9,6 @@ export const getExaminationsStatistic = async () => {
 
 export const getStepsStatistic = async () => {
     const url = route.statistic + "/steps";
-    const response = await client.get(url);
+    const response = await client.post(url, {});
     return response.data;
 }

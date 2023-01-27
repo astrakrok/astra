@@ -18,8 +18,18 @@
     background-color: var(--primary-color);
 }
 
+.Badge .wrapper.light-primary {
+    background-color: var(--light-primary-color);
+    color: rgba(0, 0, 0, 0.5);
+}
+
 .Badge .wrapper.secondary {
     background-color: var(--secondary-color);
+}
+
+.Badge .wrapper.light-secondary {
+    background-color: var(--light-secondary-color);
+    color: rgba(0, 0, 0, 0.7);
 }
 
 .Badge .wrapper.green {

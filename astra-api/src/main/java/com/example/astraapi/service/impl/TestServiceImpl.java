@@ -17,6 +17,7 @@ import com.example.astraapi.model.Pageable;
 import com.example.astraapi.model.exporting.ExportTest;
 import com.example.astraapi.model.validation.ValidationError;
 import com.example.astraapi.repository.TestRepository;
+import com.example.astraapi.service.AdaptiveTestService;
 import com.example.astraapi.service.TestService;
 import com.example.astraapi.service.TestSubjectService;
 import com.example.astraapi.service.TestVariantService;
@@ -39,6 +40,7 @@ public class TestServiceImpl implements TestService {
     private final ErrorValidator<RequestTestDto> testValidator;
     private final TestVariantService testVariantService;
     private final TestSubjectService testSubjectService;
+    private final AdaptiveTestService adaptiveTestService;
 
     @Override
     @Transactional
@@ -139,6 +141,12 @@ public class TestServiceImpl implements TestService {
         return PageUtils.mapPage(
                 testRepository.getExportTests(exportDto.getSpecializationId(), pageable),
                 testMapper::toExportTest);
+    }
+
+    @Override
+    @Transactional
+    public List<AdaptiveTestDto> getAdaptiveTests(long specializationId) {
+        return adaptiveTestService.getAdaptiveTests(specializationId);
     }
 
     private Long saveWithStatus(RequestTestDto testDto, TestStatus status) {

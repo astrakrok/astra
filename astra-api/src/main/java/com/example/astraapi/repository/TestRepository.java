@@ -1,7 +1,8 @@
 package com.example.astraapi.repository;
 
 import com.example.astraapi.entity.TestEntity;
-import com.example.astraapi.entity.TestFullDetailEntity;
+import com.example.astraapi.entity.projection.TestFullDetailProjection;
+import com.example.astraapi.entity.projection.TestIdAndSubjectsIdsProjection;
 import com.example.astraapi.entity.projection.TestShortDetailProjection;
 import com.example.astraapi.entity.projection.exporting.ExportTestProjection;
 import com.example.astraapi.meta.TestStatus;
@@ -29,13 +30,13 @@ public interface TestRepository {
             @Param("id") Long id,
             @Param("status") TestStatus status);
 
-    Optional<TestFullDetailEntity> getDetailedTestById(@Param("id") Long id);
+    Optional<TestFullDetailProjection> getDetailedTestById(@Param("id") Long id);
 
-    List<TestFullDetailEntity> getTestsByTestingId(
+    List<TestFullDetailProjection> getTestsByTestingId(
             @Param("testingId") Long testingId,
             @Param("count") Long count);
 
-    List<TestFullDetailEntity> getTestsByIds(
+    List<TestFullDetailProjection> getTestsByIds(
             @Param("ids") List<Long> ids);
 
     Page<TestEntity> getNotRelatedTestingTests(
@@ -48,4 +49,14 @@ public interface TestRepository {
     Page<ExportTestProjection> getExportTests(
             @Param("specializationId") Long specializationId,
             @Param("pageable") Pageable pageable);
+
+    List<TestFullDetailProjection> getFullDetailedTests(
+            @Param("specializationId") Long specializationId);
+
+    List<TestFullDetailProjection> getFullDetailedTestsByIds(@Param("ids") List<Long> ids);
+
+    List<TestIdAndSubjectsIdsProjection> getActiveTestsIdsBySubjectAndExceptIds(
+            @Param("subjectsIds") List<Long> subjectsIds,
+            @Param("exceptIds") List<Long> exceptIds,
+            @Param("limit") Long limit);
 }
