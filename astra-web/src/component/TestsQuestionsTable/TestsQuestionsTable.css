@@ -2,3 +2,8 @@
     color: var(--red-color);
     font-weight: bold;
 }
+
+.TestsQuestionsTable .view i {
+    color: var(--secondary-color) !important;
+    font-weight: bold;
+}

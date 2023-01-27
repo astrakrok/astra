@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {page} from "../../../constant/page";
 import Badge from "../../Badge/Badge";
 import DisplayBoundary from "../../DisplayBoundary/DisplayBoundary";
@@ -48,7 +48,7 @@ export const TestRow = ({
     }
 
     return (
-        <tr className={statusClass}>
+        <tr className={statusClass + " TestRow"}>
             <td className="center order">{index + 1}</td>
             <td className="line-break full-width question">{test.question}</td>
             <td>
@@ -67,9 +67,11 @@ export const TestRow = ({
                             </Tooltipped>
                         </DisplayBoundary>
                         <Spacer width={10} />
-                        <Tooltipped tooltip="Переглянути" position="top" onClick={() => openEditTestPage(test)}>
-                            <i className="material-icons clickable">visibility</i>
-                        </Tooltipped>
+                        <Link to={page.admin.tests.id(test.id).edit} className="view">
+                            <Tooltipped tooltip="Переглянути" position="top" onClick={() => openEditTestPage(test)}>
+                                <i className="material-icons clickable">visibility</i>
+                            </Tooltipped>
+                        </Link>
                     </LoaderBoundary>
                 </div>
             </td>
