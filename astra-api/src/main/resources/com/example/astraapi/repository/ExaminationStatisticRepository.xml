@@ -68,7 +68,7 @@
         from public.subjects sub
                  left join public.specializations spec on spec.id = sub.specialization_id
                  left join public.steps s on s.id = spec.step_id
-                 join lateral (
+                 left join lateral (
             select coalesce(sum(case when is_correct THEN 1 ELSE 0 END), 0) as correct,
                    coalesce(sum(1), 0)                                      as total
             from (select distinct on (ea.test_id) ea.test_id    as test_id,
@@ -89,9 +89,8 @@
                                  and testings.status = 'ACTIVE')
                   order by ea.test_id, rank_number desc) as nested
             ) as stat on true
-        where stat.total > 0
-          and (#{specializationId}::bigint is null or spec.id = #{specializationId}::bigint)
-        order by s.title, spec.title, sub.title;
+        where (#{specializationId}::bigint is null or spec.id = #{specializationId}::bigint)
+        order by s.title, spec.title, sub.title
     </select>
 
     <resultMap id="statisticInfo" type="com.example.astraapi.entity.ExaminationStatisticInfoEntity">

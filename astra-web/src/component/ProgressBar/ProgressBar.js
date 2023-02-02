@@ -3,10 +3,11 @@ import "./ProgressBar.css";
 const ProgressBar = ({
     title,
     progress,
-    children
+    children,
+    className = ""
 }) => {
     return (
-        <div className="ProgressBar s-vflex-center equal-flex">
+        <div className={`ProgressBar s-vflex-center equal-flex ${className}`}>
             <div className="s-hflex content full-width full-height">
                 <div className="title s-vflex-center equal-flex">
                     {title}

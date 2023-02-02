@@ -31,12 +31,12 @@ public class AdaptiveTestServiceImpl implements AdaptiveTestService {
     @Override
     public List<AdaptiveTestDto> getAdaptiveTests(long specializationId) {
         List<SubjectStatisticDto> subjects = getSubjects(specializationId);
-        List<SubjectStatisticDto> top10FailedSubjects = subjects.stream()
+        List<SubjectStatisticDto> topFailedSubjects = subjects.stream()
                 .limit(adaptiveProperties.getSubjectsCount())
                 .collect(Collectors.toList());
-        List<Long> idsForTop10FailedSubjects = getTests(top10FailedSubjects);
-        List<Long> restTestsIds = getRestTestsIds(subjects, idsForTop10FailedSubjects);
-        return getAllTests(idsForTop10FailedSubjects, restTestsIds);
+        List<Long> idsForTopFailedSubjects = getTests(topFailedSubjects);
+        List<Long> restTestsIds = getRestTestsIds(subjects, idsForTopFailedSubjects);
+        return getAllTests(idsForTopFailedSubjects, restTestsIds);
     }
 
     private List<AdaptiveTestDto> getAllTests(List<Long> first, List<Long> second) {
@@ -52,8 +52,14 @@ public class AdaptiveTestServiceImpl implements AdaptiveTestService {
         long failedTestsCount = getFailedTestsCount(subjects);
         for (SubjectStatisticDto statistic : subjects) {
             long failedCount = statistic.getStatistic().getTotalCount() - statistic.getStatistic().getCorrectCount();
+            if (failedCount == 0) {
+                continue;
+            }
             long testsNeeded = Math.round(failedCount * 100.0 / failedTestsCount) - subjectIdToTestsCount.getOrDefault(statistic.getId(), 0L);
             testsNeeded = Math.min(adaptiveProperties.getCount() - testsIds.size(), testsNeeded);
+            if (testsNeeded <= 0) {
+                continue;
+            }
             List<TestIdAndSubjectsIdsProjection> result = testRepository.getActiveTestsIdsBySubjectAndExceptIds(List.of(statistic.getId()), testsIds, testsNeeded);
             for (TestIdAndSubjectsIdsProjection item : result) {
                 testsIds.add(item.getId());
@@ -95,6 +101,11 @@ public class AdaptiveTestServiceImpl implements AdaptiveTestService {
     }
 
     private int compareSubjects(SubjectStatisticDto first, SubjectStatisticDto second) {
+        if (first.getStatistic().getTotalCount() == 0) {
+            return 1;
+        } else if (second.getStatistic().getTotalCount() == 0) {
+            return -1;
+        }
         double firstSubjectCorrectness = first.getStatistic().getCorrectCount() * 1.0 / first.getStatistic().getTotalCount();
         double secondSubjectCorrectness = second.getStatistic().getCorrectCount() * 1.0 / second.getStatistic().getTotalCount();
         if (Math.abs(firstSubjectCorrectness - secondSubjectCorrectness) < 0.00000001) {
