@@ -7,12 +7,12 @@ const StepSatisticItem = ({
     statistic
 }) => {
     const calculateSubjectProgress = statistic => (
-        Math.round(statistic.correctCount * 100.0 / statistic.totalCount)
+        statistic.totalCount === 0 ? 0 : Math.round(statistic.correctCount * 100.0 / statistic.totalCount)
     );
 
     const renderSubjectItem = subject => (
         <div key={subject.id} className="subject">
-            <ProgressBar title={subject.title} progress={calculateSubjectProgress(subject.statistic)}>
+            <ProgressBar className={subject.statistic.totalCount === 0 ? "disabled" : ""} title={subject.title} progress={calculateSubjectProgress(subject.statistic)}>
                 <div className="percentage s-vflex-center">
                     {subject.statistic.correctCount} / {subject.statistic.totalCount}
                 </div>

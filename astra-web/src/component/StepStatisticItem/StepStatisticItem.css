@@ -13,3 +13,7 @@
 .StepStatisticItem .subject {
     padding: 10px 0;
 }
+
+.StepStatisticItem .ProgressBar.disabled {
+    opacity: 0.7;
+}
