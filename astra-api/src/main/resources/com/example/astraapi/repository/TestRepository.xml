@@ -335,11 +335,19 @@
         left join public.specializations spec on spec.id = testings.specialization_id
         left join public.exams e on e.id = testings.exam_id
         left join public.steps step on step.id = spec.step_id
-        where t.id in (
-        <foreach collection="ids" item="id" separator=",">
-            #{id}
-        </foreach>
-        )
+        where
+        <choose>
+            <when test="ids.isEmpty()">
+                false
+            </when>
+            <otherwise>
+                t.id in (
+                <foreach collection="ids" item="id" separator=",">
+                    #{id}
+                </foreach>
+                )
+            </otherwise>
+        </choose>
         order by random()
     </select>
 
