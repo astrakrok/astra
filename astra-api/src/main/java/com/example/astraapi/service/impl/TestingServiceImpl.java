@@ -64,7 +64,12 @@ public class TestingServiceImpl implements TestingService {
                 id,
                 filter.getSearchText(),
                 pageable);
-        return page == null ? new TestingPage<>() : page.map(testingMapper::toTestQuestionDto);
+        if (page == null) {
+            TestingPage<TestingTestQuestionDto> emptyPage = new TestingPage<>();
+            emptyPage.setTestingId(id);
+            return emptyPage;
+        }
+        return page.map(testingMapper::toTestQuestionDto);
     }
 
     @Override
@@ -99,7 +104,7 @@ public class TestingServiceImpl implements TestingService {
     }
 
     @Override
-    public Optional<TestingInfoDto> changeStatus(Long id, TestingStatusDto statusDto) {
+    public Optional<TestingInfoDto> updateStatus(Long id, TestingStatusDto statusDto) {
         if (statusDto.getStatus() == TestingStatus.ACTIVE && testingRepository.getTestsCount(id) == 0) {
             throw new ValidationException(new ValidationError(ValidationErrorType.EMPTY));
         }

@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "telegram")
 public class TelegramProperties {
-  private String apiToken;
-  private String chatId;
-  private String baseUrl;
+    private String apiToken;
+    private String chatId;
+    private String baseUrl;
 }

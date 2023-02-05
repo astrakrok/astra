@@ -9,10 +9,10 @@ import org.springframework.security.core.GrantedAuthority;
 @Setter
 @AllArgsConstructor
 public class RoleAuthority implements GrantedAuthority {
-  private final String role;
+    private final String role;
 
-  @Override
-  public String getAuthority() {
-    return role;
-  }
+    @Override
+    public String getAuthority() {
+        return role;
+    }
 }

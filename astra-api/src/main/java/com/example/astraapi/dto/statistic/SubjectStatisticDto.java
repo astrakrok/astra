@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SubjectStatisticDto {
-  private Long id;
-  private String title;
-  private StatisticDto statistic;
+    private Long id;
+    private String title;
+    private StatisticDto statistic;
 }

@@ -8,11 +8,11 @@ import java.util.Arrays;
 
 @Component
 public class StringToConfigPropertyConverter implements Converter<String, ConfigProperty> {
-  @Override
-  public ConfigProperty convert(String source) {
-    return Arrays.stream(ConfigProperty.values())
-        .filter(property -> property.getName().equalsIgnoreCase(source.strip()))
-        .findFirst()
-        .orElseThrow(() -> new IllegalArgumentException("No such property"));
-  }
+    @Override
+    public ConfigProperty convert(String source) {
+        return Arrays.stream(ConfigProperty.values())
+                .filter(property -> property.getName().equalsIgnoreCase(source.strip()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("No such property"));
+    }
 }

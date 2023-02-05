@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class OAuth2ConnectionConverter implements Converter<String, OAuth2Connection> {
-  @Override
-  public OAuth2Connection convert(String source) {
-    return OAuth2Connection.valueOf(source.strip().toUpperCase());
-  }
+    @Override
+    public OAuth2Connection convert(String source) {
+        return OAuth2Connection.valueOf(source.strip().toUpperCase());
+    }
 }
