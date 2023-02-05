@@ -14,9 +14,9 @@ import javax.validation.constraints.Positive;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RequestSubjectDto {
-  @Positive
-  private Long specializationId;
-  @NotNull
-  @TrimmedLength(min = 6, max = 255)
-  private String title;
+    @Positive
+    private Long specializationId;
+    @NotNull
+    @TrimmedLength(min = 6, max = 255)
+    private String title;
 }

@@ -20,9 +20,7 @@ public interface SubjectRepository {
             @Param("searchText") String searchText,
             @Param("pageable") Pageable pageable);
 
-    void update(
-            @Param("id") Long id,
-            @Param("entity") SubjectEntity subjectEntity);
+    void update(@Param("entity") SubjectEntity subjectEntity);
 
     List<ImportSubjectProjection> getSubjects(
             @Param("subjectTitles") List<String> subjectTitles,

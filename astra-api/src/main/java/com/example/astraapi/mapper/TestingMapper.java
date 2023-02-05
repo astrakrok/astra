@@ -19,16 +19,16 @@ public interface TestingMapper {
 
     TestingWithSpecializationDto toDto(TestingWithSpecializationEntity entity);
 
+    TestingDto toDto(TestingEntity entity);
+
+    TestingDetailDto toDetailDto(TestingEntity entity);
+
+    TestingDetailDto toDetailDto(TestingInfoProjection projection);
+
     TestingInfoDto toInfoDto(TestingInfoProjection entity);
 
     @Mapping(target = "id", source = "testingTestId")
     @Mapping(target = "testId", source = "testId")
     @Mapping(target = "testQuestion", source = "question")
     TestingTestQuestionDto toTestQuestionDto(TestingTestSimpleProjection projection);
-
-    TestingDetailDto toDetailDto(TestingEntity entity);
-
-    TestingDetailDto toDetailDto(TestingInfoProjection projection);
-
-    TestingDto toDto(TestingEntity entity);
 }

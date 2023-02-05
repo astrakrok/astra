@@ -8,11 +8,11 @@ import java.io.InputStream;
 
 @UtilityClass
 public class FileUtils {
-  public static InputStream getInputStream(MultipartFile file) {
-    try {
-      return file.getInputStream();
-    } catch (IOException exception) {
-      throw new RuntimeException(exception);
+    public static InputStream getInputStream(MultipartFile file) {
+        try {
+            return file.getInputStream();
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
     }
-  }
 }

@@ -2,6 +2,7 @@ package com.example.astraapi.service.impl;
 
 import com.example.astraapi.exception.ImportException;
 import com.example.astraapi.exception.ValidationException;
+import com.example.astraapi.factory.CsvFactory;
 import com.example.astraapi.meta.ImportFileHeader;
 import com.example.astraapi.meta.ImportSource;
 import com.example.astraapi.meta.ValidationErrorType;
@@ -11,7 +12,6 @@ import com.example.astraapi.model.importing.ImportTest;
 import com.example.astraapi.model.importing.ImportVariant;
 import com.example.astraapi.model.validation.ValidationError;
 import com.example.astraapi.service.FileImporter;
-import com.example.astraapi.util.FileUtils;
 import com.example.astraapi.util.TransferUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.csv.CSVFormat;
@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -32,6 +31,8 @@ import java.util.stream.Collectors;
 @Service("csvFileImporter")
 @RequiredArgsConstructor
 public class CsvFileImporter implements FileImporter {
+    private final CsvFactory csvFactory;
+
     @Override
     public ImportResult importTests(MultipartFile file) {
         try (CSVParser parser = createParser(file)) {
@@ -42,7 +43,6 @@ public class CsvFileImporter implements FileImporter {
             CSVRecord headerRecord = iterator.next();
             Map<ImportFileHeader, Integer> headers = getHeaders(headerRecord);
             List<ImportTest> tests = parser.stream()
-                    .skip(1)
                     .map(record -> parseTestRecord(record, headers))
                     .collect(Collectors.groupingBy(CsvTestRecord::getNumber))
                     .entrySet().stream()
@@ -101,8 +101,9 @@ public class CsvFileImporter implements FileImporter {
         CSVFormat format = CSVFormat.Builder
                 .create(CSVFormat.DEFAULT)
                 .setSkipHeaderRecord(true)
+                .setIgnoreEmptyLines(true)
                 .build();
-        return new CSVParser(new InputStreamReader(FileUtils.getInputStream(file)), format);
+        return csvFactory.newParser(file, format);
     }
 
     private Map<ImportFileHeader, Integer> getHeaders(CSVRecord record) {

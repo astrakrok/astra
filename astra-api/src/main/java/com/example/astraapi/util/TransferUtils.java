@@ -50,6 +50,7 @@ public class TransferUtils {
 
     private static ImportSubject toImportSubject(String value) {
         String[] parts = value.split("\\|");
+
         return new ImportSubject(
                 StringUtils.strip(parts[0]),
                 parts.length >= 2 ? StringUtils.strip(parts[1]) : null,

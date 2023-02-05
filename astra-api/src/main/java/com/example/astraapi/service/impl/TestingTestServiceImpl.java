@@ -59,7 +59,7 @@ public class TestingTestServiceImpl implements TestingTestService {
     @Override
     @Transactional
     public IdDto save(RequestTestingDetailTestDto testingDetailTestDto) {
-        TestingEntity testingEntity = this.testingRepository.getByExamIdAndSpecializationId(testingDetailTestDto.getExamId(), testingDetailTestDto.getSpecializationId());
+        TestingEntity testingEntity = testingRepository.getByExamIdAndSpecializationId(testingDetailTestDto.getExamId(), testingDetailTestDto.getSpecializationId());
         if (testingEntity == null) {
             testingEntity = testingMapper.toEntity(testingDetailTestDto, TestingStatus.DRAFT);
             testingRepository.save(testingEntity);

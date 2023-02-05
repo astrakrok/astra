@@ -11,6 +11,7 @@ import com.example.astraapi.service.FileImporter;
 import com.example.astraapi.util.FileUtils;
 import com.example.astraapi.util.TransferUtils;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellReference;
@@ -26,7 +27,7 @@ import java.util.stream.Collectors;
 public class ExcelFileImporter implements FileImporter {
     @Override
     public ImportResult importTests(MultipartFile file) {
-        try (Workbook workbook = createWorkbook(file)) {
+        try (Workbook workbook = WorkbookFactory.create(FileUtils.getInputStream(file))) {
             Sheet sheet = workbook.getSheetAt(0);
             Map<String, String> ranges = getRanges(sheet);
             Map<ImportFileHeader, Integer> headers = getHeaders(sheet.getRow(0));
@@ -46,19 +47,17 @@ public class ExcelFileImporter implements FileImporter {
         int lastRowNum = sheet.getLastRowNum();
         int i = 1;
         List<ImportTest> tests = new ArrayList<>();
-        while (i < lastRowNum) {
+        while (i <= lastRowNum) {
             Row startRow = sheet.getRow(i);
-            Cell cell = startRow.getCell(headers.get(ImportFileHeader.QUESTION));
-            String startAddress = cell.getAddress().formatAsString();
+            Integer columnIndex = headers.get(ImportFileHeader.QUESTION);
+            String startAddress = new CellReference(i, columnIndex).formatAsString();
             String endAddress = ranges.get(startAddress);
-            if (endAddress == null) {
-                i++;
-                continue;
-            }
             int startRowNum = startRow.getRowNum();
-            int endRowNum = new CellReference(endAddress).getRow() + 1;
+            int endRowNum = new CellReference(endAddress == null ? startAddress : endAddress).getRow() + 1;
             ImportTest importTest = parseTest(sheet, headers, startRowNum, endRowNum);
-            tests.add(importTest);
+            if (importTest != null) {
+                tests.add(importTest);
+            }
             i += endRowNum - startRowNum;
         }
         return tests;
@@ -72,11 +71,17 @@ public class ExcelFileImporter implements FileImporter {
         List<ImportVariant> variants = new ArrayList<>();
         for (int i = startRowNum; i < endRowNum; i++) {
             Row row = sheet.getRow(i);
-            String title = getStringValue(generalInfoRow, headers.get(ImportFileHeader.TITLE));
-            String explanation = getStringValue(generalInfoRow, headers.get(ImportFileHeader.EXPLANATION));
-            boolean correct = "+".equals(row.getCell(headers.get(ImportFileHeader.CORRECTNESS)).getStringCellValue());
+            String title = getStringValue(row, headers.get(ImportFileHeader.TITLE));
+            String explanation = getStringValue(row, headers.get(ImportFileHeader.EXPLANATION));
+            boolean correct = "+".equals(getStringValue(row, headers.get(ImportFileHeader.CORRECTNESS)));
+            if (StringUtils.isAllBlank(question, comment, subjects, title, explanation)) {
+                continue;
+            }
             ImportVariant variant = new ImportVariant(title, explanation, correct);
             variants.add(variant);
+        }
+        if (StringUtils.isAllBlank(question, comment, subjects) && variants.isEmpty()) {
+            return null;
         }
         return ImportTest.builder()
                 .question(question)
@@ -86,8 +91,12 @@ public class ExcelFileImporter implements FileImporter {
                 .build();
     }
 
-    private String getStringValue(Row row, Integer column) {
-        return column == null ? null : row.getCell(column).getStringCellValue();
+    private String getStringValue(Row row, Integer columnIndex) {
+        if (columnIndex == null) {
+            return null;
+        }
+        Cell cell = row.getCell(columnIndex);
+        return cell == null ? null : cell.getStringCellValue();
     }
 
     private Map<String, String> getRanges(Sheet sheet) {
@@ -112,13 +121,5 @@ public class ExcelFileImporter implements FileImporter {
             }
         }
         return headers;
-    }
-
-    private Workbook createWorkbook(MultipartFile file) {
-        try {
-            return WorkbookFactory.create(FileUtils.getInputStream(file));
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
     }
 }

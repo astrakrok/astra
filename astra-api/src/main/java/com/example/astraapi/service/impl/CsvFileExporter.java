@@ -2,6 +2,7 @@ package com.example.astraapi.service.impl;
 
 import com.example.astraapi.dto.exporting.ExportDto;
 import com.example.astraapi.entity.projection.exporting.ExportTestsPageResult;
+import com.example.astraapi.factory.CsvFactory;
 import com.example.astraapi.model.Page;
 import com.example.astraapi.model.Pageable;
 import com.example.astraapi.model.exporting.ExportSubject;
@@ -26,6 +27,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CsvFileExporter implements FileExporter {
     private final TestService testService;
+    private final CsvFactory csvFactory;
 
     @Override
     public byte[] exportTests(ExportDto exportDto) {
@@ -34,11 +36,7 @@ public class CsvFileExporter implements FileExporter {
                 .setNullString("")
                 .build();
 
-        try (
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                BufferedWriter out = new BufferedWriter(new OutputStreamWriter(baos));
-                CSVPrinter printer = new CSVPrinter(out, format)
-        ) {
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream(); BufferedWriter out = new BufferedWriter(new OutputStreamWriter(baos)); CSVPrinter printer = csvFactory.newPrinter(out, format)) {
             int pageNumber = 0;
             ExportTestsPageResult exportResult = new ExportTestsPageResult(0, 0, true);
             boolean proceed = true;

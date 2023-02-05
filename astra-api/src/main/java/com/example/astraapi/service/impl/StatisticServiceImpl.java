@@ -31,10 +31,7 @@ public class StatisticServiceImpl implements StatisticService {
     @Override
     public List<StepStatisticDto> getStepsStatistic(StepsStatisticFilterDto filter) {
         Long userId = authContext.getUser().getId();
-        return examinationStatisticRepository.getStepsStatisticByUserId(
-                        userId,
-                        filter.getSpecializationId()
-                ).stream()
+        return examinationStatisticRepository.getStepsStatisticByUserId(userId, filter.getSpecializationId()).stream()
                 .map(examinationStatisticMapper::toDto)
                 .collect(Collectors.toList());
     }

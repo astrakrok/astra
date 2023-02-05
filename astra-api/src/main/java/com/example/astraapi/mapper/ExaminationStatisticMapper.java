@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring", uses = {TestingMapper.class, SubjectMapper.class})
 public interface ExaminationStatisticMapper {
-  ExaminationStatisticDto toDto(ExaminationStatisticInfoEntity entity);
+    ExaminationStatisticDto toDto(ExaminationStatisticInfoEntity entity);
 
-  StepStatisticDto toDto(StepStatisticProjection projection);
+    StepStatisticDto toDto(StepStatisticProjection projection);
 }

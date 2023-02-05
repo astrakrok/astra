@@ -15,6 +15,11 @@ public interface SubjectMapper {
     @Mapping(target = "title", qualifiedByName = TitleQualifier.TRIM)
     SubjectEntity toEntity(RequestSubjectDto requestSubjectDto);
 
+    @Mapping(target = "id", source = "id")
+    @Mapping(target = "specializationId", source = "dto.specializationId")
+    @Mapping(target = "title", source = "dto.title")
+    SubjectEntity toEntity(Long id, RequestSubjectDto dto);
+
     ResponseSubjectDto toDto(SubjectDetailProjection subjectEntity);
 
     @Mapping(target = "statistic.correctCount", source = "correctCount")
