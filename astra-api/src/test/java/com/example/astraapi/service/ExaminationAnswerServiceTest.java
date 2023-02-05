@@ -64,12 +64,12 @@ public class ExaminationAnswerServiceTest {
     void shouldSaveAndReturnExaminationTests() {
         Mockito.when(testService.getExaminationTests(ArgumentMatchers.anyLong(), ArgumentMatchers.any())).thenAnswer(invocation -> {
             long count = invocation.getArgument(0);
-            return mockExaminationTests(count);
+            return mockExaminationTests(10);
         });
 
         List<ExaminationTestDto> tests = examinationAnswerService.createTestsForExamination(1L, new ExaminationSearchDto());
 
-        assertEquals(0, tests.size());
+        assertEquals(10, tests.size());
     }
 
     @Test

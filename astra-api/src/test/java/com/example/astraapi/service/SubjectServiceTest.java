@@ -70,10 +70,13 @@ public class SubjectServiceTest {
         ));
         page.setPageSize(4);
         page.setRows(100);
+        Pageable pageable = new Pageable();
+        pageable.setPageNumber(0L);
+        pageable.setPageSize(4L);
 
         when(subjectRepository.search(any(), any(), any(), any())).thenReturn(page);
 
-        Page<ResponseSubjectDto> returnedPage = subjectService.search(new AdminSubjectFilterDto(1L, 2L, "searchText"), new Pageable(4, 0));
+        Page<ResponseSubjectDto> returnedPage = subjectService.search(new AdminSubjectFilterDto(1L, 2L, "searchText"), pageable);
 
         assertEquals(4, returnedPage.getItems().size());
         assertEquals(100, returnedPage.getRows());

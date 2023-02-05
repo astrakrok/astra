@@ -108,7 +108,7 @@ public class TransferServiceImpl implements TransferService {
     }
 
     private List<ValidationError> getErrorsByResult(ImportSubjectResult result) {
-        ArrayList<ValidationError> errors = new ArrayList<>();
+        List<ValidationError> errors = new ArrayList<>();
         result.getNotFoundSubjects().stream()
                 .map(subject -> new ValidationError(ValidationErrorType.NOT_FOUND, Map.of("subject", subject.getImportSubjectTitle())))
                 .forEach(errors::add);

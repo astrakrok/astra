@@ -73,6 +73,7 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public Optional<TestFullDetailDto> updateDraft(Long id, RequestTestDto testDto) {
+        testDto.setId(id);
         if (!testRepository.existsByIdAndStatus(id, TestStatus.DRAFT)) {
             throw new ValidationException(new ValidationError(ValidationErrorType.INVALID_STATUS, new HashMap<>()));
         }
@@ -129,11 +130,10 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public void deleteTest(Long id) {
-        if (testRepository.existsByIdAndStatus(id, TestStatus.DRAFT)) {
-            testRepository.deleteById(id);
-        } else {
+        if (!testRepository.existsByIdAndStatus(id, TestStatus.DRAFT)) {
             throw new ValidationException(new ValidationError(ValidationErrorType.INVALID_STATUS));
         }
+        testRepository.deleteById(id);
     }
 
     @Override

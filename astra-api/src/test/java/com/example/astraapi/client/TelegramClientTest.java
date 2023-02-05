@@ -6,10 +6,7 @@ import com.example.astraapi.dto.MessageDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatchers;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
@@ -28,181 +25,181 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 public class TelegramClientTest {
-  @InjectMocks
-  private TelegramClientImpl telegramClient;
-  @Mock
-  private WebClient webClient;
-  @Mock
-  private TelegramProperties telegramProperties;
+    @InjectMocks
+    private TelegramClientImpl telegramClient;
+    @Mock
+    private WebClient webClient;
+    @Spy
+    private TelegramProperties telegramProperties;
 
-  @BeforeEach
-  void beforeEach() {
-    Mockito.lenient().when(telegramProperties.getApiToken()).thenReturn("telegramApiToken");
-    Mockito.lenient().when(telegramProperties.getChatId()).thenReturn("telegramChatId");
-  }
+    @BeforeEach
+    void beforeEach() {
+        telegramProperties.setApiToken("telegramApiToken");
+        telegramProperties.setChatId("telegramChatId");
+    }
 
-  @Test
-  void shouldSendRegularMessage() {
-    String[] url = new String[1];
+    @Test
+    void shouldSendRegularMessage() {
+        String[] url = new String[1];
 
-    Mono<ResponseEntity<Void>> mono = Mockito.mock(Mono.class);
-    Mockito.doAnswer(invocation -> null).when(mono).block();
+        Mono<ResponseEntity<Void>> mono = Mockito.mock(Mono.class);
+        Mockito.doAnswer(invocation -> null).when(mono).block();
 
-    WebClient.ResponseSpec responseSpec = Mockito.mock(WebClient.ResponseSpec.class);
-    Mockito.when(responseSpec.toBodilessEntity()).thenReturn(mono);
+        WebClient.ResponseSpec responseSpec = Mockito.mock(WebClient.ResponseSpec.class);
+        Mockito.when(responseSpec.toBodilessEntity()).thenReturn(mono);
 
-    WebClient.RequestBodyUriSpec requestBodySpec = Mockito.mock(WebClient.RequestBodyUriSpec.class);
-    Mockito.when(requestBodySpec.uri(ArgumentMatchers.<Function<UriBuilder, URI>>any())).thenAnswer(invocation -> {
-      Function<UriBuilder, URI> function = invocation.getArgument(0);
-      URI value = function.apply(new DefaultUriBuilderFactory().uriString("https://example.com"));
-      url[0] = value.toString();
-      return requestBodySpec;
-    });
-    Mockito.when(requestBodySpec.retrieve()).thenReturn(responseSpec);
+        WebClient.RequestBodyUriSpec requestBodySpec = Mockito.mock(WebClient.RequestBodyUriSpec.class);
+        Mockito.when(requestBodySpec.uri(ArgumentMatchers.<Function<UriBuilder, URI>>any())).thenAnswer(invocation -> {
+            Function<UriBuilder, URI> function = invocation.getArgument(0);
+            URI value = function.apply(new DefaultUriBuilderFactory().uriString("https://example.com"));
+            url[0] = value.toString();
+            return requestBodySpec;
+        });
+        Mockito.when(requestBodySpec.retrieve()).thenReturn(responseSpec);
 
-    Mockito.when(webClient.post()).thenReturn(requestBodySpec);
+        Mockito.when(webClient.post()).thenReturn(requestBodySpec);
 
-    telegramClient.sendRegularMessage(new MessageDto("title", "text", null));
+        telegramClient.sendRegularMessage(new MessageDto("title", "text", null));
 
-    assertEquals("https://example.com/bottelegramApiToken/sendMessage?parse_mode=markdown&text=*title*%0Atext&chat_id=telegramChatId", url[0]);
-  }
+        assertEquals("https://example.com/bottelegramApiToken/sendMessage?parse_mode=markdown&text=*title*%0Atext&chat_id=telegramChatId", url[0]);
+    }
 
-  @Test
-  void shouldSendRegularMessageAndIgnoreNullText() {
-    String[] url = new String[1];
+    @Test
+    void shouldSendRegularMessageAndIgnoreNullText() {
+        String[] url = new String[1];
 
-    Mono<ResponseEntity<Void>> mono = Mockito.mock(Mono.class);
-    Mockito.doAnswer(invocation -> null).when(mono).block();
+        Mono<ResponseEntity<Void>> mono = Mockito.mock(Mono.class);
+        Mockito.doAnswer(invocation -> null).when(mono).block();
 
-    WebClient.ResponseSpec responseSpec = Mockito.mock(WebClient.ResponseSpec.class);
-    Mockito.when(responseSpec.toBodilessEntity()).thenReturn(mono);
+        WebClient.ResponseSpec responseSpec = Mockito.mock(WebClient.ResponseSpec.class);
+        Mockito.when(responseSpec.toBodilessEntity()).thenReturn(mono);
 
-    WebClient.RequestBodyUriSpec requestBodySpec = Mockito.mock(WebClient.RequestBodyUriSpec.class);
-    Mockito.when(requestBodySpec.uri(ArgumentMatchers.<Function<UriBuilder, URI>>any())).thenAnswer(invocation -> {
-      Function<UriBuilder, URI> function = invocation.getArgument(0);
-      URI value = function.apply(new DefaultUriBuilderFactory().uriString("https://example.com"));
-      url[0] = value.toString();
-      return requestBodySpec;
-    });
-    Mockito.when(requestBodySpec.retrieve()).thenReturn(responseSpec);
+        WebClient.RequestBodyUriSpec requestBodySpec = Mockito.mock(WebClient.RequestBodyUriSpec.class);
+        Mockito.when(requestBodySpec.uri(ArgumentMatchers.<Function<UriBuilder, URI>>any())).thenAnswer(invocation -> {
+            Function<UriBuilder, URI> function = invocation.getArgument(0);
+            URI value = function.apply(new DefaultUriBuilderFactory().uriString("https://example.com"));
+            url[0] = value.toString();
+            return requestBodySpec;
+        });
+        Mockito.when(requestBodySpec.retrieve()).thenReturn(responseSpec);
 
-    Mockito.when(webClient.post()).thenReturn(requestBodySpec);
+        Mockito.when(webClient.post()).thenReturn(requestBodySpec);
 
-    telegramClient.sendRegularMessage(new MessageDto("title", null, null));
+        telegramClient.sendRegularMessage(new MessageDto("title", null, null));
 
-    assertEquals("https://example.com/bottelegramApiToken/sendMessage?parse_mode=markdown&text=*title*&chat_id=telegramChatId", url[0]);
-  }
+        assertEquals("https://example.com/bottelegramApiToken/sendMessage?parse_mode=markdown&text=*title*&chat_id=telegramChatId", url[0]);
+    }
 
-  @Test
-  void shouldSendRegularMessageAndIgnoreNullTitle() {
-    String[] url = new String[1];
+    @Test
+    void shouldSendRegularMessageAndIgnoreNullTitle() {
+        String[] url = new String[1];
 
-    Mono<ResponseEntity<Void>> mono = Mockito.mock(Mono.class);
-    Mockito.doAnswer(invocation -> null).when(mono).block();
+        Mono<ResponseEntity<Void>> mono = Mockito.mock(Mono.class);
+        Mockito.doAnswer(invocation -> null).when(mono).block();
 
-    WebClient.ResponseSpec responseSpec = Mockito.mock(WebClient.ResponseSpec.class);
-    Mockito.when(responseSpec.toBodilessEntity()).thenReturn(mono);
+        WebClient.ResponseSpec responseSpec = Mockito.mock(WebClient.ResponseSpec.class);
+        Mockito.when(responseSpec.toBodilessEntity()).thenReturn(mono);
 
-    WebClient.RequestBodyUriSpec requestBodySpec = Mockito.mock(WebClient.RequestBodyUriSpec.class);
-    Mockito.when(requestBodySpec.uri(ArgumentMatchers.<Function<UriBuilder, URI>>any())).thenAnswer(invocation -> {
-      Function<UriBuilder, URI> function = invocation.getArgument(0);
-      URI value = function.apply(new DefaultUriBuilderFactory().uriString("https://example.com"));
-      url[0] = value.toString();
-      return requestBodySpec;
-    });
-    Mockito.when(requestBodySpec.retrieve()).thenReturn(responseSpec);
+        WebClient.RequestBodyUriSpec requestBodySpec = Mockito.mock(WebClient.RequestBodyUriSpec.class);
+        Mockito.when(requestBodySpec.uri(ArgumentMatchers.<Function<UriBuilder, URI>>any())).thenAnswer(invocation -> {
+            Function<UriBuilder, URI> function = invocation.getArgument(0);
+            URI value = function.apply(new DefaultUriBuilderFactory().uriString("https://example.com"));
+            url[0] = value.toString();
+            return requestBodySpec;
+        });
+        Mockito.when(requestBodySpec.retrieve()).thenReturn(responseSpec);
 
-    Mockito.when(webClient.post()).thenReturn(requestBodySpec);
+        Mockito.when(webClient.post()).thenReturn(requestBodySpec);
 
-    telegramClient.sendRegularMessage(new MessageDto(null, "text", null));
+        telegramClient.sendRegularMessage(new MessageDto(null, "text", null));
 
-    assertEquals("https://example.com/bottelegramApiToken/sendMessage?parse_mode=markdown&text=text&chat_id=telegramChatId", url[0]);
-  }
+        assertEquals("https://example.com/bottelegramApiToken/sendMessage?parse_mode=markdown&text=text&chat_id=telegramChatId", url[0]);
+    }
 
-  @Test
-  void shouldThrowExceptionOnNullTextValues() {
-    String[] url = new String[1];
+    @Test
+    void shouldThrowExceptionOnNullTextValues() {
+        String[] url = new String[1];
 
-    WebClient.RequestBodyUriSpec requestBodySpec = Mockito.mock(WebClient.RequestBodyUriSpec.class);
-    Mockito.when(requestBodySpec.uri(ArgumentMatchers.<Function<UriBuilder, URI>>any())).thenAnswer(invocation -> {
-      Function<UriBuilder, URI> function = invocation.getArgument(0);
-      URI value = function.apply(new DefaultUriBuilderFactory().uriString("https://example.com"));
-      url[0] = value.toString();
-      return requestBodySpec;
-    });
+        WebClient.RequestBodyUriSpec requestBodySpec = Mockito.mock(WebClient.RequestBodyUriSpec.class);
+        Mockito.when(requestBodySpec.uri(ArgumentMatchers.<Function<UriBuilder, URI>>any())).thenAnswer(invocation -> {
+            Function<UriBuilder, URI> function = invocation.getArgument(0);
+            URI value = function.apply(new DefaultUriBuilderFactory().uriString("https://example.com"));
+            url[0] = value.toString();
+            return requestBodySpec;
+        });
 
-    Mockito.when(webClient.post()).thenReturn(requestBodySpec);
+        Mockito.when(webClient.post()).thenReturn(requestBodySpec);
 
-    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> telegramClient.sendRegularMessage(new MessageDto(null, null, null)));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> telegramClient.sendRegularMessage(new MessageDto(null, null, null)));
 
-    assertEquals("Invalid message", exception.getMessage());
-  }
+        assertEquals("Invalid message", exception.getMessage());
+    }
 
-  @Test
-  void shouldSendPhotoMessage() {
-    String[] url = new String[1];
+    @Test
+    void shouldSendPhotoMessage() {
+        String[] url = new String[1];
 
-    Mono<ResponseEntity<Void>> mono = Mockito.mock(Mono.class);
-    Mockito.doAnswer(invocation -> null).when(mono).block();
+        Mono<ResponseEntity<Void>> mono = Mockito.mock(Mono.class);
+        Mockito.doAnswer(invocation -> null).when(mono).block();
 
-    WebClient.ResponseSpec responseSpec = Mockito.mock(WebClient.ResponseSpec.class);
-    Mockito.when(responseSpec.toBodilessEntity()).thenReturn(mono);
+        WebClient.ResponseSpec responseSpec = Mockito.mock(WebClient.ResponseSpec.class);
+        Mockito.when(responseSpec.toBodilessEntity()).thenReturn(mono);
 
-    WebClient.RequestHeadersSpec requestHeadersSpec = Mockito.mock(WebClient.RequestHeadersSpec.class);
-    Mockito.when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
+        WebClient.RequestHeadersSpec requestHeadersSpec = Mockito.mock(WebClient.RequestHeadersSpec.class);
+        Mockito.when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
 
-    WebClient.RequestBodyUriSpec requestBodySpec = Mockito.mock(WebClient.RequestBodyUriSpec.class);
-    Mockito.when(requestBodySpec.uri(ArgumentMatchers.<Function<UriBuilder, URI>>any())).thenAnswer(invocation -> {
-      Function<UriBuilder, URI> function = invocation.getArgument(0);
-      URI value = function.apply(new DefaultUriBuilderFactory().uriString("https://example.com"));
-      url[0] = value.toString();
-      return requestBodySpec;
-    });
-    Mockito.when(requestBodySpec.contentType(ArgumentMatchers.any())).thenReturn(requestBodySpec);
-    Mockito.when(requestBodySpec.body(ArgumentMatchers.any())).thenReturn(requestHeadersSpec);
+        WebClient.RequestBodyUriSpec requestBodySpec = Mockito.mock(WebClient.RequestBodyUriSpec.class);
+        Mockito.when(requestBodySpec.uri(ArgumentMatchers.<Function<UriBuilder, URI>>any())).thenAnswer(invocation -> {
+            Function<UriBuilder, URI> function = invocation.getArgument(0);
+            URI value = function.apply(new DefaultUriBuilderFactory().uriString("https://example.com"));
+            url[0] = value.toString();
+            return requestBodySpec;
+        });
+        Mockito.when(requestBodySpec.contentType(ArgumentMatchers.any())).thenReturn(requestBodySpec);
+        Mockito.when(requestBodySpec.body(ArgumentMatchers.any())).thenReturn(requestHeadersSpec);
 
-    Mockito.when(webClient.post()).thenReturn(requestBodySpec);
+        Mockito.when(webClient.post()).thenReturn(requestBodySpec);
 
-    MessageDto messageDto = new MessageDto("title", "text", mockFile());
-    telegramClient.sendPhotoMessage(messageDto);
+        MessageDto messageDto = new MessageDto("title", "text", mockFile());
+        telegramClient.sendPhotoMessage(messageDto);
 
-    assertEquals("https://example.com/bottelegramApiToken/sendPhoto?parse_mode=markdown&caption=*title*%0Atext&chat_id=telegramChatId", url[0]);
-  }
+        assertEquals("https://example.com/bottelegramApiToken/sendPhoto?parse_mode=markdown&caption=*title*%0Atext&chat_id=telegramChatId", url[0]);
+    }
 
-  @Test
-  void shouldSendPhotoMessageAndIgnoreNullTextValues() {
-    String[] url = new String[1];
+    @Test
+    void shouldSendPhotoMessageAndIgnoreNullTextValues() {
+        String[] url = new String[1];
 
-    Mono<ResponseEntity<Void>> mono = Mockito.mock(Mono.class);
-    Mockito.doAnswer(invocation -> null).when(mono).block();
+        Mono<ResponseEntity<Void>> mono = Mockito.mock(Mono.class);
+        Mockito.doAnswer(invocation -> null).when(mono).block();
 
-    WebClient.ResponseSpec responseSpec = Mockito.mock(WebClient.ResponseSpec.class);
-    Mockito.when(responseSpec.toBodilessEntity()).thenReturn(mono);
+        WebClient.ResponseSpec responseSpec = Mockito.mock(WebClient.ResponseSpec.class);
+        Mockito.when(responseSpec.toBodilessEntity()).thenReturn(mono);
 
-    WebClient.RequestHeadersSpec requestHeadersSpec = Mockito.mock(WebClient.RequestHeadersSpec.class);
-    Mockito.when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
+        WebClient.RequestHeadersSpec requestHeadersSpec = Mockito.mock(WebClient.RequestHeadersSpec.class);
+        Mockito.when(requestHeadersSpec.retrieve()).thenReturn(responseSpec);
 
-    WebClient.RequestBodyUriSpec requestBodySpec = Mockito.mock(WebClient.RequestBodyUriSpec.class);
-    Mockito.when(requestBodySpec.uri(ArgumentMatchers.<Function<UriBuilder, URI>>any())).thenAnswer(invocation -> {
-      Function<UriBuilder, URI> function = invocation.getArgument(0);
-      URI value = function.apply(new DefaultUriBuilderFactory().uriString("https://example.com"));
-      url[0] = value.toString();
-      return requestBodySpec;
-    });
-    Mockito.when(requestBodySpec.contentType(ArgumentMatchers.any())).thenReturn(requestBodySpec);
-    Mockito.when(requestBodySpec.body(ArgumentMatchers.any())).thenReturn(requestHeadersSpec);
+        WebClient.RequestBodyUriSpec requestBodySpec = Mockito.mock(WebClient.RequestBodyUriSpec.class);
+        Mockito.when(requestBodySpec.uri(ArgumentMatchers.<Function<UriBuilder, URI>>any())).thenAnswer(invocation -> {
+            Function<UriBuilder, URI> function = invocation.getArgument(0);
+            URI value = function.apply(new DefaultUriBuilderFactory().uriString("https://example.com"));
+            url[0] = value.toString();
+            return requestBodySpec;
+        });
+        Mockito.when(requestBodySpec.contentType(ArgumentMatchers.any())).thenReturn(requestBodySpec);
+        Mockito.when(requestBodySpec.body(ArgumentMatchers.any())).thenReturn(requestHeadersSpec);
 
-    Mockito.when(webClient.post()).thenReturn(requestBodySpec);
+        Mockito.when(webClient.post()).thenReturn(requestBodySpec);
 
-    MessageDto messageDto = new MessageDto(null, null, mockFile());
-    telegramClient.sendPhotoMessage(messageDto);
+        MessageDto messageDto = new MessageDto(null, null, mockFile());
+        telegramClient.sendPhotoMessage(messageDto);
 
-    assertEquals("https://example.com/bottelegramApiToken/sendPhoto?parse_mode=markdown&caption=&chat_id=telegramChatId", url[0]);
-  }
+        assertEquals("https://example.com/bottelegramApiToken/sendPhoto?parse_mode=markdown&caption=&chat_id=telegramChatId", url[0]);
+    }
 
-  private MultipartFile mockFile() {
-    MultipartFile file = Mockito.mock(MultipartFile.class);
-    Mockito.when(file.getResource()).thenReturn(new InputStreamResource(new ByteArrayInputStream("".getBytes())));
-    return file;
-  }
+    private MultipartFile mockFile() {
+        MultipartFile file = Mockito.mock(MultipartFile.class);
+        Mockito.when(file.getResource()).thenReturn(new InputStreamResource(new ByteArrayInputStream("".getBytes())));
+        return file;
+    }
 }

@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class ExaminationServiceTest {
     @InjectMocks
     private ExaminationServiceImpl examinationService;
-    @Mock
+    @Spy
     private ExaminationProperties examinationProperties;
     @Mock
     private ExaminationRepository examinationRepository;
@@ -67,9 +67,8 @@ public class ExaminationServiceTest {
             return mapStructExaminationMapper.toEntity(userId, testingId, finishedAt);
         });
 
-        Mockito.lenient().when(examinationProperties.getDurationInMinutes()).thenReturn(10);
-        Mockito.lenient().when(examinationProperties.getFinishedAtDeviationSeconds()).thenReturn(0);
-        Mockito.lenient().when(examinationProperties.getThresholdPercentage()).thenReturn(50);
+        examinationProperties.setDurationInMinutes(10);
+        examinationProperties.setFinishedAtDeviationSeconds(0);
     }
 
     @Test

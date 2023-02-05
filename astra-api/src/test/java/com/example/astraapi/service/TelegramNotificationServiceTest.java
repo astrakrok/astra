@@ -17,49 +17,49 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class TelegramNotificationServiceTest {
-  @InjectMocks
-  private TelegramNotificationService telegramNotificationService;
-  @Mock
-  private MessageValidator validator;
-  @Mock
-  private TelegramClient telegramClient;
+    @InjectMocks
+    private TelegramNotificationService telegramNotificationService;
+    @Mock
+    private MessageValidator validator;
+    @Mock
+    private TelegramClient telegramClient;
 
-  @Test
-  void shouldThrowExceptionOnInvalidMessage() {
-    Mockito.doThrow(new IllegalArgumentException("Invalid message")).when(validator).validate(ArgumentMatchers.any());
+    @Test
+    void shouldThrowExceptionOnInvalidMessage() {
+        Mockito.doThrow(new IllegalArgumentException("Invalid message")).when(validator).validate(ArgumentMatchers.any());
 
-    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> telegramNotificationService.sendMessage(new MessageDto()));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> telegramNotificationService.sendMessage(new MessageDto()));
 
-    assertEquals("Invalid message", exception.getMessage());
-  }
+        assertEquals("Invalid message", exception.getMessage());
+    }
 
-  @Test
-  void shouldSendRegularMessage() {
-    MessageDto[] sent = new MessageDto[1];
+    @Test
+    void shouldSendRegularMessage() {
+        MessageDto[] sent = new MessageDto[1];
 
-    Mockito.doAnswer(invocation -> {
-      MessageDto messageDto = invocation.getArgument(0);
-      sent[0] = messageDto;
-      return null;
-    }).when(telegramClient).sendRegularMessage(ArgumentMatchers.any());
+        Mockito.doAnswer(invocation -> {
+            MessageDto messageDto = invocation.getArgument(0);
+            sent[0] = messageDto;
+            return null;
+        }).when(telegramClient).sendRegularMessage(ArgumentMatchers.any());
 
-    telegramNotificationService.sendMessage(new MessageDto("title", "text", null));
+        telegramNotificationService.sendMessage(new MessageDto("title", "text", null));
 
-    assertNotNull(sent[0]);
-  }
+        assertNotNull(sent[0]);
+    }
 
-  @Test
-  void shouldSendPhotoMessage() {
-    MessageDto[] sent = new MessageDto[1];
+    @Test
+    void shouldSendPhotoMessage() {
+        MessageDto[] sent = new MessageDto[1];
 
-    Mockito.doAnswer(invocation -> {
-      MessageDto messageDto = invocation.getArgument(0);
-      sent[0] = messageDto;
-      return null;
-    }).when(telegramClient).sendPhotoMessage(ArgumentMatchers.any());
+        Mockito.doAnswer(invocation -> {
+            MessageDto messageDto = invocation.getArgument(0);
+            sent[0] = messageDto;
+            return null;
+        }).when(telegramClient).sendPhotoMessage(ArgumentMatchers.any());
 
-    telegramNotificationService.sendMessage(new MessageDto("title", "text", Mockito.mock(MultipartFile.class)));
+        telegramNotificationService.sendMessage(new MessageDto("title", "text", Mockito.mock(MultipartFile.class)));
 
-    assertNotNull(sent[0]);
-  }
+        assertNotNull(sent[0]);
+    }
 }

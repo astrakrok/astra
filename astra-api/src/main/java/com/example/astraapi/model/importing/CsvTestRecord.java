@@ -1,11 +1,11 @@
 package com.example.astraapi.model.importing;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
 
 @Getter
-@Setter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 public class CsvTestRecord {
     private String number;

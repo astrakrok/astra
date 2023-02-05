@@ -55,7 +55,7 @@ public class AdaptiveTestServiceImpl implements AdaptiveTestService {
             if (failedCount == 0) {
                 continue;
             }
-            long testsNeeded = Math.round(failedCount * 100.0 / failedTestsCount) - subjectIdToTestsCount.getOrDefault(statistic.getId(), 0L);
+            long testsNeeded = Math.round(adaptiveProperties.getCount() * 1.0 * failedCount / failedTestsCount) - subjectIdToTestsCount.getOrDefault(statistic.getId(), 0L);
             testsNeeded = Math.min(adaptiveProperties.getCount() - testsIds.size(), testsNeeded);
             if (testsNeeded <= 0) {
                 continue;

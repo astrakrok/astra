@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -20,5 +21,5 @@ public class TestShortDetailProjection {
     private String comment;
     private TestStatus status;
     private LocalDateTime createdDate;
-    private List<SpecializationEntity> specializations;
+    private List<SpecializationEntity> specializations = new ArrayList<>();
 }

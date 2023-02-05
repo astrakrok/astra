@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "google")
 public class GoogleProperties {
-  private String connection;
-  private String redirectUri;
-  private String scope;
+    private String connection;
+    private String redirectUri;
+    private String scope;
 }

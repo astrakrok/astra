@@ -17,20 +17,20 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class JwtConverter implements Converter<Jwt, AbstractAuthenticationToken> {
-  private final UserService userService;
+    private final UserService userService;
 
-  @Override
-  public AbstractAuthenticationToken convert(Jwt source) {
-    String email = source.getClaim("https://astrakrok.com/email");
-    UserDto user = userService.findUserWithRolesByEmail(email)
-        .orElseThrow(() -> new AccessDeniedException("User not found"));
-    List<RoleAuthority> grantedAuthorities = getGrantedAuthorities(user);
-    return new UserPrincipal(user, grantedAuthorities);
-  }
+    @Override
+    public AbstractAuthenticationToken convert(Jwt source) {
+        String email = source.getClaim("https://astrakrok.com/email");
+        UserDto user = userService.findUserWithRolesByEmail(email)
+                .orElseThrow(() -> new AccessDeniedException("User not found"));
+        List<RoleAuthority> grantedAuthorities = getGrantedAuthorities(user);
+        return new UserPrincipal(user, grantedAuthorities);
+    }
 
-  private List<RoleAuthority> getGrantedAuthorities(UserDto userDto) {
-    return userDto.getRoles().stream()
-        .map(RoleAuthority::new)
-        .collect(Collectors.toList());
-  }
+    private List<RoleAuthority> getGrantedAuthorities(UserDto userDto) {
+        return userDto.getRoles().stream()
+                .map(RoleAuthority::new)
+                .collect(Collectors.toList());
+    }
 }

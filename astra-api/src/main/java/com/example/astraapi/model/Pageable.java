@@ -12,20 +12,20 @@ import javax.validation.constraints.PositiveOrZero;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Pageable {
-  @PositiveOrZero
-  private long pageSize;
-  @PositiveOrZero
-  private long pageNumber;
+    @PositiveOrZero
+    private long pageSize;
+    @PositiveOrZero
+    private long pageNumber;
 
-  public Long getOffset() {
-    return pageNumber * pageSize;
-  }
+    public Long getOffset() {
+        return pageNumber * pageSize;
+    }
 
-  public void setPageNumber(long pageNumber) {
-    this.pageNumber = Math.max(0L, pageNumber);
-  }
+    public void setPageNumber(long pageNumber) {
+        this.pageNumber = Math.max(0L, pageNumber);
+    }
 
-  public void setPageSize(long pageSize) {
-    this.pageSize = Math.max(0L, pageSize);
-  }
+    public void setPageSize(long pageSize) {
+        this.pageSize = Math.max(0L, pageSize);
+    }
 }

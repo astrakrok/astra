@@ -30,5 +30,5 @@ public interface TestingService {
 
     TestingDto getOne(Long examId, Long specializationId);
 
-    Optional<TestingInfoDto> changeStatus(Long id, TestingStatusDto statusDto);
+    Optional<TestingInfoDto> updateStatus(Long id, TestingStatusDto statusDto);
 }
