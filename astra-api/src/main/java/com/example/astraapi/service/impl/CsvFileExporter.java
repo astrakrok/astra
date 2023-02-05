@@ -34,6 +34,7 @@ public class CsvFileExporter implements FileExporter {
         CSVFormat format = CSVFormat.Builder.create(CSVFormat.DEFAULT)
                 .setHeader("#", "Питання", "Коментар", "Предмет", "Варіант", "Пояснення", "+/-")
                 .setNullString("")
+                .setRecordSeparator(System.lineSeparator())
                 .build();
 
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream(); BufferedWriter out = new BufferedWriter(new OutputStreamWriter(baos)); CSVPrinter printer = csvFactory.newPrinter(out, format)) {
