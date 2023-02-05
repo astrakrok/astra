@@ -10,7 +10,6 @@ import com.example.astraapi.service.FileExporter;
 import com.example.astraapi.service.FileImporter;
 import com.example.astraapi.service.LinkService;
 import com.example.astraapi.service.WebImporter;
-import com.example.astraapi.service.impl.TestingUkrWebImporterImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -28,7 +27,7 @@ public class TransferFactoryImpl implements TransferFactory {
             LinkService linkService,
             @Qualifier("excelFileImporter") FileImporter excelFileImporter,
             @Qualifier("csvFileImporter") FileImporter csvFileImporter,
-            @Qualifier("testingUkrWebImporter") TestingUkrWebImporterImpl testingUkrWebImporter,
+            @Qualifier("testingUkrWebImporter") WebImporter testingUkrWebImporter,
             @Qualifier("excelFileExporter") FileExporter excelFileExporter,
             @Qualifier("csvFileExporter") FileExporter csvFileExporter
     ) {
@@ -63,6 +62,9 @@ public class TransferFactoryImpl implements TransferFactory {
 
     @Override
     public FileExporter getFileExporter(FileType fileType) {
+        if (fileType == null) {
+            throw new ValidationException(new ValidationError(ValidationErrorType.UNSUPPORTED_DOCUMENT_TYPE));
+        }
         switch (fileType) {
             case XLS:
             case XLSX:

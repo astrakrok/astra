@@ -33,7 +33,7 @@
         update public.subjects
         set title             = #{entity.title},
             specialization_id = #{entity.specializationId}
-        where id = #{id}
+        where id = #{entity.id}
     </update>
 
     <select id="getSubjects"

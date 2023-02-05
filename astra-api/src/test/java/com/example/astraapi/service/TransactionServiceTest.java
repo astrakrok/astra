@@ -10,16 +10,17 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @ExtendWith(MockitoExtension.class)
 public class TransactionServiceTest {
-  @InjectMocks
-  private TransactionServiceImpl transactionService;
+    @InjectMocks
+    private TransactionServiceImpl transactionService;
 
-  @Test
-  void shouldNotRunWhenNullIsPassed() {
-    assertDoesNotThrow(() -> transactionService.execute(null));
-  }
+    @Test
+    void shouldNotRunWhenNullIsPassed() {
+        assertDoesNotThrow(() -> transactionService.execute(null));
+    }
 
-  @Test
-  void shouldRun() {
-    assertDoesNotThrow(() -> transactionService.execute(() -> {}));
-  }
+    @Test
+    void shouldRun() {
+        assertDoesNotThrow(() -> transactionService.execute(() -> {
+        }));
+    }
 }

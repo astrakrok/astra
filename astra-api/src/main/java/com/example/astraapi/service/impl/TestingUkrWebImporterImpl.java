@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,8 +36,9 @@ public class TestingUkrWebImporterImpl implements WebImporter {
                 .collect(Collectors.toList());
         return ImportResult.builder()
                 .source(ImportSource.TESTING_UKR_WEB)
-                .sourceTitle(title)
+                .sourceTitle(StringUtils.defaultIfBlank(title, null))
                 .tests(tests)
+                .details(Map.of("url", url))
                 .build();
     }
 
@@ -43,16 +46,13 @@ public class TestingUkrWebImporterImpl implements WebImporter {
         Document document = JsoupUtils.getDocument(url);
         return document.select(".text-justify").stream()
                 .map(this::parseTest)
+                .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
     private ImportTest parseTest(Element element) {
         String question = element.text();
-        Element parent = element.parent();
-        if (parent == null) {
-            return ImportTest.builder().question(question).build();
-        }
-        List<ImportVariant> variants = parent.children().stream()
+        List<ImportVariant> variants = element.siblingElements().stream()
                 .filter(child -> !StringUtils.contains(child.attr("class"), "text-justify"))
                 .map(this::parseVariant)
                 .collect(Collectors.toList());

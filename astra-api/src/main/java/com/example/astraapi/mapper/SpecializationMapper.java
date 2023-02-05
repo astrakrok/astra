@@ -11,13 +11,13 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = TitleQualifier.class)
 public interface SpecializationMapper {
-  @Mapping(target = "title", qualifiedByName = TitleQualifier.TRIM)
-  SpecializationEntity toEntity(SpecializationDto specializationDto);
+    @Mapping(target = "title", qualifiedByName = TitleQualifier.TRIM)
+    SpecializationEntity toEntity(SpecializationDto specializationDto);
 
-  @Mapping(target = "title", qualifiedByName = TitleQualifier.TRIM)
-  SpecializationEntity toEntity(Long stepId, RequestSpecializationDto specializationDto);
+    @Mapping(target = "title", qualifiedByName = TitleQualifier.TRIM)
+    SpecializationEntity toEntity(Long stepId, RequestSpecializationDto specializationDto);
 
-  StepSpecializationDto toDto(StepSpecializationProjection specializationEntity);
+    StepSpecializationDto toDto(StepSpecializationProjection specializationEntity);
 
-  SpecializationDto toDto(SpecializationEntity specializationEntity);
+    SpecializationDto toDto(SpecializationEntity specializationEntity);
 }

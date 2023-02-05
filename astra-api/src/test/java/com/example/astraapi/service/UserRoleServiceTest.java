@@ -19,31 +19,31 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
 public class UserRoleServiceTest {
-  @InjectMocks
-  private UserRoleServiceImpl userRoleService;
-  @Mock
-  private UserRoleRepository userRoleRepository;
+    @InjectMocks
+    private UserRoleServiceImpl userRoleService;
+    @Mock
+    private UserRoleRepository userRoleRepository;
 
-  @Test
-  void shouldSaveUserRoles() {
-    Long[] passedUserId = new Long[1];
-    Set<String> passedRoles = new HashSet<>();
+    @Test
+    void shouldSaveUserRoles() {
+        Long[] passedUserId = new Long[1];
+        Set<String> passedRoles = new HashSet<>();
 
-    Mockito.doAnswer(invocation -> {
-      Long userId = invocation.getArgument(0);
-      Set<String> roles = invocation.getArgument(1);
+        Mockito.doAnswer(invocation -> {
+            Long userId = invocation.getArgument(0);
+            Set<String> roles = invocation.getArgument(1);
 
-      passedUserId[0] = userId;
-      passedRoles.addAll(roles);
+            passedUserId[0] = userId;
+            passedRoles.addAll(roles);
 
-      return null;
-    }).when(userRoleRepository).save(ArgumentMatchers.any(), ArgumentMatchers.anySet());
+            return null;
+        }).when(userRoleRepository).save(ArgumentMatchers.any(), ArgumentMatchers.anySet());
 
-    userRoleService.save(4L, Set.of(Role.USER.name(), Role.ADMIN.name()));
+        userRoleService.save(4L, Set.of(Role.USER.name(), Role.ADMIN.name()));
 
-    assertEquals(4L, passedUserId[0]);
-    assertEquals(2, passedRoles.size());
-    assertTrue(passedRoles.contains(Role.USER.name()));
-    assertTrue(passedRoles.contains(Role.ADMIN.name()));
-  }
+        assertEquals(4L, passedUserId[0]);
+        assertEquals(2, passedRoles.size());
+        assertTrue(passedRoles.contains(Role.USER.name()));
+        assertTrue(passedRoles.contains(Role.ADMIN.name()));
+    }
 }

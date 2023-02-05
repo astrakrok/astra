@@ -40,7 +40,7 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     @Transactional
     public void update(Long id, RequestSubjectDto requestSubjectDto) {
-        SubjectEntity subjectEntity = subjectMapper.toEntity(requestSubjectDto);
-        subjectRepository.update(id, subjectEntity);
+        SubjectEntity subjectEntity = subjectMapper.toEntity(id, requestSubjectDto);
+        subjectRepository.update(subjectEntity);
     }
 }

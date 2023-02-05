@@ -20,43 +20,43 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class TestVariantServiceImpl implements TestVariantService {
-  private final ChangeService changeService;
-  private final TestVariantRepository variantRepository;
-  private final TestVariantMapper variantMapper;
+    private final ChangeService changeService;
+    private final TestVariantRepository variantRepository;
+    private final TestVariantMapper variantMapper;
 
-  @Override
-  public void save(Long testId, Collection<TestVariantDto> testVariants) {
-    if (testVariants.isEmpty()) {
-      return;
+    @Override
+    public void save(Long testId, Collection<TestVariantDto> testVariants) {
+        if (testVariants.isEmpty()) {
+            return;
+        }
+        List<TestVariantEntity> variantEntities = testVariants.stream()
+                .map(variantMapper::toEntity)
+                .collect(Collectors.toList());
+        variantRepository.save(testId, variantEntities);
     }
-    List<TestVariantEntity> variantEntities = testVariants.stream()
-        .map(variantMapper::toEntity)
-        .collect(Collectors.toList());
-    variantRepository.save(testId, variantEntities);
-  }
 
-  @Override
-  @Transactional
-  public void update(Long testId, Collection<TestVariantDto> testVariants) {
-    Set<Long> oldVariantsIds = variantRepository.getVariantsIdsByTestId(testId);
-    Set<Long> existentVariantsIds = testVariants.stream()
-        .map(TestVariantDto::getId)
-        .filter(Objects::nonNull)
-        .collect(Collectors.toSet());
-    Change<Long> change = changeService.getChange(oldVariantsIds, existentVariantsIds);
-    if (!change.getRemoved().isEmpty()) {
-      variantRepository.delete(testId, change.getRemoved());
+    @Override
+    @Transactional
+    public void update(Long testId, Collection<TestVariantDto> testVariants) {
+        Set<Long> oldVariantsIds = variantRepository.getVariantsIdsByTestId(testId);
+        Set<Long> existentVariantsIds = testVariants.stream()
+                .map(TestVariantDto::getId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+        Change<Long> change = changeService.getChange(oldVariantsIds, existentVariantsIds);
+        if (!change.getRemoved().isEmpty()) {
+            variantRepository.delete(testId, change.getRemoved());
+        }
+        testVariants.stream()
+                .map(variantMapper::toEntity)
+                .forEach(variant -> saveOrUpdate(testId, variant));
     }
-    testVariants.stream()
-        .map(variantMapper::toEntity)
-        .forEach(variant -> saveOrUpdate(testId, variant));
-  }
 
-  private void saveOrUpdate(Long testId, TestVariantEntity variant) {
-    if (variant.getId() == null) {
-      variantRepository.save(testId, Set.of(variant));
-    } else {
-      variantRepository.update(testId, variant);
+    private void saveOrUpdate(Long testId, TestVariantEntity variant) {
+        if (variant.getId() == null) {
+            variantRepository.save(testId, Set.of(variant));
+        } else {
+            variantRepository.update(testId, variant);
+        }
     }
-  }
 }

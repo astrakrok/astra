@@ -18,36 +18,36 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-  private final UserRepository userRepository;
-  private final UserMapper userMapper;
-  private final AuthContext authContext;
-  private final UserRoleService userRoleService;
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
+    private final AuthContext authContext;
+    private final UserRoleService userRoleService;
 
-  @Override
-  @Transactional
-  public IdDto save(UserDto userDto) {
-    UserEntity userEntity = userMapper.toEntity(userDto);
-    userRepository.save(userEntity);
-    Long id = userEntity.getId();
-    userRoleService.save(id, userDto.getRoles());
-    return new IdDto(id);
-  }
+    @Override
+    @Transactional
+    public IdDto save(UserDto userDto) {
+        UserEntity userEntity = userMapper.toEntity(userDto);
+        userRepository.save(userEntity);
+        Long id = userEntity.getId();
+        userRoleService.save(id, userDto.getRoles());
+        return new IdDto(id);
+    }
 
-  @Override
-  public Optional<UserDto> findUserWithRolesByEmail(String email) {
-    return userRepository.findUserWithRolesByEmail(email)
-        .map(userMapper::toDto);
-  }
+    @Override
+    public Optional<UserDto> findUserWithRolesByEmail(String email) {
+        return userRepository.findUserWithRolesByEmail(email)
+                .map(userMapper::toDto);
+    }
 
-  @Override
-  public UserDto getCurrentUser() {
-    return authContext.getUser();
-  }
+    @Override
+    public UserDto getCurrentUser() {
+        return authContext.getUser();
+    }
 
-  @Override
-  public void update(UpdateUserDto user) {
-    String email = authContext.getUser().getEmail();
-    UserEntity userEntity = userMapper.toEntity(user, email);
-    userRepository.update(userEntity);
-  }
+    @Override
+    public void update(UpdateUserDto user) {
+        String email = authContext.getUser().getEmail();
+        UserEntity userEntity = userMapper.toEntity(user, email);
+        userRepository.update(userEntity);
+    }
 }
