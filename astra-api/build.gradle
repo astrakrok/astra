@@ -58,12 +58,16 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mockito:mockito-junit-jupiter:4.9.0'
 
+    integrationImplementation 'org.testcontainers:postgresql:1.17.3'
+    integrationImplementation 'org.testcontainers:junit-jupiter:1.17.3'
+
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.1.Final'
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 }
 
 task integrationTest(type: Test) {
+    environment("TEST_PROFILE", "integration")
     testClassesDirs = sourceSets.integration.output.classesDirs
     classpath = sourceSets.integration.runtimeClasspath
 }
