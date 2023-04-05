@@ -14,10 +14,10 @@ import java.util.List;
 @RequestMapping(Endpoint.SPECIALIZATIONS)
 @RequiredArgsConstructor
 public class SpecializationController {
-  private final SpecializationService service;
+    private final SpecializationService service;
 
-  @GetMapping("/details")
-  public List<StepSpecializationDto> getAll() {
-    return service.getAll();
-  }
+    @GetMapping("/details")
+    public List<StepSpecializationDto> getAll() {
+        return service.getAll();
+    }
 }

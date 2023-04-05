@@ -18,15 +18,15 @@ import java.util.List;
 @RequestMapping(Endpoint.TESTS)
 @RequiredArgsConstructor
 public class TestController {
-  private final TestService testService;
+    private final TestService testService;
 
-  @GetMapping("/training")
-  public List<TrainingTestDto> getTrainingTesting(@Valid TrainingSearchDto searchDto) {
-    return testService.getTrainingTests(searchDto);
-  }
+    @GetMapping("/training")
+    public List<TrainingTestDto> getTrainingTesting(@Valid TrainingSearchDto searchDto) {
+        return testService.getTrainingTests(searchDto);
+    }
 
-  @GetMapping("/adaptive")
-  public List<AdaptiveTestDto> getAdaptiveTesting(@RequestParam("specializationId") long specializationId) {
-    return testService.getAdaptiveTests(specializationId);
-  }
+    @GetMapping("/adaptive")
+    public List<AdaptiveTestDto> getAdaptiveTesting(@RequestParam("specializationId") long specializationId) {
+        return testService.getAdaptiveTests(specializationId);
+    }
 }

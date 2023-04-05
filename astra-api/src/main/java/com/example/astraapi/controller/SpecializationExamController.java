@@ -15,10 +15,10 @@ import java.util.List;
 @RequestMapping(Endpoint.SPECIALIZATION_EXAMS)
 @RequiredArgsConstructor
 public class SpecializationExamController {
-  private final ExamService examService;
+    private final ExamService examService;
 
-  @GetMapping
-  public List<ResponseExamDto> getActive(@PathVariable("specializationId") Long specializationId) {
-    return examService.getActive(specializationId);
-  }
+    @GetMapping
+    public List<ResponseExamDto> getActive(@PathVariable("specializationId") Long specializationId) {
+        return examService.getActive(specializationId);
+    }
 }

@@ -5,11 +5,7 @@ import com.example.astraapi.dto.UserDto;
 import com.example.astraapi.meta.Endpoint;
 import com.example.astraapi.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -17,15 +13,15 @@ import javax.validation.Valid;
 @RequestMapping(Endpoint.USERS)
 @RequiredArgsConstructor
 public class UserController {
-  private final UserService userService;
+    private final UserService userService;
 
-  @GetMapping("/current")
-  public UserDto getCurrentUser() {
-    return userService.getCurrentUser();
-  }
+    @GetMapping("/current")
+    public UserDto getCurrentUser() {
+        return userService.getCurrentUser();
+    }
 
-  @PutMapping
-  public void update(@Valid @RequestBody UpdateUserDto user) {
-    userService.update(user);
-  }
+    @PutMapping
+    public void update(@Valid @RequestBody UpdateUserDto user) {
+        userService.update(user);
+    }
 }

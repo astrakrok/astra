@@ -8,15 +8,15 @@ import com.example.astraapi.dto.specialization.StepSpecializationDto;
 import java.util.List;
 
 public interface ExamService {
-  IdDto save(RequestExamDto examDto);
+    IdDto save(RequestExamDto examDto);
 
-  List<ResponseExamDto> getAll();
+    List<ResponseExamDto> getAll();
 
-  List<ResponseExamDto> getActive(Long specializationId);
+    List<ResponseExamDto> getActive(Long specializationId);
 
-  void delete(Long id);
+    void delete(Long id);
 
-  void update(Long id, RequestExamDto examDto);
+    void update(Long id, RequestExamDto examDto);
 
-  List<StepSpecializationDto> getAvailableSpecializations(Long id);
+    List<StepSpecializationDto> getAvailableSpecializations(Long id);
 }
