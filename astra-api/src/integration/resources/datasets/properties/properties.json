@@ -1,0 +1,24 @@
+{
+    "public.properties": [
+        {
+            "id": 101,
+            "name": "examinationThresholdPercentage",
+            "value": "value1"
+        },
+        {
+            "id": 102,
+            "name": "trainingDescription",
+            "value": "value2"
+        },
+        {
+            "id": 103,
+            "name": "examinationDescription",
+            "value": "value3"
+        },
+        {
+            "id": 104,
+            "name": "adaptiveDescription",
+            "value": "value4"
+        }
+    ]
+}

@@ -13,10 +13,10 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SpecializationDto {
-  private Long id;
-  @NotNull
-  private Long stepId;
-  @NotNull
-  @TrimmedLength(min = 6, max = 255)
-  private String title;
+    private Long id;
+    @NotNull
+    private Long stepId;
+    @NotNull
+    @TrimmedLength(min = 6, max = 255)
+    private String title;
 }

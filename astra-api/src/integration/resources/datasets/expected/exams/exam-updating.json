@@ -1,0 +1,16 @@
+{
+    "public.exams": [
+        {
+            "id": 101,
+            "title": "Exam 1"
+        },
+        {
+            "id": 102,
+            "title": "Updated exam title"
+        },
+        {
+            "id": 103,
+            "title": "Exam 3"
+        }
+    ]
+}

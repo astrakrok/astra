@@ -34,6 +34,7 @@
         where s.id not in (select t.specialization_id
                            from public.testings t
                            where t.exam_id = #{examId})
+        order by s.id desc
     </select>
 
     <select id="search" resultType="com.example.astraapi.entity.SpecializationEntity">
@@ -47,6 +48,7 @@
                                                                       from public.tests_subjects ts
                                                                       where ts.test_id = #{testId}::bigint)))
           and (#{stepId}::bigint is null or s.step_id = #{stepId}::bigint)
+        order by s.id desc
     </select>
 
     <resultMap id="detailedSpecialization" type="com.example.astraapi.entity.projection.StepSpecializationProjection">

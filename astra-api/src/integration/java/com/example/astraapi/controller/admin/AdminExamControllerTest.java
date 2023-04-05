@@ -3,6 +3,7 @@ package com.example.astraapi.controller.admin;
 import com.example.astraapi.config.BaseTest;
 import com.example.astraapi.config.TestConfig;
 import com.example.astraapi.dto.exam.RequestExamDto;
+import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import com.github.database.rider.junit5.api.DBRider;
 import com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http.HttpHeaders;
@@ -32,8 +33,7 @@ public class AdminExamControllerTest extends BaseTest {
                 .bodyValue(new RequestExamDto(" Exam is created     "))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .exchange()
-                .expectStatus()
-                .isEqualTo(HttpStatus.CREATED)
+                .expectStatus().isEqualTo(HttpStatus.CREATED)
                 .expectBody()
                 .jsonPath("$.id").exists();
     }
@@ -45,7 +45,57 @@ public class AdminExamControllerTest extends BaseTest {
                 .bodyValue(new RequestExamDto(" Exa     "))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .exchange()
-                .expectStatus()
-                .isEqualTo(HttpStatus.BAD_REQUEST);
+                .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    @DataSet("datasets/exams/exams.json")
+    @ExpectedDataSet(value = "datasets/expected/exams/exam-deletion.json")
+    void shouldDeleteExamById() {
+        webClient.delete()
+                .uri("/api/v1/admin/exams/102")
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.OK);
+    }
+
+    @Test
+    @DataSet("datasets/exams/exams.json")
+    @ExpectedDataSet(value = "datasets/expected/exams/exam-updating.json")
+    void shouldUpdateExamById() {
+        webClient.put()
+                .uri("/api/v1/admin/exams/102")
+                .bodyValue(new RequestExamDto("   Updated exam title "))
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.OK);
+    }
+
+    @Test
+    @DataSet("datasets/exams/exams.json")
+    @ExpectedDataSet(value = "datasets/expected/exams/exams.json")
+    void shouldNotUpdateExamByIdWhenInvalidRequestBody() {
+        webClient.put()
+                .uri("/api/v1/admin/exams/102")
+                .bodyValue(new RequestExamDto(" xam  "))
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    @DataSet({
+            "datasets/exams/exams.json",
+            "datasets/steps/steps.json",
+            "datasets/specializations/specializations.json",
+            "datasets/testings/testings.json"})
+    void shouldReturnNotSelectedSpecializationsForExam() {
+        webClient.get()
+                .uri("/api/v1/admin/exams/103/specializations/available")
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.OK)
+                .expectBody()
+                .jsonPath("$.length()").isEqualTo(4)
+                .jsonPath("$[0].id").isEqualTo(108)
+                .jsonPath("$[1].id").isEqualTo(106)
+                .jsonPath("$[2].id").isEqualTo(105)
+                .jsonPath("$[3].id").isEqualTo(103);
     }
 }

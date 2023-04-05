@@ -13,8 +13,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StepDto {
-  private Long id;
-  @NotNull
-  @TrimmedLength(min = 3)
-  private String title;
+    private Long id;
+    @NotNull
+    @TrimmedLength(min = 3)
+    private String title;
 }
