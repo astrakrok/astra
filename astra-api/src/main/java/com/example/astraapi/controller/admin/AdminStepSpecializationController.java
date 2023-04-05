@@ -5,11 +5,9 @@ import com.example.astraapi.dto.specialization.RequestSpecializationDto;
 import com.example.astraapi.meta.Endpoint;
 import com.example.astraapi.service.SpecializationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -17,13 +15,16 @@ import javax.validation.Valid;
 @RequestMapping(Endpoint.ADMIN_STEP_SPECIALIZATIONS)
 @RequiredArgsConstructor
 public class AdminStepSpecializationController {
-  private final SpecializationService specializationService;
+    private final SpecializationService specializationService;
 
-  @PostMapping
-  public IdDto save(
-      @PathVariable("stepId") Long stepId,
-      @Valid @RequestBody RequestSpecializationDto specializationDto
-  ) {
-    return specializationService.save(stepId, specializationDto);
-  }
+    @PostMapping
+    public ResponseEntity<IdDto> save(
+            @PathVariable("stepId") Long stepId,
+            @Valid @RequestBody RequestSpecializationDto specializationDto
+    ) {
+        IdDto idDto = specializationService.save(stepId, specializationDto);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(idDto);
+    }
 }

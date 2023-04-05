@@ -9,9 +9,9 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface PropertyService {
-  Map<String, String> getProperties(Set<String> names);
+    Map<String, String> getProperties(Set<String> names);
 
-  Optional<PropertyEntity> getProperty(String name);
+    Optional<PropertyEntity> getProperty(String name);
 
-  void update(ConfigProperty property, PropertyValueDto valueDto);
+    void update(ConfigProperty property, PropertyValueDto valueDto);
 }

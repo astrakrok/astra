@@ -1,0 +1,46 @@
+{
+    "public.testings": [
+        {
+            "id": 101,
+            "exam_id": 101,
+            "specialization_id": 102,
+            "status": "ACTIVE"
+        },
+        {
+            "id": 102,
+            "exam_id": 101,
+            "specialization_id": 101,
+            "status": "ACTIVE"
+        },
+        {
+            "id": 103,
+            "exam_id": 103,
+            "specialization_id": 101,
+            "status": "ACTIVE"
+        },
+        {
+            "id": 104,
+            "exam_id": 103,
+            "specialization_id": 102,
+            "status": "ACTIVE"
+        },
+        {
+            "id": 105,
+            "exam_id": 103,
+            "specialization_id": 104,
+            "status": "ACTIVE"
+        },
+        {
+            "id": 106,
+            "exam_id": 103,
+            "specialization_id": 107,
+            "status": "ACTIVE"
+        },
+        {
+            "id": 107,
+            "exam_id": 103,
+            "specialization_id": 109,
+            "status": "ACTIVE"
+        }
+    ]
+}

@@ -9,15 +9,15 @@ import com.example.astraapi.dto.specialization.StepSpecializationDto;
 import java.util.List;
 
 public interface SpecializationService {
-  IdDto save(SpecializationDto specializationDto);
+    IdDto save(SpecializationDto specializationDto);
 
-  IdDto save(Long stepId, RequestSpecializationDto specializationDto);
+    IdDto save(Long stepId, RequestSpecializationDto specializationDto);
 
-  List<StepSpecializationDto> getAll();
+    List<StepSpecializationDto> getAll();
 
-  List<SpecializationDto> getAll(Long stepId);
+    List<SpecializationDto> getAll(Long stepId);
 
-  List<StepSpecializationDto> getNotSelectedForExam(Long examId);
+    List<StepSpecializationDto> getNotSelectedForExam(Long examId);
 
-  List<SpecializationDto> search(AdminSpecializationFilterDto filter);
+    List<SpecializationDto> search(AdminSpecializationFilterDto filter);
 }

@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StepSpecializationDto {
-  private Long id;
-  private String title;
-  private StepDto step;
+    private Long id;
+    private String title;
+    private StepDto step;
 }
