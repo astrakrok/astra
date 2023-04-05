@@ -16,10 +16,10 @@ import javax.validation.Valid;
 @RequestMapping(Endpoint.NOTIFICATIONS)
 @RequiredArgsConstructor
 public class NotificationController {
-  private final NotificationService notificationService;
+    private final NotificationService notificationService;
 
-  @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-  public void sendMessage(@Valid @ModelAttribute MessageDto messageDto) {
-    notificationService.sendMessage(messageDto);
-  }
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void sendMessage(@Valid @ModelAttribute MessageDto messageDto) {
+        notificationService.sendMessage(messageDto);
+    }
 }

@@ -1,9 +1,9 @@
-name: Deploy
+name: Testing
 
 on: [push]
 
 jobs:
-  test_backend:
+  unit_test_backend:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout
@@ -11,3 +11,11 @@ jobs:
       - name: Test backend
         working-directory: ./astra-api
         run: ./gradlew test
+  integration_test_backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
+      - name: Integration test backend
+        working-directory: ./astra-api
+        run: ./gradlew integrationTest

@@ -14,10 +14,10 @@ import java.util.List;
 @RequestMapping(Endpoint.STEPS)
 @RequiredArgsConstructor
 public class StepController {
-  private final StepService stepService;
+    private final StepService stepService;
 
-  @GetMapping
-  public List<StepDto> getAll() {
-    return stepService.getAll();
-  }
+    @GetMapping
+    public List<StepDto> getAll() {
+        return stepService.getAll();
+    }
 }

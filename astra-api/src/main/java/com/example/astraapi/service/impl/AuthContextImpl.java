@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class AuthContextImpl implements AuthContext {
-  @Override
-  public UserDto getUser() {
-    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    return (UserDto) principal;
-  }
+    @Override
+    public UserDto getUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return (UserDto) principal;
+    }
 }

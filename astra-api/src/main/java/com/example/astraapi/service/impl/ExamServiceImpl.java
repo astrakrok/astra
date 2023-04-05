@@ -19,44 +19,44 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ExamServiceImpl implements ExamService {
-  private final SpecializationService specializationService;
-  private final ExamRepository examRepository;
-  private final ExamMapper examMapper;
+    private final SpecializationService specializationService;
+    private final ExamRepository examRepository;
+    private final ExamMapper examMapper;
 
-  @Override
-  public IdDto save(RequestExamDto examDto) {
-    ExamEntity entity = examMapper.toEntity(examDto);
-    examRepository.save(entity);
-    return new IdDto(entity.getId());
-  }
+    @Override
+    public IdDto save(RequestExamDto examDto) {
+        ExamEntity entity = examMapper.toEntity(examDto);
+        examRepository.save(entity);
+        return new IdDto(entity.getId());
+    }
 
-  @Override
-  public List<ResponseExamDto> getAll() {
-    return examRepository.getAll().stream()
-        .map(examMapper::toDto)
-        .collect(Collectors.toList());
-  }
+    @Override
+    public List<ResponseExamDto> getAll() {
+        return examRepository.getAll().stream()
+                .map(examMapper::toDto)
+                .collect(Collectors.toList());
+    }
 
-  @Override
-  public List<ResponseExamDto> getActive(Long specializationId) {
-    return examRepository.getAllBySpecializationIdAndStatus(specializationId, TestingStatus.ACTIVE).stream()
-        .map(examMapper::toDto)
-        .collect(Collectors.toList());
-  }
+    @Override
+    public List<ResponseExamDto> getActive(Long specializationId) {
+        return examRepository.getAllBySpecializationIdAndStatus(specializationId, TestingStatus.ACTIVE).stream()
+                .map(examMapper::toDto)
+                .collect(Collectors.toList());
+    }
 
-  @Override
-  public void delete(Long id) {
-    examRepository.deleteById(id);
-  }
+    @Override
+    public void delete(Long id) {
+        examRepository.deleteById(id);
+    }
 
-  @Override
-  public void update(Long id, RequestExamDto examDto) {
-    ExamEntity entity = examMapper.toEntity(examDto);
-    examRepository.updateById(id, entity);
-  }
+    @Override
+    public void update(Long id, RequestExamDto examDto) {
+        ExamEntity entity = examMapper.toEntity(examDto);
+        examRepository.updateById(id, entity);
+    }
 
-  @Override
-  public List<StepSpecializationDto> getAvailableSpecializations(Long id) {
-    return specializationService.getNotSelectedForExam(id);
-  }
+    @Override
+    public List<StepSpecializationDto> getAvailableSpecializations(Long id) {
+        return specializationService.getNotSelectedForExam(id);
+    }
 }
