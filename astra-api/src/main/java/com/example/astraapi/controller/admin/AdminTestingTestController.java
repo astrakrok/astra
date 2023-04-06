@@ -7,6 +7,8 @@ import com.example.astraapi.dto.testing.TestingDetailDto;
 import com.example.astraapi.meta.Endpoint;
 import com.example.astraapi.service.TestingTestService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,27 +21,36 @@ public class AdminTestingTestController {
     private final TestingTestService testingTestService;
 
     @PostMapping
-    public IdDto save(@Valid @RequestBody RequestTestingTestDto dto) {
-        return testingTestService.save(dto);
+    public ResponseEntity<IdDto> save(@Valid @RequestBody RequestTestingTestDto dto) {
+        IdDto idDto = testingTestService.save(dto);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(idDto);
     }
 
     @PostMapping("/details")
-    public IdDto save(@Valid @RequestBody RequestTestingDetailTestDto dto) {
-        return testingTestService.save(dto);
+    public ResponseEntity<IdDto> save(@Valid @RequestBody RequestTestingDetailTestDto dto) {
+        IdDto idDto = testingTestService.save(dto);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(idDto);
     }
 
     @DeleteMapping
-    public void deleteTest(@RequestBody RequestTestingTestDto dto) {
+    public ResponseEntity<Void> deleteTest(@RequestBody RequestTestingTestDto dto) {
         testingTestService.delete(dto);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTest(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteTest(@PathVariable("id") Long id) {
         testingTestService.delete(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{testId}/testings")
-    public List<TestingDetailDto> getTestings(@PathVariable("testId") Long testId) {
-        return testingTestService.getTestings(testId);
+    public ResponseEntity<List<TestingDetailDto>> getTestings(@PathVariable("testId") Long testId) {
+        List<TestingDetailDto> testings = testingTestService.getTestings(testId);
+        return ResponseEntity.ok(testings);
     }
 }

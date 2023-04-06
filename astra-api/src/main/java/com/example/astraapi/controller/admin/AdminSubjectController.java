@@ -9,6 +9,8 @@ import com.example.astraapi.model.Page;
 import com.example.astraapi.model.Pageable;
 import com.example.astraapi.service.SubjectService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -17,26 +19,31 @@ import javax.validation.Valid;
 @RequestMapping(Endpoint.ADMIN_SUBJECTS)
 @RequiredArgsConstructor
 public class AdminSubjectController {
-    private final SubjectService service;
+    private final SubjectService subjectService;
 
     @PostMapping
-    public IdDto saveSubject(@RequestBody @Valid RequestSubjectDto requestSubjectDto) {
-        return service.save(requestSubjectDto);
+    public ResponseEntity<IdDto> saveSubject(@RequestBody @Valid RequestSubjectDto requestSubjectDto) {
+        IdDto idDto = subjectService.save(requestSubjectDto);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(idDto);
     }
 
     @PostMapping("/details")
-    public Page<ResponseSubjectDto> search(
+    public ResponseEntity<Page<ResponseSubjectDto>> search(
             @RequestBody AdminSubjectFilterDto filter,
             Pageable pageable
     ) {
-        return service.search(filter, pageable);
+        Page<ResponseSubjectDto> page = subjectService.search(filter, pageable);
+        return ResponseEntity.ok(page);
     }
 
     @PutMapping("/{id}")
-    public void updateSubject(
+    public ResponseEntity<Void> updateSubject(
             @PathVariable("id") Long id,
             @Valid @RequestBody RequestSubjectDto subjectDto
     ) {
-        service.update(id, subjectDto);
+        subjectService.update(id, subjectDto);
+        return ResponseEntity.ok().build();
     }
 }

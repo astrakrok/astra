@@ -16,55 +16,55 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class MessageValidatorTest {
-  private MessageValidator validator;
+    private MessageValidator validator;
 
-  @BeforeEach
-  void beforeEach() {
-    FileProperties fileProperties = new FileProperties();
-    fileProperties.setAllowedExtensions(Set.of("txt", "jpg"));
-    validator = new MessageValidator(fileProperties);
-  }
+    @BeforeEach
+    void beforeEach() {
+        FileProperties fileProperties = new FileProperties();
+        fileProperties.setAllowedExtensions(Set.of("txt", "jpg"));
+        validator = new MessageValidator(fileProperties);
+    }
 
-  @Test
-  void shouldIgnoreAllValidationsOnNullFile() {
-    MessageDto message = getMessageMock(null);
-    assertDoesNotThrow(() -> validator.validate(message));
-  }
+    @Test
+    void shouldIgnoreAllValidationsOnNullFile() {
+        MessageDto message = getMessageMock(null);
+        assertDoesNotThrow(() -> validator.validate(message));
+    }
 
-  @Test
-  void shouldThrowExceptionOnNullFilename() {
-    MessageDto message = getMessageMock(getFileMock(null));
-    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> validator.validate(message));
-    assertEquals("File name cannot be null", exception.getMessage());
-  }
+    @Test
+    void shouldThrowExceptionOnNullFilename() {
+        MessageDto message = getMessageMock(getFileMock(null));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> validator.validate(message));
+        assertEquals("File name cannot be blank", exception.getMessage());
+    }
 
-  @Test
-  void shouldThrowExceptionOnInvalidExtension() {
-    MessageDto message = getMessageMock(getFileMock("filename.png"));
-    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> validator.validate(message));
-    assertEquals("Invalid extension", exception.getMessage());
-  }
+    @Test
+    void shouldThrowExceptionOnInvalidExtension() {
+        MessageDto message = getMessageMock(getFileMock("filename.png"));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> validator.validate(message));
+        assertEquals("Invalid extension", exception.getMessage());
+    }
 
-  @Test
-  void shouldThrowExceptionOnFilenameWithoutExtension() {
-    MessageDto message = getMessageMock(getFileMock("filename"));
-    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> validator.validate(message));
-    assertEquals("Invalid extension", exception.getMessage());
-  }
+    @Test
+    void shouldThrowExceptionOnFilenameWithoutExtension() {
+        MessageDto message = getMessageMock(getFileMock("filename"));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> validator.validate(message));
+        assertEquals("Invalid extension", exception.getMessage());
+    }
 
-  @Test
-  void shouldNotThrowExceptionOnValidMessage() {
-    MessageDto message = getMessageMock(getFileMock("filename.txt"));
-    assertDoesNotThrow(() -> validator.validate(message));
-  }
+    @Test
+    void shouldNotThrowExceptionOnValidMessage() {
+        MessageDto message = getMessageMock(getFileMock("filename.txt"));
+        assertDoesNotThrow(() -> validator.validate(message));
+    }
 
-  private MultipartFile getFileMock(String filename) {
-    MultipartFile mock = Mockito.mock(MultipartFile.class);
-    Mockito.when(mock.getOriginalFilename()).thenReturn(filename);
-    return mock;
-  }
+    private MultipartFile getFileMock(String filename) {
+        MultipartFile mock = Mockito.mock(MultipartFile.class);
+        Mockito.when(mock.getOriginalFilename()).thenReturn(filename);
+        return mock;
+    }
 
-  private MessageDto getMessageMock(MultipartFile file) {
-    return new MessageDto("title", "text", file);
-  }
+    private MessageDto getMessageMock(MultipartFile file) {
+        return new MessageDto("title", "text", file);
+    }
 }

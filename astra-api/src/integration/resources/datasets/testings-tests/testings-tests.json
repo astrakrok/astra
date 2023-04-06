@@ -1,0 +1,59 @@
+{
+    "public.testings_tests": [
+        {
+            "id": 101,
+            "testing_id": 101,
+            "test_id": 101
+        },
+        {
+            "id": 102,
+            "testing_id": 105,
+            "test_id": 102
+        },
+        {
+            "id": 103,
+            "testing_id": 105,
+            "test_id": 103
+        },
+        {
+            "id": 104,
+            "testing_id": 106,
+            "test_id": 104
+        },
+        {
+            "id": 105,
+            "testing_id": 101,
+            "test_id": 105
+        },
+        {
+            "id": 106,
+            "testing_id": 109,
+            "test_id": 106
+        },
+        {
+            "id": 107,
+            "testing_id": 111,
+            "test_id": 107
+        },
+        {
+            "id": 108,
+            "testing_id": 110,
+            "test_id": 108
+        },
+        {
+            "id": 109,
+            "testing_id": 110,
+            "test_id": 109
+        },
+        {
+            "id": 110,
+            "testing_id": 107,
+            "test_id": 103
+        },
+        {
+            "id": 111,
+            "testing_id": 110,
+            "test_id": 103
+        }
+    ]
+}

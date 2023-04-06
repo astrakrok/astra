@@ -1,0 +1,13 @@
+{
+    "public.users": [
+        {
+            "id": 101,
+            "name": "Mock updated",
+            "surname": "Mockovich updated",
+            "email": "mock@email.com",
+            "course": 4,
+            "school": "School updated",
+            "specialization_id": 103
+        }
+    ]
+}

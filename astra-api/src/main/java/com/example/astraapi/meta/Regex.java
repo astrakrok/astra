@@ -7,5 +7,5 @@ public class Regex {
   public static final String PASSWORD =
       "^(?=.*[a-zа-щьюяґєії])(?=.*[A-ZА-ЩЬЮЯҐЄІЇ])(?=.*\\d)[a-zа-щьюяґєіїA-ZА-ЩЬЮЯҐЄІЇ\\d\\w\\W]{8,}$";
   public static final String TEXT =
-      "^[a-zа-щьюяґєіїA-ZА-ЩЬЮЯҐЄІЇ]{2,}$";
+      "^[a-zа-щьюяґєіїA-ZА-ЩЬЮЯҐЄІЇ\\s]{2,}$";
 }

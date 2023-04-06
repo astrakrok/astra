@@ -1,0 +1,84 @@
+{
+    "public.subjects": [
+        {
+            "id": 101,
+            "title": "Subject 1",
+            "specialization_id": 106
+        },
+        {
+            "id": 102,
+            "title": "Subject 2",
+            "specialization_id": 104
+        },
+        {
+            "id": 103,
+            "title": "Updated subject title",
+            "specialization_id": 101
+        },
+        {
+            "id": 104,
+            "title": "Subject 4",
+            "specialization_id": 109
+        },
+        {
+            "id": 105,
+            "title": "example subject",
+            "specialization_id": 107
+        },
+        {
+            "id": 106,
+            "title": "subject for exam",
+            "specialization_id": 107
+        },
+        {
+            "id": 107,
+            "title": "another subject",
+            "specialization_id": 107
+        },
+        {
+            "id": 108,
+            "title": "One more",
+            "specialization_id": 108
+        },
+        {
+            "id": 109,
+            "title": "More than one",
+            "specialization_id": 108
+        },
+        {
+            "id": 110,
+            "title": "Subject 10",
+            "specialization_id": 102
+        },
+        {
+            "id": 111,
+            "title": "Subject 11",
+            "specialization_id": 103
+        },
+        {
+            "id": 112,
+            "title": "Mock title exam",
+            "specialization_id": 104
+        },
+        {
+            "id": 113,
+            "title": "Exam subject title",
+            "specialization_id": 105
+        },
+        {
+            "id": 114,
+            "title": "Subject 14",
+            "specialization_id": 106
+        },
+        {
+            "id": 115,
+            "title": "Subject 15",
+            "specialization_id": 108
+        },
+        {
+            "id": 116,
+            "title": "Examination",
+            "specialization_id": 109
+        }
+    ]
+}

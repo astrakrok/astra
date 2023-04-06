@@ -15,13 +15,13 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateUserDto {
-  @Pattern(regexp = Regex.TEXT)
-  private String name;
-  @Pattern(regexp = Regex.TEXT)
-  private String surname;
-  @Min(1)
-  @Max(6)
-  private Integer course;
-  private String school;
-  private Long specializationId;
+    @Pattern(regexp = Regex.TEXT)
+    private String name;
+    @Pattern(regexp = Regex.TEXT)
+    private String surname;
+    @Min(1)
+    @Max(6)
+    private Integer course;
+    private String school;
+    private Long specializationId;
 }

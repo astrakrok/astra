@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface StepRepository {
-  void save(@Param("entity") StepEntity entity);
+    void save(@Param("entity") StepEntity entity);
 
-  List<StepEntity> getAll();
+    List<StepEntity> getAll();
 }

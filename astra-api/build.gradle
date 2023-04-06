@@ -69,7 +69,7 @@ dependencies {
 
 task integrationTest(type: Test) {
     environment("TEST_PROFILE", "integration")
-    environment("PROFILE", "test")
+    environment("PROFILE", "integration-test")
     tasks.withType(Copy).configureEach {
         duplicatesStrategy = DuplicatesStrategy.INCLUDE
     }

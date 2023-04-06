@@ -20,6 +20,7 @@
         where e.id in (select t.exam_id
                        from public.testings t
                        where t.specialization_id = #{specializationId} and t.status = #{status})
+        order by e.id desc
     </select>
 
     <delete id="deleteById">

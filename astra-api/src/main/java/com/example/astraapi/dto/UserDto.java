@@ -13,12 +13,12 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
-  private Long id;
-  private String name;
-  private String surname;
-  private String email;
-  private Integer course;
-  private String school;
-  private Long specializationId;
-  private Set<String> roles = new HashSet<>();
+    private Long id;
+    private String name;
+    private String surname;
+    private String email;
+    private Integer course;
+    private String school;
+    private Long specializationId;
+    private Set<String> roles = new HashSet<>();
 }

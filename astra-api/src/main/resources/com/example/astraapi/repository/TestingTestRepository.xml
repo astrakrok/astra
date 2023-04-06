@@ -66,6 +66,7 @@
                  left join public.specializations s on s.id = t.specialization_id
                  left join public.steps on steps.id = s.step_id
         where exists(select 1 from public.testings_tests tt where tt.testing_id = t.id and tt.test_id = #{testId})
+        order by e.id, s.id
     </select>
 
     <resultMap id="testingInfo" type="com.example.astraapi.entity.projection.TestingInfoProjection">

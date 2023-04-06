@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TestingDescriptionDto {
-  private String trainingDescription;
-  private String examinationDescription;
-  private String adaptiveDescription;
+    private String trainingDescription;
+    private String examinationDescription;
+    private String adaptiveDescription;
 }
