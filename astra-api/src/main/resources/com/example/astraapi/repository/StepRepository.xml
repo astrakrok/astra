@@ -10,6 +10,7 @@
 
     <select id="getAll" resultType="com.example.astraapi.entity.StepEntity">
         select *
-        from public.steps
+        from public.steps s
+        order by s.id desc
     </select>
 </mapper>

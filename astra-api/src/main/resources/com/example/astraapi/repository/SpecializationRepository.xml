@@ -22,6 +22,7 @@
         select *
         from public.specializations s
         where s.step_id = #{stepId}
+        order by s.id desc
     </select>
 
     <select id="getNotSelectedByExamId" resultMap="detailedSpecialization">

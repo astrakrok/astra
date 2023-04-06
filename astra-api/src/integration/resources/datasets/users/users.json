@@ -1,0 +1,13 @@
+{
+    "public.users": [
+        {
+            "id": 101,
+            "name": "Mock",
+            "surname": "Mockovich",
+            "email": "mock@email.com",
+            "course": null,
+            "school": null,
+            "specialization_id": null
+        }
+    ]
+}

@@ -7,11 +7,11 @@ import com.example.astraapi.dto.UserDto;
 import java.util.Optional;
 
 public interface UserService {
-  IdDto save(UserDto userDto);
+    IdDto save(UserDto userDto);
 
-  Optional<UserDto> findUserWithRolesByEmail(String email);
+    Optional<UserDto> findUserWithRolesByEmail(String email);
 
-  UserDto getCurrentUser();
+    UserDto getCurrentUser();
 
-  void update(UpdateUserDto user);
+    void update(UpdateUserDto user);
 }

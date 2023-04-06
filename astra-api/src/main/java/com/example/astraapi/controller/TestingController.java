@@ -6,6 +6,7 @@ import com.example.astraapi.dto.testing.TestingDto;
 import com.example.astraapi.meta.Endpoint;
 import com.example.astraapi.service.TestingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,20 +21,23 @@ public class TestingController {
     private final TestingService testingService;
 
     @GetMapping("/description")
-    public TestingDescriptionDto getDescription() {
-        return testingService.getDescription();
+    public ResponseEntity<TestingDescriptionDto> getDescription() {
+        TestingDescriptionDto description = testingService.getDescription();
+        return ResponseEntity.ok(description);
     }
 
     @GetMapping("/available")
-    public List<TestingDetailDto> getAvailableTestings() {
-        return testingService.getAvailableTestings();
+    public ResponseEntity<List<TestingDetailDto>> getAvailableTestings() {
+        List<TestingDetailDto> items = testingService.getAvailableTestings();
+        return ResponseEntity.ok(items);
     }
 
     @GetMapping
-    public TestingDto getOne(
+    public ResponseEntity<TestingDto> getOne(
             @RequestParam("examId") Long examId,
             @RequestParam("specializationId") Long specializationId
     ) {
-        return testingService.getOne(examId, specializationId);
+        TestingDto testing = testingService.getOne(examId, specializationId);
+        return ResponseEntity.ok(testing);
     }
 }

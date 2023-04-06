@@ -15,20 +15,20 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class StepServiceImpl implements StepService {
-  private final StepRepository stepRepository;
-  private final StepMapper stepMapper;
+    private final StepRepository stepRepository;
+    private final StepMapper stepMapper;
 
-  @Override
-  public IdDto save(StepDto stepDto) {
-    StepEntity entity = stepMapper.toEntity(stepDto);
-    stepRepository.save(entity);
-    return new IdDto(entity.getId());
-  }
+    @Override
+    public IdDto save(StepDto stepDto) {
+        StepEntity entity = stepMapper.toEntity(stepDto);
+        stepRepository.save(entity);
+        return new IdDto(entity.getId());
+    }
 
-  @Override
-  public List<StepDto> getAll() {
-    return stepRepository.getAll().stream()
-        .map(stepMapper::toDto)
-        .collect(Collectors.toList());
-  }
+    @Override
+    public List<StepDto> getAll() {
+        return stepRepository.getAll().stream()
+                .map(stepMapper::toDto)
+                .collect(Collectors.toList());
+    }
 }
