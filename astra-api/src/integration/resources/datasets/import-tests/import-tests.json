@@ -1,0 +1,84 @@
+{
+    "public.import_tests": [
+        {
+            "import_id": 101,
+            "test_id": 101
+        },
+        {
+            "import_id": 103,
+            "test_id": 102
+        },
+        {
+            "import_id": 106,
+            "test_id": 103
+        },
+        {
+            "import_id": 103,
+            "test_id": 104
+        },
+        {
+            "import_id": 104,
+            "test_id": 105
+        },
+        {
+            "import_id": 105,
+            "test_id": 106
+        },
+        {
+            "import_id": 102,
+            "test_id": 107
+        },
+        {
+            "import_id": 102,
+            "test_id": 108
+        },
+        {
+            "import_id": 103,
+            "test_id": 109
+        },
+        {
+            "import_id": 103,
+            "test_id": 110
+        },
+        {
+            "import_id": 103,
+            "test_id": 111
+        },
+        {
+            "import_id": 101,
+            "test_id": 112
+        },
+        {
+            "import_id": 101,
+            "test_id": 113
+        },
+        {
+            "import_id": 104,
+            "test_id": 114
+        },
+        {
+            "import_id": 105,
+            "test_id": 115
+        },
+        {
+            "import_id": 106,
+            "test_id": 116
+        },
+        {
+            "import_id": 105,
+            "test_id": 117
+        },
+        {
+            "import_id": 105,
+            "test_id": 118
+        },
+        {
+            "import_id": 105,
+            "test_id": 119
+        },
+        {
+            "import_id": 104,
+            "test_id": 120
+        }
+    ]
+}

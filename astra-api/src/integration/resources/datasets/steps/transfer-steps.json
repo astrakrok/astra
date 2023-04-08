@@ -1,0 +1,16 @@
+{
+    "public.steps": [
+        {
+            "id": 101,
+            "title": "step 1"
+        },
+        {
+            "id": 102,
+            "title": "step 2"
+        },
+        {
+            "id": 103,
+            "title": "step 3"
+        }
+    ]
+}

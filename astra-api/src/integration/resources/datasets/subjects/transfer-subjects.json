@@ -1,0 +1,29 @@
+{
+    "public.subjects": [
+        {
+            "id": 101,
+            "title": "subject 1",
+            "specialization_id": 101
+        },
+        {
+            "id": 102,
+            "title": "subject 2",
+            "specialization_id": 102
+        },
+        {
+            "id": 103,
+            "title": "subject 3",
+            "specialization_id": 104
+        },
+        {
+            "id": 104,
+            "title": "subject 3",
+            "specialization_id": 106
+        },
+        {
+            "id": 105,
+            "title": "subject 4",
+            "specialization_id": 105
+        }
+    ]
+}

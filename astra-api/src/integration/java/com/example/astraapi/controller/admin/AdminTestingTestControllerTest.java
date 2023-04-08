@@ -119,7 +119,7 @@ public class AdminTestingTestControllerTest extends BaseTest {
             "datasets/subjects/subjects.json",
             "datasets/tests-subjects/tests-subjects.json",
             "datasets/testings/active-and-draft-testings.json",
-            "datasets/testings-tests/testings-tests.json"})
+            "datasets/testings-tests/dummy-testings-tests.json"})
     void shouldReturnBadRequestWhenCreateByTestingIdAndTestIdTestingTestAlreadyExists() {
         webClient.post()
                 .uri("/api/v1/admin/testings-tests")
@@ -224,7 +224,7 @@ public class AdminTestingTestControllerTest extends BaseTest {
             "datasets/subjects/subjects.json",
             "datasets/tests-subjects/tests-subjects.json",
             "datasets/testings/active-and-draft-testings.json",
-            "datasets/testings-tests/testings-tests.json"})
+            "datasets/testings-tests/dummy-testings-tests.json"})
     void shouldReturnBadRequestWhenCreateByExamIdAndSpecializationIdAndTestIdTestingTestAlreadyExists() {
         webClient.post()
                 .uri("/api/v1/admin/testings-tests/details")
@@ -246,7 +246,7 @@ public class AdminTestingTestControllerTest extends BaseTest {
             "datasets/subjects/subjects.json",
             "datasets/tests-subjects/tests-subjects.json",
             "datasets/testings/active-and-draft-testings.json",
-            "datasets/testings-tests/testings-tests.json"})
+            "datasets/testings-tests/dummy-testings-tests.json"})
     void shouldReturnBadRequestWhenDeletingTestFromActiveTestingByTestingIdAndTestId() {
         webClient.method(HttpMethod.DELETE)
                 .uri("/api/v1/admin/testings-tests")
@@ -268,7 +268,7 @@ public class AdminTestingTestControllerTest extends BaseTest {
             "datasets/subjects/subjects.json",
             "datasets/tests-subjects/tests-subjects.json",
             "datasets/testings/active-and-draft-testings.json",
-            "datasets/testings-tests/testings-tests.json"})
+            "datasets/testings-tests/dummy-testings-tests.json"})
     @ExpectedDataSet("datasets/expected/testings-tests/testing-test-deletion.json")
     void shouldSuccessfullyDeleteTestingTestByTestingIdAndTestId() {
         webClient.method(HttpMethod.DELETE)
@@ -288,7 +288,7 @@ public class AdminTestingTestControllerTest extends BaseTest {
             "datasets/subjects/subjects.json",
             "datasets/tests-subjects/tests-subjects.json",
             "datasets/testings/active-and-draft-testings.json",
-            "datasets/testings-tests/testings-tests.json"})
+            "datasets/testings-tests/dummy-testings-tests.json"})
     void shouldReturnBadRequestWhenDeletingTestFromActiveTestingByTestingTestId() {
         webClient.method(HttpMethod.DELETE)
                 .uri("/api/v1/admin/testings-tests/111")
@@ -308,7 +308,7 @@ public class AdminTestingTestControllerTest extends BaseTest {
             "datasets/subjects/subjects.json",
             "datasets/tests-subjects/tests-subjects.json",
             "datasets/testings/active-and-draft-testings.json",
-            "datasets/testings-tests/testings-tests.json"})
+            "datasets/testings-tests/dummy-testings-tests.json"})
     @ExpectedDataSet("datasets/expected/testings-tests/testing-test-deletion.json")
     void shouldSuccessfullyDeleteTestingTestByTestingTestId() {
         webClient.method(HttpMethod.DELETE)
@@ -326,7 +326,7 @@ public class AdminTestingTestControllerTest extends BaseTest {
             "datasets/subjects/subjects.json",
             "datasets/tests-subjects/tests-subjects.json",
             "datasets/testings/active-and-draft-testings.json",
-            "datasets/testings-tests/testings-tests.json"})
+            "datasets/testings-tests/dummy-testings-tests.json"})
     void shouldReturnTestingsByTestId() {
         webClient.get()
                 .uri("/api/v1/admin/testings-tests/103/testings")

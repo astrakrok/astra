@@ -54,7 +54,7 @@ public class CsvFileImporter implements FileImporter {
                     .tests(tests)
                     .details(new HashMap<>())
                     .build();
-        } catch (IOException exception) {
+        } catch (NullPointerException | IOException exception) {
             throw new ImportException(ValidationErrorType.UNKNOWN, exception);
         }
     }

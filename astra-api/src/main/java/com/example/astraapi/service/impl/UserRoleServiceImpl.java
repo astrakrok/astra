@@ -10,10 +10,10 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class UserRoleServiceImpl implements UserRoleService {
-  private final UserRoleRepository userRoleRepository;
+    private final UserRoleRepository userRoleRepository;
 
-  @Override
-  public void save(Long userId, Set<String> roles) {
-    userRoleRepository.save(userId, roles);
-  }
+    @Override
+    public void save(Long userId, Set<String> roles) {
+        userRoleRepository.save(userId, roles);
+    }
 }

@@ -41,7 +41,7 @@ public class TestingControllerTest extends BaseTest {
             "datasets/specializations/specializations.json",
             "datasets/testings/active-and-draft-testings.json",
             "datasets/tests/tests.json",
-            "datasets/testings-tests/testings-tests.json"})
+            "datasets/testings-tests/dummy-testings-tests.json"})
     void shouldReturnActiveTestings() {
         webClient.get()
                 .uri("/api/v1/testings/available")

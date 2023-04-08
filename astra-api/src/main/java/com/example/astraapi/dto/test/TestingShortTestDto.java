@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TestingShortTestDto {
-  private Long id;
-  private String question;
-  private List<TestingShortTestVariantDto> variants = new ArrayList<>();
+    private Long id;
+    private String question;
+    private List<TestingShortTestVariantDto> variants = new ArrayList<>();
 }

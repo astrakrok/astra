@@ -1,0 +1,20 @@
+{
+    "public.tests": [
+        {
+            "id": 1,
+            "question": "question text",
+            "question_svg": null,
+            "comment": null,
+            "comment_svg": null,
+            "status": "DRAFT"
+        },
+        {
+            "id": 2,
+            "question": "question text another",
+            "question_svg": null,
+            "comment": null,
+            "comment_svg": null,
+            "status": "DRAFT"
+        }
+    ]
+}

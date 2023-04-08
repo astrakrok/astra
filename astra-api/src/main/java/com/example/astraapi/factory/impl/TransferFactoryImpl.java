@@ -2,6 +2,7 @@ package com.example.astraapi.factory.impl;
 
 import com.example.astraapi.exception.ValidationException;
 import com.example.astraapi.factory.TransferFactory;
+import com.example.astraapi.meta.ExecutionProfile;
 import com.example.astraapi.meta.FileType;
 import com.example.astraapi.meta.LinkSource;
 import com.example.astraapi.meta.ValidationErrorType;
@@ -12,9 +13,11 @@ import com.example.astraapi.service.LinkService;
 import com.example.astraapi.service.WebImporter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 @Service
+@Profile(ExecutionProfile.PRODUCTION)
 public class TransferFactoryImpl implements TransferFactory {
     private final LinkService linkService;
     private final FileImporter excelFileImporter;

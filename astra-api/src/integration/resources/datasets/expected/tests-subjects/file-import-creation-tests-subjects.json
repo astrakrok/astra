@@ -1,0 +1,12 @@
+{
+    "public.tests_subjects": [
+        {
+            "test_id": 1,
+            "subject_id": 101
+        },
+        {
+            "test_id": 1,
+            "subject_id": 105
+        }
+    ]
+}

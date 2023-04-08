@@ -1,0 +1,74 @@
+{
+    "public.tests_variants": [
+        {
+            "id": 1,
+            "test_id": 1,
+            "title": "variant title 1",
+            "explanation": "variant explanation 1",
+            "is_correct": true
+        },
+        {
+            "id": 2,
+            "test_id": 1,
+            "title": "variant title 2",
+            "explanation": "variant explanation 2",
+            "is_correct": false
+        },
+        {
+            "id": 3,
+            "test_id": 1,
+            "title": "variant title 3",
+            "explanation": "variant explanation 3",
+            "is_correct": false
+        },
+        {
+            "id": 4,
+            "test_id": 1,
+            "title": "variant title 4",
+            "explanation": "variant explanation 4",
+            "is_correct": false
+        },
+        {
+            "id": 5,
+            "test_id": 1,
+            "title": "variant title 5",
+            "explanation": "variant explanation 5",
+            "is_correct": false
+        },
+        {
+            "id": 6,
+            "test_id": 2,
+            "title": "example title 1",
+            "explanation": "example explanation 1",
+            "is_correct": false
+        },
+        {
+            "id": 7,
+            "test_id": 2,
+            "title": "example title 2",
+            "explanation": "example explanation 2",
+            "is_correct": false
+        },
+        {
+            "id": 8,
+            "test_id": 2,
+            "title": "example title 3",
+            "explanation": "example explanation 3",
+            "is_correct": false
+        },
+        {
+            "id": 9,
+            "test_id": 2,
+            "title": "example title 4",
+            "explanation": "example explanation 4",
+            "is_correct": true
+        },
+        {
+            "id": 10,
+            "test_id": 2,
+            "title": "example title 5",
+            "explanation": "example explanation 5",
+            "is_correct": false
+        }
+    ]
+}

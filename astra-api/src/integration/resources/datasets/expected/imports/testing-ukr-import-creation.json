@@ -1,0 +1,10 @@
+{
+    "public.imports": [
+        {
+            "id": 1,
+            "source": "TESTING_UKR_WEB",
+            "source_title": "Testing title",
+            "title": "testing.ukr Import"
+        }
+    ]
+}

@@ -11,7 +11,9 @@ import com.example.astraapi.model.Page;
 import com.example.astraapi.model.Pageable;
 import com.example.astraapi.service.TransferService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,25 +25,33 @@ public class AdminTransferController {
     private final TransferService transferService;
 
     @PostMapping(value = "/import/file", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public IdDto importFromFile(@Valid @ModelAttribute FileImportDto fileImportDto) {
-        return transferService.importFromFile(fileImportDto);
+    public ResponseEntity<IdDto> importFromFile(@Valid @ModelAttribute FileImportDto fileImportDto) {
+        IdDto idDto = transferService.importFromFile(fileImportDto);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(idDto);
     }
 
     @PostMapping("/import/web")
-    public IdDto importFromWeb(@Valid @RequestBody WebImportDto webImportDto) {
-        return transferService.importFromWeb(webImportDto);
-    }
-
-    @PostMapping(value = "/import/stats/filter")
-    public Page<ImportStatsDto> search(
-            @RequestBody AdminImportTestFilterDto filter,
-            Pageable pageable
-    ) {
-        return transferService.search(filter, pageable);
+    public ResponseEntity<IdDto> importFromWeb(@Valid @RequestBody WebImportDto webImportDto) {
+        IdDto idDto = transferService.importFromWeb(webImportDto);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(idDto);
     }
 
     @PostMapping("/export")
-    public byte[] exportTests(@Valid @RequestBody ExportDto exportDto) {
-        return transferService.exportTests(exportDto);
+    public ResponseEntity<byte[]> exportTests(@Valid @RequestBody ExportDto exportDto) {
+        byte[] bytes = transferService.exportTests(exportDto);
+        return ResponseEntity.ok(bytes);
+    }
+
+    @PostMapping(value = "/import/stats/filter")
+    public ResponseEntity<Page<ImportStatsDto>> search(
+            @RequestBody AdminImportTestFilterDto filter,
+            Pageable pageable
+    ) {
+        Page<ImportStatsDto> page = transferService.search(filter, pageable);
+        return ResponseEntity.ok(page);
     }
 }

@@ -13,10 +13,10 @@ import javax.validation.constraints.Positive;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TrainingSearchDto {
-  @NotNull
-  @Positive
-  private long testingId;
-  @NotNull
-  @Positive
-  private long count;
+    @NotNull
+    @Positive
+    private long testingId;
+    @NotNull
+    @Positive
+    private long count;
 }

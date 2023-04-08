@@ -30,6 +30,7 @@ public class BaseTest {
 
     @DataSet(
             cleanBefore = true,
+            executeScriptsBefore = "restart-sequences.sql",
             skipCleaningFor = "flyway_schema_history")
     @BeforeEach
     public void cleanupDb() {}

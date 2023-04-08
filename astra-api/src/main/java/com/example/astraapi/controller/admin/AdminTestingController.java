@@ -12,8 +12,11 @@ import com.example.astraapi.dto.testing.TestingWithSpecializationDto;
 import com.example.astraapi.meta.Endpoint;
 import com.example.astraapi.model.Page;
 import com.example.astraapi.model.Pageable;
+import com.example.astraapi.model.TestingPage;
 import com.example.astraapi.service.TestingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,43 +30,51 @@ public class AdminTestingController {
     private final TestingService testingService;
 
     @PostMapping
-    public IdDto save(@Valid @RequestBody RequestTestingDto testingDto) {
-        return testingService.save(testingDto);
+    public ResponseEntity<IdDto> save(@Valid @RequestBody RequestTestingDto testingDto) {
+        IdDto idDto = testingService.save(testingDto);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(idDto);
     }
 
     @GetMapping("/exams/{examId}")
-    public List<TestingWithSpecializationDto> getWithSpecializations(@PathVariable("examId") Long examId) {
-        return testingService.getWithSpecializations(examId);
+    public ResponseEntity<List<TestingWithSpecializationDto>> getWithSpecializations(@PathVariable("examId") Long examId) {
+        List<TestingWithSpecializationDto> items = testingService.getWithSpecializations(examId);
+        return ResponseEntity.ok(items);
     }
 
     @GetMapping("/{id}/info")
-    public Optional<TestingInfoDto> getTestingInfo(@PathVariable("id") Long id) {
-        return testingService.getTestingInfo(id);
+    public ResponseEntity<Optional<TestingInfoDto>> getTestingInfo(@PathVariable("id") Long id) {
+        Optional<TestingInfoDto> testing = testingService.getTestingInfo(id);
+        return ResponseEntity.ok(testing);
     }
 
     @PostMapping("/{id}/tests")
-    public Page<TestingTestQuestionDto> getTestsQuestions(
+    public ResponseEntity<Page<TestingTestQuestionDto>> getTestsQuestions(
             @PathVariable("id") Long id,
             @RequestBody AdminTestingTestsFilterDto filter,
             Pageable pageable
     ) {
-        return testingService.getTestsQuestions(id, filter, pageable);
+        TestingPage<TestingTestQuestionDto> page = testingService.getTestsQuestions(id, filter, pageable);
+        return ResponseEntity.ok(page);
     }
 
     @PostMapping("/{id}/tests/available")
-    public Page<TestingShortTestDto> getAvailableTestingTests(
+    public ResponseEntity<Page<TestingShortTestDto>> getAvailableTestingTests(
             @PathVariable("id") Long id,
             @RequestBody AdminAvailableTestingTestsFilterDto filter,
             Pageable pageable
     ) {
-        return testingService.getNotSelectedTestingTests(id, filter, pageable);
+        Page<TestingShortTestDto> page = testingService.getNotSelectedTestingTests(id, filter, pageable);
+        return ResponseEntity.ok(page);
     }
 
     @PutMapping("/{id}/status")
-    public Optional<TestingInfoDto> updateStatus(
+    public ResponseEntity<Optional<TestingInfoDto>> updateStatus(
             @PathVariable("id") Long id,
             @RequestBody TestingStatusDto statusDto
     ) {
-        return testingService.updateStatus(id, statusDto);
+        Optional<TestingInfoDto> testing = testingService.updateStatus(id, statusDto);
+        return ResponseEntity.ok(testing);
     }
 }

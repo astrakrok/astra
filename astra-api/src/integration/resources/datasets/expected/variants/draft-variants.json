@@ -1,0 +1,20 @@
+{
+    "public.tests_variants": [
+        {
+            "id": 1,
+            "test_id": 1,
+            "title": "Title 1",
+            "title_svg": null,
+            "explanation": "Explanation 1",
+            "explanation_svg": null
+        },
+        {
+            "id": 2,
+            "test_id": 1,
+            "title": "Title 2",
+            "title_svg": null,
+            "explanation": "Explanation 2",
+            "explanation_svg": null
+        }
+    ]
+}

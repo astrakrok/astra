@@ -13,9 +13,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TestingInfoDto {
-  private Long id;
-  private TestingStatus status;
-  private Long testsCount;
-  private ResponseExamDto exam;
-  private SpecializationDto specialization;
+    private Long id;
+    private TestingStatus status;
+    private Long testsCount;
+    private ResponseExamDto exam;
+    private SpecializationDto specialization;
 }
