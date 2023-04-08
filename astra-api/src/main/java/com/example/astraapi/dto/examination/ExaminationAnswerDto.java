@@ -13,11 +13,11 @@ import javax.validation.constraints.Positive;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExaminationAnswerDto {
-  private Long id;
-  private Long examinationId;
-  @NotNull
-  @Positive
-  private Long testId;
-  @Positive
-  private Long variantId;
+    private Long id;
+    private Long examinationId;
+    @NotNull
+    @Positive
+    private Long testId;
+    @Positive
+    private Long variantId;
 }

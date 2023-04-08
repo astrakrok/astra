@@ -13,10 +13,10 @@ import javax.validation.constraints.Positive;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RequestTestingDto {
-  @NotNull
-  @Positive
-  private Long examId;
-  @NotNull
-  @Positive
-  private Long specializationId;
+    @NotNull
+    @Positive
+    private Long examId;
+    @NotNull
+    @Positive
+    private Long specializationId;
 }

@@ -2,7 +2,7 @@
     "public.tests": [
         {
             "id": 101,
-            "question": "Question 1",
+            "question": "Example question",
             "comment": "Comment 1",
             "question_svg": null,
             "comment_svg": null,
@@ -10,7 +10,7 @@
         },
         {
             "id": 102,
-            "question": "Question 2",
+            "question": "Just for exam test",
             "comment": "Comment 2",
             "question_svg": null,
             "comment_svg": null,
@@ -18,7 +18,7 @@
         },
         {
             "id": 103,
-            "question": "Question 3",
+            "question": "another question test",
             "comment": "Comment 3",
             "question_svg": null,
             "comment_svg": null,
@@ -34,7 +34,7 @@
         },
         {
             "id": 105,
-            "question": "Question 5",
+            "question": "lorem ipsum dolor sit amet",
             "comment": "Comment 5",
             "question_svg": null,
             "comment_svg": null,
@@ -42,7 +42,7 @@
         },
         {
             "id": 106,
-            "question": "Question 6",
+            "question": "Just for examination",
             "comment": "Comment 6",
             "question_svg": null,
             "comment_svg": null,
@@ -66,7 +66,7 @@
         },
         {
             "id": 109,
-            "question": "Question 9",
+            "question": "Examination just for you",
             "comment": "Comment 9",
             "question_svg": null,
             "comment_svg": null,
@@ -74,7 +74,7 @@
         },
         {
             "id": 110,
-            "question": "Question 10",
+            "question": "Test one more value",
             "comment": "Comment 10",
             "question_svg": null,
             "comment_svg": null,
@@ -90,11 +90,11 @@
         },
         {
             "id": 112,
-            "question": "Question 12",
+            "question": "Another examination",
             "comment": "Comment 12",
             "question_svg": null,
             "comment_svg": null,
-            "status": "ACTIVE"
+            "status": "DRAFT"
         },
         {
             "id": 113,
@@ -110,11 +110,11 @@
             "comment": "Comment 14",
             "question_svg": null,
             "comment_svg": null,
-            "status": "ACTIVE"
+            "status": "DRAFT"
         },
         {
             "id": 115,
-            "question": "Question 15",
+            "question": "EEEEexammmmm",
             "comment": "Comment 15",
             "question_svg": null,
             "comment_svg": null,
@@ -122,11 +122,11 @@
         },
         {
             "id": 116,
-            "question": "Question 16",
+            "question": "The last exam one(maybe)",
             "comment": "Comment 16",
             "question_svg": null,
             "comment_svg": null,
-            "status": "ACTIVE"
+            "status": "DRAFT"
         },
         {
             "id": 117,
@@ -142,11 +142,11 @@
             "comment": "Comment 18",
             "question_svg": null,
             "comment_svg": null,
-            "status": "ACTIVE"
+            "status": "DRAFT"
         },
         {
             "id": 119,
-            "question": "Question 19",
+            "question": "Just try to complete this exam",
             "comment": "Comment 19",
             "question_svg": null,
             "comment_svg": null,
@@ -158,7 +158,7 @@
             "comment": "Comment 20",
             "question_svg": null,
             "comment_svg": null,
-            "status": "ACTIVE"
+            "status": "DRAFT"
         }
     ]
 }

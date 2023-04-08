@@ -1,0 +1,12 @@
+{
+    "public.tests": [
+        {
+            "id": 1,
+            "status": "DRAFT",
+            "question": "Test",
+            "comment": "Test",
+            "question_svg": null,
+            "comment_svg": null
+        }
+    ]
+}

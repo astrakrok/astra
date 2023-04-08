@@ -9,6 +9,8 @@ import com.example.astraapi.model.Page;
 import com.example.astraapi.model.Pageable;
 import com.example.astraapi.service.TestService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,40 +23,51 @@ public class AdminTestController {
     private final TestService testService;
 
     @PostMapping
-    public TestFullDetailDto save(@RequestBody RequestTestDto testDto) {
-        return testService.save(testDto);
+    public ResponseEntity<TestFullDetailDto> save(@RequestBody RequestTestDto testDto) {
+        TestFullDetailDto test = testService.save(testDto);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(test);
     }
 
     @PostMapping("/draft")
-    public TestFullDetailDto saveDraft(@RequestBody RequestTestDto testDto) {
-        return testService.saveDraft(testDto);
+    public ResponseEntity<TestFullDetailDto> saveDraft(@RequestBody RequestTestDto testDto) {
+        TestFullDetailDto test = testService.saveDraft(testDto);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(test);
     }
 
     @PutMapping("/{id}")
-    public Optional<TestFullDetailDto> update(@PathVariable("id") Long id, @RequestBody RequestTestDto testDto) {
-        return testService.update(id, testDto);
+    public ResponseEntity<Optional<TestFullDetailDto>> update(@PathVariable("id") Long id, @RequestBody RequestTestDto testDto) {
+        Optional<TestFullDetailDto> test = testService.update(id, testDto);
+        return ResponseEntity.ok(test);
     }
 
     @PutMapping("/{id}/draft")
-    public Optional<TestFullDetailDto> updateDraft(@PathVariable("id") Long id, @RequestBody RequestTestDto testDto) {
-        return testService.updateDraft(id, testDto);
+    public ResponseEntity<Optional<TestFullDetailDto>> updateDraft(@PathVariable("id") Long id, @RequestBody RequestTestDto testDto) {
+        Optional<TestFullDetailDto> test = testService.updateDraft(id, testDto);
+        return ResponseEntity.ok(test);
     }
 
     @PostMapping("/filter")
-    public Page<TestShortDetailDto> getAll(
+    public ResponseEntity<Page<TestShortDetailDto>> getAll(
             @RequestBody AdminTestFilterDto filter,
             @Valid Pageable pageable
     ) {
-        return testService.getAll(filter, pageable);
+        Page<TestShortDetailDto> page = testService.getAll(filter, pageable);
+        return ResponseEntity.ok(page);
     }
 
     @GetMapping("/{id}")
-    public Optional<TestFullDetailDto> getDetailedTest(@PathVariable("id") Long id) {
-        return testService.getDetailedTest(id);
+    public ResponseEntity<Optional<TestFullDetailDto>> getDetailedTest(@PathVariable("id") Long id) {
+        Optional<TestFullDetailDto> test = testService.getDetailedTest(id);
+        return ResponseEntity.ok(test);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTest(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteTest(@PathVariable("id") Long id) {
         testService.deleteTest(id);
+        return ResponseEntity.ok().build();
     }
 }

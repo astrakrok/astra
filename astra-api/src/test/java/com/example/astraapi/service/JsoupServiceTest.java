@@ -1,19 +1,27 @@
-package com.example.astraapi.util;
+package com.example.astraapi.service;
 
+import com.example.astraapi.service.impl.JsoupServiceImpl;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.MockedStatic;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
-import java.lang.reflect.Constructor;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
-public class JsoupUtilsTest {
+@ExtendWith(MockitoExtension.class)
+public class JsoupServiceTest {
+    @InjectMocks
+    private JsoupServiceImpl jsoupService;
+
     @Test
     void shouldReturnDocument() throws IOException {
         Map<String, String> queryParams = Map.of("page", "0");
@@ -27,7 +35,7 @@ public class JsoupUtilsTest {
         try (MockedStatic<Jsoup> utilities = mockStatic(Jsoup.class)) {
             utilities.when(() -> Jsoup.connect("https://www.example.com/")).thenReturn(connection);
 
-            Document returnedDocument = JsoupUtils.getDocument("https://www.example.com/", queryParams);
+            Document returnedDocument = jsoupService.getDocument("https://www.example.com/", queryParams);
             assertEquals(document, returnedDocument);
         }
     }
@@ -40,16 +48,7 @@ public class JsoupUtilsTest {
 
         try (MockedStatic<Jsoup> utilities = mockStatic(Jsoup.class)) {
             utilities.when(() -> Jsoup.connect("https://www.example.com/")).thenReturn(connection);
-            assertThrows(RuntimeException.class, () -> JsoupUtils.getDocument("https://www.example.com/"));
+            assertThrows(RuntimeException.class, () -> jsoupService.getDocument("https://www.example.com/"));
         }
-    }
-
-    @Test
-    void shouldThrowExceptionWhenTryingToInstantiateClass() throws NoSuchMethodException {
-        Constructor<JsoupUtils> constructor = JsoupUtils.class.getDeclaredConstructor();
-        constructor.setAccessible(true);
-
-        Exception exception = assertThrows(Exception.class, constructor::newInstance);
-        assertTrue(exception.getCause() instanceof UnsupportedOperationException);
     }
 }

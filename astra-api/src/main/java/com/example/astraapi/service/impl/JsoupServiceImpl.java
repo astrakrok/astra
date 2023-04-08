@@ -1,21 +1,29 @@
-package com.example.astraapi.util;
+package com.example.astraapi.service.impl;
 
-import lombok.experimental.UtilityClass;
+import com.example.astraapi.meta.ExecutionProfile;
+import com.example.astraapi.service.JsoupService;
+import lombok.RequiredArgsConstructor;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
 
-@UtilityClass
-public class JsoupUtils {
-    public static Document getDocument(String url) {
+@Service
+@RequiredArgsConstructor
+@Profile(ExecutionProfile.PRODUCTION)
+public class JsoupServiceImpl implements JsoupService {
+    @Override
+    public Document getDocument(String url) {
         return getDocument(url, Collections.emptyMap());
     }
 
-    public static Document getDocument(String url, Map<String, String> queryParams) {
+    @Override
+    public Document getDocument(String url, Map<String, String> queryParams) {
         try {
             Connection connection = Jsoup.connect(url);
             for (Map.Entry<String, String> entry : queryParams.entrySet()) {

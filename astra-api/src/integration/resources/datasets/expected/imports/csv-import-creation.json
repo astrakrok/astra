@@ -1,0 +1,10 @@
+{
+    "public.imports": [
+        {
+            "id": 1,
+            "source": "CSV_FILE",
+            "source_title": "import.csv",
+            "title": "CSV Import"
+        }
+    ]
+}

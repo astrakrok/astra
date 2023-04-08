@@ -1,0 +1,40 @@
+{
+    "public.imports": [
+        {
+            "id": 101,
+            "source": "EXCEL_FILE",
+            "source_title": "excel file name.xlsx",
+            "title": "custom title"
+        },
+        {
+            "id": 102,
+            "source": "CSV_FILE",
+            "source_title": "csv title.csv",
+            "title": "custom csv title"
+        },
+        {
+            "id": 103,
+            "source": "TESTING_UKR_WEB",
+            "source_title": "ЗЛП 2018",
+            "title": "one more title for demo"
+        },
+        {
+            "id": 104,
+            "source": "TESTING_UKR_WEB",
+            "source_title": "Dentistry",
+            "title": "Dentistry 2020"
+        },
+        {
+            "id": 105,
+            "source": "CSV_FILE",
+            "source_title": "Pharmacology",
+            "title": "20 pharmacology 20"
+        },
+        {
+            "id": 106,
+            "source": "EXCEL_FILE",
+            "source_title": "Dentistry",
+            "title": "Dentistry 2006"
+        }
+    ]
+}

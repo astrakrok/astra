@@ -4,8 +4,9 @@ import com.example.astraapi.meta.ImportSource;
 import com.example.astraapi.model.importing.ImportResult;
 import com.example.astraapi.model.importing.ImportTest;
 import com.example.astraapi.model.importing.ImportVariant;
+import com.example.astraapi.service.JsoupService;
 import com.example.astraapi.service.WebImporter;
-import com.example.astraapi.util.JsoupUtils;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -20,10 +21,13 @@ import java.util.stream.Collectors;
 
 @Service
 @Qualifier("testingUkrWebImporter")
+@RequiredArgsConstructor
 public class TestingUkrWebImporterImpl implements WebImporter {
+    private final JsoupService jsoupService;
+
     @Override
     public ImportResult importTests(String url) {
-        Document document = JsoupUtils.getDocument(url);
+        Document document = jsoupService.getDocument(url);
         String title = document.title();
         List<String> urls = document.select(".page-link").stream()
                 .map(element -> element.absUrl("href"))
@@ -43,7 +47,7 @@ public class TestingUkrWebImporterImpl implements WebImporter {
     }
 
     private List<ImportTest> parseTests(String url) {
-        Document document = JsoupUtils.getDocument(url);
+        Document document = jsoupService.getDocument(url);
         return document.select(".text-justify").stream()
                 .map(this::parseTest)
                 .filter(Objects::nonNull)

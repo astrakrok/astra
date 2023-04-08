@@ -12,8 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TestingWithSpecializationDto {
-  private Long id;
-  private Long examId;
-  private TestingStatus status;
-  private StepSpecializationDto specialization;
+    private Long id;
+    private Long examId;
+    private TestingStatus status;
+    private StepSpecializationDto specialization;
 }

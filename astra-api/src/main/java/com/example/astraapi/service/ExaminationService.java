@@ -6,9 +6,9 @@ import com.example.astraapi.dto.examination.ExaminationSearchDto;
 import com.example.astraapi.dto.examination.ExaminationStateDto;
 
 public interface ExaminationService {
-  ExaminationStateDto start(ExaminationSearchDto searchDto);
+    ExaminationStateDto start(ExaminationSearchDto searchDto);
 
-  void updateAnswer(Long id, ExaminationAnswerDto examinationAnswerDto);
+    void updateAnswer(Long id, ExaminationAnswerDto examinationAnswerDto);
 
-  ExaminationResultDto finish(Long id);
+    ExaminationResultDto finish(Long id);
 }

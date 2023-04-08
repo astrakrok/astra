@@ -3,6 +3,7 @@ package com.example.astraapi.exception.handler;
 import com.example.astraapi.dto.ErrorDto;
 import com.example.astraapi.dto.ErrorResponseDto;
 import com.example.astraapi.exception.AlreadyExistsException;
+import com.example.astraapi.exception.ImportException;
 import com.example.astraapi.exception.ValidationException;
 import com.example.astraapi.meta.ErrorMessage;
 import com.example.astraapi.model.validation.ValidationError;
@@ -54,6 +55,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(new ErrorResponseDto(new ErrorDto(exception.getMessage())));
+    }
+
+    @ExceptionHandler(ImportException.class)
+    public ResponseEntity<List<ValidationError>> handleException(ImportException exception) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(List.of(new ValidationError(exception.getType())));
     }
 
     @ExceptionHandler(Exception.class)

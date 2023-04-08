@@ -1,0 +1,94 @@
+{
+    "public.tests_variants": [
+        {
+            "id": 1,
+            "test_id": 104,
+            "title": "example title(new)",
+            "title_svg": null,
+            "explanation": "example explanation(new)",
+            "explanation_svg": null,
+            "is_correct": true
+        },
+        {
+            "id": 101,
+            "test_id": 104,
+            "title": "example title 1(updated)",
+            "title_svg": null,
+            "explanation": "example explanation 1(updated)",
+            "explanation_svg": null,
+            "is_correct": false
+        },
+        {
+            "id": 102,
+            "test_id": 104,
+            "title": "example title 2(updated)",
+            "title_svg": null,
+            "explanation": "example explanation 2(updated)",
+            "explanation_svg": null,
+            "is_correct": false
+        },
+        {
+            "id": 104,
+            "test_id": 105,
+            "title": "1) one more title for test 105",
+            "title_svg": null,
+            "explanation": "1) one more explanation for test 105",
+            "explanation_svg": null,
+            "is_correct": true
+        },
+        {
+            "id": 105,
+            "test_id": 105,
+            "title": "2) one more title for test 105",
+            "title_svg": null,
+            "explanation": "2) one more explanation for test 105",
+            "explanation_svg": null,
+            "is_correct": false
+        },
+        {
+            "id": 106,
+            "test_id": 105,
+            "title": "3) one more title for test 105",
+            "title_svg": null,
+            "explanation": "3) one more explanation for test 105",
+            "explanation_svg": null,
+            "is_correct": false
+        },
+        {
+            "id": 107,
+            "test_id": 101,
+            "title": "Just another test for trying export to CSV/EXCEL 1",
+            "title_svg": null,
+            "explanation": "Just another test variant for trying export to CSV/EXCEL 1",
+            "explanation_svg": null,
+            "is_correct": true
+        },
+        {
+            "id": 108,
+            "test_id": 101,
+            "title": "Just another test for trying export to CSV/EXCEL 2",
+            "title_svg": null,
+            "explanation": "Just another test variant for trying export to CSV/EXCEL 2",
+            "explanation_svg": null,
+            "is_correct": false
+        },
+        {
+            "id": 109,
+            "test_id": 102,
+            "title": "another test 1",
+            "title_svg": null,
+            "explanation": "another test variant 1",
+            "explanation_svg": null,
+            "is_correct": false
+        },
+        {
+            "id": 110,
+            "test_id": 102,
+            "title": "another test 2",
+            "title_svg": null,
+            "explanation": "another test variant 2",
+            "explanation_svg": null,
+            "is_correct": true
+        }
+    ]
+}

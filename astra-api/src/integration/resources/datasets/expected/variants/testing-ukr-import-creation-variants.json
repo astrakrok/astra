@@ -1,0 +1,94 @@
+{
+    "public.tests_variants": [
+        {
+            "id": 1,
+            "test_id": 1,
+            "title": "variant title 1",
+            "title_svg": null,
+            "explanation": null,
+            "explanation_svg": null,
+            "is_correct": true
+        },
+        {
+            "id": 2,
+            "test_id": 1,
+            "title": "variant title 2",
+            "title_svg": null,
+            "explanation": null,
+            "explanation_svg": null,
+            "is_correct": false
+        },
+        {
+            "id": 3,
+            "test_id": 1,
+            "title": "variant title 3",
+            "title_svg": null,
+            "explanation": null,
+            "explanation_svg": null,
+            "is_correct": false
+        },
+        {
+            "id": 4,
+            "test_id": 1,
+            "title": "variant title 4",
+            "title_svg": null,
+            "explanation": null,
+            "explanation_svg": null,
+            "is_correct": false
+        },
+        {
+            "id": 5,
+            "test_id": 1,
+            "title": "variant title 5",
+            "title_svg": null,
+            "explanation": null,
+            "explanation_svg": null,
+            "is_correct": false
+        },
+        {
+            "id": 6,
+            "test_id": 2,
+            "title": "variant title another 1",
+            "title_svg": null,
+            "explanation": null,
+            "explanation_svg": null,
+            "is_correct": false
+        },
+        {
+            "id": 7,
+            "test_id": 2,
+            "title": "variant title another 2",
+            "title_svg": null,
+            "explanation": null,
+            "explanation_svg": null,
+            "is_correct": false
+        },
+        {
+            "id": 8,
+            "test_id": 2,
+            "title": "variant title another 3",
+            "title_svg": null,
+            "explanation": null,
+            "explanation_svg": null,
+            "is_correct": true
+        },
+        {
+            "id": 9,
+            "test_id": 2,
+            "title": "variant title another 4",
+            "title_svg": null,
+            "explanation": null,
+            "explanation_svg": null,
+            "is_correct": false
+        },
+        {
+            "id": 10,
+            "test_id": 2,
+            "title": "variant title another 5",
+            "title_svg": null,
+            "explanation": null,
+            "explanation_svg": null,
+            "is_correct": false
+        }
+    ]
+}

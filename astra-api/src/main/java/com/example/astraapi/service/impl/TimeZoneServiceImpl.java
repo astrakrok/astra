@@ -11,11 +11,11 @@ import java.time.ZoneOffset;
 @Service
 @RequiredArgsConstructor
 public class TimeZoneServiceImpl implements TimeZoneService {
-  @Override
-  public LocalDateTime toUtc(LocalDateTime dateTime) {
-    return dateTime == null ? null : dateTime
-        .atZone(ZoneId.systemDefault())
-        .withZoneSameInstant(ZoneOffset.UTC)
-        .toLocalDateTime();
-  }
+    @Override
+    public LocalDateTime toUtc(LocalDateTime dateTime) {
+        return dateTime == null ? null : dateTime
+                .atZone(ZoneId.systemDefault())
+                .withZoneSameInstant(ZoneOffset.UTC)
+                .toLocalDateTime();
+    }
 }

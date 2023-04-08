@@ -1,0 +1,16 @@
+{
+    "public.examinations": [
+        {
+            "id": 101,
+            "user_id": 101,
+            "testing_id": 107,
+            "finished_at": "[DAY,TOMORROW]"
+        },
+        {
+            "id": 102,
+            "user_id": 101,
+            "testing_id": 107,
+            "finished_at": "[DAY,YESTERDAY]"
+        }
+    ]
+}

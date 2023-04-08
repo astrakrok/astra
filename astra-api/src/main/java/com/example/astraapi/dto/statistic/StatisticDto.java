@@ -10,6 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StatisticDto {
-  private Long correctCount;
-  private Long totalCount;
+    private Long correctCount;
+    private Long totalCount;
 }

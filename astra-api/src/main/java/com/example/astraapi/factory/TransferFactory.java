@@ -6,9 +6,9 @@ import com.example.astraapi.service.FileImporter;
 import com.example.astraapi.service.WebImporter;
 
 public interface TransferFactory {
-  FileImporter getFileImporter(String fileName);
+    FileImporter getFileImporter(String fileName);
 
-  WebImporter getWebImporter(String url);
+    WebImporter getWebImporter(String url);
 
-  FileExporter getFileExporter(FileType fileType);
+    FileExporter getFileExporter(FileType fileType);
 }
