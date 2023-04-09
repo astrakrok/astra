@@ -1,0 +1,32 @@
+{
+    "public.testings_tests": [
+        {
+            "testing_id": 107,
+            "test_id": 104
+        },
+        {
+            "testing_id": 107,
+            "test_id": 105
+        },
+        {
+            "testing_id": 107,
+            "test_id": 101
+        },
+        {
+            "testing_id": 107,
+            "test_id": 102
+        },
+        {
+            "testing_id": 107,
+            "test_id": 106
+        },
+        {
+            "testing_id": 107,
+            "test_id": 107
+        },
+        {
+            "testing_id": 107,
+            "test_id": 108
+        }
+    ]
+}

@@ -14,9 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExaminationEntity {
-  private Long id;
-  private Long userId;
-  private Long testingId;
-  private LocalDateTime finishedAt;
-  private List<ExaminationAnswerEntity> answers = new ArrayList<>();
+    private Long id;
+    private Long userId;
+    private Long testingId;
+    private LocalDateTime finishedAt;
+    private List<ExaminationAnswerEntity> answers = new ArrayList<>();
 }

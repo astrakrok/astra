@@ -50,9 +50,6 @@ public class ExaminationAnswerServiceImpl implements ExaminationAnswerService {
     @Override
     public List<ExaminationTestDto> getExaminationTests(List<ExaminationAnswerDto> answers) {
         List<Long> testsIds = getTestsIds(answers);
-        if (testsIds.size() < answers.size()) {
-            throw new IllegalArgumentException("Some tests have more than 1 user answer!");
-        }
         Map<Long, Long> testIdToUserAnswer = getTestIdToUserAnswerMap(answers);
         List<ExaminationTestDto> examinationTests = testService.getExaminationTests(testsIds);
         examinationTests.forEach(test -> setUserAnswer(test, testIdToUserAnswer));

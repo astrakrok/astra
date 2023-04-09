@@ -62,10 +62,7 @@ public class ExaminationAnswerServiceTest {
 
     @Test
     void shouldSaveAndReturnExaminationTests() {
-        Mockito.when(testService.getExaminationTests(ArgumentMatchers.anyLong(), ArgumentMatchers.any())).thenAnswer(invocation -> {
-            long count = invocation.getArgument(0);
-            return mockExaminationTests(10);
-        });
+        Mockito.when(testService.getExaminationTests(ArgumentMatchers.anyLong(), ArgumentMatchers.any())).thenAnswer(invocation -> mockExaminationTests(10));
 
         List<ExaminationTestDto> tests = examinationAnswerService.createTestsForExamination(1L, new ExaminationSearchDto());
 
@@ -110,21 +107,6 @@ public class ExaminationAnswerServiceTest {
         assertEquals(2L, getVariantIdByTestId(answers, 2L));
         assertNull(getVariantIdByTestId(answers, 6L));
         assertEquals(20L, getVariantIdByTestId(answers, 10L));
-    }
-
-    @Test
-    void shouldThrowExceptionOnInvalidAnswersList() {
-        List<ExaminationAnswerDto> answers = List.of(
-                mockExaminationAnswer(3L, 5L),
-                mockExaminationAnswer(3L, null),
-                mockExaminationAnswer(1L, 1L),
-                mockExaminationAnswer(2L, 2L),
-                mockExaminationAnswer(6L, null),
-                mockExaminationAnswer(10L, 20L));
-
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> examinationAnswerService.getExaminationTests(answers));
-
-        assertEquals("Some tests have more than 1 user answer!", exception.getMessage());
     }
 
     @Test

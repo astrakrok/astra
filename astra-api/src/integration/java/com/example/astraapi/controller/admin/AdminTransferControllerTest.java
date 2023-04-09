@@ -9,6 +9,7 @@ import com.example.astraapi.meta.FileType;
 import com.github.database.rider.core.api.dataset.DataSet;
 import com.github.database.rider.core.api.dataset.ExpectedDataSet;
 import com.github.database.rider.junit5.api.DBRider;
+import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.junit.jupiter.api.Test;
@@ -64,6 +65,28 @@ public class AdminTransferControllerTest extends BaseTest {
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.MULTIPART_FORM_DATA_VALUE)
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.CREATED);
+    }
+
+    @Test
+    void shouldReturnInternalServerErrorWhenIOExceptionWhenImportCsvFile() throws IOException {
+        try (MockedConstruction<CSVParser> ignored = mockConstruction(
+                CSVParser.class,
+                withSettings().defaultAnswer(invocation -> {
+                    throw new IOException();
+                })
+        )) {
+            MultipartBodyBuilder bodyBuilder = new MultipartBodyBuilder();
+            byte[] file = new ClassPathResource("transfer/import/import.csv").getInputStream().readAllBytes();
+            bodyBuilder.part("file", new ByteArrayResource(file)).header("Content-Disposition", "form-data; name=file; filename=import.csv");
+            bodyBuilder.part("title", "CSV Import", MediaType.TEXT_PLAIN);
+
+            webClient.post()
+                    .uri("/api/v1/admin/transfer/import/file")
+                    .body(BodyInserters.fromMultipartData(bodyBuilder.build()))
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.MULTIPART_FORM_DATA_VALUE)
+                    .exchange()
+                    .expectStatus().isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Test

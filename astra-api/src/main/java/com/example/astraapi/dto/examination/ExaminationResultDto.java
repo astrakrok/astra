@@ -15,9 +15,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExaminationResultDto {
-  private List<AnsweredTestDto> tests = new ArrayList<>();
-  private Long correctCount;
-  private Long total;
-  @JsonProperty("isSuccess")
-  private boolean success;
+    private List<AnsweredTestDto> tests = new ArrayList<>();
+    private Long correctCount;
+    private Long total;
+    @JsonProperty("isSuccess")
+    private boolean success;
 }
