@@ -1,0 +1,22 @@
+{
+    "public.examinations_answers": [
+        {
+            "id": 101,
+            "examination_id": 101,
+            "test_id": 104,
+            "variant_id": null
+        },
+        {
+            "id": 102,
+            "examination_id": 101,
+            "test_id": 104,
+            "variant_id": 105
+        },
+        {
+            "id": 103,
+            "examination_id": 102,
+            "test_id": 104,
+            "variant_id": 101
+        }
+    ]
+}

@@ -1,0 +1,46 @@
+{
+    "public.examinations_answers": [
+        {
+            "id": 101,
+            "examination_id": 101,
+            "test_id": 104,
+            "variant_id": null
+        },
+        {
+            "id": 102,
+            "examination_id": 101,
+            "test_id": 105,
+            "variant_id": 104
+        },
+        {
+            "id": 103,
+            "examination_id": 101,
+            "test_id": 101,
+            "variant_id": 107
+        },
+        {
+            "id": 104,
+            "examination_id": 101,
+            "test_id": 102,
+            "variant_id": 111
+        },
+        {
+            "id": 105,
+            "examination_id": 101,
+            "test_id": 106,
+            "variant_id": 122
+        },
+        {
+            "id": 106,
+            "examination_id": 101,
+            "test_id": 107,
+            "variant_id": 116
+        },
+        {
+            "id": 107,
+            "examination_id": 101,
+            "test_id": 108,
+            "variant_id": 119
+        }
+    ]
+}

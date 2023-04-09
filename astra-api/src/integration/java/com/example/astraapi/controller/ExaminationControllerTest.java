@@ -81,6 +81,70 @@ public class ExaminationControllerTest extends BaseTest {
             "datasets/testings-tests/correct-testings-tests.json",
             "datasets/examinations/examinations.json",
             "datasets/examinations-answers/examinations-answers.json"})
+    void shouldReturnExistingExamination() {
+        ExaminationStateDto examination = webClient.post()
+                .uri("/api/v1/examinations")
+                .bodyValue(new ExaminationSearchDto(107L))
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.CREATED)
+                .expectBody(ExaminationStateDto.class)
+                .returnResult()
+                .getResponseBody();
+
+        LocalDateTime utcTime = LocalDateTime.now()
+                .atZone(ZoneId.systemDefault())
+                .withZoneSameInstant(ZoneOffset.UTC)
+                .toLocalDateTime();
+
+        assertNotNull(examination);
+        assertEquals(1, examination.getTests().size());
+        assertTrue(utcTime.until(examination.getFinishedAt(), ChronoUnit.HOURS) >= 23);
+    }
+
+    @Test
+    @DataSet({
+            "datasets/users/users.json",
+            "datasets/exams/exams.json",
+            "datasets/steps/steps.json",
+            "datasets/specializations/specializations.json",
+            "datasets/testings/active-and-draft-testings.json",
+            "datasets/examinations/examinations.json"})
+    void shouldReturnExaminationWithNoAnswers() {
+        ExaminationStateDto examination = webClient.post()
+                .uri("/api/v1/examinations")
+                .bodyValue(new ExaminationSearchDto(107L))
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.CREATED)
+                .expectBody(ExaminationStateDto.class)
+                .returnResult()
+                .getResponseBody();
+
+        LocalDateTime utcTime = LocalDateTime.now()
+                .atZone(ZoneId.systemDefault())
+                .withZoneSameInstant(ZoneOffset.UTC)
+                .toLocalDateTime();
+
+        assertNotNull(examination);
+        assertTrue(examination.getTests().isEmpty());
+        assertTrue(utcTime.until(examination.getFinishedAt(), ChronoUnit.HOURS) >= 23);
+    }
+
+    @Test
+    @DataSet({
+            "datasets/users/users.json",
+            "datasets/exams/exams.json",
+            "datasets/steps/steps.json",
+            "datasets/specializations/specializations.json",
+            "datasets/subjects/subjects.json",
+            "datasets/tests/tests.json",
+            "datasets/tests-subjects/tests-subjects.json",
+            "datasets/tests-variants/tests-variants.json",
+            "datasets/testings/active-and-draft-testings.json",
+            "datasets/testings-tests/correct-testings-tests.json",
+            "datasets/examinations/examinations.json",
+            "datasets/examinations-answers/examinations-answers.json"})
     @ExpectedDataSet("datasets/expected/examinations-answers/examinations-answers-updating.json")
     void shouldUpdateExaminationAnswer() {
         webClient.put()
@@ -112,5 +176,51 @@ public class ExaminationControllerTest extends BaseTest {
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .exchange()
                 .expectStatus().isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    @DataSet({
+            "datasets/properties/correct-properties.json",
+            "datasets/users/users.json",
+            "datasets/exams/exams.json",
+            "datasets/steps/steps.json",
+            "datasets/specializations/specializations.json",
+            "datasets/testings/active-and-draft-testings.json",
+            "datasets/examinations/examinations.json"})
+    void shouldReturnResultForEmptyExamination() {
+        webClient.put()
+                .uri("/api/v1/examinations/101/result")
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.OK)
+                .expectBody()
+                .jsonPath("$.tests.length()").isEqualTo(0)
+                .jsonPath("$.correctCount").isEqualTo(0)
+                .jsonPath("$.total").isEqualTo(0)
+                .jsonPath("$.isSuccess").isEqualTo(false);
+    }
+
+    @Test
+    @DataSet({
+            "datasets/properties/correct-properties.json",
+            "datasets/users/users.json",
+            "datasets/exams/exams.json",
+            "datasets/steps/steps.json",
+            "datasets/specializations/specializations.json",
+            "datasets/tests/tests.json",
+            "datasets/tests-variants/tests-variants.json",
+            "datasets/testings/active-and-draft-testings.json",
+            "datasets/testings-tests/examination-testings-tests.json",
+            "datasets/examinations/examinations.json",
+            "datasets/examinations-answers/examinations-answers-result.json"})
+    void shouldReturnExaminationResult() {
+        webClient.put()
+                .uri("/api/v1/examinations/101/result")
+                .exchange()
+                .expectStatus().isEqualTo(HttpStatus.OK)
+                .expectBody()
+                .jsonPath("$.tests.length()").isEqualTo(7)
+                .jsonPath("$.correctCount").isEqualTo(3)
+                .jsonPath("$.total").isEqualTo(7)
+                .jsonPath("$.isSuccess").isEqualTo(false);
     }
 }

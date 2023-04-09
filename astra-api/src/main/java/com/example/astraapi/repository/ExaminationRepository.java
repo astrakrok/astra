@@ -10,25 +10,25 @@ import java.util.Optional;
 
 @Mapper
 public interface ExaminationRepository {
-  void save(@Param("entity") ExaminationEntity entity);
+    void save(@Param("entity") ExaminationEntity entity);
 
-  Optional<ExaminationEntity> findExaminationWithAnswers(
-      @Param("userId") Long userId,
-      @Param("testingId") Long testingId,
-      @Param("finishedAt") LocalDateTime finishedAt);
+    Optional<ExaminationEntity> findExaminationWithAnswers(
+            @Param("userId") Long userId,
+            @Param("testingId") Long testingId,
+            @Param("finishedAt") LocalDateTime finishedAt);
 
-  boolean exists(
-      @Param("id") Long id,
-      @Param("userId") Long userId,
-      @Param("finishedAtAfter") LocalDateTime finishedAtAfter);
+    boolean exists(
+            @Param("id") Long id,
+            @Param("userId") Long userId,
+            @Param("finishedAtAfter") LocalDateTime finishedAtAfter);
 
-  void updateFinishedAtById(
-      @Param("id") Long id,
-      @Param("finishedAt") LocalDateTime finishedAt);
+    void updateFinishedAtById(
+            @Param("id") Long id,
+            @Param("finishedAt") LocalDateTime finishedAt);
 
-  List<ExaminationEntity> getAllByUserIdAndFinishedAtBeforeOrderById(
-      @Param("userId") Long userId,
-      @Param("finishedAt") LocalDateTime finishedAt);
+    List<ExaminationEntity> getAllByUserIdAndFinishedAtBeforeOrderById(
+            @Param("userId") Long userId,
+            @Param("finishedAt") LocalDateTime finishedAt);
 
-  void deleteById(@Param("id") Long id);
+    void deleteById(@Param("id") Long id);
 }
