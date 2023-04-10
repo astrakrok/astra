@@ -10,10 +10,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "security")
 public class SecurityProperties {
-  private String audience;
-  private String issuerUri;
-  private String scope;
-  private String clientId;
-  private String clientSecret;
-  private String connection;
+    private String audience;
+    private String issuerUri;
+    private String scope;
+    private String clientId;
+    private String clientSecret;
+    private String connection;
 }

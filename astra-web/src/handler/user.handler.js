@@ -22,6 +22,10 @@ export const isAdmin = user => {
     );
 }
 
+export const isUser = user => {
+    return user && user.roles.includes(userRole.user);
+}
+
 export const isSuperAdmin = user => {
     return user && user.roles.includes(userRole.superAdmin);
 }

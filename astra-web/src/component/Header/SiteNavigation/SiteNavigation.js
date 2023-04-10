@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import {page} from "../../../constant/page";
 import AuthConsumer from "../../../context/auth/AuthConsumer";
-import {isAdmin} from "../../../handler/user.handler";
+import {isAdmin, isUser} from "../../../handler/user.handler";
 import Dropdown from "../../Dropdown/Dropdown";
 import DropdownList from "../../DropdownList/DropdownList";
 import IconTitle from "../../IconTitle/IconTitle";
@@ -43,13 +43,22 @@ const SiteNavigation = () => {
             <div className="wrapper s-hflex-center m-hflex-end">
                 <AuthConsumer>
                     {
-                        ({userData}) => isAdmin(userData) ? (
-                            <Dropdown id="management" trigger={getAdminDropdownTrigger()} content={getAdminDropdownContent()} />
-                        ) : (
-                            <>
-                                <Link to={page.newTesting} className="link">Почати іспит</Link>
-                            </>
-                        )
+                        ({userData}) => {
+                            return (
+                                <>
+                                    {
+                                        isAdmin(userData) ? (
+                                            <Dropdown id="management" trigger={getAdminDropdownTrigger()} content={getAdminDropdownContent()} />
+                                        ) : null
+                                    }
+                                    {
+                                        isUser(userData) ? (
+                                            <Link to={page.newTesting} className="link">Почати іспит</Link>
+                                        ) : null
+                                    }
+                                </>
+                            );
+                        }
                     }
                 </AuthConsumer>
             </div>

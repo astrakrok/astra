@@ -5,7 +5,7 @@ COPY gradle gradle
 COPY build.gradle settings.gradle gradlew ./
 COPY src src
 
-RUN ./gradlew bootJar -x test
+RUN ["sh", "./gradlew", "bootJar", "-x", "test"]
 
 FROM amazoncorretto:11-alpine
 

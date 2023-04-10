@@ -58,6 +58,7 @@ const ExamForm = ({
     return (
         <div className="s-vflex">
             <Input
+                data-test-id="exam-input-field"
                 withLabel={false}
                 placeholder="Назва іспиту"
                 value={exam.title}
@@ -66,14 +67,14 @@ const ExamForm = ({
             <Spacer height={20} />
             <div className="s-hflex-center">
                 <LoaderBoundary size="small" condition={formState.loading}>
-                    <Button isFilled={true} onClick={save}>
+                    <Button isFilled={true} onClick={save} data-test-id="exam-confirm-action">
                         {exam.id ? "Підтвердити" : "Створити"}
                     </Button>
                 </LoaderBoundary>
             </div>
             <DisplayBoundary condition={formState.errors.global}>
                 <Spacer height={20} />
-                <ErrorsArea errors={formState.errors.global} />
+                <ErrorsArea errors={formState.errors.global} data-test-id="exam-errors" />
             </DisplayBoundary>
         </div>
     );

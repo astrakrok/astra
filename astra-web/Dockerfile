@@ -1,12 +1,13 @@
 FROM node:16-alpine as builder
 
-ARG BASE_API_URL=http://localhost:8080/api/v1
+ARG BASE_API_URL=http://localhost:8080
+ARG PROFILE=production
 
 WORKDIR /app
 COPY package*.json ./
 RUN npm install --silent --force
 COPY . .
-RUN REACT_APP_BASE_API_URL=$BASE_API_URL npm run build
+RUN REACT_APP_BASE_API_URL=$BASE_API_URL REACT_APP_PROFILE=$PROFILE npm run build
 
 FROM nginx:latest
 COPY --from=builder /app/build /usr/share/nginx/html

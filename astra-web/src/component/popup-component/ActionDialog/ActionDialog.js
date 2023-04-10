@@ -9,6 +9,7 @@ import "./ActionDialog.css";
 const ActionDialog = ({
     message,
     setPopupState,
+    dataTestId = "",
     onConfirm = () => {}
 }) => {
     const [status, setStatus] = useState(loadingStatus.inProgress);
@@ -20,19 +21,19 @@ const ActionDialog = ({
     }
 
     return (
-        <div className="ActionDialog s-vflex-center">
+        <div className="ActionDialog s-vflex-center" data-test-id={dataTestId}>
             <div className="message">
                 {message}
             </div>
             <div className="actions s-hflex-center">
                 <DisplayBoundary condition={status !== loadingStatus.loading}>
-                    <Button isFilled={false} onClick={() => setPopupState()}>
+                    <Button isFilled={false} onClick={() => setPopupState()} data-test-id="reject">
                         Скасувати
                     </Button>
                     <Spacer width={20} />
                 </DisplayBoundary>
                 <LoaderBoundary condition={status === loadingStatus.loading} size="small">
-                    <Button isFilled={true} onClick={() => confirmAction()}>
+                    <Button isFilled={true} onClick={() => confirmAction()} data-test-id="confirm">
                         Підтвердити
                     </Button>
                 </LoaderBoundary>
