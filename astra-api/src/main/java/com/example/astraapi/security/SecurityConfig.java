@@ -1,5 +1,6 @@
 package com.example.astraapi.security;
 
+import com.example.astraapi.meta.ExecutionProfile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
@@ -12,11 +13,10 @@ import org.springframework.security.oauth2.jwt.*;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 
-@Profile("production")
+@Profile(ExecutionProfile.PRODUCTION)
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final CorsProperties corsProperties;
     private final SecurityProperties properties;
     private final JwtConverter jwtConverter;
 
@@ -31,16 +31,6 @@ public class SecurityConfig {
         jwtDecoder.setJwtValidator(withAudience);
 
         return jwtDecoder;
-    }
-
-    @Bean
-    public CorsConfiguration corsConfigurationSource() {
-        final CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(corsProperties.getOrigins());
-        configuration.setAllowedMethods(corsProperties.getMethods());
-        configuration.setAllowCredentials(true);
-        configuration.setAllowedHeaders(corsProperties.getHeaders());
-        return configuration;
     }
 
     @Bean

@@ -1,0 +1,12 @@
+{
+    "public.exams": [
+        {
+            "id": 101,
+            "title": "Exam 1"
+        },
+        {
+            "id": 103,
+            "title": "Exam 3"
+        }
+    ]
+}

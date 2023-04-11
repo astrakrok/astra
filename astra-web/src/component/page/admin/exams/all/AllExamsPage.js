@@ -74,6 +74,7 @@ const AllExamsPage = () => {
     const showExamDeletionWarning = (setPopupState, examId) => {
         setPopupState({
             bodyGetter: () => <ActionDialog
+                dataTestId="delete-exam-popup"
                 message="Ви впевнені, що хочете видалити цей іспит? Його вже неможливо буде повернути"
                 setPopupState={setPopupState}
                 onConfirm={async () => await onDeletionConfirmed(examId)} />
@@ -88,7 +89,7 @@ const AllExamsPage = () => {
                         <PopupConsumer>
                             {
                                 ({setPopupState}) => (
-                                    <Button isFilled={true} onClick={() => openCreateExamPopup(setPopupState)}>
+                                    <Button isFilled={true} onClick={() => openCreateExamPopup(setPopupState)} data-test-id="exam-new-action">
                                         Створити
                                     </Button>
                                 )
@@ -96,7 +97,7 @@ const AllExamsPage = () => {
                         </PopupConsumer>
                     </div>
                     <Spacer height={20} />
-                    <div className="exams-list center">
+                    <div className="exams-list center" data-test-id="exam-list">
                         <LoaderBoundary condition={exams == null}>
                             {
                                 (exams && exams.length > 0) ? (

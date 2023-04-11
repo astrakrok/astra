@@ -12,7 +12,7 @@ import java.util.List;
 @Configuration
 @ConfigurationProperties(prefix = "cors")
 public class CorsProperties {
-  private List<String> origins;
-  private List<String> methods;
-  private List<String> headers;
+    private List<String> origins;
+    private List<String> methods;
+    private List<String> headers;
 }

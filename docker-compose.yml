@@ -1,0 +1,44 @@
+version: '3.9'
+
+services:
+  database:
+    image: postgres:14-alpine
+    ports:
+      - "5433:5432"
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=astra
+
+  backend:
+    image: astra/backend
+    build:
+      context: ./astra-api
+      dockerfile: ./Dockerfile
+    ports:
+      - "8081:8080"
+    environment:
+      - PROFILE=integration-test
+      - ALLOWED_ORIGINS=http://frontend:3000,http://localhost:3001
+      - ALLOWED_METHODS=*
+      - ALLOWED_HEADERS=*
+      - DATASOURCE_URL=jdbc:postgresql://database:5432/astra
+      - DATASOURCE_USERNAME=postgres
+      - DATASOURCE_PASSWORD=postgres
+    depends_on:
+      - database
+
+  frontend:
+    image: astra/frontend
+    build:
+      context: astra-web
+      dockerfile: ./Dockerfile
+      args:
+        - PROFILE=test
+        - BASE_API_URL=${BACKEND_BASE_URL:-http://backend:8080}
+    ports:
+      - "3001:3000"
+    environment:
+      - PORT=3000
+    depends_on:
+      - backend

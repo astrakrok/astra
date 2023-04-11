@@ -19,3 +19,11 @@ jobs:
       - name: Integration test backend
         working-directory: ./astra-api
         run: ./gradlew integrationTest
+  e2e_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
+      - name: E2E test
+        working-directory: ./e2e
+        run: ./gradlew test --stacktrace --info
