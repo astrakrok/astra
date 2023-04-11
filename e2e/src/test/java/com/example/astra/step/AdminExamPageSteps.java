@@ -7,6 +7,7 @@ public class AdminExamPageSteps {
 
     public void openPage() {
         open("/admin/exams");
+        commonSteps.delay(200);
     }
 
     public void openCreateModal() {
@@ -15,7 +16,7 @@ public class AdminExamPageSteps {
 
     public void clickDeleteExamButton(String title) {
         commonSteps.clickItemsByCssSelectorAndCondition(".ExamItem .delete", element -> title.equalsIgnoreCase(element.parent().$(".title").text()));
-        commonSteps.delay(500);
+        commonSteps.delay(300);
     }
 
     public void typeExamTitle(String text) {
@@ -28,6 +29,7 @@ public class AdminExamPageSteps {
 
     public void confirmExamDeletion() {
         commonSteps.clickByCssSelector("[data-test-id='delete-exam-popup'] [data-test-id='confirm']");
+        commonSteps.delay(200);
     }
 
     public void assertExamsCount(int count) {
