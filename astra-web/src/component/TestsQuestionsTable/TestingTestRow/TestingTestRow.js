@@ -52,7 +52,7 @@ const TestingTestRow = ({
                     </div>
                     <Spacer width={10} />
                     <div className="view">
-                        <Link to={page.admin.tests.id(test.id).edit}>
+                        <Link to={page.admin.tests.id(test.testId).edit}>
                             <Tooltipped tooltip="Переглянути" position="top">
                                 <i className="material-icons clickable">visibility</i>
                             </Tooltipped>
