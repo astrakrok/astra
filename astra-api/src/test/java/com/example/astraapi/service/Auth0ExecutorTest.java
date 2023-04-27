@@ -18,27 +18,27 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 public class Auth0ExecutorTest {
-  @InjectMocks
-  private Auth0ExecutorImpl executor;
+    @InjectMocks
+    private Auth0ExecutorImpl executor;
 
-  @Test
-  void shouldExecuteRequest() throws Auth0Exception {
-    TokenHolder tokenHolder = new TokenHolder("accessToken", "idToken", "refreshToken", "Bearer", 1000000, "email, profile", new Date());
-    TokenRequest request = Mockito.mock(TokenRequest.class);
-    Mockito.when(request.execute()).thenReturn(tokenHolder);
+    @Test
+    void shouldExecuteRequest() throws Auth0Exception {
+        TokenHolder tokenHolder = new TokenHolder("accessToken", "idToken", "refreshToken", "Bearer", 1000000, "email, profile", new Date());
+        TokenRequest request = Mockito.mock(TokenRequest.class);
+        Mockito.when(request.execute()).thenReturn(tokenHolder);
 
-    TokenHolder answer = executor.execute(request);
-    assertEquals("accessToken", answer.getAccessToken());
-    assertEquals("idToken", answer.getIdToken());
-    assertEquals("refreshToken", answer.getRefreshToken());
-    assertEquals("Bearer", answer.getTokenType());
-  }
+        TokenHolder answer = executor.execute(request);
+        assertEquals("accessToken", answer.getAccessToken());
+        assertEquals("idToken", answer.getIdToken());
+        assertEquals("refreshToken", answer.getRefreshToken());
+        assertEquals("Bearer", answer.getTokenType());
+    }
 
-  @Test
-  void shouldThrowExceptionWhenExecuteRequest() throws Auth0Exception {
-    TokenRequest request = Mockito.mock(TokenRequest.class);
-    Mockito.when(request.execute()).thenThrow(new Auth0Exception("Thrown exception"));
-    AuthProviderException exception = assertThrows(AuthProviderException.class, () -> executor.execute(request));
-    assertEquals("An unexpected error occurred", exception.getMessage());
-  }
+    @Test
+    void shouldThrowExceptionWhenExecuteRequest() throws Auth0Exception {
+        TokenRequest request = Mockito.mock(TokenRequest.class);
+        Mockito.when(request.execute()).thenThrow(new Auth0Exception("Thrown exception"));
+        AuthProviderException exception = assertThrows(AuthProviderException.class, () -> executor.execute(request));
+        assertEquals("An unexpected error occurred", exception.getMessage());
+    }
 }

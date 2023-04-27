@@ -11,32 +11,32 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 public class OAuth2ConnectionConverterTest {
-  @InjectMocks
-  private OAuth2ConnectionConverter converter;
+    @InjectMocks
+    private OAuth2ConnectionConverter converter;
 
-  @Test
-  void shouldConvertValueToConnection() {
-    OAuth2Connection google = converter.convert("google");
+    @Test
+    void shouldConvertValueToConnection() {
+        OAuth2Connection google = converter.convert("google");
 
-    assertEquals(OAuth2Connection.GOOGLE, google);
-  }
+        assertEquals(OAuth2Connection.GOOGLE, google);
+    }
 
-  @Test
-  void shouldConvertStrippedValueToConnection() {
-    OAuth2Connection google = converter.convert("  google ");
+    @Test
+    void shouldConvertStrippedValueToConnection() {
+        OAuth2Connection google = converter.convert("  google ");
 
-    assertEquals(OAuth2Connection.GOOGLE, google);
-  }
+        assertEquals(OAuth2Connection.GOOGLE, google);
+    }
 
-  @Test
-  void shouldConvertValueToConnectionCaseInsensitive() {
-    OAuth2Connection google = converter.convert("  GooGLe ");
+    @Test
+    void shouldConvertValueToConnectionCaseInsensitive() {
+        OAuth2Connection google = converter.convert("  GooGLe ");
 
-    assertEquals(OAuth2Connection.GOOGLE, google);
-  }
+        assertEquals(OAuth2Connection.GOOGLE, google);
+    }
 
-  @Test
-  void shouldThrowExceptionOnInvalidValue() {
-    assertThrows(IllegalArgumentException.class, () -> converter.convert("   goog le "));
-  }
+    @Test
+    void shouldThrowExceptionOnInvalidValue() {
+        assertThrows(IllegalArgumentException.class, () -> converter.convert("   goog le "));
+    }
 }

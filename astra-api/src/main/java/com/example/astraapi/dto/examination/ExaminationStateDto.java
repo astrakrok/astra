@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ExaminationStateDto {
-  private Long id;
-  private List<ExaminationTestDto> tests;
-  private LocalDateTime finishedAt;
+    private Long id;
+    private List<ExaminationTestDto> tests;
+    private LocalDateTime finishedAt;
 }

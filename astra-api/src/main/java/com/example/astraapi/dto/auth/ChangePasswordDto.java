@@ -14,10 +14,10 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChangePasswordDto {
-  @NotNull
-  @Pattern(regexp = Regex.PASSWORD)
-  private String oldPassword;
-  @NotNull
-  @Pattern(regexp = Regex.PASSWORD)
-  private String newPassword;
+    @NotNull
+    @Pattern(regexp = Regex.PASSWORD)
+    private String oldPassword;
+    @NotNull
+    @Pattern(regexp = Regex.PASSWORD)
+    private String newPassword;
 }

@@ -22,7 +22,7 @@ public class AdminSubjectController {
     private final SubjectService subjectService;
 
     @PostMapping
-    public ResponseEntity<IdDto> saveSubject(@RequestBody @Valid RequestSubjectDto requestSubjectDto) {
+    public ResponseEntity<IdDto> save(@RequestBody @Valid RequestSubjectDto requestSubjectDto) {
         IdDto idDto = subjectService.save(requestSubjectDto);
         return ResponseEntity
                 .status(HttpStatus.CREATED)

@@ -13,10 +13,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TrainingTestDto {
-  private Long id;
-  private String question;
-  private String questionSvg;
-  private String comment;
-  private String commentSvg;
-  private List<TrainingVariantDto> variants;
+    private Long id;
+    private String question;
+    private String questionSvg;
+    private String comment;
+    private String commentSvg;
+    private List<TrainingVariantDto> variants;
 }

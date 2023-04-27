@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RefreshTokenDto {
-  @NotNull
-  @TrimmedLength(min = 1)
-  private String refreshToken;
+    @NotNull
+    @TrimmedLength(min = 1)
+    private String refreshToken;
 }

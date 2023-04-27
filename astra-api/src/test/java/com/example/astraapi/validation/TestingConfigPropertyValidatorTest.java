@@ -10,29 +10,29 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class TestingConfigPropertyValidatorTest {
-  @InjectMocks
-  private TestingConfigPropertyValidator validator;
+    @InjectMocks
+    private TestingConfigPropertyValidator validator;
 
-  @Test
-  void shouldThrowExceptionOnNullValue() {
-    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> validator.validate(null));
-    assertEquals("Property cannot be null", exception.getMessage());
-  }
+    @Test
+    void shouldThrowExceptionOnNullValue() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> validator.validate(null));
+        assertEquals("Property cannot be null", exception.getMessage());
+    }
 
-  @Test
-  void shouldThrowExceptionOnInvalidLength() {
-    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> validator.validate("ValueValueValueDone"));
-    assertEquals("Description must be at least 20 characters long", exception.getMessage());
-  }
+    @Test
+    void shouldThrowExceptionOnInvalidLength() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> validator.validate("ValueValueValueDone"));
+        assertEquals("Description must be at least 20 characters long", exception.getMessage());
+    }
 
-  @Test
-  void shouldStringValueThrowExceptionOnInvalidLength() {
-    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> validator.validate(" ValueValueValueDone    "));
-    assertEquals("Description must be at least 20 characters long", exception.getMessage());
-  }
+    @Test
+    void shouldStringValueThrowExceptionOnInvalidLength() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> validator.validate(" ValueValueValueDone    "));
+        assertEquals("Description must be at least 20 characters long", exception.getMessage());
+    }
 
-  @Test
-  void shouldNotThrowExceptionOnValidValue() {
-    assertDoesNotThrow(() -> validator.validate("ValueValueValueValue"));
-  }
+    @Test
+    void shouldNotThrowExceptionOnValidValue() {
+        assertDoesNotThrow(() -> validator.validate("ValueValueValueValue"));
+    }
 }
