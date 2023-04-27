@@ -11,34 +11,34 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 public class StringToConfigPropertyConverterTest {
-  @InjectMocks
-  private StringToConfigPropertyConverter converter;
+    @InjectMocks
+    private StringToConfigPropertyConverter converter;
 
-  @Test
-  void shouldConvertPropertyToEnumValue() {
-    ConfigProperty configProperty = converter.convert("examinationThresholdPercentage");
+    @Test
+    void shouldConvertPropertyToEnumValue() {
+        ConfigProperty configProperty = converter.convert("examinationThresholdPercentage");
 
-    assertEquals(ConfigProperty.EXAMINATION_THRESHOLD_PERCENTAGE, configProperty);
-  }
+        assertEquals(ConfigProperty.EXAMINATION_THRESHOLD_PERCENTAGE, configProperty);
+    }
 
-  @Test
-  void shouldConvertStrippedPropertyToEnumValue() {
-    ConfigProperty configProperty = converter.convert("  examinationThresholdPercentage ");
+    @Test
+    void shouldConvertStrippedPropertyToEnumValue() {
+        ConfigProperty configProperty = converter.convert("  examinationThresholdPercentage ");
 
-    assertEquals(ConfigProperty.EXAMINATION_THRESHOLD_PERCENTAGE, configProperty);
-  }
+        assertEquals(ConfigProperty.EXAMINATION_THRESHOLD_PERCENTAGE, configProperty);
+    }
 
-  @Test
-  void shouldConvertPropertyToEnumValueIgnoreCase() {
-    ConfigProperty configProperty = converter.convert("EXAMINAtionThreSHoldPercentAGE");
+    @Test
+    void shouldConvertPropertyToEnumValueIgnoreCase() {
+        ConfigProperty configProperty = converter.convert("EXAMINAtionThreSHoldPercentAGE");
 
-    assertEquals(ConfigProperty.EXAMINATION_THRESHOLD_PERCENTAGE, configProperty);
-  }
+        assertEquals(ConfigProperty.EXAMINATION_THRESHOLD_PERCENTAGE, configProperty);
+    }
 
-  @Test
-  void shouldThrowExceptionOnInvalidValue() {
-    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> converter.convert("invalid value"));
+    @Test
+    void shouldThrowExceptionOnInvalidValue() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> converter.convert("invalid value"));
 
-    assertEquals("No such property", exception.getMessage());
-  }
+        assertEquals("No such property", exception.getMessage());
+    }
 }

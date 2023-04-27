@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TestingDto {
-  private Long id;
-  private Long examId;
-  private Long specializationId;
+    private Long id;
+    private Long examId;
+    private Long specializationId;
 }

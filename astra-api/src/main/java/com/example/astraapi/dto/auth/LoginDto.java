@@ -14,8 +14,8 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoginDto {
-  @Email
-  private String email;
-  @Pattern(regexp = Regex.PASSWORD)
-  private String password;
+    @Email
+    private String email;
+    @Pattern(regexp = Regex.PASSWORD)
+    private String password;
 }

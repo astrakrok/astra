@@ -50,7 +50,7 @@ public class AdminTestingController {
     }
 
     @PostMapping("/{id}/tests")
-    public ResponseEntity<Page<TestingTestQuestionDto>> getTestsQuestions(
+    public ResponseEntity<TestingPage<TestingTestQuestionDto>> getTestsQuestions(
             @PathVariable("id") Long id,
             @RequestBody AdminTestingTestsFilterDto filter,
             Pageable pageable

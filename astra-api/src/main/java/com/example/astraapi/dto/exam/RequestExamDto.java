@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RequestExamDto {
-  @NotNull
-  @TrimmedLength(min = 4, max = 255)
-  private String title;
+    @NotNull
+    @TrimmedLength(min = 4, max = 255)
+    private String title;
 }

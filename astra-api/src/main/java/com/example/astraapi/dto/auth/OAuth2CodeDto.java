@@ -10,6 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OAuth2CodeDto {
-  private String code;
-  private String redirectUri;
+    private String code;
+    private String redirectUri;
 }

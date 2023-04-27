@@ -39,7 +39,7 @@ public class NotificationControllerTest extends BaseTest {
                 .uri("/api/v1/notifications")
                 .body(BodyInserters.fromMultipartData(bodyBuilder.build()))
                 .exchange()
-                .expectStatus().isEqualTo(HttpStatus.OK);
+                .expectStatus().isEqualTo(HttpStatus.CREATED);
     }
 
     @Test
@@ -69,7 +69,7 @@ public class NotificationControllerTest extends BaseTest {
                 .body(BodyInserters.fromMultipartData(bodyBuilder.build()))
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.MULTIPART_FORM_DATA_VALUE)
                 .exchange()
-                .expectStatus().isEqualTo(HttpStatus.OK);
+                .expectStatus().isEqualTo(HttpStatus.CREATED);
     }
 
     @Test

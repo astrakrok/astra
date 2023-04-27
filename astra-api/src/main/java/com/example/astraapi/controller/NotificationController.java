@@ -4,6 +4,7 @@ import com.example.astraapi.dto.MessageDto;
 import com.example.astraapi.meta.Endpoint;
 import com.example.astraapi.service.NotificationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,6 +23,6 @@ public class NotificationController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> sendMessage(@Valid @ModelAttribute MessageDto messageDto) {
         notificationService.sendMessage(messageDto);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

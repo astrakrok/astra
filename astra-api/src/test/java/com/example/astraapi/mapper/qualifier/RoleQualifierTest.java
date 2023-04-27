@@ -11,16 +11,16 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 @ExtendWith(MockitoExtension.class)
 public class RoleQualifierTest {
-  @InjectMocks
-  private RoleQualifier roleQualifier;
+    @InjectMocks
+    private RoleQualifier roleQualifier;
 
-  @Test
-  void shouldReturnNullWhenNull() {
-    assertNull(roleQualifier.mapRoleEntityToString(null));
-  }
+    @Test
+    void shouldReturnNullWhenNull() {
+        assertNull(roleQualifier.mapRoleEntityToString(null));
+    }
 
-  @Test
-  void shouldReturnEntityRole() {
-    assertEquals("user", roleQualifier.mapRoleEntityToString(new RoleEntity(1L, "user")));
-  }
+    @Test
+    void shouldReturnEntityRole() {
+        assertEquals("user", roleQualifier.mapRoleEntityToString(new RoleEntity(1L, "user")));
+    }
 }

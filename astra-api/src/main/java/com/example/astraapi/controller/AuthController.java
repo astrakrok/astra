@@ -21,13 +21,15 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping
-    public TokenDto login(@Valid @RequestBody LoginDto loginDto) {
-        return authService.login(loginDto);
+    public ResponseEntity<TokenDto> login(@Valid @RequestBody LoginDto loginDto) {
+        TokenDto tokenDto = authService.login(loginDto);
+        return ResponseEntity.ok(tokenDto);
     }
 
     @PutMapping
-    public TokenDto refreshToken(@Valid @RequestBody RefreshTokenDto refreshTokenDto) {
-        return authService.refreshToken(refreshTokenDto);
+    public ResponseEntity<TokenDto> refreshToken(@Valid @RequestBody RefreshTokenDto refreshTokenDto) {
+        TokenDto tokenDto = authService.refreshToken(refreshTokenDto);
+        return ResponseEntity.ok(tokenDto);
     }
 
     @PostMapping("/signup")
@@ -39,22 +41,26 @@ public class AuthController {
     }
 
     @PutMapping("/password")
-    public void changePassword(@Valid @RequestBody ChangePasswordDto changePasswordDto) {
+    public ResponseEntity<Void> changePassword(@Valid @RequestBody ChangePasswordDto changePasswordDto) {
         authService.changePassword(changePasswordDto);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/password/reset")
-    public void resetPassword(@Valid @RequestBody EmailDto emailDto) {
+    public ResponseEntity<Void> resetPassword(@Valid @RequestBody EmailDto emailDto) {
         authService.resetPassword(emailDto);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/oauth2/{connection}")
-    public UrlDto getLoginUrl(@PathVariable("connection") OAuth2Connection connection) {
-        return authService.getLoginUrl(connection);
+    public ResponseEntity<UrlDto> getLoginUrl(@PathVariable("connection") OAuth2Connection connection) {
+        UrlDto urlDto = authService.getLoginUrl(connection);
+        return ResponseEntity.ok(urlDto);
     }
 
     @PostMapping("/oauth2/{connection}")
-    public TokenDto oauth2Login(@PathVariable("connection") OAuth2Connection connection, @RequestBody OAuth2CodeDto codeDto) {
-        return authService.login(connection, codeDto);
+    public ResponseEntity<TokenDto> oauth2Login(@PathVariable("connection") OAuth2Connection connection, @RequestBody OAuth2CodeDto codeDto) {
+        TokenDto tokenDto = authService.login(connection, codeDto);
+        return ResponseEntity.ok(tokenDto);
     }
 }

@@ -10,36 +10,34 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AudienceValidatorTest {
-  private AudienceValidator validator;
+    private AudienceValidator validator;
 
-  @BeforeEach
-  void beforeEach() {
-    validator = new AudienceValidator("https://www.example.com/audience");
-  }
+    @BeforeEach
+    void beforeEach() {
+        validator = new AudienceValidator("https://www.example.com/audience");
+    }
 
-  @Test
-  void shouldReturnSuccessResult() {
-    Jwt jwt = Mockito.mock(Jwt.class);
-    Mockito.when(jwt.getAudience()).thenReturn(List.of("https://www.example.com/audience", "https://www.google.com.ua/"));
+    @Test
+    void shouldReturnSuccessResult() {
+        Jwt jwt = Mockito.mock(Jwt.class);
+        Mockito.when(jwt.getAudience()).thenReturn(List.of("https://www.example.com/audience", "https://www.google.com.ua/"));
 
-    OAuth2TokenValidatorResult result = validator.validate(jwt);
-    assertFalse(result.hasErrors());
-  }
+        OAuth2TokenValidatorResult result = validator.validate(jwt);
+        assertFalse(result.hasErrors());
+    }
 
-  @Test
-  void shouldReturnFailureResult() {
-    Jwt jwt = Mockito.mock(Jwt.class);
-    Mockito.when(jwt.getAudience()).thenReturn(List.of("https://www.google.com.ua/"));
+    @Test
+    void shouldReturnFailureResult() {
+        Jwt jwt = Mockito.mock(Jwt.class);
+        Mockito.when(jwt.getAudience()).thenReturn(List.of("https://www.google.com.ua/"));
 
-    OAuth2TokenValidatorResult result = validator.validate(jwt);
-    assertTrue(result.hasErrors());
-    assertEquals(1, result.getErrors().size());
-    ArrayList<OAuth2Error> errors = new ArrayList<>(result.getErrors());
-    assertEquals("invalid_token", errors.get(0).getErrorCode());
-  }
+        OAuth2TokenValidatorResult result = validator.validate(jwt);
+        assertTrue(result.hasErrors());
+        assertEquals(1, result.getErrors().size());
+        ArrayList<OAuth2Error> errors = new ArrayList<>(result.getErrors());
+        assertEquals("invalid_token", errors.get(0).getErrorCode());
+    }
 }

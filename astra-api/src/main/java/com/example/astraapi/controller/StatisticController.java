@@ -6,6 +6,7 @@ import com.example.astraapi.dto.statistic.StepStatisticDto;
 import com.example.astraapi.meta.Endpoint;
 import com.example.astraapi.service.StatisticService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,14 +18,16 @@ public class StatisticController {
     private final StatisticService statisticService;
 
     @GetMapping("/examinations")
-    public List<ExaminationStatisticDto> getStatistics() {
-        return statisticService.getStatistics();
+    public ResponseEntity<List<ExaminationStatisticDto>> getStatistics() {
+        List<ExaminationStatisticDto> statistics = statisticService.getStatistics();
+        return ResponseEntity.ok(statistics);
     }
 
     @PostMapping("/steps")
-    public List<StepStatisticDto> getStepsStatistic(
+    public ResponseEntity<List<StepStatisticDto>> getStepsStatistic(
             @RequestBody StepsStatisticFilterDto filter
     ) {
-        return statisticService.getStepsStatistic(filter);
+        List<StepStatisticDto> statistics = statisticService.getStepsStatistic(filter);
+        return ResponseEntity.ok(statistics);
     }
 }

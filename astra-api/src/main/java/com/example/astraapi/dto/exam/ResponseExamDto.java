@@ -10,6 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponseExamDto {
-  private Long id;
-  private String title;
+    private Long id;
+    private String title;
 }

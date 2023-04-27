@@ -66,7 +66,7 @@ public class AdminTestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTest(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         testService.deleteTest(id);
         return ResponseEntity.ok().build();
     }
