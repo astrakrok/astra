@@ -9,8 +9,10 @@ export const validateTest = test => {
         errors.question = ["Питання повинно містити щонайменше 10 символів"];
         hasError = true;
     }
+
     const commentText = removeWhitespaces(getInnerText(test.comment));
     const commentTrimmedLength = getTrimmedLength(commentText);
+    
     if (!commentTrimmedLength || commentTrimmedLength < 10) {
         errors.comment = ["Коментар повинен містити щонайменше 10 символів"];
         hasError = true;
