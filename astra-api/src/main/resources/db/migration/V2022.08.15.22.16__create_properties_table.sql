@@ -1,4 +1,4 @@
-create table public.properties
+create table if not exists public.properties
 (
     id    bigserial primary key,
     name  varchar not null,

@@ -1,4 +1,4 @@
-create table public.examinations_statistics
+create table if not exists public.examinations_statistics
 (
     id              bigserial primary key,
     testing_id      bigint   not null references public.testings (id) on delete cascade,

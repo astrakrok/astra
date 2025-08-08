@@ -1,11 +1,11 @@
-create table public.tests
+create table if not exists public.tests
 (
     id       bigserial primary key,
     question varchar not null,
     comment  varchar not null
 );
 
-create table public.tests_variants
+create table if not exists public.tests_variants
 (
     id          bigserial primary key,
     test_id     bigint references public.tests (id) on delete cascade,
@@ -14,14 +14,14 @@ create table public.tests_variants
     is_correct  boolean not null
 );
 
-create table public.tests_subjects
+create table if not exists public.tests_subjects
 (
     test_id    bigint references public.tests (id) on delete cascade,
     subject_id bigint references public.subjects (id) on delete cascade,
     unique (test_id, subject_id)
 );
 
-create table public.tests_exams
+create table if not exists public.tests_exams
 (
     test_id bigint references public.tests (id) on delete cascade,
     exam_id bigint references public.exams (id) on delete cascade,

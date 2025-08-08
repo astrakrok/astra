@@ -1,4 +1,4 @@
-create table public.steps
+create table if not exists public.steps
 (
     id    bigserial primary key,
     title varchar(20) not null

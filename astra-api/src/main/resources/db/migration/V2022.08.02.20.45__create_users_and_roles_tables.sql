@@ -1,4 +1,4 @@
-create table public.users
+create table if not exists public.users
 (
     id      bigserial primary key,
     name    varchar(50)  not null,
@@ -8,13 +8,13 @@ create table public.users
     school  varchar(255) not null
 );
 
-create table public.roles
+create table if not exists public.roles
 (
     id    bigserial primary key,
     title varchar(20) not null
 );
 
-create table public.users_roles
+create table if not exists public.users_roles
 (
     id      bigserial primary key,
     user_id bigint not null references public.users (id),

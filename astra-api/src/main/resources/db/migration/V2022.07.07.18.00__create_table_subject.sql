@@ -1,4 +1,4 @@
-create table public.subjects
+create table if not exists public.subjects
 (
     id                int primary key generated always as identity,
     title             varchar(255),
