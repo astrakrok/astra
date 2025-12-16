@@ -7,6 +7,7 @@ import LoaderBoundary from "../../LoaderBoundary/LoaderBoundary";
 import TrainingTesting from "../../TrainingTesting/TrainingTesting";
 import ExaminationTesting from "../../ExaminationTesting/ExaminationTesting";
 import InfoText from "../../InfoText/InfoText";
+import withScrollTopButton from "../../hoc/withScrollTopButton/withScrollTopButton";
 
 const TestingPage = () => {
     const [searchParams] = useSearchParams();
@@ -71,4 +72,5 @@ const TestingPage = () => {
     );
 }
 
-export default TestingPage;
+
+export default withScrollTopButton(TestingPage);
