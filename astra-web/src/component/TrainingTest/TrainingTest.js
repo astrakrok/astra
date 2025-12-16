@@ -10,6 +10,15 @@ import ErrorForm from "../form/ErrorForm/ErrorForm";
 import Spacer from "../Spacer/Spacer";
 import Divider from "../Divider/Divider";
 import Badge from "../Badge/Badge";
+import Alert from "../Alert/Alert";
+
+const isCorrectSelected = (testState, selected) => {
+    const selectedVariant = testState.variants.find(item => item.id === selected);
+    if (!selectedVariant) {
+        return false;
+    }
+    return selectedVariant.isCorrect;
+}
 
 const TrainingTest = ({
                           onAnswer = () => {
@@ -154,6 +163,15 @@ const TrainingTest = ({
                     </div>
                 ) : null
             }
+            <DisplayBoundary condition={!selectable()}>
+                {
+                    isCorrectSelected(testState, selected) ? (
+                        <Alert type="success">Відповідь правильна!</Alert>
+                    ) : (
+                        <Alert type="danger">Відповідь неправильна!</Alert>
+                    )
+                }
+            </DisplayBoundary>
             <div className="s-vflex variants">
                 {
                     testState.variants.map(renderVariant)

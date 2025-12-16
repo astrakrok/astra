@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import withAllAvailableHeight from "../../hoc/withAllAvailableHeight/withAllAvailableHeight";
 import "./NewTestingPage.css";
 import {page} from "../../../constant/page";
+import withScrollTopButton from "../../hoc/withScrollTopButton/withScrollTopButton";
 import withAvailableTestingsAndDescriptions
     from "../../hoc/withAvailableTestingsAndDescriptions/withAvailableTestingsAndDescriptions";
 
@@ -30,4 +31,4 @@ const NewTestingPage = () => {
     );
 }
 
-export default withAllAvailableHeight(withTitle(NewTestingPage, "Тестування"));
+export default withScrollTopButton(withAllAvailableHeight(withTitle(NewTestingPage, "Тестування")));
