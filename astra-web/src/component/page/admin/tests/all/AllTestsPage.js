@@ -26,7 +26,7 @@ const AllTestsPage = () => {
                 </div>
                 <Spacer height={20} />
                 <div className="tests-list s-hflex-center">
-                    <Paginated pageSize={app.pageSize} pageHandler={fetchPage} initialFilter={{importId: searchParams.get("importId")}}>
+                    <Paginated pageSize={app.pageSize} pageSizeOptions={app.pageSizeOptions} pageHandler={fetchPage} initialFilter={{importId: searchParams.get("importId")}}>
                         {({
                             filter: ({initialFilter, setFilter}) => (
                                 <TestsFilter initialFilter={initialFilter} onFilterSelected={setFilter} />

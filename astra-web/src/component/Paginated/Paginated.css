@@ -1,3 +1,11 @@
 .Paginated .loader {
     padding: 50px 0;
 }
+
+.Paginated .page-size {
+    align-items: center;
+}
+
+.Paginated .page-size-select {
+    width: 110px;
+}
