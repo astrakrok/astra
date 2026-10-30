@@ -22,6 +22,9 @@
     "suneditor-react": "^3.4.1",
     "web-vitals": "^2.1.4"
   },
+  "devDependencies": {
+    "typescript": "^4.9.5"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
